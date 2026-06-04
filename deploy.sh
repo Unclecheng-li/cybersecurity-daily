@@ -35,48 +35,55 @@ else:
 fi
 
 echo "==> [2/5] 更新 index.json 清单..."
-# 扫描 daily/ 目录下的 HTML 文件，自动生成 index.json
+# 扫描 daily/ 目录下的 HTML 文件，合并到 index.json（保留历史记录）
 $PYTHON -c "
 import os, json, re
+from datetime import datetime
 
 daily_dir = 'daily'
-entries = []
+index_path = os.path.join(daily_dir, 'index.json')
 
+# 读取现有记录
+existing = {}
+if os.path.exists(index_path):
+    try:
+        with open(index_path, 'r', encoding='utf-8') as f:
+            for item in json.load(f):
+                existing[item['date']] = item
+    except Exception:
+        pass
+
+# 扫描HTML文件并提取信息
 for f in sorted(os.listdir(daily_dir)):
     if not f.endswith('.html') or f == 'index.html':
         continue
     
-    # 从文件名提取日期 2026-06-04.html -> 2026-06-04
     date_match = re.match(r'(\d{4}-\d{2}-\d{2})\.html', f)
     if not date_match:
         continue
     
     date_str = date_match.group(1)
     
-    # 尝试从HTML文件中提取关键词
+    # 如果已有记录且有关键词，跳过
+    if date_str in existing and existing[date_str].get('keywords'):
+        continue
+    
+    # 提取关键词
     filepath = os.path.join(daily_dir, f)
     keywords = ''
     try:
         with open(filepath, 'r', encoding='utf-8') as fh:
             content = fh.read()
-            # 查找 keywords-banner 或 keywords-banner 内容
             kw_match = re.search(r'keywords-banner[^>]*>(.*?)</div>', content, re.DOTALL)
             if kw_match:
                 keywords = re.sub(r'<[^>]+>', '', kw_match.group(1)).strip()
-                # 去掉常见前缀
                 keywords = re.sub(r'^最新一期[：:]\s*', '', keywords)
                 keywords = re.sub(r'^今日关键词[：:]\s*', '', keywords)
                 keywords = re.sub(r'^\d{4}年\d{1,2}月\d{1,2}日\s*[—–-]\s*', '', keywords)
-            else:
-                # 备选：从 title 或 h1 提取
-                title_match = re.search(r'<title>(.*?)</title>', content)
-                if title_match:
-                    keywords = title_match.group(1).strip()
     except Exception:
         pass
     
     # 计算星期
-    from datetime import datetime
     weekdays = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
     try:
         d = datetime.strptime(date_str, '%Y-%m-%d')
@@ -84,16 +91,16 @@ for f in sorted(os.listdir(daily_dir)):
     except Exception:
         weekday = ''
     
-    entries.append({
+    existing[date_str] = {
         'date': date_str,
         'weekday': weekday,
         'keywords': keywords
-    })
+    }
 
-# 按日期降序
-entries.sort(key=lambda x: x['date'], reverse=True)
+# 按日期降序排列
+entries = sorted(existing.values(), key=lambda x: x['date'], reverse=True)
 
-with open(os.path.join(daily_dir, 'index.json'), 'w', encoding='utf-8') as out:
+with open(index_path, 'w', encoding='utf-8') as out:
     json.dump(entries, out, ensure_ascii=False, indent=2)
 
 print(f'    已更新 index.json ({len(entries)} 条记录)')
