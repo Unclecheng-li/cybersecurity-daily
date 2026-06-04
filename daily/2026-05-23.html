@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年5月23日</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年5月23日 星期五</span>
+            <span class="edition-number">第 11 期 | 总第 11 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Trend Micro Apex One在野 · Drupal PostgreSQL SQL注入 · Cisco CVSS 10.0 · HPLIP提权
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">Trend Micro Apex One在野利用、Drupal PostgreSQL SQL注入、Cisco CVSS 10.0满分漏洞</h2>
+                <p class="sub-headline">端点管理系统被控可批量下发恶意代码，CVSS 10.0 API权限绕过无需认证</p>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Trend Micro Apex One CVE-2026-34926：端点管理面漏洞已被在野利用</h3>
+                    <div class="article-meta">
+                        <span>在野利用</span>
+                        <span class="cvss-score">端点管理</span>
+                        <span>JPCERT/CC 更新告警</span>
+                    </div>
+                    <div class="article-body">
+                        <p>JPCERT/CC 更新 Trend Micro 多产品漏洞告警，其中 CVE-2026-34926 为 TrendAI Apex One (On Premise) 的相对路径遍历漏洞。Trend Micro 已确认该漏洞存在在野利用。</p>
+                        
+                        <p><strong>攻击流程：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">攻击者获得认证入口</span>
+                            <span class="flow-step">利用CVE-2026-34926相对路径遍历</span>
+                            <span class="flow-step">篡改Apex One管理服务器文件</span>
+                            <span class="flow-step">构造恶意Agent更新或任务</span>
+                            <span class="flow-step critical">下发至受管终端</span>
+                            <span class="flow-step critical">批量执行恶意代码</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>Apex One 属于企业端点安全管理系统，一旦管理服务器被控，影响不是单点主机，而是整批受管终端</li>
+                            <li>该漏洞已出现真实攻击，不是理论风险</li>
+                            <li>端点安全产品具备高权限和广泛部署特征，被攻破后容易变成"合法分发恶意代码"的通道</li>
+                            <li>建议：按 Trend Micro 官方公告打补丁，限制管理端访问</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Cisco Secure Workload CVE-2026-20223：CVSS 10.0 满分 API 权限绕过</h3>
+                    <div class="article-meta">
+                        <span>CVSS 10.0</span>
+                        <span class="cvss-score">满分漏洞</span>
+                        <span>无需认证</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Cisco 修复 Secure Workload 中的 CVE-2026-20223，CVSS 10.0 Critical。漏洞源于内部 REST API endpoint 的访问验证与认证不足。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>项目</th><th>详情</th></tr>
+                            <tr><td>CVSS</td><td class="risk-high">10.0 Critical</td></tr>
+                            <tr><td>认证要求</td><td>无需认证</td></tr>
+                            <tr><td>影响</td><td>获得 Site Admin 权限，跨租户边界修改配置</td></tr>
+                            <tr><td>修复版本</td><td>3.10.8.3 / 4.0.3.17</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>Secure Workload/Tetration 常用于零信任、微隔离、工作负载策略控制</li>
+                            <li>CVSS 10.0 且无需认证，属于应立即排查的管理面高危漏洞</li>
+                            <li>建议：升级至 3.10.8.3 或 4.0.3.17，收敛管理接口</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Drupal CVE-2026-9082：PostgreSQL 场景下的高危 SQL 注入</h3>
+                    <div class="article-meta">
+                        <span>SA-CORE-2026-004</span>
+                        <span class="cvss-score">SQL注入</span>
+                        <span>PostgreSQL + JSON:API/Views</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Akamai 分析称，CVE-2026-9082 是 Drupal Core 的关键 SQL 注入漏洞。风险主要集中在使用 PostgreSQL 后端数据库，并依赖 JSON:API、Views 暴露过滤器、Entity autocomplete 等端点的 Drupal 站点。</p>
+                        
+                        <p><strong>攻击过程：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">攻击者构造query string数组参数</span>
+                            <span class="flow-step">PHP参数解析保留可控array key</span>
+                            <span class="flow-step">Drupal EntityQuery将key传入查询条件构造</span>
+                            <span class="flow-step">PostgreSQL Driver placeholder名称处理异常</span>
+                            <span class="flow-step critical">形成SQL注入</span>
+                            <span class="flow-step critical">数据泄露</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>Drupal 是常见 CMS，政企、教育、内容站点中仍有大量部署</li>
+                            <li>PostgreSQL + JSON:API/Views 这类组合在真实站点中并不少见</li>
+                            <li>Akamai 指出补丁发布后攻击代码通常会快速出现</li>
+                            <li>建议：立即升级 Drupal Core，排查异常数组参数请求</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">HPLIP CVE-2026-8631 / CVE-2026-8632：Linux 打印栈可导致提权或任意代码执行</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.3 / 8.5</span>
+                        <span class="cvss-score">RCE/提权</span>
+                        <span>修复版本：HPLIP 3.26.4</span>
+                    </div>
+                    <div class="article-body">
+                        <p>HP Linux Imaging and Printing Software（HPLIP）两个漏洞，可能通过命令注入或缓冲区溢出触发。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>CVSS</th><th>严重性</th><th>利用条件</th><th>影响</th></tr>
+                            <tr><td>CVE-2026-8631</td><td class="risk-high">9.3</td><td>Critical</td><td>网络可利用、低复杂度、无需权限、无需交互</td><td>权限提升 / 任意代码执行</td></tr>
+                            <tr><td>CVE-2026-8632</td><td class="risk-medium">8.5</td><td>High</td><td>本地可利用、低权限、无需交互</td><td>权限提升 / 任意代码执行</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>打印服务常被当作"低优先级资产"，但在办公网、服务器和桌面 Linux 中都有部署</li>
+                            <li>CVE-2026-8631 为网络可利用且无需权限，适合被内网横向利用</li>
+                            <li>打印链路通常日志与检测不足，容易成为隐蔽入口</li>
+                            <li>建议：升级 HPLIP 至 3.26.4，限制打印服务暴露</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Linux Kernel CVE-2026-46333：本地低权限 shell 到 root / 凭据泄露路径</h3>
+                    <div class="article-meta">
+                        <span>Qualys TRU 披露</span>
+                        <span class="cvss-score">本地提权</span>
+                        <span>PoC 已出现</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Qualys TRU 披露 CVE-2026-46333，这是 Linux Kernel ptrace 路径中的逻辑缺陷。攻击者在获得本地低权限 shell 后，可结合 pidfd_getfd() 捕获特权进程的文件描述符或认证 IPC 通道。</p>
+                        
+                        <p><strong>可造成的影响：</strong></p>
+                        <ul>
+                            <li>读取 /etc/shadow</li>
+                            <li>泄露 SSH host private keys</li>
+                            <li>通过 pkexec、accounts-daemon 等目标以 root 执行命令</li>
+                            <li>在多租户主机、CI runner、开发机、容器宿主机上扩大入侵影响</li>
+                        </ul>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>"本地漏洞"不等于低优先级</li>
+                            <li>SSH host key 泄露会影响主机身份信任和后续横向移动</li>
+                            <li>公开 PoC 已出现，补丁窗口应压缩</li>
+                            <li>建议：应用内核安全更新，临时缓解：设置 ptrace_scope=2</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Fox Tempest：Microsoft 摧毁"恶意软件签名即服务"基础设施</h3>
+                    <div class="article-meta">
+                        <span>超过 1000 个代码签名证书</span>
+                        <span>关联勒索生态</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Microsoft Threat Intelligence 披露并干扰 Fox Tempest 运营的 Malware-signing-as-a-Service（MSaaS）。该组织滥用 Microsoft Artifact Signing 生成短生命周期代码签名证书，为恶意软件提供"可信签名"。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>维度</th><th>数据</th></tr>
+                            <tr><td>创建证书</td><td>超过 1000 个代码签名证书</td></tr>
+                            <tr><td>Azure租户</td><td>数百个</td></tr>
+                            <tr><td>已吊销证书</td><td>超过 1000 个</td></tr>
+                            <tr><td>被签名恶意软件</td><td>Oyster/Broomstick、Lumma Stealer、Vidar 等</td></tr>
+                            <tr><td>关联勒索生态</td><td>Rhysida、INC、Qilin、Akira、BlackByte 等</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>代码签名本应代表软件发布可信链，但被服务化滥用后，会降低"签名=安全"的判断价值</li>
+                            <li>攻击者可将恶意安装包伪装为 Teams、AnyDesk、PuTTY、Webex 等常见软件</li>
+                            <li>建议：不要把"文件有有效签名"作为放行依据，启用 SmartScreen、云端防护</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 7 -->
+                <article class="article-card">
+                    <span class="article-number">7</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">First VPN 被跨国执法摧毁：匿名化基础设施成为勒索生态打击重点</h3>
+                    <div class="article-meta">
+                        <span>Operation Saffron</span>
+                        <span>25 个勒索软件组织使用</span>
+                        <span>33 台服务器被扣押</span>
+                    </div>
+                    <div class="article-body">
+                        <p>法国、荷兰牵头，Europol、Eurojust、FBI 等参与的 Operation Saffron 摧毁了面向网络犯罪的 First VPN Service。该服务至少被 25 个勒索软件组织用于网络侦察、入侵、勒索攻击等活动。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>维度</th><th>数据</th></tr>
+                            <tr><td>行动时间</td><td>2026 年 5 月 19 日至 20 日</td></tr>
+                            <tr><td>扣押服务器</td><td>33 台</td></tr>
+                            <tr><td>出口节点</td><td>32 个，分布在 27 个国家</td></tr>
+                            <tr><td>关联用户</td><td>506 名</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>这是对勒索攻击链"匿名化支撑层"的打击，不只是关闭一个网站</li>
+                            <li>犯罪 VPN、代理、bulletproof hosting 正成为勒索生态中的关键基础设施</li>
+                            <li>用户身份被执法掌握，会削弱这类"无日志、不配合司法"的地下服务可信度</li>
+                            <li>建议：将公开出口节点 IP 纳入威胁情报回溯</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 8 -->
+                <article class="article-card">
+                    <span class="article-number">8</span>
+                    <span class="severity-badge severity-high">行业趋势</span>
+                    <h3 class="article-title">VulnCheck：2026 年"常规被攻击漏洞"加速，边界设备与开发者生态继续升温</h3>
+                    <div class="article-meta">
+                        <span>VulnCheck 报告</span>
+                        <span>25 个 Routinely Targeted 漏洞</span>
+                        <span>KEV 增长 59%</span>
+                    </div>
+                    <div class="article-body">
+                        <p>VulnCheck 截至 2026 年 5 月 21 日识别出 25 个 Routinely Targeted 漏洞。其 KEV 列表今年已新增 394 个有野外利用证据的 CVE，较 2025 年同期增长 59%。</p>
+                        
+                        <p><strong>重点攻击面：</strong></p>
+                        <ul>
+                            <li>企业边界设备：Ivanti EPMM、BeyondTrust、Cisco SD-WAN/FMC、cPanel & WHM</li>
+                            <li>邮件与协作系统：SmarterMail 等</li>
+                            <li>AI / 自动化 / 开发者平台：Langflow、n8n、MCPJam Inspector、marimo</li>
+                            <li>供应链事件：Notepad++、Trivy/LiteLLM/Checkmarx KICS、axios、TanStack npm 事件</li>
+                        </ul>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>防守排优先级不能只看 CVSS，还要看是否在野利用、是否有公开 PoC、是否互联网暴露</li>
+                            <li>AI Agent、低代码自动化、开发者工具链正在成为新一轮高价值攻击面</li>
+                            <li>供应链 CVE 标记并不统一，单靠 CVE/KEV 可能漏掉真实高风险包和受损版本</li>
+                            <li>建议：建立"CVSS + KEV + EPSS/PoC + 暴露面 + 业务关键性"的补丁优先级模型</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日重点风险象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-05-23 网安重点事件风险象限
+    x-axis "低暴露/低扩散" --> "高暴露/高扩散"
+    y-axis "低影响" --> "高影响"
+    quadrant-1 "优先处置"
+    quadrant-2 "重点监控"
+    quadrant-3 "持续跟踪"
+    quadrant-4 "快速修补"
+    "Apex One CVE-2026-34926": [0.78, 0.88]
+    "Drupal CVE-2026-9082": [0.82, 0.84]
+    "Cisco Secure Workload CVE-2026-20223": [0.68, 0.96]
+    "HPLIP CVE-2026-8631": [0.62, 0.86]
+    "Linux CVE-2026-46333": [0.52, 0.80]
+    "Fox Tempest 签名服务": [0.74, 0.72]
+    "First VPN 摧毁": [0.48, 0.58]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日态势思维导图</div>
+                    <div class="mermaid">
+mindmap
+  root((今日态势))
+    在野利用
+      Apex One CVE-2026-34926
+      Linux CVE-2026-46333 PoC
+      VulnCheck KEV 增长59%
+    高危漏洞
+      Cisco Secure Workload CVSS10
+      Drupal SQLi
+      HPLIP RCE
+    犯罪基础设施
+      Fox Tempest 签名服务
+      First VPN 匿名化服务
+    供应链与开发者生态
+      npm/TanStack
+      LiteLLM/Trivy/KICS
+      AI Agent 平台
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <h3 class="section-header">CVE-2026-46333 披露与处置时间线</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <div class="mermaid">
+timeline
+    title CVE-2026-46333 披露与处置时间线
+    2016-11 : 缺陷进入 Linux mainline v4.10-rc1 路径
+    2026-05-11 : Qualys 私下报告给 Linux kernel security contact
+    2026-05-14 : 上游补丁公开提交 / CVE 分配
+    2026-05-20 : Qualys 发布完整技术公告
+    2026-05-23 : 多发行版补丁推进 / PoC 风险持续
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority Section -->
+            <h3 class="section-header">今日处置优先级建议</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <table class="affected-table">
+                        <tr><th>优先级</th><th>漏洞</th><th>操作</th></tr>
+                        <tr><td class="risk-high">P0 - 立即处理</td><td>Trend Micro Apex One CVE-2026-34926</td><td>按官方公告打补丁，限制管理端访问</td></tr>
+                        <tr><td class="risk-high">P0 - 立即处理</td><td>Cisco Secure Workload CVE-2026-20223</td><td>升级至 3.10.8.3 / 4.0.3.17</td></tr>
+                        <tr><td class="risk-high">P0 - 立即处理</td><td>Drupal CVE-2026-9082</td><td>立即升级 Drupal Core，排查异常数组参数请求</td></tr>
+                        <tr><td class="risk-medium">P1 - 今日处理</td><td>HPLIP CVE-2026-8631/8632</td><td>升级 HPLIP 3.26.4，限制打印服务暴露</td></tr>
+                        <tr><td class="risk-medium">P1 - 今日处理</td><td>Linux Kernel CVE-2026-46333</td><td>更新内核；临时设置 ptrace_scope=2</td></tr>
+                        <tr><td>P2 - 本周处理</td><td>Fox Tempest 签名服务</td><td>不盲信签名，启用云查杀、SmartScreen、ASR</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">JPCERT/CC</span>
+                        <a href="https://www.jpcert.or.jp/english/at/2026/at260014.html">Trend Micro 多产品漏洞告警</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HKCERT</span>
+                        <a href="https://www.hkcert.org/tc/security-bulletin/trend-micro-apex-one-multiple-vulnerabilities_20260522">Trend Micro Apex One 多個漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Akamai</span>
+                        <a href="https://www.akamai.com/blog/security-research/cve-2026-9082-mitigating-critical-sql-injection-drupal">CVE-2026-9082: Mitigating a Critical SQL Injection Vulnerability in Drupal</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Drupal</span>
+                        <a href="https://www.drupal.org/sa-core-2026-004">SA-CORE-2026-004</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Affairs</span>
+                        <a href="https://securityaffairs.com/192473/security/cisco-fixed-maximum-severity-flaw-cve-2026-20223-in-secure-workload.html">Cisco CVE-2026-20223</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">oss-security / Openwall</span>
+                        <a href="https://www.openwall.com/lists/oss-security/2026/05/23/1">HPLIP 漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HP Support</span>
+                        <a href="https://support.hp.com/vn-en/document/ish_14942099-14942126-16/hpsbpi04118">HPSBPI04118</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Qualys TRU</span>
+                        <a href="https://blog.qualys.com/vulnerabilities-threat-research/2026/05/20/cve-2026-46333-local-root-privilege-escalation-and-credential-disclosure-in-the-linux-kernel-ptrace-path">CVE-2026-46333</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft Security Blog</span>
+                        <a href="https://www.microsoft.com/en-us/security/blog/2026/05/19/exposing-fox-tempest-a-malware-signing-service-operation/">Exposing Fox Tempest</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/05/first-vpn-dismantled-in-global-takedown.html">First VPN Dismantled</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck</span>
+                        <a href="https://www.vulncheck.com/blog/routinely-targeted-vulnerabilities-may-2026">2026 Routinely Targeted Vulnerabilities</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                每日精选 · 值得关注 | 由 AI城 自动化工作流生成
+                <br>
+                本站内容基于公开信息整理，CVE编号及CVSS评分以官方源为准
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

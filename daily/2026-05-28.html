@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年5月28日</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年5月28日 星期三</span>
+            <span class="edition-number">第 16 期 | 总第 16 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>GitLab 6×CVE同日修复 · Nx Console VS扩展投毒 · GitBucket老漏洞标注 · NVIDIA Triton认证绕过
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">GitLab同日修复6个CVE、Nx Console供应链投毒18分钟、NVIDIA Triton认证绕过CVSS 9.8</h2>
+                <p class="sub-headline">5月27日NVD批量发布多个高危漏洞，开发者工具链成为重点攻击目标</p>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GitLab 同日修复 6 个 CVE</h3>
+                    <div class="article-meta">
+                        <span>5月27日 NVD批量发布</span>
+                        <span>覆盖 GitLab EE 17.1～19.0 版本</span>
+                    </div>
+                    <div class="article-body">
+                        <p>NVD 5月27日批量发布 GitLab 安全公告，涉及6个CVE，覆盖 GitLab EE 17.1～19.0 版本，建议所有自托管 GitLab 实例立即检查并升级。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>CVE ID</th><th>漏洞类型</th><th>受影响版本</th><th>风险等级</th></tr>
+                            <tr><td>CVE-2026-1402</td><td>认证用户可能触发拒绝服务</td><td>17.1～18.10.7 等</td><td>中</td></tr>
+                            <tr><td>CVE-2026-2601</td><td>开发者角色用户可越权访问</td><td>特定版本范围</td><td>中</td></tr>
+                            <tr><td>CVE-2026-4868</td><td>认证用户可触发Duo AI工作流问题</td><td>18.8～18.10.7 等</td><td>中</td></tr>
+                            <tr><td>CVE-2026-5296</td><td>启用基础流时开发者越权</td><td>特定版本范围</td><td>中</td></tr>
+                            <tr><td>CVE-2026-6713</td><td>未授权用户可枚举私有项目</td><td>全部受影响版本</td><td>中</td></tr>
+                            <tr><td>CVE-2026-8716</td><td>认证用户可跨项目访问CI数据</td><td>特定版本范围</td><td>中</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>6个CVE同日发布，显示 GitLab 在近期发现了多个关联安全问题</li>
+                            <li>CVE-2026-6713（枚举私有项目）和 CVE-2026-8716（跨项目CI数据访问）涉及权限边界问题</li>
+                            <li>在多租户场景下尤其危险，建议批量升级</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Nx Console 恶意版本惊魂 18 分钟（CVE-2026-48027）</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.8</span>
+                        <span class="cvss-score">供应链投毒</span>
+                        <span>5月27日确认</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Nx Console（用于 Angular/Nx 开发工具链的 VS Code 扩展）在 Visual Studio Marketplace 遭遇供应链投毒：</p>
+                        
+                        <div class="attack-flow">
+                            <span class="flow-step">5月19日 12:30 UTC</span>
+                            <span class="flow-step">恶意版本 18.95.0 被发布</span>
+                            <span class="flow-step">12:48 UTC</span>
+                            <span class="flow-step critical">约18分钟后被移除</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>这是本月第二起 VS Marketplace 供应链投毒事件</li>
+                            <li>开发者工具的供应链投毒可直接污染企业 CI/CD 流水线</li>
+                            <li>影响范围远超普通终端用户</li>
+                            <li>建议：检查是否安装了 18.95.0 版本，撤销相关 GitHub Action 工作流 tokens</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GitBucket CVE-2018-25332（CVSS 9.8）重新标注</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.8</span>
+                        <span class="cvss-score">老漏洞新标注</span>
+                        <span>5月17日 NVD 收录</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GitBucket 4.23.1 版本存在未经认证的远程代码执行漏洞。CVE-2018-25332 是2018年的老漏洞，但近期被 NVD 重新收录并标注为高危。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>项目</th><th>详情</th></tr>
+                            <tr><td>根因</td><td>弱密钥令牌生成 + 不安全文件上传功能</td></tr>
+                            <tr><td>攻击方式</td><td>暴力破解获取令牌并执行任意命令</td></tr>
+                            <tr><td>CVSS</td><td class="risk-high">9.8 满分</td></tr>
+                            <tr><td>认证要求</td><td>无需认证即可利用</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>2018年的老漏洞被重新标注为高危</li>
+                            <li>GitBucket 作为自托管 Git 仓库解决方案，在企业内网有部署</li>
+                            <li>如果此前未修补，攻击者可无需任何凭证即可获得服务器权限</li>
+                            <li>建议：检查版本并立即升级</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">NVIDIA Triton Inference Server 认证绕过漏洞（CVE-2026-24207）</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.8</span>
+                        <span class="cvss-score">AI基础设施</span>
+                        <span>5月20日 NVD 收录</span>
+                    </div>
+                    <div class="article-body">
+                        <p>NVIDIA Triton Inference Server 是一款开源 AI 模型推理服务组件，广泛部署于 Linux 生产环境。漏洞存在于 Vertex AI 兼容入口 /predict，该入口在特定条件下绕过认证检查。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>项目</th><th>详情</th></tr>
+                            <tr><td>CVE</td><td>CVE-2026-24207</td></tr>
+                            <tr><td>类型</td><td>认证绕过</td></tr>
+                            <tr><td>CVSS</td><td class="risk-high">9.8（Critical）</td></tr>
+                            <tr><td>影响</td><td>代码执行（通过认证绕过）</td></tr>
+                            <tr><td>受影响组件</td><td>Vertex AI 兼容入口 /predict</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>CVSS 9.8 — 接近满分，已是最高等级威胁</li>
+                            <li>Triton Inference Server 广泛部署 — 几乎所有使用 AI 模型的生产环境都可能受影响</li>
+                            <li>/predict 端点 — 是最常用的推理接口，攻击面直接暴露于互联网</li>
+                            <li>AI 推理服务器常含敏感数据 — 模型权重、训练数据、用户推理请求均可被窃取或篡改</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Microsoft SharePoint RCE 漏洞（CVE-2026-45659）</h3>
+                    <div class="article-meta">
+                        <span>CVSS 8.8</span>
+                        <span class="cvss-score">反序列化RCE</span>
+                        <span>5月26日被媒体报道</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Microsoft 于 5月12日 发布补丁，修补了 SharePoint 中的反序列化远程代码执行漏洞。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>版本</th><th>KB 编号</th></tr>
+                            <tr><td>SharePoint Server Subscription Edition</td><td>KB5002863</td></tr>
+                            <tr><td>SharePoint Server 2019</td><td>KB5002870</td></tr>
+                            <tr><td>SharePoint Enterprise Server 2016</td><td>KB5002868</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>SharePoint 漏洞多年来持续被攻击者武器化</li>
+                            <li>上月修复的 CVE-2026-32201 已被证实在野利用</li>
+                            <li>CVSS 8.8 配合低攻击复杂度仍有实际威胁</li>
+                            <li>建议：确认补丁已部署</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "CVE漏洞披露" : 5
+    "供应链攻击" : 2
+    "数据泄露" : 1
+    "勒索软件" : 1
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日漏洞严重程度分布</div>
+                    <div class="mermaid">
+quadrantChart
+    x-axis: 利用难度 -->
+    y-axis: 影响范围 -->
+    quadrant-1: 立即处理
+    quadrant-2: 重点关注
+    quadrant-3: 持续监控
+    quadrant-4: 常规维护
+    CVE-2026-24207: [0.9, 0.9]
+    CVE-2026-48027: [0.8, 0.7]
+    CVE-2018-25332: [0.9, 0.8]
+    CVE-2026-45659: [0.6, 0.8]
+    GitLab 6×CVE: [0.5, 0.6]
+    TanStack (持续): [0.7, 0.5]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority Section -->
+            <h3 class="section-header">优先级处理建议</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <table class="affected-table">
+                        <tr><th>优先级</th><th>漏洞</th><th>操作</th></tr>
+                        <tr><td class="risk-high">P0 - 立即处理</td><td>NVIDIA Triton CVE-2026-24207 / GitBucket CVE-2018-25332</td><td>检查版本并立即打补丁，检查 /predict 端点暴露情况</td></tr>
+                        <tr><td class="risk-high">P0 - 立即处理</td><td>Nx Console CVE-2026-48027</td><td>卸载 18.95.0，检查 CI/CD 环境是否受影响</td></tr>
+                        <tr><td class="risk-medium">P1 - 今日处理</td><td>MS Exchange OWA CVE-2026-42897</td><td>部署缓解方案，CISA 截止 5月29日</td></tr>
+                        <tr><td class="risk-medium">P1 - 今日处理</td><td>GitLab 6×CVE（若使用自托管）</td><td>批量升级至最新版本</td></tr>
+                        <tr><td>P2 - 本周处理</td><td>SharePoint CVE-2026-45659</td><td>确认 KB5002863/2870/2868 补丁已部署</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mindmap Section -->
+            <h3 class="section-header">今日安全态势总结</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <div class="chart-title">今日新增漏洞与持续活跃事件</div>
+                    <div class="mermaid">
+flowchart TD
+    subgraph 今日新增
+        A["GitLab 6×CVE<br/>CVE-2026-1402/2601/4868/5296/6713/8716"]
+        B["Nx Console 恶意版本<br/>CVE-2026-48027 CVSS 9.8"]
+        C["GitBucket 老漏洞新标注<br/>CVE-2018-25332 CVSS 9.8"]
+        D["SharePoint RCE<br/>CVE-2026-45659 CVSS 8.8"]
+        E["NVIDIA Triton 认证绕过<br/>CVE-2026-24207 CVSS 9.8"]
+    end
+
+    subgraph 持续活跃
+        F["MS Exchange OWA零日<br/>CVE-2026-42897"]
+        G["Nginx Rift<br/>CVE-2026-42945"]
+        H["TanStack供应链<br/>恶意包"]
+    end
+
+    A --> 权限边界问题
+    B --> 开发者工具链污染
+    C --> 自托管Git仓库沦陷
+    D --> 企业协作平台RCE
+    E --> AI推理服务器沦陷
+
+    F --> 邮件网关
+    G --> Web服务器
+    H --> npm生态
+                    </div>
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-24207">CVE-2026-24207 NVIDIA Triton</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/05/microsoft-patches-sharepoint-rce-flaw.html">CVE-2026-45659 SharePoint</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Help Net Security</span>
+                        <a href="https://www.helpnetsecurity.com/2026/05/26/sharepoint-vulnerability-cve-2026-45659/">CVE-2026-45659 SharePoint 详情</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-4868">GitLab CVE-2026-4868</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/">CVE-2018-25332 GitBucket</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SharkStriker</span>
+                        <a href="https://sharkstriker.com/blog/may-2026-data-breaches/">5月数据泄露事件</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">阿里云漏洞库</span>
+                        <a href="https://avd.aliyun.com/detail?id=AVD-2026-24207">CVE-2026-24207 阿里云AVD</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                每日精选 · 值得关注 | 由 AI城 自动化工作流生成
+                <br>
+                本站内容基于公开信息整理，CVE编号及CVSS评分以官方源为准
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

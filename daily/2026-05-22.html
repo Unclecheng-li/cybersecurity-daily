@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年5月22日</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年5月22日 星期四</span>
+            <span class="edition-number">第 10 期 | 总第 10 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Cisco CVSS 10.0满分 · Apache OFBiz RCE · OpenClaw四漏洞链 · Claude Code沙箱绕过 · CISA凭证泄露
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">Cisco Secure Workload CVSS 10.0满分漏洞、Apache OFBiz三缺陷链RCE、OpenClaw AI四漏洞链曝光</h2>
+                <p class="sub-headline">AI安全事件密集爆发：Claude Code沙箱绕过5个月未公开、CISA承包商GitHub泄露844MB凭证</p>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Cisco Secure Workload CVE-2026-20223 — CVSS 10.0 满分漏洞</h3>
+                    <div class="article-meta">
+                        <span>CVSS 10.0</span>
+                        <span class="cvss-score">满分漏洞</span>
+                        <span>无需认证</span>
+                    </div>
+                    <div class="article-body">
+                        <p>攻击者无需任何认证即可通过构造 REST API 请求获取 Secure Workload 平台的站点管理员（Site Admin）权限。Secure Workload 是 Cisco 零信任微隔离方案的核心组件，管理员权限意味着攻击者可完全控制多租户微隔离策略。</p>
+                        
+                        <p><strong>攻击流程：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">攻击者</span>
+                            <span class="flow-step">未认证 REST API 请求</span>
+                            <span class="flow-step">Secure Workload API</span>
+                            <span class="flow-step">漏洞: 无鉴权</span>
+                            <span class="flow-step critical">获取 Site Admin 权限</span>
+                            <span class="flow-step critical">篡改微隔离策略</span>
+                        </div>
+
+                        <table class="affected-table">
+                            <tr><th>字段</th><th>详情</th></tr>
+                            <tr><td>CVE</td><td>CVE-2026-20223</td></tr>
+                            <tr><td>CVSS</td><td class="risk-high">10.0（满分）</td></tr>
+                            <tr><td>影响产品</td><td>Cisco Secure Workload（原 Tetration）</td></tr>
+                            <tr><td>影响版本</td><td>3.9 及以前、3.10、4.0（含 SaaS 和本地部署）</td></tr>
+                            <tr><td>修复状态</td><td>已修复，SaaS 用户自动更新</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>满分 CVSS + 零认证 + 核心安全产品，三重叠加罕见</li>
+                            <li>微隔离策略篡改可直接导致横向移动畅通无阻</li>
+                            <li>SaaS 用户虽不受影响，但本地部署版（金融机构/政府常见）需手动升级</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Apache OFBiz CVE-2026-45434 — 三个缺陷组合实现认证绕过→RCE</h3>
+                    <div class="article-meta">
+                        <span>CVSS 8.8</span>
+                        <span class="cvss-score">单请求RCE</span>
+                        <span>受影响：Apache OFBiz < 24.09.06</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这是 Apache OFBiz 认证流程中三个缺陷的链式组合，一次 HTTP POST 即可实现 RCE。</p>
+                        
+                        <p><strong>三个缺陷：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">缺陷#1: checkLogin()仅检查"error"返回值</span>
+                            <span class="flow-step">缺陷#2: requirePasswordChange从HTTP请求读取</span>
+                            <span class="flow-step">缺陷#3: ProgramExport无权限检查无沙箱</span>
+                            <span class="flow-step critical">GroovyShell.evaluate()执行任意代码</span>
+                        </div>
+
+                        <p><strong>攻击时序：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">POST /control/ProgramExport</span>
+                            <span class="flow-step">requirePasswordChange=Y</span>
+                            <span class="flow-step">LoginWorker checkLogin()</span>
+                            <span class="flow-step">仅检查"error"，放行</span>
+                            <span class="flow-step">无权限检查，无沙箱</span>
+                            <span class="flow-step critical">RCE (uid=0 root)</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>单请求 RCE，利用门槛极低</li>
+                            <li>OFBiz 默认附带 10+ 演示账户（密码均为 ofbiz），大量部署未改默认凭证</li>
+                            <li>与 2023 年 CVE-2023-51467（CVSS 9.8）利用同一 requirePasswordChange 逻辑缺陷——同类漏洞再次出现</li>
+                            <li>建议：升级至 24.09.06+，禁用默认演示账户</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">OpenClaw AI "Claw Chain" 四漏洞链 — 24.5 万 AI Agent 服务器暴露</h3>
+                    <div class="article-meta">
+                        <span>最高 CVSS 9.6</span>
+                        <span class="cvss-score">AI基础设施</span>
+                        <span>公网暴露 24.5 万台</span>
+                    </div>
+                    <div class="article-body">
+                        <p>四个漏洞可链式利用形成完整攻击链——"Claw Chain"：</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>缺陷类型</th><th>攻击效果</th></tr>
+                            <tr><td>CVE-2026-44112</td><td>沙箱执行时序缺陷</td><td>绕过安全校验</td></tr>
+                            <tr><td>CVE-2026-44115</td><td>命令校验绕过</td><td>执行未授权命令</td></tr>
+                            <tr><td>CVE-2026-44118</td><td>权限越权</td><td>提升至服务器权限</td></tr>
+                            <tr><td>CVE-2026-44113</td><td>路径读取绕过</td><td>窃取密钥与敏感文件</td></tr>
+                        </table>
+
+                        <p><strong>攻击链：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">CVE-2026-44112 沙箱时序缺陷</span>
+                            <span class="flow-step">CVE-2026-44115 命令校验绕过</span>
+                            <span class="flow-step">CVE-2026-44118 权限越权</span>
+                            <span class="flow-step">CVE-2026-44113 路径读取绕过</span>
+                            <span class="flow-step critical">服务器完全控制</span>
+                            <span class="flow-step critical">持久化后门植入</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>AI Agent 框架安全首例大规模披露——AI 基础设施安全盲区</li>
+                            <li>四漏洞组合 = 从低权限到完全控制的完整攻击链</li>
+                            <li>24.5 万公网暴露实例，实际受影响面可能更大</li>
+                            <li>AI Agent 持久化后门威胁：篡改 AI 行为比传统后门更难检测</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Claude Code 沙箱绕过 — AI 编程助手的隐蔽风险</h3>
+                    <div class="article-meta">
+                        <span>暴露时长：5 个月+</span>
+                        <span class="cvss-score">AI安全</span>
+                        <span>修复版本：v2.1.90+</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全研究员 Guan 发现 Claude Code 的网络沙箱存在严重缺陷——沙箱内的任何进程都可以通过 SOCKS5 代理静默绕过出口限制，访问被封锁的主机。</p>
+                        
+                        <p><strong>攻击流程：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">恶意提示词/依赖投毒</span>
+                            <span class="flow-step">Claude Code 沙箱内进程</span>
+                            <span class="flow-step">SOCKS5 绕过</span>
+                            <span class="flow-step critical">突破出口限制</span>
+                            <span class="flow-step critical">外传 API 密钥/源代码/环境变量</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>AI 编程助手已成为开发者日常工具，沙箱安全是最后的防线</li>
+                            <li>Anthropic 标记为"重复"而非主动披露，透明度严重不足</li>
+                            <li>与 OpenClaw 事件叠加，AI 工具链安全已成系统性问题</li>
+                            <li>建议：升级到 v2.1.90+ 并轮换所有凭证</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">CISA 承包商 GitHub 泄露 844MB 凭证 — 安全机构翻车</h3>
+                    <div class="article-meta">
+                        <span>泄露机构：CISA</span>
+                        <span class="cvss-score">暴露6个月</span>
+                        <span>发现方：GitGuardian</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 一家承包商将名为 "Private-CISA" 的公开 GitHub 仓库暴露近 6 个月，包含 844MB 敏感数据——其中 importantAWStokens 文件包含 3 个 AWS GovCloud 管理员凭证。</p>
+                        
+                        <p><strong>时间线：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">2025-11-13 承包商创建仓库</span>
+                            <span class="flow-step">持续暴露约 6 个月</span>
+                            <span class="flow-step">2026-05-14 GitGuardian 发现泄露</span>
+                            <span class="flow-step">2026-05-15 仓库下架</span>
+                            <span class="flow-step critical">部分 AWS 密钥仍然有效</span>
+                        </div>
+
+                        <table class="affected-table">
+                            <tr><th>字段</th><th>详情</th></tr>
+                            <tr><td>泄露内容</td><td>844MB：AWS GovCloud 管理员密钥、明文密码、GitHub Token、K8s 配置</td></tr>
+                            <tr><td>暴露时长</td><td class="risk-high">6 个月（2025.11.13 → 2026.5.14）</td></tr>
+                            <tr><td>密钥轮换</td><td>仓库下架 48 小时后部分 AWS 密钥仍然有效</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>讽刺到极致：负责全美网络安全的 CISA，自己犯了最低级的凭证泄露错误</li>
+                            <li>暴露时间 6 个月 + 下架后密钥 48 小时仍有效 = 攻击窗口巨大</li>
+                            <li>供应链角度：触及 CISA 构建环境 → 类 SolarWinds 场景</li>
+                            <li>第三方风险管理：CISA 对外包的安全管控形同虚设</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">NYC Health+Hospitals — 180 万患者含生物识别数据泄露</h3>
+                    <div class="article-meta">
+                        <span>影响人数：180 万</span>
+                        <span class="cvss-score">生物识别泄露</span>
+                        <span>驻留时间：77 天</span>
+                    </div>
+                    <div class="article-body">
+                        <p>纽约市公立医疗体系通过第三方供应商被入侵，攻击者在系统内驻留长达 77 天。最严重的是泄露数据包含不可重置的生物识别信息（指纹、掌纹）——密码可以改，指纹不能换。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>字段</th><th>详情</th></tr>
+                            <tr><td>受害机构</td><td>NYC Health + Hospitals（纽约市公立医疗体系）</td></tr>
+                            <tr><td>影响人数</td><td class="risk-high">180 万</td></tr>
+                            <tr><td>入侵方式</td><td>第三方供应商被入侵</td></tr>
+                            <tr><td>泄露数据</td><td>医保信息、诊疗记录、社保号、银行卡 + 指纹/掌纹</td></tr>
+                            <tr><td>发现时间</td><td>2026.02.02</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>生物识别数据泄露不可逆，影响终身</li>
+                            <li>第三方供应商风险再次成为主要攻击面（与 Verizon DBIR 数据一致）</li>
+                            <li>77 天驻留时间远超行业平均检测时间</li>
+                            <li>该机构 2026 年第二起第三方关联泄露</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 7 -->
+                <article class="article-card">
+                    <span class="article-number">7</span>
+                    <span class="severity-badge severity-medium">重要</span>
+                    <h3 class="article-title">Trump AI 网络安全行政令 — "松监管、强合作"新路线</h3>
+                    <div class="article-meta">
+                        <span>签署时间：2026 年 5 月 22 日</span>
+                        <span>核心取向：自愿测试取代强制审批</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Trump 签署的行政令将 AI 公司纳入现有网络安全信息共享体系，呼吁对前沿 AI 模型进行自愿性政府测试。不要求对 AI 模型进行强制性联邦审批。</p>
+                        
+                        <p><strong>关键内容：</strong></p>
+                        <ul>
+                            <li>AI 公司纳入网络安全信息共享</li>
+                            <li>前沿模型自愿政府测试</li>
+                            <li>不要求对 AI 模型进行强制性联邦审批</li>
+                        </ul>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>标志美国 AI 安全监管从拜登时代的"预防性监管"转向"自愿合作"</li>
+                            <li>Mythos 模型争议凸显 AI 安全与 AI 能力利用之间的深层张力</li>
+                            <li>对国内 AI 安全治理有参考意义——如何平衡发展与安全</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 8 -->
+                <article class="article-card">
+                    <span class="article-number">8</span>
+                    <span class="severity-badge severity-high">行业报告</span>
+                    <h3 class="article-title">Verizon DBIR 2026 — 历史性转变：漏洞利用首次登顶入侵方式</h3>
+                    <div class="article-meta">
+                        <span>分析事件数：31,000+</span>
+                        <span>确认泄露：22,000+</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Verizon DBIR 2026 报告显示，漏洞利用首次超过凭证滥用成为首要入侵向量。</p>
+                        
+                        <table class="affected-table">
+                            <tr><th>指标</th><th>数据</th></tr>
+                            <tr><td>漏洞利用占比</td><td class="risk-high">31%（↑55%）</td></tr>
+                            <tr><td>凭证滥用</td><td>13%（↓41%）</td></tr>
+                            <tr><td>KEV 修复率</td><td class="risk-high">仅 26%（上年 38%，持续恶化）</td></tr>
+                            <tr><td>中位修复时间</td><td>43 天（上年 32 天）</td></tr>
+                            <tr><td>第三方涉及泄露</td><td>同比增长 60%，占所有泄露 48%</td></tr>
+                            <tr><td>勒索软件</td><td>占泄露 48%，但中位赎金下降至 $139,875</td></tr>
+                            <tr><td>影子 AI</td><td>67% 用户通过非企业账户访问 AI，DLP 违规 4 倍增长</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>历史性拐点：漏洞利用首次超过凭证滥用成为首要入侵向量</li>
+                            <li>修复能力持续恶化：26% KEV 修复率 + 43 天中位修复时间</li>
+                            <li>影子 AI 是 2026 年新风险维度：源代码被提交到未授权 AI 系统</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日漏洞/事件严重性 vs 利用状态</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞/事件严重性 vs 利用状态
+    x-axis 低利用风险 --> 高利用风险
+    y-axis 低严重性 --> 高严重性
+    quadrant-1 紧急修复
+    quadrant-2 重点监控
+    quadrant-3 持续关注
+    quadrant-4 优先验证
+    Cisco_CVE-2026-20223: [0.9, 0.95]
+    Apache_OFBiz_CVE-2026-45434: [0.7, 0.75]
+    OpenClaw_Claw_Chain: [0.5, 0.8]
+    Claude_Code_Sandbox: [0.4, 0.7]
+    CISA_GitHub_Leak: [0.8, 0.85]
+    NYC_Health_Breach: [0.6, 0.8]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日态势思维导图</div>
+                    <div class="mermaid">
+mindmap
+  root((2026-05-22<br/>网安速递))
+    漏洞
+      Cisco Secure Workload<br/>CVSS 10.0 满分
+      Apache OFBiz<br/>三缺陷链→RCE
+      OpenClaw Claw Chain<br/>24.5万台暴露
+    AI安全
+      Claude Code 沙箱绕过<br/>5个月未公开
+      Trump AI 行政令<br/>自愿测试路线
+      Mythos 模型争议
+    安全事件
+      CISA 凭证泄露<br/>844MB 6个月
+      NYC 医疗泄露<br/>180万+指纹
+    行业趋势
+      Verizon DBIR 2026<br/>漏洞利用登顶
+      修复率持续恶化<br/>仅26% KEV修复
+      影子AI 4倍增长
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <h3 class="section-header">CISA 凭证泄露时间线</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <div class="mermaid">
+timeline
+    title CISA 凭证泄露时间线
+    2025-11-13 : 承包商创建 "Private-CISA" 仓库
+    2025-12 ~ 2026-04 : 持续暴露约 6 个月
+    2026-05-14 : GitGuardian 发现泄露
+    2026-05-15 : 仓库下架（发现后 ~26h）
+    2026-05-16 : 部分 AWS 密钥仍然有效
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority Section -->
+            <h3 class="section-header">防御建议速查</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <table class="affected-table">
+                        <tr><th>优先级</th><th>行动项</th></tr>
+                        <tr><td class="risk-high">P0 立即</td><td>Cisco Secure Workload 本地部署版立即升级补丁</td></tr>
+                        <tr><td class="risk-high">P0 立即</td><td>Apache OFBiz 升级至 24.09.06+，禁用默认演示账户</td></tr>
+                        <tr><td class="risk-high">P0 立即</td><td>Claude Code 用户升级至 v2.1.90+ 并轮换所有凭证</td></tr>
+                        <tr><td class="risk-medium">P1 本周</td><td>OpenClaw 框架更新至最新版，排查公网暴露实例</td></tr>
+                        <tr><td class="risk-medium">P1 本周</td><td>审计第三方供应商 GitHub 仓库的凭证暴露情况</td></tr>
+                        <tr><td>P2 持续</td><td>建立 AI 工具使用安全基线，管控影子 AI 风险</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Cisco</span>
+                        <a href="https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-tetration-api-M4OqOeN2">CVE-2026-20223 官方公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Affairs</span>
+                        <a href="https://securityaffairs.com/192473/security/cisco-fixed-maximum-severity-flaw-cve-2026-20223-in-secure-workload.html">Cisco 满分漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iThome</span>
+                        <a href="https://www.ithome.com.tw/news/176031">思科 Secure Workload 滿分漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">oss-security</span>
+                        <a href="https://www.openwall.com/lists/oss-security/2026/05/19/29">Apache OFBiz CVE-2026-45434</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aretiq</span>
+                        <a href="https://aretiq.ai/research/vul260520-cve-2026-45434-apache-ofbiz-loginworker-checklogin-password-change-flow-authentication-bypass-rce/">CVE-2026-45434 技术深度分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberPress</span>
+                        <a href="https://cyberpress.org/apache-ofbiz-flaw-exploited/">Apache OFBiz 在野利用</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyera</span>
+                        <a href="https://aviatrix.ai/threat-research-center/four-openclaw-flaws-enable-data-theft-privilege-escalation-and-persistence/">OpenClaw Claw Chain 披露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iThome</span>
+                        <a href="https://www.ithome.com.tw/news/175889">OpenClaw Claw Chain 分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CybersecurityNews</span>
+                        <a href="https://cybersecuritynews.com/claude-codes-network-sandbox-vulnerability/">Claude Code 沙箱漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FreeBuf</span>
+                        <a href="https://www.freebuf.com/articles/ai-security/482079.html">Claude Code 网络沙箱漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CryptoBriefing</span>
+                        <a href="https://cryptobriefing.com/cisa-exposed-passwords-github/">CISA GitHub 凭证泄露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">KrebsOnSecurity</span>
+                        <a href="https://krebsonsecurity.com/">CISA 泄露首次报道</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechCrunch</span>
+                        <a href="https://techcrunch.com/2026/05/18/nyc-health-and-hospitals-says-hackers-stole-medical-data-and-fingerprints-during-breach-affecting-at-least-1-8-million-people/">NYC Health+Hospitals 泄露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HIPAA Journal</span>
+                        <a href="https://www.hipaajournal.com/nyc-health-hospitals-data-breach-march-26/">NYC 医疗泄露详情</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GovTech</span>
+                        <a href="https://www.govtech.com/artificial-intelligence/trump-set-to-sign-ai-cybersecurity-executive-order">Trump AI 网络安全行政令</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Verizon</span>
+                        <a href="https://www.verizon.com/business/resources/reports/dbir/">Verizon DBIR 2026 报告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberInsuranceNews</span>
+                        <a href="https://cyberinsurancenews.org/verizon-2026-dbir-data-breach-report/">Verizon DBIR 分析</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                每日精选 · 值得关注 | 由 AI城 自动化工作流生成
+                <br>
+                本站内容基于公开信息整理，CVE编号及CVSS评分以官方源为准
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

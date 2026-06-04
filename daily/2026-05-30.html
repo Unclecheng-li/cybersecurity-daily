@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年5月30日</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年5月30日 星期六</span>
+            <span class="edition-number">第 18 期 | 总第 18 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Gogs零日RCE · FortiClient EMS CVE-2026-35616 · Marimo未认证RCE · Kimsuky HTTPSpy · 荷兰摧毁僵尸网络
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">Gogs自托管Git服务零日RCE (CVSS 9.4)：任何认证用户均可执行任意代码，尚无官方补丁</h2>
+                <p class="sub-headline">Rapid7安全研究员披露，攻击者通过创建含恶意分支名的Pull Request即可触发</p>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Gogs 自托管Git服务零日RCE (CVSS 9.4)</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.4</span>
+                        <span class="cvss-score">零日无补丁</span>
+                        <span>利用门槛：极低</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Rapid7安全研究员披露了Gogs（一款开源自托管Git服务）中的一个严重零日漏洞，任何认证用户均可利用该漏洞在服务器上执行任意代码。</p>
+                        
+                        <p><strong>攻击流程：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">攻击者创建恶意分支</span>
+                            <span class="flow-step">分支名含Payload</span>
+                            <span class="flow-step">提交Pull Request</span>
+                            <span class="flow-step">管理员执行Rebase before merge</span>
+                            <span class="flow-step">触发 git rebase --exec</span>
+                            <span class="flow-step critical">以git服务用户权限执行任意代码</span>
+                        </div>
+
+                        <table class="affected-table">
+                            <tr><th>维度</th><th>说明</th></tr>
+                            <tr><td>CVSS评分</td><td class="risk-high">9.4/10（严重）</td></tr>
+                            <tr><td>利用门槛</td><td>极低 — 任何认证用户即可触发</td></tr>
+                            <tr><td>攻击复杂度</td><td>低 — 只需提交一个含特殊分支名的PR</td></tr>
+                            <tr><td>影响范围</td><td>所有面向互联网的Gogs实例</td></tr>
+                            <tr><td>修补状态</td><td class="risk-high">尚无官方补丁</td></tr>
+                            <tr><td>PoC状态</td><td>已公开可用</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>利用极其简单，任何能在Gogs上创建仓库的用户都能触发</li>
+                            <li>尚无官方补丁，PoC已公开</li>
+                            <li>建议：限制Gogs实例的网络暴露，审查现有用户和仓库</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">FortiClient EMS CVE-2026-35616 漏洞在野利用</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.1</span>
+                        <span class="cvss-score">在野利用</span>
+                        <span>受影响：FortiClient EMS 7.4.7之前版本</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Fortinet确认其FortiClient企业管理系统（EMS）中的一个严重认证绕过漏洞正在被攻击者利用，部署名为EKZ的凭证窃取恶意软件。</p>
+                        
+                        <p><strong>攻击链：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">攻击者发送恶意API请求</span>
+                            <span class="flow-step">绕过认证获取EMS控制权</span>
+                            <span class="flow-step">修改配置禁用固件升级提醒</span>
+                            <span class="flow-step">推送伪造的Fortinet更新</span>
+                            <span class="flow-step critical">受害者执行EKZ恶意软件</span>
+                            <span class="flow-step critical">窃取凭证持久化</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>CVSS 9.1：极高的严重性评分</li>
+                            <li>已被利用：Arctic Wolf在2026年5月观测到真实攻击活动</li>
+                            <li>攻击手法新颖：伪装成Fortinet端点更新，通过PowerShell静默执行</li>
+                            <li>修补可用：Fortinet已在7.4.7版中修复</li>
+                            <li>建议：立即升级到7.4.7或更高版本</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Marimo CVE-2026-39987 — LLM Agent辅助后渗透</h3>
+                    <div class="article-meta">
+                        <span>CVSS 严重</span>
+                        <span class="cvss-score">在野利用</span>
+                        <span>受影响：Marimo ≤ 0.20.4（所有版本）</span>
+                    </div>
+                    <div class="article-body">
+                        <p>研究人员发现，攻击者正在利用Marimo（一个开源Python交互计算环境）中的严重漏洞进行初始入侵，并使用AI/LLM Agent执行复杂的后渗透活动。</p>
+                        
+                        <p><strong>攻击时间线：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">攻击者发送恶意请求</span>
+                            <span class="flow-step">CVE-2026-39987未认证RCE</span>
+                            <span class="flow-step">获取初始Shell</span>
+                            <span class="flow-step">启动LLM Agent</span>
+                            <span class="flow-step">提取云凭证</span>
+                            <span class="flow-step">调用Secrets Manager</span>
+                            <span class="flow-step critical">两分钟内完成数据库窃取</span>
+                        </div>
+
+                        <table class="affected-table">
+                            <tr><th>项目</th><th>值</th></tr>
+                            <tr><td>CVE编号</td><td>CVE-2026-39987</td></tr>
+                            <tr><td>影响版本</td><td>Marimo ≤ 0.20.4（所有版本均受影响）</td></tr>
+                            <tr><td>漏洞类型</td><td>未认证远程代码执行（RCE）</td></tr>
+                            <tr><td>补丁状态</td><td>0.20.5已修复</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>全版本受影响：没有任何版本具备防护能力</li>
+                            <li>利用活跃：Sysdig在野观测到真实攻击</li>
+                            <li>AI辅助后渗透：攻击者使用LLM agent自动化进行凭证窃取和数据外传</li>
+                            <li>速度极快：从入侵到数据库完整窃取仅需两分钟</li>
+                            <li>建议：立即升级Marimo至0.20.5或更高版本</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">北朝鲜Kimsuky组织部署HTTPSpy新变体</h3>
+                    <div class="article-meta">
+                        <span>APT组织：Kimsuky（Velvet Chollima）</span>
+                        <span>目标：韩国军事和商业实体</span>
+                    </div>
+                    <div class="article-body">
+                        <p>朝鲜APT组织Kimsuky针对韩国军事和商业实体发起新一波攻击，部署了名为HTTPSpy的恶意软件新变体。</p>
+                        
+                        <p><strong>攻击向量：</strong></p>
+                        <div class="attack-flow">
+                            <span class="flow-step">Kimsuky APT组织</span>
+                            <span class="flow-step">鱼叉式钓鱼邮件</span>
+                            <span class="flow-step">假冒安全软件安装页面</span>
+                            <span class="flow-step">伪造Webex会议页面</span>
+                            <span class="flow-step">韩国B2B消息服务</span>
+                            <span class="flow-step critical">分发HTTPSpy/HelloDoor/VS Code Tunnels后门</span>
+                        </div>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>国家级APT：Kimsuky是北朝鲜最活跃的对外情报机构之一</li>
+                            <li>目标精准：专门针对韩国军事和企业实体</li>
+                            <li>技术迭代：持续更新武器库（HTTPSpy → HelloDoor → VS Code Tunnels）</li>
+                            <li>社工手法：利用韩国常用的B2B消息服务作为攻击跳板</li>
+                            <li>建议：对韩国相关的招聘信息和软件安装保持高度警惕</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">荷兰警方摧毁1700万设备僵尸网络</h3>
+                    <div class="article-meta">
+                        <span>受感染设备：1700万台</span>
+                        <span>扣押服务器：200+台</span>
+                    </div>
+                    <div class="article-body">
+                        <p>荷兰执法机构宣布成功摧毁一个由1700万台受感染设备组成的巨型僵尸网络，并扣押了支持该恶意网络的一家本地互联网服务提供商（ISP）的200多台服务器。</p>
+                        
+                        <p><strong>执法行动规模：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>维度</th><th>说明</th></tr>
+                            <tr><td>规模</td><td class="risk-high">1700万台设备 — 堪称巨型</td></tr>
+                            <tr><td>打击力度</td><td>直接端掉ISP，非常规但有效的执法手段</td></tr>
+                            <tr><td>生态破坏</td><td>从终端设备到基础设施的全面摧毁</td></tr>
+                            <tr><td>国际合作</td><td>通常需要跨国协调，展示了执法合作的力量</td></tr>
+                        </table>
+
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>1700万台设备的僵尸网络规模罕见</li>
+                            <li>直接端掉ISP的执法手段非常规但有效</li>
+                            <li>该僵尸网络此前可能用于DDoS攻击、垃圾邮件分发、加密货币挖矿等</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日重点漏洞严重程度分布</div>
+                    <div class="mermaid">
+pie title 今日重点漏洞严重程度分布
+    "Critical (9.0-10)" : 4
+    "High (7.0-8.9)" : 2
+    "Medium (4.0-6.9)" : 0
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">僵尸网络影响范围</div>
+                    <div class="mermaid">
+pie title 僵尸网络影响范围
+    "受感染设备数量" : 1700万
+    "扣押服务器数量" : 200+
+    "运营时间" : 多年
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <h3 class="section-header">近期持续跟踪事件</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <table class="affected-table">
+                        <tr><th>事件</th><th>状态</th><th>备注</th></tr>
+                        <tr><td>MS Exchange OWA零日 CVE-2026-42897</td><td class="risk-high">持续扩散</td><td>仍无补丁，仅缓解方案</td></tr>
+                        <tr><td>Nginx Rift CVE-2026-42945</td><td class="risk-high">在野利用</td><td>全球扫描活跃</td></tr>
+                        <tr><td>cPanel CVE-2026-41940</td><td class="risk-high">大规模利用</td><td>4.4万IP已失陷</td></tr>
+                        <tr><td>Grafana Labs源码泄露</td><td class="risk-high">CoinbaseCartel威胁公开</td><td>赎金未支付</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mindmap Section -->
+            <h3 class="section-header">安全建议总结</h3>
+            <div class="charts-grid">
+                <div class="chart-container" style="grid-column: span 2;">
+                    <div class="chart-title">紧急行动（24小时内）</div>
+                    <div class="mermaid">
+mindmap
+  root((安全建议))
+    紧急行动（24小时内）
+      Gogs实例
+        评估网络暴露
+        限制认证用户权限
+        关注官方补丁
+      FortiClient EMS
+        立即升级到7.4.7+
+      Marimo
+        立即升级到0.20.5+
+    本周内行动
+      监控供应链
+        检查开发环境中的NuGet/npm包
+        尤其是Sicoeb.Sdk（已发现恶意版本）
+      警惕社工攻击
+        针对韩国和加密货币行业
+        招聘主题钓鱼
+                    </div>
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/05/critical-gogs-rce-vulnerability-lets-any.html">Gogs零日RCE披露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/forticlient-ems-flaw-being-exploited-to-deploy-ekz-stealer/">FortiClient EMS漏洞利用</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/05/attackers-use-llm-agent-for-post-exploitation.html">Marimo CVE-2026-39987</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/05/kimsuky-deploys-httpspy-expands-arsenal-with.html">Kimsuky部署HTTPSpy</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/dutch-govt-disrupts-malware-botnet-with-17-million-infected-devices/">荷兰僵尸网络摧毁</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45372">CVE-2026-45372 cpp-httplib CRLF注入</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OpenCVE</span>
+                        <a href="https://app.opencve.io/cve/CVE-2026-45372">CVE-2026-45372</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/05/critical-gogs-rce-vulnerability-lets-any-authenticated-user-execute-arbitrary-code.html">Gogs技术细节</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                每日精选 · 值得关注 | 由 AI城 自动化工作流生成
+                <br>
+                本站内容基于公开信息整理，CVE编号及CVSS评分以官方源为准
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
