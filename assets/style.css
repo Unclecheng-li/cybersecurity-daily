@@ -176,7 +176,6 @@ body {
 }
 .article-card.featured {
     grid-column: span 2;
-    grid-row: span 2;
     border: 2px solid var(--accent-red);
     background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
 }
@@ -525,7 +524,7 @@ body {
 /* --- Responsive --- */
 @media (max-width: 1024px) {
     .articles-grid { grid-template-columns: repeat(2, 1fr); }
-    .article-card.featured { grid-column: span 2; grid-row: span 1; }
+    .article-card.featured { grid-column: span 2; }
 }
 @media (max-width: 768px) {
     body { padding: 10px; }
