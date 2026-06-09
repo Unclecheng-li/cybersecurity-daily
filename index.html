@@ -45,6 +45,7 @@
         <!-- Archive -->
         <h3 class="section-header" style="margin:30px 40px 20px;">历史存档</h3>
         <div id="archive-grid" class="archive-grid"></div>
+        <div id="pagination" class="pagination"></div>
 
         <!-- Footer -->
         <footer class="newspaper-footer">
@@ -147,6 +148,12 @@
             }
         ];
 
+        // ============================================================
+        // 分页配置
+        // ============================================================
+        var PER_PAGE = 12;
+        var currentPage = 1;
+
         // 日期格式化：2026-06-05 -> 2026年6月5日
         function formatDateCN(dateStr) {
             var parts = dateStr.split('-');
@@ -165,17 +172,110 @@
             return card;
         }
 
-        // 渲染
-        var grid = document.getElementById('archive-grid');
+        // 渲染当前页的卡片
+        function renderPage(page) {
+            var grid = document.getElementById('archive-grid');
+            grid.innerHTML = '';
+
+            var start = (page - 1) * PER_PAGE;
+            var end = Math.min(start + PER_PAGE, ARCHIVE_DATA.length);
+            var totalPages = Math.ceil(ARCHIVE_DATA.length / PER_PAGE);
+
+            for (var i = start; i < end; i++) {
+                // isLatest 仅在第一页且是第一条数据时为 true
+                var isLatest = (page === 1 && i === 0);
+                grid.appendChild(createCard(ARCHIVE_DATA[i], isLatest));
+            }
+
+            renderPagination(page, totalPages);
+        }
+
+        // 渲染分页控件
+        function renderPagination(page, totalPages) {
+            var container = document.getElementById('pagination');
+            container.innerHTML = '';
+
+            if (totalPages <= 1) return;
+
+            var arrowL = '<svg viewBox="0 0 16 16"><path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>';
+            var arrowR = '<svg viewBox="0 0 16 16"><path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>';
+
+            // 上一页
+            var prev = document.createElement('button');
+            prev.className = 'page-btn' + (page <= 1 ? ' disabled' : '');
+            prev.innerHTML = arrowL;
+            prev.title = '上一页';
+            if (page > 1) prev.onclick = function() { goToPage(page - 1); };
+            container.appendChild(prev);
+
+            // 页码按钮
+            var pages = getPageNumbers(page, totalPages);
+            for (var i = 0; i < pages.length; i++) {
+                if (pages[i] === '...') {
+                    var dots = document.createElement('span');
+                    dots.className = 'page-btn disabled';
+                    dots.textContent = '...';
+                    container.appendChild(dots);
+                } else {
+                    var btn = document.createElement('button');
+                    btn.className = 'page-btn' + (pages[i] === page ? ' active' : '');
+                    btn.textContent = pages[i];
+                    var p = pages[i];
+                    if (p !== page) btn.onclick = (function(pp) { return function() { goToPage(pp); }; })(p);
+                    container.appendChild(btn);
+                }
+            }
+
+            // 下一页
+            var next = document.createElement('button');
+            next.className = 'page-btn' + (page >= totalPages ? ' disabled' : '');
+            next.innerHTML = arrowR;
+            next.title = '下一页';
+            if (page < totalPages) next.onclick = function() { goToPage(page + 1); };
+            container.appendChild(next);
+
+            // 页码信息
+            var info = document.createElement('span');
+            info.className = 'pagination-info';
+            info.textContent = '第 ' + page + ' / ' + totalPages + ' 页 · 共 ' + ARCHIVE_DATA.length + ' 期';
+            container.appendChild(info);
+        }
+
+        // 计算要显示的页码数组（带省略号）
+        function getPageNumbers(current, total) {
+            if (total <= 7) {
+                var arr = [];
+                for (var i = 1; i <= total; i++) arr.push(i);
+                return arr;
+            }
+            var pages = [1];
+            if (current > 3) pages.push('...');
+            for (var s = Math.max(2, current - 1); s <= Math.min(total - 1, current + 1); s++) {
+                pages.push(s);
+            }
+            if (current < total - 2) pages.push('...');
+            pages.push(total);
+            return pages;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderPage(page);
+            // 滚动到存档区域顶部
+            var grid = document.getElementById('archive-grid');
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // --- 初始化 ---
         var bannerText = document.getElementById('latest-text');
         var latestLink = document.getElementById('latest-link');
 
         if (!ARCHIVE_DATA || ARCHIVE_DATA.length === 0) {
-            grid.innerHTML = '<div class="empty-msg">暂无存档</div>';
+            document.getElementById('archive-grid').innerHTML = '<div class="empty-msg">暂无存档</div>';
             return;
         }
 
-        // 按日期降序排列（数据已手动排好序，这里做一次保险）
+        // 按日期降序排列
         ARCHIVE_DATA.sort(function(a, b) { return b.date.localeCompare(a.date); });
 
         // 更新最新一期横幅
@@ -183,11 +283,8 @@
         bannerText.textContent = formatDateCN(latest.date) + ' — ' + (latest.keywords || '');
         latestLink.href = 'daily/' + latest.date + '.html';
 
-        // 渲染卡片
-        grid.innerHTML = '';
-        for (var i = 0; i < ARCHIVE_DATA.length; i++) {
-            grid.appendChild(createCard(ARCHIVE_DATA[i], i === 0));
-        }
+        // 渲染第一页
+        renderPage(1);
     })();
     </script>
 </body>

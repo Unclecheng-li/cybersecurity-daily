@@ -506,6 +506,62 @@ body {
     font-weight: 700;
     letter-spacing: 1px;
 }
+
+/* --- Pagination --- */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 40px 30px;
+    position: relative;
+    z-index: 2;
+}
+.pagination-info {
+    font-size: 0.85em;
+    color: var(--ink-dark);
+    margin-right: 10px;
+    font-style: italic;
+}
+.page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--border-light);
+    background: rgba(255,255,255,0.5);
+    color: var(--ink-black);
+    font-family: 'Noto Serif SC', 'Georgia', serif;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    user-select: none;
+}
+.page-btn:hover {
+    background: var(--ink-black);
+    color: var(--paper-cream);
+    border-color: var(--ink-black);
+}
+.page-btn.active {
+    background: var(--accent-red);
+    color: white;
+    border-color: var(--accent-red);
+    cursor: default;
+}
+.page-btn.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.page-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
 .nav-back {
     display: inline-block;
     padding: 10px 20px;
