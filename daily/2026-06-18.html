@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年6月18日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年6月18日 星期四</span>
+            <span class="edition-number">第 24 期 | 总第 24 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>CVE-2026-48907 · CVE-2026-50656 · FortiBleed · Mastra npm · Google Vertex AI · JetBrains Marketplace · ShinyHunters
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">FortiBleed 泄露暴露 73,000+ Fortinet 设备凭证，全球企业面临供应链欺诈风险</h2>
+                <p class="sub-headline">Joomla JCE CVSS 10.0 满分漏洞被积极利用 · Microsoft Defender 零日漏洞确认 · AI 框架供应链攻击</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 1：FortiBleed -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">FortiBleed：73,932 台 Fortinet 防火墙凭证大规模泄露</h3>
+                    <div class="article-meta">
+                        <span>全球 194 个国家受影响</span>
+                        <span class="cvss-score">凭证泄露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全研究员 Volodymyr "Bob" Diachenko 与 Hudson Rock 联合披露了一个名为 "FortiBleed" 的大规模网络间谍活动。该活动已悄然入侵了全球 194 个国家的 73,932 个独特 Fortinet 防火墙 URL。</p>
+                        <p><strong>攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>规模：</strong>11.6 亿次凭证攻击 + 21 亿次暴力破解</li>
+                            <li><strong>技术：</strong>45-GPU 集群离线破解 SSL VPN 哈希</li>
+                            <li><strong>目标：</strong>富士康、三星、西门子、联想、甲骨文、普华永道等</li>
+                            <li><strong>后果：</strong>土耳其 NATO 国防承包商机密文件被窃</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>密码复杂度完全失效——20 位复杂密码因 infostealer 数据库泄露而被破解</li>
+                            <li>从根本上动摇了"强密码"策略作为边界防御的有效性</li>
+                            <li>攻击者已成功渗透关键基础设施和国防承包商</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">扫描暴露实例</span>
+                        <span class="flow-step">凭证匹配</span>
+                        <span class="flow-step">SSL VPN 哈希拦截</span>
+                        <span class="flow-step critical">45-GPU 集群破解</span>
+                        <span class="flow-step critical">AD 环境渗透</span>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 2：Joomla JCE -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Joomla JCE 编辑器 CVSS 10.0 满分漏洞被积极利用</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-48907</span>
+                        <span class="cvss-score">CVSS 10.0</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 将 Joomla JCE 编辑器的最高严重性漏洞添加到 KEV 目录，允许未认证用户创建编辑器配置文件并执行 PHP 代码。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>JCE 1.0.0 - 2.9.99.4</td><td class="risk-high">严重</td></tr>
+                            <tr><td>Joomla CMS</td><td class="risk-high">高危</td></tr>
+                        </table>
+                        <p><strong>修复截止：6月19日</strong></p>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 3：Mastra npm -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Mastra npm 供应链攻击：144 个 AI 框架包被植入窃密木马</h3>
+                    <div class="article-meta">
+                        <span>easy-day-js 攻击代号</span>
+                        <span class="cvss-score">周下载 918K+</span>
+                    </div>
+                    <div class="article-body">
+                        <p>攻击者劫持 Mastra 贡献者账户，在 88 分钟内发布 140+ 个恶意包，通过 easy-day-js 依赖注入跨平台信息窃取器。</p>
+                        <p><strong>窃取目标：</strong></p>
+                        <ul>
+                            <li>浏览器历史数据</li>
+                            <li>160+ 加密钱包扩展数据</li>
+                            <li>AI 提供商 API 密钥</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 4：Google Vertex AI -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Google Vertex AI SDK "Pickle in the Middle" 漏洞</h3>
+                    <div class="article-meta">
+                        <span>Bucket Squatting 攻击</span>
+                        <span class="cvss-score">已修复 v1.148.0</span>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 5：Microsoft Defender -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Microsoft Defender "RoguePlanet" 零日漏洞确认</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-50656</span>
+                        <span class="cvss-score">CVSS 7.8</span>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. JetBrains Marketplace 恶意插件窃取 AI API 密钥</h4>
+                    <p>15 个恶意插件冒充 AI 编码助手，窃取 OpenAI、Anthropic、Google AI 密钥，下载量超 25,000 次</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Kodak 确认数据泄露，ShinyHunters 威胁泄露 220 万记录</h4>
+                    <p>ShinyHunters 设置 6月18日 最后期限，FBI 强烈建议不支付赎金</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Steam Workshop 被滥用传播恶意软件</h4>
+                    <p>威胁行为者将恶意软件隐藏在壁纸包中通过 Wallpaper Engine 传播</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 新型 Rokarolla 安卓木马针对 217 个银行应用</h4>
+                    <p>拥有 137 个远程命令，可窃取 PIN 码、短信、加密货币并禁用 Play Protect</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "CVE-2026-48907 Joomla JCE": [0.95, 0.98]
+    "CVE-2026-50656 Defender": [0.85, 0.75]
+    "FortiBleed 凭证泄露": [0.9, 0.9]
+    "Mastra npm 供应链": [0.8, 0.85]
+    "Google Vertex AI SDK": [0.6, 0.7]
+    "Rokarolla Android": [0.7, 0.65]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "供应链攻击" : 35
+    "漏洞利用" : 30
+    "数据泄露" : 20
+    "恶意软件" : 10
+    "零日漏洞" : 5
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年6月第3周网安事件
+    6月16日 : Google Vertex AI SDK漏洞披露
+           : Mastra npm恶意包开始发布
+    6月17日 : FortiBleed凭证泄露曝光
+           : Joomla JCE漏洞CISA收录
+           : Kodak数据泄露确认
+           : Microsoft确认RoguePlanet零日
+           : JetBrains恶意插件曝光
+    6月18日 : ShinyHunters对Kodak最后期限
+           : Joomla JCE修复截止日
+                </div>
+            </div>
+
+            <!-- ===== 攻击链分析 ===== -->
+            <h3 class="section-header">攻击链分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">FortiBleed 攻击链</div>
+                    <div class="mermaid">
+flowchart TD
+    A[攻击者] --> B[扫描互联网暴露的Fortinet实例]
+    B --> C{发现目标}
+    C --> D[使用历史凭证泄露数据库]
+    D --> E{凭证匹配?}
+    E -->|是| F[获取初始立足点]
+    E -->|否| G[暴力破解尝试]
+    G --> E
+    F --> H[拦截SSL VPN认证哈希]
+    H --> I[45-GPU集群离线破解]
+    I --> J[转向内部Active Directory]
+    J --> K[持久化访问]
+    K --> L[数据窃取]
+    
+    style A fill:#ff6b6b
+    style L fill:#ff6b6b
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Mastra npm 供应链攻击链</div>
+                    <div class="mermaid">
+flowchart TD
+    A[攻击者] --> B[劫持ehindero账户]
+    B --> C[88分钟内发布140+恶意包]
+    C --> D[添加easy-day-js依赖]
+    D --> E[用户npm install]
+    E --> F[postinstall钩子触发]
+    F --> G[下载混淆载荷]
+    G --> H[禁用TLS验证]
+    H --> I[从C2下载第二阶段]
+    I --> J[后台执行]
+    J --> K[自我删除]
+    K --> L[窃取浏览器数据]
+    L --> M[窃取160+加密钱包]
+    M --> N[外传到C2]
+    
+    style A fill:#ff6b6b
+    style N fill:#ff6b6b
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">FortiBleed 事件</span>
+                        <a href="https://cybersecuritynews.com/fortibleed-fortinet-firewalls-compromised/">CybersecurityNews - FortiBleed 70,000+ Fortinet Firewalls</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FortiBleed 事件</span>
+                        <a href="https://thecybersecguru.com/news/fortibleed-fortinet-firewall-credential-leak/">The Cyber Sec Guru - FortiBleed 75,000 Fortinet Firewalls</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Joomla JCE 漏洞</span>
+                        <a href="https://thehackernews.com/2026/06/cisa-warns-of-actively-exploited-joomla.html">The Hacker News - CISA Warns of Joomla JCE Flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Joomla JCE 漏洞</span>
+                        <a href="https://www.helpnetsecurity.com/2026/06/17/rogueplanet-zero-day-cve-2026-50656/">Help Net Security - RoguePlanet Zero-Day</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Mastra npm 攻击</span>
+                        <a href="https://thehackernews.com/2026/06/144-mastra-npm-packages-compromised-via.html">The Hacker News - 144 Mastra npm Packages</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Mastra npm 攻击</span>
+                        <a href="https://cybersecuritynews.com/140-mastra-npm-packages-compromised/">CybersecurityNews - 140+ Mastra npm Packages</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Google Vertex AI</span>
+                        <a href="https://thehackernews.com/2026/06/google-vertex-ai-sdk-flaw-let-attackers.html">The Hacker News - Google Vertex AI SDK Flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Google Vertex AI</span>
+                        <a href="https://unit42.paloaltonetworks.com/hijacking-vertex-ai-model/">Unit 42 - Pickle in the Middle</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">JetBrains 恶意插件</span>
+                        <a href="https://threat-modeling.com/jetbrains-marketplace-malicious-plugins-ai-key-theft-june-2026/">Threat-Modeling - JetBrains Malicious Plugins</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Kodak 数据泄露</span>
+                        <a href="https://www.techtimes.com/articles/318565/20260617/kodak-confirms-data-breach-shinyhunters-threatens-leak-22m-records.htm">TechTimes - Kodak Data Breach ShinyHunters</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Kodak 数据泄露</span>
+                        <a href="https://cyberpress.org/kodak-confirms-data-breach/">Cyberpress - Kodak Confirms Data Breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft Defender</span>
+                        <a href="https://www.helpnetsecurity.com/2026/06/17/rogueplanet-zero-day-cve-2026-50656/">Help Net Security - RoguePlanet Zero-Day</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年6月18日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
