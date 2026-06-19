@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年6月19日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年6月19日 星期四</span>
+            <span class="edition-number">第 25 期 | 总第 25 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>CVE-2026-20253 · CVE-2026-42530 · CVE-2026-20181 · Splunk · NGINX · Cisco ISE · REDCap · UNC6508
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Splunk Enterprise CVE-2026-20253 在野利用确认，CISA 仅给 3 天修复期限</h2>
+                <p class="sub-headline">F5 NGINX 双 9.2 关键漏洞 · Cisco ISE CVSS 9.1 · Atlassian 100+ 安全公告 · REDCap 遭 APT 持续攻击</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 1：Splunk CVE-2026-20253 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Splunk Enterprise CVE-2026-20253 在野利用 — PoC 已公开，首个 Splunk KEV 漏洞</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-20253</span>
+                        <span class="cvss-score">在野利用 | PoC 公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Splunk Enterprise PostgreSQL 侧边车服务端点存在未认证任意文件创建/截断漏洞，已被 WatchTowr 研究员证明可实现远程代码执行（RCE）。Splunk PSIRT 于 6 月 18 日确认有限利用，CISA 当日将其添加到 KEV 目录。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>未认证远程代码执行（Pre-auth RCE）</li>
+                            <li><strong>攻击方式：</strong>PostgreSQL 侧边车服务端点缺乏认证控制，任何网络可达用户可调用文件操作</li>
+                            <li><strong>影响范围：</strong>Splunk Enterprise 10.2（&lt;10.2.4）、10.0（&lt;10.0.7）</li>
+                            <li><strong>后果：</strong>企业 SIEM 沦陷，安全防线全面崩溃</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>首个 Splunk KEV 漏洞，CISA 仅给 3 天修复期限（截止 6 月 21 日）</li>
+                            <li>WatchTowr 于 6 月 12 日发布 PoC，攻击门槛大幅降低</li>
+                            <li>Splunk 作为企业安全运营核心，一旦沦陷将导致整个安全防线崩溃</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">PostgreSQL 侧边车</span>
+                        <span class="flow-step">未认证文件操作</span>
+                        <span class="flow-step critical">恶意文件写入</span>
+                        <span class="flow-step critical">RCE 执行</span>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 2：F5 NGINX -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">F5 NGINX 双 9.2 关键漏洞 — 远程代码执行</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-42530 / CVE-2026-42055</span>
+                        <span class="cvss-score">CVSS 9.2</span>
+                    </div>
+                    <div class="article-body">
+                        <p>F5 发布带外安全更新，修复 NGINX 开源版两个关键漏洞。CVE-2026-42530 为 HTTP/3 模块释放后重用漏洞，CVE-2026-42055 为代理模块堆缓冲区溢出，均可被未认证远程攻击者利用。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>NGINX Open Source</td><td class="risk-high">严重</td></tr>
+                            <tr><td>NGINX Plus</td><td class="risk-high">严重</td></tr>
+                            <tr><td>NGINX Gateway Fabric</td><td class="risk-high">高危</td></tr>
+                        </table>
+                        <p>若 ASLR 被绕过，可执行任意代码。NGINX 近期已遭攻击，修复迫在眉睫。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 3：Cisco ISE -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Cisco ISE CVE-2026-20181 — 认证后命令执行</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-20181</span>
+                        <span class="cvss-score">CVSS 9.1</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Cisco Identity Services Engine（ISE）存在关键命令执行漏洞，攻击者可通过精心构造的 HTTP 请求获取操作系统用户级访问权限，并提权至 root。单节点部署可导致拒绝服务。</p>
+                        <p><strong>修复版本：</strong>ISE 3.3 Patch 11、ISE 3.4 Patch 6、ISE 3.5 热修复</p>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 4：Atlassian/Splunk -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Atlassian/Splunk 批量漏洞修复 — 100+ 安全公告</h3>
+                    <div class="article-meta">
+                        <span>Splunk AI Toolkit + Atlassian 全线产品</span>
+                        <span class="cvss-score">CVSS 9.1</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Splunk 修复 AI Toolkit 中的 OS 命令注入（CVE-2026-20266，CVSS 9.1），Atlassian 发布 100 个安全公告修复旗下多个产品的第三方依赖漏洞（Axios、Apache Tomcat、Netty）。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 文章 5：REDCap -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">REDCap 服务器过时版本 — 8500 个暴露实例遭 APT 攻击</h3>
+                    <div class="article-meta">
+                        <span>UNC6508（中国关联）</span>
+                        <span class="cvss-score">国家级 APT</span>
+                    </div>
+                    <div class="article-body">
+                        <p>互联网上约 8500 个 REDCap 实例中仅 1.18% 运行最新版本，中国关联 APT 组织 UNC6508 持续利用过时版本进行网络间谍活动，目标包括美国医疗、学术和军事研究组织。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Accenture 41 亿美元收购 OT 安全巨头 Dragos</h4>
+                    <p>Accenture 宣布以 41 亿美元收购工业网络安全公司 Dragos 的多数股权，同时收购 runZero 和 NetRise，Dragos 估值达 32.5 亿美元。OT 安全领域最大规模收购。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Kodak 确认遭 ShinyHunters 攻击数据泄露</h4>
+                    <p>柯达确认在 ShinyHunters 黑客组织的攻击中遭受数据泄露，但表示其系统和运营未受到威胁。ShinyHunters 近期活跃度持续上升。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Rokarolla 银行木马针对 200+ 应用</h4>
+                    <p>新型 Android 银行木马 Rokarolla 针对 217 个银行和加密货币应用，使用 137 个命令控制受感染设备，可进行账户接管和敏感信息窃取。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 设备代码钓鱼攻击增长 37 倍</h4>
+                    <p>Push Security 报告显示，设备代码钓鱼攻击在今年增长了 37 倍，野外已出现超过 18 种相关攻击套件，成为企业面临的重要威胁。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "CVE-2026-20253 Splunk": [0.9, 0.95]
+    "CVE-2026-42530 NGINX": [0.7, 0.85]
+    "CVE-2026-42055 NGINX": [0.7, 0.85]
+    "CVE-2026-20181 Cisco ISE": [0.5, 0.75]
+    "CVE-2026-20266 Splunk AI": [0.3, 0.65]
+    "REDCap过时版本": [0.9, 0.6]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "平台/框架漏洞" : 35
+    "Web应用漏洞" : 25
+    "供应链安全" : 15
+    "数据泄露" : 15
+    "恶意软件" : 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年6月第3周网安事件
+    6月16日 : LiteLLM AI网关CVSS 9.9满分漏洞
+           : Microsoft 365 Copilot SearchLeak漏洞链
+    6月17日 : Novo Nordisk遭FulcrumSec勒索
+           : OptinMonster CDN供应链攻击
+    6月18日 : F5 NGINX关键漏洞修复
+           : Cisco ISE命令执行漏洞
+           : Atlassian/Splunk批量漏洞修复
+           : REDCap过时版本遭APT攻击
+    6月19日 : Splunk CVE-2026-20253在野利用确认
+           : CISA KEV 3天修复期限
+                </div>
+            </div>
+
+            <!-- ===== 攻击链分析 ===== -->
+            <h3 class="section-header">攻击链分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Splunk CVE-2026-20253 攻击链</div>
+                    <div class="mermaid">
+flowchart TD
+    A[攻击者] -->|网络可达| B[Splunk Enterprise]
+    B -->|PostgreSQL侧边车| C[未认证文件操作]
+    C -->|创建/截断文件| D[恶意文件写入]
+    D -->|触发执行| E[远程代码执行]
+    E -->|完全控制| F[企业SIEM沦陷]
+    
+    style A fill:#ff6b6b,color:white
+    style F fill:#ff0000,color:white
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">NGINX 漏洞影响范围</div>
+                    <div class="mermaid">
+pie title NGINX漏洞影响组件
+    "NGINX Open Source" : 45
+    "NGINX Plus" : 30
+    "NGINX Gateway Fabric" : 25
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Splunk Advisory</span>
+                        <a href="https://advisory.splunk.com/advisories/SVD-2026-0603">CVE-2026-20253 - Splunk Advisory SVD-2026-0603</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WatchTowr Labs</span>
+                        <a href="https://labs.watchtowr.com/why-use-app-level-auth-when-every-database-has-auth-splunk-enterprise-cve-2026-20253-pre-auth-rce/">Splunk CVE-2026-20253 PoC 分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/06/18/cisa-adds-one-known-exploited-vulnerability-catalog">CVE-2026-20253 - CISA KEV 目录</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">F5 Security</span>
+                        <a href="https://my.f5.com/manage/s/article/K000161614">NGINX 漏洞安全通知</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cisco Security</span>
+                        <a href="https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-multi-G5WP8vv">CVE-2026-20181 - Cisco ISE 安全公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Atlassian Security</span>
+                        <a href="https://confluence.atlassian.com/security/security-bulletin-june-16-2026-1796309326.html">Atlassian 安全公告 - 2026 年 6 月</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/splunk-enterprise-vulnerability-exploited-in-attacks-days-after-disclosure/">Splunk Enterprise Vulnerability Exploited</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/f5-patches-critical-high-severity-nginx-vulnerabilities/">F5 Patches Critical NGINX Vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/critical-command-execution-vulnerability-patched-in-cisco-ise/">Critical Cisco ISE Vulnerability Patched</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/atlassian-splunk-patch-critical-vulnerabilities/">Atlassian, Splunk Patch Critical Vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/majority-of-internet-accessible-redcap-servers-outdated/">Majority of REDCap Servers Outdated</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Censys</span>
+                        <a href="https://censys.com/blog/redcap-exposure-analysis/">REDCap Exposure Analysis</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyAsha</span>
+                        <a href="https://www.cyasha.com/">CVE-2026-20253 Severe Splunk Vulnerability</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/">INC Ransomware 2026 年主要 RaaS 威胁</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer</span>
+                        <a href="https://www.bleepingcomputer.com/">DragonForce 黑客滥用 Microsoft Teams</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年6月19日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
