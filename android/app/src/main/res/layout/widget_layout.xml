@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:padding="12dp">
 
+    <!-- Title bar with refresh -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="网络安全日报"
+            android:text="\u7f51\u7edc\u5b89\u5168\u65e5\u62a5"
             android:textColor="@color/accent_gold"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -31,11 +32,31 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="加载中"
-            android:textColor="@color/widget_text_secondary"
-            android:textSize="12sp" />
+            android:text="\u52a0\u8f7d\u4e2d"
+            android:textColor="@color/accent_gold"
+            android:textSize="14sp" />
+
+        <ProgressBar
+            android:id="@+id/widget_refresh_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="4dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/widget_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:padding="4dp"
+            android:text="\u21bb"
+            android:textColor="@color/accent_gold"
+            android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- Keywords -->
     <TextView
         android:id="@+id/widget_keywords"
         android:layout_width="match_parent"
@@ -46,51 +67,43 @@
         android:maxLines="1"
         android:paddingHorizontal="8dp"
         android:paddingVertical="3dp"
-        android:text="正在获取最新安全要闻..."
+        android:text="\u6b63\u5728\u83b7\u53d6\u6700\u65b0\u5b89\u5168\u8981\u95fb..."
         android:textColor="@android:color/white"
         android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/widget_headline_1"
+    <!-- Scrollable article list -->
+    <ListView
+        android:id="@+id/widget_article_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="4dp"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent" />
+
+    <!-- Chart images section (horizontal) -->
+    <LinearLayout
+        android:id="@+id/widget_charts_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="正在获取最新内容..."
-        android:textColor="@color/widget_text_primary"
-        android:textSize="13sp" />
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <ImageView android:id="@+id/widget_chart_img_1" android:layout_width="0dp" android:layout_height="90dp" android:layout_weight="1" android:scaleType="fitCenter" android:adjustViewBounds="true" />
+        <ImageView android:id="@+id/widget_chart_img_2" android:layout_width="0dp" android:layout_height="90dp" android:layout_weight="1" android:scaleType="fitCenter" android:adjustViewBounds="true" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/widget_headline_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text=""
-        android:textColor="@color/widget_text_primary"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/widget_headline_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text=""
-        android:textColor="@color/widget_text_primary"
-        android:textSize="13sp" />
-
+    <!-- Footer -->
     <TextView
         android:id="@+id/widget_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="点击阅读完整日报"
+        android:text="\u70b9\u51fb\u9605\u8bfb\u5b8c\u6574\u65e5\u62a5"
         android:textColor="@color/accent_gold"
         android:textSize="11sp" />
 </LinearLayout>

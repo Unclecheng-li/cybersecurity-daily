@@ -1,4 +1,4 @@
-ï»¿package com.cybersecdaily.widget
+package com.cybersecdaily.widget
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,94 +19,92 @@ object ReportFetcher {
         .followRedirects(true)
         .build()
 
-    /**
-     * Fetch the latest daily report data.
-     *
-     * Strategy:
-     * 1. Try fetching index.html â†’ parse the ARCHIVE_DATA JS blob to find latest date.
-     * 2. If that fails, guess today's date and try to fetch directly.
-     * 3. Parse the daily HTML to extract headlines, keywords, etc.
-     */
     suspend fun fetchLatest(): DailyReport = withContext(Dispatchers.IO) {
         try {
-            val latestDate = fetchLatestDate()
+            val latestDate = fetchLatestDateOnly()
             val dailyHtml = fetchDailyPage(latestDate)
             parseDailyHtml(dailyHtml, latestDate)
         } catch (e: Exception) {
-            DailyReport.error("èŽ·å–å¤±è´¥ï¼š${e.localizedMessage ?: "æœªçŸ¥é”™è¯¯"}")
+            DailyReport.error("»ñÈ¡Ê§°Ü£º${e.localizedMessage ?: "Î´Öª´íÎó"}")
         }
     }
 
-    // ---------- Step 1: find latest date ----------
-
-    private fun fetchLatestDate(): String {
+    fun fetchLatestDateOnly(): String {
         val request = Request.Builder().url(INDEX_URL).build()
         val body = client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw Exception("index request failed (${response.code})")
             response.body?.string() ?: throw Exception("empty index page")
         }
 
-        // Try regex: ARCHIVE_DATA[0].date = "YYYY-MM-DD"
         val regex = Regex(""""date"\s*:\s*"(\d{4}-\d{2}-\d{2})"""")
-        val match = regex.find(body)
-        if (match != null) {
-            return match.groupValues[1]
-        }
-
-        // Fallback: find any date pattern in ARCHIVE_DATA
-        val fallback = Regex("""(\d{4}-\d{2}-\d{2})""").find(body)
-        if (fallback != null) {
-            return fallback.groupValues[1]
-        }
-
-        throw Exception("æ— æ³•è§£æžæœ€æ–°æ—¥æœŸ")
+        regex.find(body)?.groupValues?.get(1)?.let { return it }
+        Regex("""(\d{4}-\d{2}-\d{2})""").find(body)?.groupValues?.get(1)?.let { return it }
+        throw Exception("ÎÞ·¨½âÎö×îÐÂÈÕÆÚ")
     }
-
-    // ---------- Step 2: fetch daily page ----------
 
     private fun fetchDailyPage(date: String): String {
         val url = "$DAILY_URL/$date.html"
         val request = Request.Builder().url(url).build()
         return client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw Exception("æ—¥æŠ¥ä¸å­˜åœ¨ ($date)")
+            if (!response.isSuccessful) throw Exception("ÈÕ±¨²»´æÔÚ ($date)")
             response.body?.string() ?: throw Exception("empty daily page")
         }
     }
 
-    // ---------- Step 3: parse HTML ----------
-
     private fun parseDailyHtml(html: String, date: String): DailyReport {
         val doc = Jsoup.parse(html)
 
-        // Keywords banner
         val keywords = doc.selectFirst(".keywords-banner")
             ?.ownText()
             ?.replace(Regex("\\s+"), " ")
             ?.trim()
             ?: ""
 
-        // Date CN from .edition-date
         val dateCN = doc.selectFirst(".edition-date")?.text()?.trim() ?: date
-
-        // Edition number
         val editionNumber = doc.selectFirst(".edition-number")?.text()?.trim() ?: ""
+        val mainHeadline = doc.selectFirst(".headline-section .main-headline")?.text()?.trim() ?: ""
 
-        // Main headline from .headline-section .main-headline
-        val mainHeadline = doc.selectFirst(".headline-section .main-headline")
-            ?.text()
-            ?.trim()
-            ?: ""
+        // Parse articles with severity
+        val articles = doc.select(".articles-grid .article-card").map { card ->
+            val title = card.selectFirst(".article-title")?.text()?.trim() ?: ""
+            val sevElem = card.selectFirst(".severity-badge")
+            val severity = if (sevElem != null) {
+                val cssClass = sevElem.className()
+                Severity.fromCssClass(cssClass)
+            } else {
+                Severity.NONE
+            }
+            val isFeatured = card.hasClass("featured")
+            ArticleItem(title = title, severity = severity, isFeatured = isFeatured)
+        }.filter { it.title.isNotBlank() }
 
-        // Article headlines from .articles-grid .article-card
-        val headlines = doc.select(".articles-grid .article-card .article-title")
+        // Quick news (no severity, treated as NONE)
+        val quickItems = doc.select(".quick-news .quick-item").map { item ->
+            val title = item.selectFirst("h4")?.text()?.trim()
+                ?: item.selectFirst("p")?.text()?.trim()
+                ?: item.text().trim()
+            ArticleItem(title = title, severity = Severity.NONE)
+        }.filter { it.title.isNotBlank() }
+
+        // Chart titles (for backward compat)
+        val chartTitles = doc.select(".charts-grid .chart-container .chart-title")
             .map { it.text().trim() }
-            .filter { it.isNotEmpty() }
-            .take(5)
+            .filter { it.isNotBlank() }
 
-        // Quick news items
-        val quickNews = doc.select(".quick-news .quick-item")
-            .map { it.text().trim() }
-            .filter { it.isNotEmpty() }
+        // Parse Mermaid chart data
+        val charts = mutableListOf<ChartData>()
+        val chartContainers = doc.select(".charts-grid .chart-container")
+        for (container in chartContainers) {
+            val title = container.selectFirst(".chart-title")?.text()?.trim() ?: continue
+            val mermaidEl = container.selectFirst(".mermaid")
+            if (mermaidEl != null) {
+                val mermaidCode = mermaidEl.wholeText().trim()
+                if (mermaidCode.isNotBlank()) {
+                    val chartData = ChartData.parseMermaid(title, mermaidCode)
+                    if (chartData != null) charts.add(chartData)
+                }
+            }
+        }
 
         return DailyReport(
             date = date,
@@ -114,8 +112,9 @@ object ReportFetcher {
             editionNumber = editionNumber,
             keywords = keywords,
             mainHeadline = mainHeadline,
-            headlines = headlines + quickNews,
-            quickNews = quickNews
+            articles = articles + quickItems,
+            chartTitles = chartTitles,
+            charts = charts
         )
     }
 }
