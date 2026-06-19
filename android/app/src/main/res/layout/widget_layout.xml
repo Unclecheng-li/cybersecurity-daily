@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <!-- Title bar with refresh -->
+    <!-- Title bar with refresh and settings -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,10 +20,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:paddingStart="3dp"
             android:singleLine="true"
             android:text="\u7f51\u7edc\u5b89\u5168\u65e5\u62a5"
             android:textColor="@color/accent_gold"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -34,13 +35,13 @@
             android:singleLine="true"
             android:text="\u52a0\u8f7d\u4e2d"
             android:textColor="@color/accent_gold"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <ProgressBar
             android:id="@+id/widget_refresh_progress"
             style="?android:attr/progressBarStyleSmall"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_marginStart="4dp"
             android:indeterminate="true"
             android:visibility="gone" />
@@ -49,11 +50,21 @@
             android:id="@+id/widget_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:padding="4dp"
             android:text="\u21bb"
             android:textColor="@color/accent_gold"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/widget_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:padding="4dp"
+            android:text="\u2699"
+            android:textColor="@color/widget_text_secondary"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <!-- Keywords -->
@@ -61,7 +72,7 @@
         android:id="@+id/widget_keywords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="5dp"
         android:background="@color/accent_red"
         android:ellipsize="end"
         android:maxLines="1"
@@ -69,7 +80,7 @@
         android:paddingVertical="3dp"
         android:text="\u6b63\u5728\u83b7\u53d6\u6700\u65b0\u5b89\u5168\u8981\u95fb..."
         android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 
     <!-- Scrollable article list -->
     <ListView
@@ -82,7 +93,7 @@
         android:listSelector="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent" />
 
-    <!-- Chart images section (horizontal) -->
+    <!-- Chart images section -->
     <LinearLayout
         android:id="@+id/widget_charts_section"
         android:layout_width="match_parent"
@@ -91,8 +102,22 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone">
-        <ImageView android:id="@+id/widget_chart_img_1" android:layout_width="0dp" android:layout_height="90dp" android:layout_weight="1" android:scaleType="fitCenter" android:adjustViewBounds="true" />
-        <ImageView android:id="@+id/widget_chart_img_2" android:layout_width="0dp" android:layout_height="90dp" android:layout_weight="1" android:scaleType="fitCenter" android:adjustViewBounds="true" />
+
+        <ImageView
+            android:id="@+id/widget_chart_img_1"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true" />
+
+        <ImageView
+            android:id="@+id/widget_chart_img_2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true" />
     </LinearLayout>
 
     <!-- Footer -->
@@ -102,8 +127,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:ellipsize="end"
+        android:paddingStart="3dp"
         android:singleLine="true"
         android:text="\u70b9\u51fb\u9605\u8bfb\u5b8c\u6574\u65e5\u62a5"
         android:textColor="@color/accent_gold"
-        android:textSize="11sp" />
+        android:textSize="10sp" />
 </LinearLayout>

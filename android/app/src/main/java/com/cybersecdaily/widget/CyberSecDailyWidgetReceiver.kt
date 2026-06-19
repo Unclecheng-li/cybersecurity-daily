@@ -1,4 +1,4 @@
-﻿package com.cybersecdaily.widget
+package com.cybersecdaily.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -174,6 +174,15 @@ class CyberSecDailyWidgetReceiver : AppWidgetProvider() {
             val ri = Intent(context, CyberSecDailyWidgetReceiver::class.java).apply { action = ACTION_REFRESH }
             views.setOnClickPendingIntent(R.id.widget_refresh, PendingIntent.getBroadcast(
                 context, 0, ri, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            ))
+
+            // Settings gear click
+            val settingsIntent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            views.setOnClickPendingIntent(R.id.widget_settings, PendingIntent.getActivity(
+                context, 1, settingsIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             ))
 
             // Charts

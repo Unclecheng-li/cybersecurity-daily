@@ -11,3 +11,5 @@
 
 # Keep our data classes
 -keep class com.cybersecdaily.widget.DailyReport { *; }
+-dontwarn org.jspecify.annotations.**
+-dontwarn org.jsoup.**

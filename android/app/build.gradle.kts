@@ -11,8 +11,8 @@ android {
         applicationId = "com.cybersecdaily.widget"
         minSdk = 26
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.0.8"
+        versionCode = 11
+        versionName = "1.0.10"
     }
 
     buildTypes {

@@ -1,21 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Gold border layer -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="#c9a227" />
-            <corners android:radius="12dp" />
-        </shape>
-    </item>
-    <!-- Inner background layer (inset by 1dp for border width) -->
-    <item
-        android:left="1dp"
-        android:top="1dp"
-        android:right="1dp"
-        android:bottom="1dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#1a1a1a" />
-            <corners android:radius="11dp" />
-        </shape>
-    </item>
-</layer-list>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#1a1a1a" />
+    <corners android:radius="16dp" />
+    <stroke
+        android:width="2dp"
+        android:color="#c9a227" />
+    <padding
+        android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp" />
+</shape>
