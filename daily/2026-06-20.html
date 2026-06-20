@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年6月20日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年6月20日 星期六</span>
+            <span class="edition-number">第 37 期 | 总第 37 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Klue供应链攻击席卷网安行业 · FortiBleed 86,000台设备凭证泄露 · SocGholish僵尸网络拆除 · ShinyHunters 270万勒索 · Aurora攻击ALS Global · LockBit 5.0 + TheGentlemen
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">Klue供应链攻击连锁爆发：OAuth令牌窃取席卷Huntress、Recorded Future等多家网安公司</h2>
+                <p class="sub-headline">攻击者通过遗忘的旧集成凭证入侵Klue后端，推送恶意代码窃取OAuth令牌，24小时内自动化抽取Salesforce CRM数据，Icarus勒索组织要求赎金</p>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Klue供应链攻击：OAuth令牌滥用窃取Salesforce数据，多家网安公司受影响</h3>
+                    <div class="article-meta">
+                        <span>攻击时间：6月11日 | Icarus勒索组织 | 已确认4家公司受影响</span>
+                        <span class="cvss-score">供应链攻击</span>
+                    </div>
+                    <div class="article-body">
+                        <p>竞争情报平台Klue遭供应链攻击，攻击者通过一个被遗忘但仍然活跃的旧集成凭证入侵后端，推送恶意代码窃取客户OAuth令牌。随后利用这些令牌通过Salesforce REST API大规模抽取CRM数据，24小时内持续执行自动化查询。</p>
+                        <p><strong>攻击链：</strong></p>
+                        <ul>
+                            <li><strong>入口：</strong>获取Klue旧集成凭证（原型集成服务遗留）</li>
+                            <li><strong>入侵：</strong>连接Klue后端服务器执行未授权命令</li>
+                            <li><strong>窃取：</strong>推送代码更新收集OAuth令牌</li>
+                            <li><strong>利用：</strong>通过REST API自动查询Salesforce数据（15分钟近千次查询）</li>
+                            <li><strong>勒索：</strong>Icarus组织通过Session Messenger要求谈判</li>
+                        </ul>
+                        <p><strong>受影响公司：</strong>Huntress、Recorded Future、Jamf、Tanium等</p>
+                        <p><strong>值得关注：</strong>SaaS供应链攻击正在加速，OAuth令牌作为"非人类身份"监控力度远弱于员工账户</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">旧凭证泄露</span>
+                        <span class="flow-step">入侵Klue后端</span>
+                        <span class="flow-step">推送恶意代码</span>
+                        <span class="flow-step">窃取OAuth令牌</span>
+                        <span class="flow-step">Salesforce API</span>
+                        <span class="flow-step critical">CRM数据外传</span>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">FortiBleed：86,000台Fortinet设备凭证大规模泄露</h3>
+                    <div class="article-meta">
+                        <span>CISA紧急警报 | 6月18日 | 全球194个国家</span>
+                        <span class="cvss-score">凭证泄露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全研究员发现暴露服务器持有超过86,000台Fortinet FortiGate设备有效凭证。35%设备未更改默认管理员账户，28.3%使用内置系统账户。CISA发布紧急警报要求加固。</p>
+                        <table class="affected-table">
+                            <tr><th>风险指标</th><th>数据</th></tr>
+                            <tr><td>泄露凭证数</td><td class="risk-high">86,644台</td></tr>
+                            <tr><td>默认管理员未更改</td><td class="risk-high">35%</td></tr>
+                            <tr><td>内置系统账户</td><td class="risk-medium">28.3%</td></tr>
+                            <tr><td>影响国家数</td><td>194个</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Operation Endgame联合执法拆除SocGholish僵尸网络</h3>
+                    <div class="article-meta">
+                        <span>荷/加/德/美联合行动 | 6月18日 | Evil Corp关联</span>
+                        <span class="cvss-score">执法行动</span>
+                    </div>
+                    <div class="article-body">
+                        <p>四国执法机构联合拆除SocGholish（FakeUpdates）恶意软件基础设施。自2017年活跃的JS下载器伪装浏览器更新，为Evil Corp、LockBit等勒索软件投递载荷。</p>
+                        <p><strong>行动成果：</strong></p>
+                        <ul>
+                            <li>关闭 <strong>106台</strong> C&C服务器</li>
+                            <li>清理 <strong>14,971</strong> 个WordPress网站</li>
+                            <li>55%云客户曾访问SocGholish基础设施</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">ShinyHunters攻击IC Security：270万条记录面临泄露</h3>
+                    <div class="article-meta">
+                        <span>6月18日 | 最后通牒6月22日</span>
+                        <span class="cvss-score">数据泄露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>ShinyHunters宣布对美国网络安全公司IC Security发动攻击，声称窃取270万条记录及内部企业数据，要求6月22日前联系谈判，否则将泄露数据并带来数字麻烦。</p>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Aurora勒索软件攻击全球检测巨头ALS Global</h3>
+                    <div class="article-meta">
+                        <span>6月19日 | ASX:ALQ | 20,500+员工 | 65+国家</span>
+                        <span class="cvss-score">勒索攻击</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Aurora勒索组织攻击全球测试、检验和认证公司ALS Global（年收入31.9亿澳元），泄露员工凭证、护照扫描件、业务文档和专有研究数据。</p>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">勒索软件三线作战：LockBit 5.0 + TheGentlemen + Icarus</h3>
+                    <div class="article-meta">
+                        <span>全球多目标 | 多组织同时活跃</span>
+                        <span class="cvss-score">勒索态势</span>
+                    </div>
+                    <div class="article-body">
+                        <p>今日勒索生态持续活跃：Icarus攻击Klue.com（加拿大），TheGentlemen攻击Calipage Humblet（比利时），LockBit 5.0攻击AMC Company（泰国）。TheGentlemen提供GentleKiller EDR杀手工具，可终止400+安全进程。</p>
+                        <table class="affected-table">
+                            <tr><th>组织</th><th>目标</th><th>地区</th></tr>
+                            <tr><td>Icarus</td><td>Klue.com</td><td>加拿大</td></tr>
+                            <tr><td>TheGentlemen</td><td>Calipage Humblet</td><td>比利时</td></tr>
+                            <tr><td>LockBit 5.0</td><td>AMC Company</td><td>泰国</td></tr>
+                            <tr><td>Aurora</td><td>ALS Global</td><td>美国</td></tr>
+                            <tr><td>ShinyHunters</td><td>IC Security</td><td>美国</td></tr>
+                        </table>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Quick News Section -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Apple Beats Studio Buds窃听漏洞 CVE-2025-20701</h4>
+                    <p>Airoha蓝牙SDK授权错误（CVSS 8.8），攻击者在蓝牙范围内可无需用户同意配对设备并利用麦克风窃听。固件1B211已修复。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. CryptoBandits恶意软件：后门+Tor双重功能</h4>
+                    <p>新型CryptoBandits恶意软件使用本地SOCKS5代理通过Tor路由流量，将数据窃取与远程代码执行功能融合。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Texas政府数据泄露：300万驾照信息曝光</h4>
+                    <p>德克萨斯州政府系统遭入侵，超过300万驾照信息泄露。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Gravity SMTP WordPress插件信息泄露在野利用</h4>
+                    <p>影响约10万个WordPress网站的信息泄露漏洞正在被攻击者积极利用。</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日安全事件风险象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title "今日安全事件风险象限"
+    x-axis "低影响" --> "高影响"
+    y-axis "有限利用" --> "广泛利用"
+    quadrant-1 "紧急响应"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规关注"
+    "Klue供应链攻击": [0.9, 0.85]
+    "FortiBleed凭证泄露": [0.95, 0.9]
+    "SocGholish拆除": [0.8, 0.75]
+    "ShinyHunters IC": [0.75, 0.7]
+    "Aurora攻击ALS": [0.7, 0.65]
+    "LockBit 5.0": [0.6, 0.6]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日安全事件类型分布
+    "供应链攻击" : 30
+    "勒索软件" : 25
+    "凭证泄露" : 20
+    "执法行动" : 15
+    "数据泄露" : 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attack Flow Diagram -->
+            <h3 class="section-header">Klue供应链攻击链</h3>
+            <div class="chart-container" style="margin-bottom:40px;">
+                <div class="mermaid">
+flowchart TD
+    A[攻击者获取Klue旧集成凭证] --> B[入侵Klue后端系统]
+    B --> C[推送恶意代码更新]
+    C --> D[窃取客户OAuth令牌]
+    D --> E[利用OAuth令牌访问Salesforce REST API]
+    E --> F[24小时自动化CRM数据抽取]
+    F --> G[窃取联系人/报价/销售数据]
+    G --> H[Icarus组织要求赎金谈判]
+    H --> I[威胁泄露数据]
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <h3 class="section-header">Operation Endgame执法时间线</h3>
+            <div style="margin-bottom:40px;">
+                <div class="mermaid">
+timeline
+    title Operation Endgame打击SocGholish时间线
+    2024年 : Operation Endgame启动
+           : 首轮僵尸网络基础设施打击
+    2026年6月18日 : 荷兰/加拿大/德国/美国联合行动
+                 : 关闭106台SocGholish C&amp;C服务器
+                 : 清理14971个受感染WordPress网站
+    2026年6月19日 : FBI发布公共安全公告
+                 : 通知网站所有者加固系统
+    后续 : 持续追踪TA569运营者
+         : 打击Evil Corp等下游勒索组织
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/cybersecurity-firms-impacted-by-klue-supply-chain-attack/">Cybersecurity Firms Impacted by Klue Supply Chain Attack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/06/salesforce-disables-klue-app.html">Salesforce Disables Klue App Integration</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/06/operation-endgame-disrupts-socgholish.html">Operation Endgame Disrupts SocGholish</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/fortibleed-86000-fortinet-device-credentials-compromised/">FortiBleed: 86,000 Fortinet Credentials Compromised</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/06/18/cisa-urges-hardening-fortinet-devices-after-reports-credential-exposure">CISA Fortinet Device Hardening Alert</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DeXpose</span>
+                        <a href="https://www.dexpose.io/shinyhunters-compromise-ic-security-in-major-ransomware-attack/">ShinyHunters Attack on IC Security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DeXpose</span>
+                        <a href="https://www.dexpose.io/aurora-ransomware-strikes-als-global/">Aurora Ransomware Strikes ALS Global</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DeXpose</span>
+                        <a href="https://www.dexpose.io/icarus-ransomware-group-compromises-canadian-firm-klue-com/">Icarus Compromises Klue.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DeXpose</span>
+                        <a href="https://www.dexpose.io/lockbit-5-0-strikes-amc-company-limited-in-thailand/">LockBit 5.0 Strikes AMC Company Thailand</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DeXpose</span>
+                        <a href="https://www.dexpose.io/thegentlemen-ransomware-attack-on-calipage-humblet/">TheGentlemen Attack on Calipage Humblet</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Huntress</span>
+                        <a href="https://www.huntress.com/blog/klue-breach-investigation/">Klue Breach Investigation</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ReliaQuest</span>
+                        <a href="https://reliaquest.com/blog/threat-spotlight-integration-abused-in-crm-data-theft/">Integration Abused in CRM Data Theft</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Netherlands Police</span>
+                        <a href="https://www.politie.nl/en/news/2026/june/18/international-law-enforcement-initiate-hunt-on-malware-group-socgholish.html">Operation Endgame SocGholish Takedown</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Proofpoint</span>
+                        <a href="https://www.proofpoint.com/us/blog/threat-insight/sayonara-socgholish-operation-endgame-disrupts-major-cybercrime-operation/">Sayonara SocGholish Analysis</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年6月20日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
