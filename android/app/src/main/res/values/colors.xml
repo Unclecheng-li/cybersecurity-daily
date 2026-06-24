@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ink_black">#1a1a1a</color>
+    <color name="ink_dark">#2d2d2d</color>
+    <color name="paper_cream">#f5f0e8</color>
+    <color name="accent_red">#c41e3a</color>
+    <color name="accent_orange">#e85d04</color>
+    <color name="accent_gold">#c9a227</color>
+    <color name="widget_bg">#1a1a1a</color>
+    <color name="widget_text_primary">#e8e0d0</color>
+    <color name="widget_text_secondary">#888888</color>
+</resources>
