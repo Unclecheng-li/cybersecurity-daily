@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>网安日报速递学习笔记 - 2026年6月24日</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Zeyada&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper-bg: #fdf6e3;
+    --paper-dark: #f5ecd3;
+    --paper-line: #e8e0cc;
+    --ink-black: #2c2c2c;
+    --ink-red: #c0392b;
+    --ink-blue: #2980b9;
+    --ink-green: #27ae60;
+    --ink-purple: #8e44ad;
+    --ink-orange: #e67e22;
+    --highlight-yellow: rgba(255, 235, 59, 0.35);
+    --highlight-pink: rgba(255, 105, 180, 0.25);
+    --highlight-green: rgba(46, 204, 113, 0.2);
+    --highlight-orange: rgba(255, 152, 0, 0.2);
+    --tape: rgba(255, 255, 255, 0.45);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #3d3d3d;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    font-family: 'Kalam', cursive;
+    overflow-x: hidden;
+  }
+
+  .desk {
+    position: relative;
+    width: 100%;
+    max-width: 920px;
+  }
+
+  .notebook {
+    position: relative;
+    background: var(--paper-bg);
+    background-image:
+      linear-gradient(90deg, transparent 79px, #e8d5b5 79px, #e8d5b5 81px, transparent 81px),
+      linear-gradient(var(--paper-line) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 2.4rem;
+    background-position: 0 0, 0 0;
+    border-radius: 4px;
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.15),
+      0 4px 8px rgba(0,0,0,0.12),
+      0 8px 16px rgba(0,0,0,0.1),
+      0 16px 32px rgba(0,0,0,0.08),
+      15px 25px 40px rgba(0,0,0,0.15);
+    padding: 3rem 2.5rem 3rem 6rem;
+    line-height: 2.4rem;
+    color: var(--ink-black);
+    transform: rotate(-0.3deg);
+    animation: paperFloat 6s ease-in-out infinite;
+  }
+
+  @keyframes paperFloat {
+    0%, 100% { transform: rotate(-0.3deg) translateY(0); }
+    50% { transform: rotate(-0.1deg) translateY(-3px); }
+  }
+
+  /* ===== 螺旋装订 ===== */
+  .spiral-holes {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 2rem 0;
+  }
+
+  .hole {
+    width: 14px;
+    height: 14px;
+    background: #3d3d3d;
+    border-radius: 50%;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.5);
+    position: relative;
+  }
+
+  .hole::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 6px;
+    background: #b0b0b0;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+
+  /* ===== 胶带 ===== */
+  .tape {
+    position: absolute;
+    width: 120px;
+    height: 30px;
+    background: var(--tape);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(200,200,200,0.3);
+    z-index: 10;
+  }
+
+  .tape-1 {
+    top: 20px;
+    right: 60px;
+    transform: rotate(8deg);
+  }
+
+  .tape-2 {
+    bottom: 40px;
+    left: 100px;
+    transform: rotate(-5deg);
+  }
+
+  /* ===== 回形针 ===== */
+  .paperclip {
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    width: 20px;
+    height: 60px;
+    border: 2px solid #b0b0b0;
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
+    transform: rotate(10deg);
+    z-index: 10;
+  }
+
+  .paperclip::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 30px;
+    border: 2px solid #b0b0b0;
+    border-radius: 6px 6px 0 0;
+    border-bottom: none;
+  }
+
+  /* ===== 咖啡渍 ===== */
+  .coffee-stain {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(139,90,43,0.15) 0%, rgba(139,90,43,0.05) 50%, transparent 70%);
+    z-index: 5;
+  }
+
+  .coffee-1 {
+    bottom: 100px;
+    right: 100px;
+    transform: rotate(20deg);
+  }
+
+  /* ===== 折角 ===== */
+  .folded-corner {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--paper-bg) 50%, var(--paper-dark) 50%);
+    box-shadow: -2px -2px 5px rgba(0,0,0,0.1);
+    z-index: 10;
+  }
+
+  /* ===== 内容样式 ===== */
+  .title {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2.2rem;
+    color: var(--ink-red);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 8px;
+  }
+
+  .subtitle {
+    font-family: 'Zeyada', cursive;
+    font-size: 1.4rem;
+    color: var(--ink-blue);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .section {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    color: var(--ink-red);
+    border-bottom: 2px dashed var(--ink-red);
+    padding-bottom: 5px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::before {
+    content: '📌';
+    font-size: 1.2rem;
+  }
+
+  .content {
+    font-size: 1.1rem;
+    line-height: 2.4rem;
+    margin-left: 20px;
+  }
+
+  .content p {
+    margin-bottom: 1rem;
+    text-indent: 2em;
+  }
+
+  .content ul {
+    margin: 1rem 0;
+    padding-left: 2em;
+  }
+
+  .content li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* ===== 重点高亮 ===== */
+  .highlight {
+    background: var(--highlight-yellow);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+
+  .highlight-pink {
+    background: var(--highlight-pink);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+
+  .highlight-green {
+    background: var(--highlight-green);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+
+  .highlight-orange {
+    background: var(--highlight-orange);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+
+  .red-text {
+    color: var(--ink-red);
+    font-weight: bold;
+  }
+
+  .blue-text {
+    color: var(--ink-blue);
+  }
+
+  .green-text {
+    color: var(--ink-green);
+  }
+
+  .purple-text {
+    color: var(--ink-purple);
+  }
+
+  .orange-text {
+    color: var(--ink-orange);
+    font-weight: bold;
+  }
+
+  .code-term {
+    font-family: 'Courier New', monospace;
+    background: rgba(0,0,0,0.05);
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-decoration: underline;
+  }
+
+  .underline-wavy {
+    text-decoration: underline wavy var(--ink-red);
+    text-underline-offset: 4px;
+  }
+
+  .double-underline {
+    text-decoration: underline double var(--ink-red);
+    text-underline-offset: 4px;
+  }
+
+  .check-mark {
+    color: var(--ink-green);
+    font-weight: bold;
+  }
+
+  .cross-mark {
+    color: var(--ink-red);
+    font-weight: bold;
+  }
+
+  .star-mark {
+    color: var(--ink-red);
+    font-weight: bold;
+  }
+
+  /* ===== 标签 ===== */
+  .badge {
+    display: inline-block;
+    background: var(--ink-red);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin: 0 5px;
+  }
+
+  .badge.blue { background: var(--ink-blue); }
+  .badge.green { background: var(--ink-green); }
+  .badge.purple { background: var(--ink-purple); }
+  .badge.orange { background: var(--ink-orange); }
+
+  /* ===== 代码块 ===== */
+  .code-block {
+    background: rgba(0,0,0,0.05);
+    border-left: 4px solid var(--ink-purple);
+    padding: 15px 20px;
+    margin: 1rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+
+  .code-comment {
+    color: var(--ink-green);
+    font-style: italic;
+  }
+
+  .code-keyword {
+    color: var(--ink-blue);
+    font-weight: bold;
+  }
+
+  .code-string {
+    color: var(--ink-orange);
+  }
+
+  /* ===== 旁注 ===== */
+  .side-note {
+    position: relative;
+    margin: 1.5rem 0;
+    padding: 15px 20px;
+    background: rgba(255,255,0,0.1);
+    border-left: 4px solid var(--ink-orange);
+    font-size: 0.95rem;
+    color: var(--ink-black);
+    transform: rotate(1deg);
+  }
+
+  .side-note::before {
+    content: '💡';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 1.2rem;
+  }
+
+  /* ===== 攻击链 ===== */
+  .attack-chain {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 1.5rem 0;
+    padding: 15px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 5px;
+  }
+
+  .chain-step {
+    background: var(--ink-black);
+    color: var(--paper-bg);
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    position: relative;
+  }
+
+  .chain-step::after {
+    content: '→';
+    position: absolute;
+    right: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-red);
+    font-weight: bold;
+  }
+
+  .chain-step:last-child::after {
+    display: none;
+  }
+
+  .chain-step.critical {
+    background: var(--ink-red);
+  }
+
+  /* ===== 数据表格 ===== */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+
+  .data-table th {
+    background: var(--ink-black);
+    color: var(--paper-bg);
+    padding: 10px;
+    text-align: left;
+  }
+
+  .data-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+
+  .data-table tr:hover {
+    background: rgba(255,235,59,0.1);
+  }
+
+  .risk-high {
+    color: var(--ink-red);
+    font-weight: bold;
+  }
+
+  .risk-medium {
+    color: var(--ink-orange);
+    font-weight: bold;
+  }
+
+  /* ===== 涂鸦装饰 ===== */
+  .doodle {
+    position: absolute;
+    opacity: 0.15;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* ===== 入场动画 ===== */
+  @keyframes writeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .write-in {
+    animation: writeIn 0.5s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 768px) {
+    body { padding: 20px 10px; }
+    .notebook {
+      padding: 2rem 1.5rem 2rem 4rem;
+      transform: rotate(0);
+      animation: none;
+    }
+    .title { font-size: 1.8rem; }
+    .subtitle { font-size: 1.2rem; }
+    .section-title { font-size: 1.3rem; }
+    .content { font-size: 1rem; margin-left: 10px; }
+    .attack-chain { flex-direction: column; align-items: flex-start; }
+    .chain-step::after { display: none; }
+    .spiral-holes { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="desk">
+  <div class="notebook">
+    <!-- 螺旋装订 -->
+    <div class="spiral-holes">
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+    </div>
+
+    <!-- 胶带 -->
+    <div class="tape tape-1"></div>
+    <div class="tape tape-2"></div>
+
+    <!-- 回形针 -->
+    <div class="paperclip"></div>
+
+    <!-- 咖啡渍 -->
+    <div class="coffee-stain coffee-1"></div>
+
+    <!-- 折角 -->
+    <div class="folded-corner"></div>
+
+    <!-- 涂鸦 -->
+    <div class="doodle" style="top:120px;right:80px;font-size:2rem;transform:rotate(15deg);">&#9760;</div>
+    <div class="doodle" style="top:300px;right:120px;font-size:1.8rem;transform:rotate(-10deg);">&#129302;</div>
+    <div class="doodle" style="bottom:200px;right:60px;font-size:2.2rem;transform:rotate(25deg);">&#128274;</div>
+    <div class="doodle" style="top:500px;right:40px;font-size:1.5rem;transform:rotate(-20deg);">&#128027;</div>
+
+    <!-- 标题 -->
+    <div class="title write-in" style="animation-delay:0.1s">网安日报速递学习笔记</div>
+    <div class="subtitle write-in" style="animation-delay:0.3s">2026年6月24日 · AI/ML工具漏洞爆发日</div>
+
+    <!-- 第一节：CISA KEV -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:0.5s">CISA紧急新增四个KEV漏洞</div>
+      <div class="content write-in" style="animation-delay:0.6s">
+        <p>CISA于6月23日紧急将四个漏洞添加至已知被利用漏洞（KEV）目录，所有漏洞均已被实际攻击利用。</p>
+        <p><span class="red-text">关键信息：</span></p>
+        <ul>
+          <li><span class="highlight">Ubiquiti UniFi OS三连击</span>：CVE-2026-34910/34909/34908，<span class="double-underline">CVSS 10.0 × 3</span></li>
+          <li><span class="highlight">Lantronix EDS5000</span>：CVE-2025-67038，连接OT/ICS环境的桥梁设备</li>
+          <li><span class="red-text">修复截止日：2026年6月26日</span>（仅剩2天！）</li>
+        </ul>
+      </div>
+      <div class="side-note write-in" style="animation-delay:0.7s">
+        <span class="orange-text">⚠️ 注意：</span>所有漏洞<span class="red-text">无需认证</span>即可被网络相邻攻击者利用，攻击门槛极低！
+      </div>
+      <div class="attack-chain write-in" style="animation-delay:0.8s">
+        <span class="chain-step">攻击者</span>
+        <span class="chain-step">网络扫描</span>
+        <span class="chain-step">CVE-2026-34908</span>
+        <span class="chain-step">CVE-2026-34909</span>
+        <span class="chain-step critical">CVE-2026-34910</span>
+        <span class="chain-step critical">设备接管</span>
+      </div>
+    </div>
+
+    <!-- 第二节：AI/ML工具漏洞 -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:1.0s">AI/ML工具漏洞爆发</div>
+      <div class="content write-in" style="animation-delay:1.1s">
+        <p>2026年6月24日成为AI/ML工具安全<span class="highlight-pink">"黑色星期三"</span>，多个主流AI开发平台同日披露高危漏洞。</p>
+        <p><span class="red-text">关键漏洞：</span></p>
+        <ul>
+          <li><span class="highlight">Flowise</span>：CVE-2026-56274，<span class="double-underline">CVSS 9.9</span>，OS命令注入</li>
+          <li><span class="highlight">picklescan</span>：CVE-2026-56315，<span class="double-underline">CVSS 9.8</span>，安全机制绕过（5个CVE）</li>
+          <li><span class="highlight">Crawl4AI</span>：CVE-2026-53753，<span class="double-underline">CVSS 9.8</span>，远程代码执行</li>
+          <li><span class="highlight">Langflow</span>：CVE-2026-48519，<span class="double-underline">CVSS 9.6</span>，远程代码执行</li>
+        </ul>
+      </div>
+      <div class="side-note write-in" style="animation-delay:1.2s">
+        <span class="red-text">🚨 严重警告：</span>picklescan失效意味着所有依赖该工具的组织一直处于<span class="highlight-pink">"虚假安全感"</span>中！恶意模型可绕过安全检查直接进入生产环境。
+      </div>
+      <div class="data-table write-in" style="animation-delay:1.3s">
+        <table>
+          <tr>
+            <th>产品</th>
+            <th>CVSS</th>
+            <th>漏洞类型</th>
+            <th>补丁状态</th>
+          </tr>
+          <tr>
+            <td>Flowise</td>
+            <td class="risk-high">9.9</td>
+            <td>OS命令注入</td>
+            <td>3.1.2已修复</td>
+          </tr>
+          <tr>
+            <td>picklescan</td>
+            <td class="risk-high">9.8</td>
+            <td>安全机制绕过</td>
+            <td>1.0.4已修复</td>
+          </tr>
+          <tr>
+            <td>Crawl4AI</td>
+            <td class="risk-high">9.8</td>
+            <td>远程代码执行</td>
+            <td>待确认</td>
+          </tr>
+          <tr>
+            <td>Langflow</td>
+            <td class="risk-medium">9.6</td>
+            <td>远程代码执行</td>
+            <td>待确认</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 第三节：ManageEngine SSO -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:1.5s">ManageEngine SSO漏洞</div>
+      <div class="content write-in" style="animation-delay:1.6s">
+        <p>ManageEngine旗下四款产品存在<span class="highlight">SSO令牌随机性不足</span>漏洞，可导致会话劫持攻击。</p>
+        <p><span class="red-text">漏洞机制：</span></p>
+        <ul>
+          <li><span class="code-term">CVE-2026-11374</span>：CVSS 9.0</li>
+          <li><span class="blue-text">影响产品</span>：ADSelfService Plus等四款</li>
+          <li><span class="purple-text">攻击方式</span>：令牌预测 → 会话劫持 → 权限提升</li>
+        </ul>
+      </div>
+      <div class="side-note write-in" style="animation-delay:1.7s">
+        <span class="orange-text">💡 关键点：</span>SSO是企业统一认证入口，一旦失守影响深远。建议启用多因素认证作为额外防护层。
+      </div>
+    </div>
+
+    <!-- 第四节：expr-eval -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:1.9s">expr-eval JavaScript库漏洞</div>
+      <div class="content write-in" style="animation-delay:2.0s">
+        <p>流行的JavaScript表达式评估库存在<span class="highlight-pink">任意代码执行</span>漏洞，所有版本受影响，暂无通用补丁。</p>
+        <p><span class="red-text">风险分析：</span></p>
+        <ul>
+          <li><span class="code-term">CVE-2026-12866</span>：CVSS 9.8</li>
+          <li><span class="orange-text">周下载量</span>：超过200万</li>
+          <li><span class="red-text">补丁状态</span>：无官方补丁</li>
+          <li><span class="purple-text">缓解方案</span>：迁移到沙箱式表达式评估库（如mathjs、jexl）</li>
+        </ul>
+      </div>
+      <div class="side-note write-in" style="animation-delay:2.1s">
+        <span class="red-text">⚠️ 紧急行动：</span>在项目中搜索<span class="code-term">expr-eval</span>依赖，评估暴露面。临时缓解：对用户输入进行严格验证和沙箱化。
+      </div>
+    </div>
+
+    <!-- 第五节：逾期漏洞 -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:2.3s">Splunk/Cisco SD-WAN KEV逾期</div>
+      <div class="content write-in" style="animation-delay:2.4s">
+        <p>两个之前披露的KEV漏洞已超过修复截止日，但仍在被积极利用。</p>
+        <p><span class="red-text">逾期状态：</span></p>
+        <ul>
+          <li><span class="highlight-pink">Splunk CVE-2026-20253</span>：截止日6月21日，<span class="red-text">逾期3天</span></li>
+          <li><span class="highlight-pink">Cisco SD-WAN CVE-2026-20262</span>：截止日6月23日，<span class="red-text">逾期1天</span></li>
+        </ul>
+      </div>
+      <div class="side-note write-in" style="animation-delay:2.5s">
+        <span class="orange-text">💡 应对建议：</span>立即验证是否已完成修复。如未完成，实施网络分段和访问控制，加强日志监控。
+      </div>
+    </div>
+
+    <!-- 行动优先级 -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:2.7s">今日行动优先级</div>
+      <div class="content write-in" style="animation-delay:2.8s">
+        <p><span class="star-mark">★</span> <span class="red-text">最紧急（6月26日截止）</span>：Ubiquiti UniFi OS三个CVSS 10.0漏洞 + Lantronix EDS5000</p>
+        <p><span class="star-mark">★</span> <span class="red-text">紧急（已逾期）</span>：Splunk CVE-2026-20253 + Cisco SD-WAN CVE-2026-20262</p>
+        <p><span class="star-mark">★</span> <span class="orange-text">高危（AI供应链）</span>：picklescan重新扫描所有ML模型 + Flowise升级</p>
+        <p><span class="star-mark">★</span> <span class="orange-text">高危（广泛影响）</span>：ManageEngine SSO漏洞 + expr-eval库漏洞</p>
+        <p><span class="star-mark">★</span> <span class="blue-text">持续监控</span>：所有无补丁漏洞的缓解措施有效性</p>
+      </div>
+    </div>
+
+    <!-- 关键数字 -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:3.0s">今日关键数字</div>
+      <div class="content write-in" style="animation-delay:3.1s">
+        <p><span class="orange-text">关键CVE数量</span>：<span class="double-underline">30个</span>（↑ 76%，前日17个）</p>
+        <p><span class="orange-text">高优先级CVE</span>：<span class="double-underline">57个</span>（↓ 30%，前日81个）</p>
+        <p><span class="orange-text">CISA KEV新增</span>：<span class="double-underline">4个</span></p>
+        <p><span class="orange-text">KEV逾期漏洞</span>：<span class="double-underline">15个</span>（↑）</p>
+        <p><span class="red-text">补丁可用率</span>：<span class="double-underline">0%</span>（⚠️ 全部无补丁）</p>
+        <p><span class="red-text">在野利用漏洞</span>：<span class="double-underline">5个</span></p>
+      </div>
+    </div>
+
+    <!-- 学习要点 -->
+    <div class="section">
+      <div class="section-title write-in" style="animation-delay:3.3s">学习要点总结</div>
+      <div class="content write-in" style="animation-delay:3.4s">
+        <p><span class="check-mark">✓</span> <span class="highlight">AI/ML工具成为攻击新焦点</span>：picklescan失效威胁整个ML供应链安全</p>
+        <p><span class="check-mark">✓</span> <span class="highlight">CISA KEV修复截止日压力增大</span>：多个高危漏洞逾期，在野利用持续</p>
+        <p><span class="check-mark">✓</span> <span class="highlight">企业SSO和JavaScript库供应链风险凸显</span>：ManageEngine和expr-eval漏洞影响广泛</p>
+        <p><span class="check-mark">✓</span> <span class="highlight">零补丁时代</span>：今日披露漏洞补丁可用率为0%，只能依赖缓解措施</p>
+      </div>
+    </div>
+
+    <!-- 旁注 -->
+    <div class="side-note write-in" style="animation-delay:3.6s">
+      <span class="red-text">🚨 核心教训：</span>AI/ML工具的安全检查机制（如picklescan）一旦失效，会导致整个供应链陷入"虚假安全感"。必须建立多层防御机制，不能依赖单一安全工具。
+    </div>
+
+    <!-- 涂鸦补充 -->
+    <div class="doodle" style="bottom:300px;left:100px;font-size:1.8rem;transform:rotate(-15deg);">&#128161;</div>
+    <div class="doodle" style="bottom:150px;right:150px;font-size:2rem;transform:rotate(30deg);">&#128293;</div>
+
+  </div>
+</div>
+
+<script>
+  // 初始化Mermaid（如果需要）
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      fontFamily: 'Kalam, cursive'
+    });
+  }
+</script>
+</body>
+</html>
