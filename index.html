@@ -81,152 +81,202 @@
         // 不再依赖 index.json，本地 file:// 协议也能正常显示
         // ============================================================
         var ARCHIVE_DATA = [
-    {
-        "date": "2026-06-25",
-        "weekday": "星期四",
-        "keywords": "Operation Endgame摧毁Amadey/StealC僵尸网络2700万凭证回收 · Cisco Unified CM CVE-2026-20230 SSRF在野利用Root提权 · Xsolis医疗AI供应商140万患者数据泄露 · LastPass Klue供应链攻击OAuth令牌窃取 · Scattered Spider认罪TfL攻击$3820万 · macOS ClickFix新变体DMG信息窃取 · Edgecution恶意Edge扩展 · Mistic后门KongTuke关联"
-    },
-    {
-        "date": "2026-06-24",
-        "weekday": "星期三",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-23",
-        "weekday": "星期二",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-22",
-        "weekday": "星期一",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-21",
-        "weekday": "星期日",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-20",
-        "weekday": "星期六",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-19",
-        "weekday": "星期五",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-18",
-        "weekday": "星期四",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-17",
-        "weekday": "星期三",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-16",
-        "weekday": "星期二",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-15",
-        "weekday": "星期一",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-14",
-        "weekday": "星期日",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-13",
-        "weekday": "星期六",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-12",
-        "weekday": "星期五",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-11",
-        "weekday": "星期四",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-10",
-        "weekday": "星期三",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-09",
-        "weekday": "星期二",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-08",
-        "weekday": "星期一",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-07",
-        "weekday": "星期日",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-06",
-        "weekday": "星期六",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-05",
-        "weekday": "星期五",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-04",
-        "weekday": "星期四",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-03",
-        "weekday": "星期三",
-        "keywords": "AI城 · 网络安全"
-    },
-    {
-        "date": "2026-06-02",
-        "weekday": "星期二",
-        "keywords": "Google MCP Toolbox DNS重绑定 · Gogs零日77天无补丁 · Carnival邮轮数据泄露 · Proofpoint 2026报告"
-    },
-    {
-        "date": "2026-06-01",
-        "weekday": "星期一",
-        "keywords": "Windows Netlogon零点击RCE · PAN-OS VPN绕过 · Daemon Tools供应链 · Gogs零日 · Nx Console投毒"
-    },
-    {
-        "date": "2026-05-30",
-        "weekday": "星期六",
-        "keywords": "Gogs零日RCE · FortiClient EMS CVE-2026-35616 · Marimo未认证RCE · Kimsuky HTTPSpy · 荷兰摧毁僵尸网络"
-    },
-    {
-        "date": "2026-05-28",
-        "weekday": "星期四",
-        "keywords": "GitLab 6×CVE同日修复 · Nx Console VS扩展投毒 · GitBucket老漏洞标注 · NVIDIA Triton认证绕过"
-    },
-    {
-        "date": "2026-05-23",
-        "weekday": "星期六",
-        "keywords": "Trend Micro Apex One在野 · Drupal PostgreSQL SQL注入 · Cisco CVSS 10.0 · HPLIP提权"
-    },
-    {
-        "date": "2026-05-22",
-        "weekday": "星期五",
-        "keywords": "Cisco CVSS 10.0满分 · Apache OFBiz RCE · OpenClaw四漏洞链 · Claude Code沙箱绕过 · CISA凭证泄露"
-    }
-];
+            {
+                "date": "2026-06-25",
+                "weekday": "星期四",
+                "keywords": "Operation Endgame摧毁Amadey/StealC僵尸网络2700万凭证回收 · Cisco Unified CM CVE-2026-20230 SSRF在野利用Root提权 · Xsolis医疗AI供应商140万患者数据泄露 · LastPass Klue供应链攻击OAuth令牌窃取 · Scattered Spider认罪TfL攻击$3820万 · macOS ClickFix新变体DMG信息窃取 · Edgecution恶意Edge扩展 · Mistic后门KongTuke关联"
+            },
+            {
+                "date": "2026-06-24",
+                "weekday": "星期三",
+                "keywords": "CISA紧急新增4个KEV漏洞Ubiquiti UniFi OS完整攻击链CVSS 10.0 · AI/ML工具漏洞爆发Flowise/picklescan · ManageEngine SSO漏洞 · expr-eval JS库无补丁 · Splunk/Cisco SD-WAN KEV逾期"
+            },
+            {
+                "date": "2026-06-23",
+                "weekday": "星期二",
+                "keywords": "FortiBleed攻击活动升级43万台设备1.1亿凭证 · Squidbleed CVE-2026-47729 29年Squid代理漏洞 · DifyTap AI平台跨租户数据泄露 · FFmpeg PixelSmash CVE-2026-8461 · Microsoft AutoGen Studio AutoJack漏洞"
+            },
+            {
+                "date": "2026-06-22",
+                "weekday": "星期一",
+                "keywords": "FortiBleed凭据大规模泄露86K设备CISA紧急加固 · GentleKiller EDR清除框架400+进程 · AryStinger D-Link僵尸网络4K设备 · Claude AI全球宕机本月第3次 · Defender RoguePlanet零日CVE-2026-50656"
+            },
+            {
+                "date": "2026-06-21",
+                "weekday": "星期日",
+                "keywords": "Splunk CVE-2026-20253在野利用CISA KEV截止明日 · Azure AD/Synapse CVSS 10/9.9 · pgAdmin 4多个关键漏洞 · Prinz Eugen勒索软件 · Mastra AI供应链攻击归因朝鲜 · Gravity SMTP信息泄露"
+            },
+            {
+                "date": "2026-06-20",
+                "weekday": "星期六",
+                "keywords": "Klue供应链攻击OAuth令牌窃取Huntress/Recorded Future/Jamf/Tanium · FortiBleed 86,000台Fortinet设备凭证泄露CISA紧急警报 · Operation Endgame拆除SocGholish僵尸网络14971网站清理 · ShinyHunters攻击IC Security 270万记录"
+            },
+            {
+                "date": "2026-06-19",
+                "weekday": "星期四",
+                "keywords": "Splunk CVE-2026-20253在野利用CISA KEV 3天修复 · F5 NGINX双9.2关键漏洞CVE-2026-42530/42055 · Cisco ISE CVE-2026-20181 CVSS 9.1命令执行 · Atlassian/Splunk 100+安全公告 · REDCap 8500暴露实例遭UNC6508 APT攻击"
+            },
+            {
+                "date": "2026-06-18",
+                "weekday": "星期四",
+                "keywords": "FortiBleed 73,932台Fortinet设备凭证泄露 · Joomla JCE CVE-2026-48907 CVSS 10.0 · Mastra npm供应链攻击144个包 · Google Vertex AI SDK Bucket Squatting · Microsoft Defender RoguePlanet零日CVE-2026-50656"
+            },
+            {
+                "date": "2026-06-17",
+                "weekday": "星期二",
+                "keywords": "Novo Nordisk 1.3TB数据泄露FulcrumSec勒索 · OptinMonster CDN供应链攻击120万站点 · OpenBSD 27年PAP认证绕过 · FortiSandbox三CVE在野利用含AI生成PoC · SimpleHelp CVE-2026-48558认证绕过"
+            },
+            {
+                "date": "2026-06-16",
+                "weekday": "星期一",
+                "keywords": "LiteLLM AI网关CVSS 9.9漏洞链CVE-2026-47101 · Microsoft 365 Copilot SearchLeak CVE-2026-42824 · Cisco SD-WAN零日CVE-2026-20262在野利用 · Wazuh CVSS 10分满分漏洞 · Windows HTTP.sys RCE CVE-2026-47291"
+            },
+            {
+                "date": "2026-06-15",
+                "weekday": "星期日",
+                "keywords": "FBI瓦解AI钓鱼服务Outsider Enterprise · Velvet Ant十年APT后门 · Oracle PeopleSoft零日CVE-2026-35273截止日 · Langflow CVE-2026-5027在野RCE · SAP NetWeaver CVSS 9.9 · Defender RoguePlanet零日"
+            },
+            {
+                "date": "2026-06-14",
+                "weekday": "星期六",
+                "keywords": "微软206漏洞补丁含3个零日 · CVE-2026-45657 Windows内核 · CVE-2026-10520 Ivanti Sentry CVSS 10.0 · CVE-2026-50751 Check Point VPN零日 · Oracle PeopleSoft ShinyHunters攻击 · Langflow AI框架RCE"
+            },
+            {
+                "date": "2026-06-13",
+                "weekday": "星期五",
+                "keywords": "Oracle PeopleSoft零日CVE-2026-35273 · 法国Tchap政府通讯泄露 · Miasma供应链蠕虫 · ServiceNow API漏洞 · VMware XSS · VRChat 240万数据泄露"
+            },
+            {
+                "date": "2026-06-12",
+                "weekday": "星期四",
+                "keywords": "Oracle PeopleSoft零日CVE-2026-35273 · GreatXML BitLocker绕过 · npm v12供应链革命 · OpenClaw AI代理攻击 · OceanLotus SPECTRALVIPER · The Gentlemen勒索蠕虫"
+            },
+            {
+                "date": "2026-06-11",
+                "weekday": "星期三",
+                "keywords": "微软206漏洞补丁 · Check Point VPN零日CVE-2026-50751 · Ivanti Sentry CVSS 10.0 · Veeam Backup RCE · Defender RoguePlanet零日 · AI发现FFmpeg 21零日"
+            },
+            {
+                "date": "2026-06-10",
+                "weekday": "星期二",
+                "keywords": "Microsoft Patch Tuesday 200漏洞 · Check Point VPN零日CVE-2026-50751 · Veeam RCE CVE-2026-44963 · CISA KEV三连新增 · HTTP/2 Bomb DoS"
+            },
+            {
+                "date": "2026-06-09",
+                "weekday": "星期一",
+                "keywords": "Check Point VPN零日CVE-2026-50751 · Gogs零日RCE修补 · Meta AI 2万账户劫持 · UniFi OS Root RCE链 · Shai-Hulud PyPI供应链"
+            },
+            {
+                "date": "2026-06-08",
+                "weekday": "星期日",
+                "keywords": "HuggingFace RCE CVE-2026-4372 · Cisco SD-WAN第7个零日 · FFmpeg 21个0Day · Chrome 429漏洞 · C0XMO僵尸网络 · SolarWinds CISA KEV"
+            },
+            {
+                "date": "2026-06-07",
+                "weekday": "星期六",
+                "keywords": "Cisco SD-WAN零日CVE-2026-20245 · Chrome 149修复429漏洞 · Polyfill.io供应链攻击 · UNC5221 APT新恶意软件 · 五眼联盟警告 · Everest Forms Pro漏洞"
+            },
+            {
+                "date": "2026-06-06",
+                "weekday": "星期六",
+                "keywords": "SolarWinds Serv-U DoS漏洞 · Mirasvit Cache Warmer RCE · MLflow AI凭证泄露 · Carnival 600万数据泄露 · WordPress OTP认证绕过"
+            },
+            {
+                "date": "2026-06-05",
+                "weekday": "星期五",
+                "keywords": "IronWorm npm供应链 · Claude Code Action劫持 · Cisco Unified CM SSRF · VS Code零日令牌窃取 · DentaQuest 260万泄露 · Acer双零日"
+            },
+            {
+                "date": "2026-06-04",
+                "weekday": "星期三",
+                "keywords": "Magento RCE零日 CVE-2026-45247 · HTTP/2 Bomb DoS · Microsoft 365 FlagLeft · Windows Search URI · Gemini通知劫持"
+            },
+            {
+                "date": "2026-06-03",
+                "weekday": "星期二",
+                "keywords": "Netlogon零点击RCE · Oracle WebLogic KEV · Red Hat npm供应链 · Android零日 · Kirki WordPress提权"
+            },
+            {
+                "date": "2026-06-02",
+                "weekday": "星期一",
+                "keywords": "Google MCP Toolbox DNS重绑定 · Gogs零日77天无补丁 · Carnival邮轮数据泄露 · Proofpoint 2026报告"
+            },
+            {
+                "date": "2026-06-01",
+                "weekday": "星期日",
+                "keywords": "Windows Netlogon零点击RCE · PAN-OS VPN绕过 · Daemon Tools供应链 · Gogs零日 · Nx Console投毒"
+            },
+            {
+                "date": "2026-05-30",
+                "weekday": "星期六",
+                "keywords": "Gogs零日RCE · FortiClient EMS CVE-2026-35616 · Marimo未认证RCE · Kimsuky HTTPSpy · 荷兰摧毁僵尸网络"
+            },
+            {
+                "date": "2026-05-28",
+                "weekday": "星期三",
+                "keywords": "GitLab 6×CVE同日修复 · Nx Console VS扩展投毒 · GitBucket老漏洞标注 · NVIDIA Triton认证绕过"
+            },
+            {
+                "date": "2026-05-25",
+                "weekday": "星期日",
+                "keywords": "持续跟踪Exchange OWA零日 · Nginx Rift CVE-2026-42945 · cPanel CVE-2026-41940 · RondoDox攻击链 · Kali365攻击链 · 设备代码钓鱼"
+            },
+            {
+                "date": "2026-05-23",
+                "weekday": "星期五",
+                "keywords": "Trend Micro Apex One在野 · Drupal PostgreSQL SQL注入 · Cisco CVSS 10.0 · HPLIP提权"
+            },
+            {
+                "date": "2026-05-22",
+                "weekday": "星期四",
+                "keywords": "Cisco CVSS 10.0满分 · Apache OFBiz RCE · OpenClaw四漏洞链 · Claude Code沙箱绕过 · CISA凭证泄露"
+            },
+            {
+                "date": "2026-05-21",
+                "weekday": "星期三",
+                "keywords": "Trump AI网络安全行政令 · Exchange OWA零日持续 · Nginx Rift在野利用 · BIND CVE-2026-5947 · authentik SAML绕过 · Taiko双9.8"
+            },
+            {
+                "date": "2026-05-20",
+                "weekday": "星期二",
+                "keywords": "Avada Builder WordPress双漏洞 · BeyondTrust微软漏洞报告 · Exchange OWA零日扩散 · Grafana Token失窃升级 · Mistral AI源码失窃"
+            },
+            {
+                "date": "2026-05-19",
+                "weekday": "星期一",
+                "keywords": "Fortinet双星未认证RCE · Grafana Labs后续 · Exchange OWA零日扩散 · Nginx Rift在野利用 · West Pharma勒索"
+            },
+            {
+                "date": "2026-05-18",
+                "weekday": "星期日",
+                "keywords": "Grafana Labs Token遭窃深度 · Exchange OWA CVE-2026-42897零日 · Nginx Rift在野利用确认 · Funnel Builder e-Skimmer"
+            },
+            {
+                "date": "2026-05-17",
+                "weekday": "星期六",
+                "keywords": "Grafana Labs Token遭窃CoinbaseCartel勒索 · Cisco SD-WAN CVE-2026-20182 · Pwn2Own Berlin 2026 47零日$129.8万 · node-ipc投毒深度"
+            },
+            {
+                "date": "2026-05-16",
+                "weekday": "星期五",
+                "keywords": "ssh-keysign-pwn CVE-2026-46333 · Mini Shai-Hulud供应链 · node-ipc npm投毒 · 勒索软件态势 · IMF AI网络攻击风险警告"
+            },
+            {
+                "date": "2026-05-15",
+                "weekday": "星期四",
+                "keywords": "Nginx Rift CVE-2026-42945引爆安全圈CVSS 9.2 · Fragnesia Linux内核LPE · cPanel CVE-2026-41940大规模利用 · Trellix遭入侵"
+            },
+            {
+                "date": "2026-05-14",
+                "weekday": "星期三",
+                "keywords": "Google GTIG首例AI辅助零日 · CNVD Skills恶意包公告 · MS Patch Tuesday深度 · PAN-OS国家级APT利用 · Canvas赎金暗示"
+            },
+            {
+                "date": "2026-05-13",
+                "weekday": "星期二",
+                "keywords": "富士康Nitrogen勒索8TB · Canvas数据泄露2.75亿记录 · Microsoft Patch Tuesday 120 CVE · SAP 5月补丁 · PAN-OS零日CVE-2026-0300"
+            }
+        ];
 
         // ============================================================
         // 分页配置
