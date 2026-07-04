@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Title bar with refresh and settings -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/widget_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:paddingStart="3dp"
+            android:singleLine="true"
+            android:text="\u7f51\u7edc\u5b89\u5168\u65e5\u62a5"
+            android:textColor="@color/accent_gold"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="\u52a0\u8f7d\u4e2d"
+            android:textColor="@color/accent_gold"
+            android:textSize="13sp" />
+
+        <ProgressBar
+            android:id="@+id/widget_refresh_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/widget_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:padding="4dp"
+            android:text="\u21bb"
+            android:textColor="@color/accent_gold"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/widget_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:padding="4dp"
+            android:text="\u2699"
+            android:textColor="@color/widget_text_secondary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Keywords -->
+    <TextView
+        android:id="@+id/widget_keywords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/accent_red"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="3dp"
+        android:text="\u6b63\u5728\u83b7\u53d6\u6700\u65b0\u5b89\u5168\u8981\u95fb..."
+        android:textColor="@android:color/white"
+        android:textSize="11sp" />
+
+    <!-- Scrollable article list -->
+    <ListView
+        android:id="@+id/widget_article_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="4dp"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent" />
+
+    <!-- Chart images section -->
+    <LinearLayout
+        android:id="@+id/widget_charts_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/widget_chart_img_1"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true" />
+
+        <ImageView
+            android:id="@+id/widget_chart_img_2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true" />
+    </LinearLayout>
+
+    <!-- Footer -->
+    <TextView
+        android:id="@+id/widget_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:paddingStart="3dp"
+        android:singleLine="true"
+        android:text="\u70b9\u51fb\u9605\u8bfb\u5b8c\u6574\u65e5\u62a5"
+        android:textColor="@color/accent_gold"
+        android:textSize="10sp" />
+</LinearLayout>

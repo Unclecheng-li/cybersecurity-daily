@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Shield shape -->
+    <path
+        android:fillColor="#c9a227"
+        android:pathData="M54,20 L54,20 L74,26 L74,44 C74,62 64,76 54,84 C44,76 34,62 34,44 L34,26 Z" />
+    <!-- Inner shield -->
+    <path
+        android:fillColor="#1a1a1a"
+        android:pathData="M54,30 L54,30 L68,34 L68,44 C68,57 60,68 54,74 C48,68 40,57 40,44 L40,34 Z" />
+    <!-- Newspaper lines -->
+    <path
+        android:fillColor="#c9a227"
+        android:pathData="M45,42 L63,42 L63,44 L45,44 Z" />
+    <path
+        android:fillColor="#c9a227"
+        android:pathData="M45,48 L63,48 L63,50 L45,50 Z" />
+    <path
+        android:fillColor="#c9a227"
+        android:pathData="M45,54 L58,54 L58,56 L45,56 Z" />
+    <!-- CVE badge -->
+    <path
+        android:fillColor="#c41e3a"
+        android:pathData="M48,58 L52,58 L52,62 L48,62 Z" />
+    <path
+        android:fillColor="#c41e3a"
+        android:pathData="M53,58 L57,58 L57,62 L53,62 Z" />
+</vector>
