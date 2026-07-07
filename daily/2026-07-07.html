@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月7日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月7日 星期二</span>
+            <span class="edition-number">第 30 期 | 总第 30 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>fast-mcp-telegram CVE-2026-52830 路径遍历未授权Telegram会话 · The Gentlemen 勒索 21种远程执行+worm自传播 · SkillCloak 8大静态扫描仪90%+绕过 · TrojPix 空隙系统208米EM渗漏8.1Mbps · IBM WebSphere CVE-2026-11712/11708/11595 XSS×2+路径遍历 · OpenSSH 10.4 多安全修复+实验性PQ加密 · Microsoft Edge CVE-2026-57992 UAF RCE · Gemini Live Voice token misconfig提示词注入 · Microsoft Device Code 钓鱼 Securelist 4-5月活动 · SilverFox ValleyRAT 8阶段+内核rootkit
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">fast-mcp-telegram CVE-2026-52830 凭一个路径遍历把 Telegram 账户"白送"出去 + SkillCloak 让 8 个 AI 编码 Agent 静态扫描仪 90%+ 失明 + The Gentlemen 用 21 种远程执行把单点感染变成整网沦陷</h2>
+                <p class="sub-headline">7/7 当天公开的 CVE-2026-52830 是 fast-mcp-telegram MCP 服务器把 HTTP Bearer token 直接拼到 session 文件路径上的路径遍历漏洞，攻击者用 "../fast-mcp-telegram/telegram" 这类 token 就能越过校验、未授权拿到默认 session 并通过 MTProto API 操控账户；CSA / Arxiv 研究员的 SkillCloak 测试 8 款主流 AI 编程 Agent 静态扫描仪，对 1,600+ 野生恶意 skill 的绕过率均超 90%，自解压包技术让"看起来干净"和"运行时安全"成为两个不同概念；Picus Security 披露的 The Gentlemen 勒索以 Go 写、Garble 混淆、Curve25519+XChaCha20 加密、21 种远程执行技术配合 PsExec 自传播——7/6/7 三天事件把"AI Agent 工具链 + 空隙系统 + 勒索 worm 引擎"三大新形态首次摆到同一天。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">fast-mcp-telegram CVE-2026-52830 — 路径遍历把 Telegram 账户"白送"出去</h3>
+                    <div class="article-meta">
+                        <span>7/7 当天披露 / OpenCVE+Mondoo+GHSA 三源共识</span>
+                        <span class="cvss-score">未认证 / 远程</span>
+                    </div>
+                    <div class="article-body">
+                        <p>7/7 当天公开的 CVE-2026-52830 是 fast-mcp-telegram MCP 服务器的**路径遍历漏洞**——HTTP Bearer token 被直接拼到 session 文件路径上做"会话名"用。攻击者用 `../fast-mcp-telegram/telegram` 这类 token 就能越过校验、未授权拿到默认 session 并**通过 MTProto API 操控 Telegram 账户**。OpenCVE / Mondoo / GitHub Advisory 当日同步收录，标志 MCP server 自身的权限模型成为 AI Agent 安全新焦点。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>路径遍历（CWE-22）+ 认证绕过</li>
+                            <li><strong>攻击方式：</strong>HTTP Bearer token 被当作路径片段，字符串 "telegram" 被黑名单拦截但未规范化输入，未限制 "../" / "/" / 绝对路径</li>
+                            <li><strong>影响范围：</strong>所有 < 0.19.1 版本（0.19.1 已修复）</li>
+                            <li><strong>后果：</strong>未认证远程拿到默认 session，**MTProto API 全开**（读消息 / 发消息 / 调 API / 拿附件）</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>"token 当文件名"是经典反模式：HTTP Bearer token 应是不透明标识符而非路径片段</li>
+                            <li>**未认证即可触发**——普通互联网节点远程即可发起</li>
+                            <li>AI Agent 工具链 = 新攻击面：MCP server 自身的权限模型 + 文件系统访问成为焦点</li>
+                            <li>3 个独立数据库同日收录 = 真漏洞而非扫描器噪音</li>
+                            <li>修复版 0.19.1 已发，但**未自动升级的部署大量存在**</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者发起请求</span>
+                        <span class="flow-step">Bearer: ../fast-mcp-telegram/telegram</span>
+                        <span class="flow-step">路径拼接待校验</span>
+                        <span class="flow-step critical">路径遍历绕过</span>
+                        <span class="flow-step critical">MTProto API 操控</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">The Gentlemen 勒索 — 21 种远程执行 + worm 自传播（Go 高级 RaaS）</h3>
+                    <div class="article-meta">
+                        <span>Picus Security 披露 / 7/6</span>
+                        <span class="cvss-score">Curve25519+XChaCha20</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Picus Security 追踪半年的 The Gentlemen 勒索以 **Go + Garble 混淆**写就，用 <code>--spread</code> flag 激活自传播——把自身 binary 复制到匿名 SMB 共享，扫描内网主机后**尝试 21 种远程执行**（远程复制 / PsExec / 计划任务 / 服务 / PowerShell …），每文件用 **Curve25519+XChaCha20** 独立密钥加密。</p>
+                        <p><strong>影响行业：</strong>教育 / 交通 / 医疗 / 金融（北美 / 南美 / 欧洲 / 非洲 / 亚洲）</p>
+                        <p><strong>关键点：</strong>与 BreachForums 合作招募 affiliate（IAB + 渗透测试者）→ RaaS 攻击者门槛进一步降低</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">SkillCloak — 8 大 AI 编程 Agent 静态扫描仪 90%+ 失明</h3>
+                    <div class="article-meta">
+                        <span>Arxiv 论文 / CSA Labs 收录 / 7/6</span>
+                        <span class="cvss-score">1,600+ 野生恶意 skill</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CSA / Arxiv 研究员的 **SkillCloak** 工具对 1,600+ 真实野生恶意 skill 测试 8 款主流 AI 编程 Agent 静态扫描仪，**绕过率均 > 90%**。两种技术叠加：① 结构性混淆（命令 / URL / 密码引用改写）绕过 80%+；② 自解压包（把恶意代码藏到 scanner 不检查的目录 / 加密块，等运行时再解压）绕过 90%+。</p>
+                        <p><strong>真实案例：</strong>ClawHavoc 已在公开市场投毒 **300+ skills**，盗浏览器凭据 / SSH key / 加密钱包</p>
+                        <p><strong>反击工具 SkillDetonate：</strong>沙箱行为检测（文件访问 / 网络调用 / 数据移动）→ 抓 90%+ 恶意 skill</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">TrojPix — 空隙系统 208 米 EM 渗漏通道，8.1 Mbps / 99% 准确率</h3>
+                    <div class="article-meta">
+                        <span>山东大学 + 泉城实验室 / USENIX 2026</span>
+                        <span class="cvss-score">air-gap 数据渗漏</span>
+                    </div>
+                    <div class="article-body">
+                        <p>山东大学 + 泉城实验室披露的 **TrojPix** 通过**像素级操控**（蓝色通道最低位）让 HDMI 等数字视频接口的 TMDS 编码发出**确定性电磁辐射**——攻击者用 USRP X310 商业无线电设备**208 米外**接收（穿透 30cm 混凝土墙），峰值 **8.1 Mbps**（既往 EM 通道的 27 倍），99% 准确率，100MB 文件 < 2 分钟。</p>
+                        <p><strong>关键点：</strong>无需管理员权限，全程用户态；但必须先植入（USB / 供应链 / 内部威胁）</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">IBM WebSphere 三漏洞 — CVSS 9.3 XSS ×2 + 路径遍历，影响 8.5/9.0</h3>
+                    <div class="article-meta">
+                        <span>IBM 官方 advisory / 6/30 发布</span>
+                        <span class="cvss-score">CVSS 9.3 / 9.3 / 4.3</span>
+                    </div>
+                    <div class="article-body">
+                        <p>IBM 一次性披露 WebSphere Application Server **8.5 / 9.0** 的 3 个 CVE，集中在管理控制台的**集成 help system**——XSS ×2（<code>CVE-2026-11712</code> / <code>CVE-2026-11708</code>，CVSS 9.3）+ 路径遍历（<code>CVE-2026-11595</code>，CVSS 4.3）。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>WebSphere 9.0.5.28 及更早 - help system XSS</td><td class="risk-high">高危 CVSS 9.3</td></tr>
+                            <tr><td>WebSphere 9.0.5.28 及更早 - help system 路径遍历</td><td class="risk-medium">中危 CVSS 4.3</td></tr>
+                            <tr><td>WebSphere 8.5.5.30 及更早 - help system XSS</td><td class="risk-high">高危 CVSS 9.3</td></tr>
+                        </table>
+                        <p>修复：9.0.5.29+ / 8.5.5.31+ / APAR PH71756（IBM 未提供 workaround）</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. OpenSSH 10.4 — 多安全修复 + 实验性 ML-DSA+Ed25519 后量子组合签名</h4>
+                    <p>修复 sftp / scp 越界写 / sshd internal-sftp 静默截断 / GSSAPI 预认证 DoS / 客户端 UAF；新增 ML-DSA 44+Ed25519 组合签名（需显式开启）；Linux seccomp 沙箱失败变 fatal。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Microsoft Edge CVE-2026-57992 — Chromium UAF RCE，CVSS 7.5</h4>
+                    <p>UAF 内存破坏 + 两次点击触发 autofill；影响 Edge 150.0.4078.48（基于 Chromium 150.0.7871.47），7/3 发布；无补丁无 PoC；缓解：监控 MSRC + 启用 Enhanced Security Mode + 临时禁用 autofill。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Gemini Live Voice Session Flaw — token misconfig → 提示词注入 + 代码执行</h4>
+                    <p>BidiGenerateContentConstrained 端点临时 token 铸造时未传 live_connect_constraints → 客户端 setup 帧未锁定；攻击者覆盖系统提示词 + 启用 codeExecution → 在 gVisor 沙箱内真实执行 Python。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Microsoft Device Code 钓鱼 — Securelist 4-5 月大规模活动</h4>
+                    <p>钓鱼邮件（伪装律所通知 + 密码保护 PDF） → 假门户（带 CAPTCHA） → 一次性 code → 受害者去真实的 microsoft.com/devicelogin 输入 → 攻击者拿到 access token → 读邮件 / OneDrive / Teams。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. SilverFox ValleyRAT — 8 阶段投递链 + Go RAT + 内核 rootkit</h4>
+                    <p>DLL 旁路 → 关闭日志/AV → 像素隐写（PNG）藏下一阶段 → 提权后再藏第二张图 → Donut shellcode loader → Go RAT（WebSocket + QUIC C2）→ svchost 注入 AV Killer → 内核 rootkit（65+ 命令码）。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026年7月7日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "CVE-2026-52830 fast-mcp-telegram": [0.6, 0.88]
+    "The Gentlemen 勒索": [0.85, 0.92]
+    "SkillCloak AI扫描绕过": [0.7, 0.85]
+    "TrojPix 208m EM": [0.45, 0.8]
+    "IBM WebSphere 9.3 XSS": [0.4, 0.82]
+    "OpenSSH 10.4 修复": [0.05, 0.5]
+    "Edge UAF CVE-2026-57992": [0.2, 0.7]
+    "Gemini Live 提示词注入": [0.35, 0.75]
+    "Device Code 钓鱼": [0.9, 0.78]
+    "SilverFox ValleyRAT": [0.8, 0.85]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 7/7 安全事件类型分布
+    "AI Agent 工具链 (fast-mcp-telegram / SkillCloak / Gemini)" : 30
+    "勒索与RaaS (The Gentlemen / ValleyRAT)" : 25
+    "空隙与隐蔽通道 (TrojPix)" : 10
+    "企业应用 (IBM WebSphere / OpenSSH / Edge)" : 20
+    "凭据钓鱼 (Device Code / EvilTokens 衍生)" : 15
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月4日-7月7日网安事件
+    7月4日 : Bad Epoll CVE-2026-46242 Linux内核epoll UAF提权
+           : JADEPUFFER 首个AI自治勒索软件 Sysdig披露
+           : Azure OpenAI SSRF CVE-2026-45499 CVSS 9.9
+           : Microsoft Entra CVE-2026-57100 CVSS 9.9
+           : CitrixBleed 2.0 CVE-2026-8451 24h被利用
+           : Gitea三大高危漏洞 (20896/58426/22874)
+           : Edge CVE-2026-58289 类型混淆RCE CVSS 9.0
+    7月5日 : Tomcat CVE-2026-55957 JNDIRealm GSSAPI绕过
+           : Chrome 151 修复 382 漏洞
+           : Claude Cowork 沙箱逃逸 Armadin 披露
+           : ARToken M365 钓鱼面板 Cisco Talos 披露
+           : Cursor IDE "DuneSlide" 双CVSS 9.8 零点击RCE
+           : T3MP3ST 35工具AI红队框架 elder-plinius开源
+           : Exchange SSRF CVE-2026-45504 PoC 公开
+           : Azure CLI ROPC 密码喷洒 8100万次
+           : Microsoft 365 Apps Excel OOB RCE
+           : Apple "Hide My Email" 未修补漏洞 1年+ 公开
+           : Kali Linux 2026.2 发布 9 新工具
+    7月6日 : Claude Mythos 5 复批美国关键基础设施
+           : T3MP3ST 武器化 35工具 XBEN 90.1% pass@1
+           : Microsoft Edge CVE-2026-57992 UAF RCE CVSS 7.5
+           : OpenSSH 10.4 修复 + 实验性PQ组合签名
+           : IBM WebSphere CVE-2026-11712/11708/11595 XSS×2 + PT
+           : Gemini Live Voice token misconfig → 提示词注入
+           : Microsoft Device Code 钓鱼 Securelist 4-5月活动
+           : The Gentlemen 勒索 21种远程执行 worm自传播
+           : SilverFox ValleyRAT 8阶段 + 内核rootkit
+           : TrojPix air-gap 208m EM 渗漏 8.1Mbps USENIX
+           : SkillCloak 8静态扫描仪 90%+ 绕过 ClawHavoc 300+skills
+    7月7日 : fast-mcp-telegram CVE-2026-52830 路径遍历 未授权Telegram会话
+           : 多源 OpenCVE/Mondoo/GHSA 同步收录
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — fast-mcp-telegram</span>
+                        <a href="https://cybersecuritynews.com/fast-mcp-telegram-vulnerability/">fast-mcp-telegram Vulnerability</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory — GHSA</span>
+                        <a href="https://github.com/advisories/GHSA-rxw2-pc8j-vxwm">GHSA-rxw2-pc8j-vxwm</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OpenCVE — CVE-2026-52830</span>
+                        <a href="https://app.opencve.io/cve/CVE-2026-52830">CVE-2026-52830</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Mondoo — CVE-2026-52830</span>
+                        <a href="https://mondoo.com/vulnerability-intelligence/vulnerability/CVE-2026-52830">Mondoo Vulnerability Intelligence</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — The Gentlemen</span>
+                        <a href="https://cybersecuritynews.com/the-gentlemen-ransomware-uses-21-remote-execution-techniques/">The Gentlemen Ransomware 21 RCE</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Picus Security — The Gentlemen</span>
+                        <a href="https://www.picussecurity.com/resource/blog/how-the-gentlemen-ransomware-spreads-and-encrypts-entire-networks">How The Gentlemen Spreads</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — SkillCloak</span>
+                        <a href="https://cybersecuritynews.com/agent-skill-malware-targets-claude-code-and-openai-codex/">Agent Skill Malware Targets Claude Code</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CSA Labs — SkillCloak</span>
+                        <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-skillcloak-agent-skill-evasion-20260706-cs/">SkillCloak Research Note</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Arxiv — SkillCloak Paper</span>
+                        <a href="https://arxiv.org/pdf/2607.02357">SkillCloak Research</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — TrojPix</span>
+                        <a href="https://cybersecuritynews.com/trojpix-attack/">TrojPix Attack 208 Meters</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — TrojPix</span>
+                        <a href="https://thehackernews.com/2026/07/new-trojpix-attack-leaks-data-from-air.html">New TrojPix Air-Gap Attack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">USENIX Security 2026 — TrojPix</span>
+                        <a href="https://www.usenix.org/conference/usenixsecurity26/presentation/zhang-guoming">USENIX TrojPix Paper</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — IBM WebSphere</span>
+                        <a href="https://cybersecuritynews.com/ibm-websphere-vulnerabilities/">Multiple IBM WebSphere Vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IBM Support — APAR PH71756</span>
+                        <a href="https://www.ibm.com/support/pages/node/7278590">IBM APAR PH71756</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — OpenSSH 10.4</span>
+                        <a href="https://cybersecuritynews.com/openssh-10-4-security-fixes/">OpenSSH 10.4 Security Fixes</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OpenSSH 官方</span>
+                        <a href="https://www.openssh.org/">OpenSSH Official</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Microsoft Edge</span>
+                        <a href="https://cybersecuritynews.com/microsoft-edge-flaw-code-execution/">Microsoft Edge UAF CVE-2026-57992</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Gemini Live</span>
+                        <a href="https://cybersecuritynews.com/gemini-live-voice-session-flaw/">Gemini Live Voice Session Flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfoSecWriteups — Gemini Live</span>
+                        <a href="https://infosecwriteups.com/rce-via-gemini-live-ai-voice-session-misconfiguration-e0648805a055">RCE via Gemini Live AI Voice</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Securelist — Device Code 钓鱼</span>
+                        <a href="https://securelist.com/microsoft-device-code-phishing-attack/120350/">Microsoft Device Code Phishing</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Device Code</span>
+                        <a href="https://cybersecuritynews.com/microsoft-device-code-phishing-attack/">Device Code Phishing Attack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — ValleyRAT</span>
+                        <a href="https://cybersecuritynews.com/silverfox-hackers-use-go-rat-av-killer/">SilverFox ValleyRAT Campaign</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Gen Threat Labs — ValleyRAT</span>
+                        <a href="https://x.com/GenThreatLabs/status/2072335910042050819">Gen Threat Labs ValleyRAT Report</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月7日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
