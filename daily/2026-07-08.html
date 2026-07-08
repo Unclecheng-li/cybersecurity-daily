@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月8日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月8日 星期三</span>
+            <span class="edition-number">第 31 期 | 总第 31 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Januscape CVE-2026-53359 Linux KVM 16年宿主机逃逸 UAF · Adobe ColdFusion CVE-2026-48282 CVSS 10.0 路径遍历在野利用 · BeyondTrust CVE-2026-40138/40139/40141 预认证认证绕过 双 9.2 · UNK_MassTraction 中国关联 Roundcube XSS 攻击美国大学物理系 · 伊朗 Cavern C2 模块化框架攻击以色列 IT/政府 · ModSecurity CVE-2026-52747/52761 WAF 绕过 3.0.16 修复 · Gitea CVE-2026-20896 通配符信任 Docker 镜像 13 天后被探测 · PamStealer macOS 利用 PAM 验证密码 Rust 信息窃取 · FortiBleed 升级 430K Fortinet 设备 INC/Lynx 勒索 · Microsoft SharePoint CVE-2026-45659 KEV +3 天仍逾期
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Januscape CVE-2026-53359 让 Linux KVM 的 16 年老代码首次尝到 "客户机逃逸宿主" 的滋味 + Adobe ColdFusion CVE-2026-48282 CVSS 10.0 已被积极利用 + BeyondTrust 双 9.2 + 8.5 三连击让 PAM 设备门户门洞大开</h2>
+                <p class="sub-headline">7/7 公开的 CVE-2026-53359 是一项代号 "Januscape" 的 KVM Shadow MMU Use-After-Free，自 2010 年 Linux 内核 2.6.36 引入（commit 2032a93d66fa）起在 x86 影子 MMU 代码里潜伏约 16 年才被 Google kvmCTF 研究员 Hyunwoo Kim（@v4bel）发现；当前 PoC 至少能让恶意客户机让宿主机崩溃（DoS），研究员声称手握可实现宿主机代码执行的未公开利用；Adobe ColdFusion CVE-2026-48282 是 CVSS 10.0 满分路径遍历，影响 2025.9 / 2023.20 及更早版本，正在被积极利用，Scope Changed、无需交互；BeyondTrust 一次性披露 RS/PRA 产品线 CVE-2026-40138（CVSS 9.2 预认证认证绕过）+ CVE-2026-40139（CVSS 9.2 同）+ CVE-2026-40141（CVSS 8.5 输入验证不足）——7/8 当天把"16 年 VM 逃逸 + 10.0 满分在野 + 三连击 PAM 设备门户"摆到同一天。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Januscape CVE-2026-53359 — Linux KVM Shadow MMU 潜伏 16 年的客户机→宿主机逃逸</h3>
+                    <div class="article-meta">
+                        <span>7/7 Hyunwoo Kim / @v4bel / Google kvmCTF 披露</span>
+                        <span class="cvss-score">kvmCTF 25 万美元奖励</span>
+                    </div>
+                    <div class="article-body">
+                        <p>7/7 公开的 <strong>CVE-2026-53359</strong> 是一项代号 <strong>"Januscape"</strong> 的 <strong>KVM Shadow MMU Use-After-Free</strong>，自 2010 年 Linux 内核 2.6.36 引入（commit 2032a93d66fa）起在 x86 影子 MMU 代码里潜伏约 16 年才被 Google kvmCTF 研究员 Hyunwoo Kim（@v4bel）发现；当前 PoC 至少能让恶意客户机让宿主机崩溃（DoS），研究员声称手握可实现宿主机代码执行的未公开利用——<strong>所有云厂商 KVM 实例都应被视为受影响</strong>。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>Use-After-Free（CWE-401），影子 MMU 代码缺陷</li>
+                            <li><strong>攻击方式：</strong>影子页表 EPT/NPT 处理未正确同步的引用 → mmio/page fault/tlb flush 触发 UAF → 客户机 root 在主机 ring 0 执行</li>
+                            <li><strong>影响范围：</strong>Linux KVM x86 影子 MMU（Intel + AMD 全平台）</li>
+                            <li><strong>后果：</strong>宿主机 ring 0 代码执行 → 访问同机所有客户机内存/磁盘</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>"16 年才被发现"是历史级别 → AWS/GCP/阿里云/腾讯云/Oracle/华为云 几乎全部使用</li>
+                            <li>宿主机逃逸 = 多租户云的最坏情况：单一客户机沦陷影响同机所有客户</li>
+                            <li>研究员声称已有完整利用：公共 PoC 虽只是 DoS，但完整 RCE 可能已在地下流传</li>
+                            <li>影子 MMU 修复具有连锁影响：补丁可能影响虚拟化性能 → 部署前需回归测试</li>
+                            <li>云厂商 KVM 实例优先级最高：IaaS 提供商需紧急评估并推送补丁</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">客户机 root</span>
+                        <span class="flow-step">页表切换 + mmio</span>
+                        <span class="flow-step">影子 MMU UAF</span>
+                        <span class="flow-step critical">宿主机 ring 0 执行</span>
+                        <span class="flow-step critical">同机全部沦陷</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Adobe ColdFusion CVE-2026-48282 — CVSS 10.0 满分路径遍历，已被积极利用</h3>
+                    <div class="article-meta">
+                        <span>Adobe 官方 / KEVIntel / SecurityAffairs 多源</span>
+                        <span class="cvss-score">CVSS 10.0 满分</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>CVE-2026-48282</strong> 是 <strong>CVSS 10.0 满分路径遍历</strong>，影响 ColdFusion <strong>2025.9 / 2023.20</strong> 及更早版本，<strong>正在被积极利用</strong>，Scope Changed、无需用户交互、无需认证。RDS 服务处理文件操作时未充分校验 <code>../</code> 等相对路径片段 → 攻击者写 WebShell → 远程代码执行。</p>
+                        <p><strong>修复：</strong>升级至 ColdFusion 2025.10+ / 2023.21+</p>
+                        <p><strong>关键点：</strong>CVSS 10.0 + 在野利用 → CISA KEV 收录只是时间问题 → 必须当日修复</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">BeyondTrust 三连击 — CVE-2026-40138 + CVE-2026-40139 + CVE-2026-40141，PAM 门户防线崩溃</h3>
+                    <div class="article-meta">
+                        <span>BeyondTrust 官方 BT26-03 / 7/8</span>
+                        <span class="cvss-score">CVSS 9.2 / 9.2 / 8.5</span>
+                    </div>
+                    <div class="article-body">
+                        <p>BeyondTrust 一次性披露 RS/PRA 产品线 3 个 CVE：<strong>CVE-2026-40138</strong>（CVSS 9.2 预认证认证绕过，影响 RS + PRA）+ <strong>CVE-2026-40139</strong>（CVSS 9.2 同，仅 RS）+ <strong>CVE-2026-40141</strong>（CVSS 8.5 Web 组件输入验证不足）——<strong>三连击协同：双 9.2 绕过认证 → 8.5 注入 → 获得 PAM 设备完全访问</strong>。</p>
+                        <p><strong>影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>BeyondTrust RS（认证子系统）</td><td class="risk-high">高危 预认证绕过 CVSS 9.2</td></tr>
+                            <tr><td>BeyondTrust PRA（认证子系统）</td><td class="risk-high">高危 预认证绕过 CVSS 9.2</td></tr>
+                            <tr><td>BeyondTrust RS（认证请求处理）</td><td class="risk-high">高危 预认证绕过 CVSS 9.2</td></tr>
+                            <tr><td>BeyondTrust RS/PRA（Web 组件）</td><td class="risk-medium">中危 输入验证不足 CVSS 8.5</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">UNK_MassTraction — 中国关联组织利用 Roundcube CVE-2024-42009 攻击美国大学物理系</h3>
+                    <div class="article-meta">
+                        <span>Proofpoint / 7/7 披露</span>
+                        <span class="cvss-score">CVSS 9.3 XSS</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>UNK_MassTraction</strong>（Proofpoint 命名，中国关联集群）利用 Roundcube <strong>CVE-2024-42009</strong>（CVSS 9.3 XSS，`message_body()` 反消毒缺陷）攻击美国 / 加拿大<strong>物理与工程院系</strong>（国家安全 / STEM 研究关联）。</p>
+                        <p><strong>攻击链：</strong>钓鱼邮件 → Roundcube XSS → 凭据 + 2FA token 窃取 → 创建邮件转发规则 → IceCube 加载器 → VShell 远控 → 长期驻留</p>
+                        <p><strong>关键点：</strong>中国关联 + STEM 目标 = 国家级 APT 行为；高校 Roundcube 部署极广 → 攻击面大</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">伊朗 Cavern C2 框架 — 模块化 C2 攻击以色列 IT/政府，与 MuddyWater / Lyceum 重叠</h3>
+                    <div class="article-meta">
+                        <span>Check Point Research / 7/6</span>
+                        <span class="cvss-score">国家级 APT</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>Cavern Manticore</strong>（CPR 命名）自 2026 年初持续活跃，模块化 C2 <strong>"Cavern C2" / "Cav3rn"</strong> 支持 HTTP/DNS/WebSocket + 多种 payload；针对以色列 IT 提供商 → 借助客户访问权限进入政府机构。与 MuddyWater / Lyceum 工具与基础设施<strong>重叠</strong>。</p>
+                        <p><strong>关键点：</strong>中东网络战 2026 持续升级；模块化 C2 = 长期基础设施，单一防御无法根除；IT 提供商是供应链跳板</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. ModSecurity CVE-2026-52747 + CVE-2026-52761 — WAF 解析器差异绕过，3.0.16 已修复</h4>
+                    <p>multipart/form-data 解析器静默剥离换行符造成解析器差异；`t:utf8toUnicode` sizeof() 错误使用（仅 32 位 i386）；影响 Apache / NGINX / IIS；3.0.16 已发布。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Gitea Docker CVE-2026-20896 — 通配符反向代理信任 13 天后被探测</h4>
+                    <p>CVSS 9.8；`app.ini` 模板硬编码 `REVERSE_PROXY_TRUSTED_PROXIES = *` → 任意来源 IP 通过 `X-WEBAUTH-USER` 伪造管理员；影响 ≤ 1.26.2；Sysdig 报告第 13 天已探测；6,000+ 实例暴露。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. PamStealer — macOS 信息窃取器，利用 PAM API 验证密码</h4>
+                    <p>Jamf Threat Labs 7/2 披露；仅 Apple Silicon Mac；仿冒 Maccy → 虚假网站 → 恶意 AppleScript；PAM API 本地验证登录密码 → 滤掉无效密码；C2 avenger-sync[.]live 等。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. FortiBleed 升级 — 430K Fortinet 设备目标，INC / Lynx 勒索团伙深度参与</h4>
+                    <p>披露日 2026/6/17；430,000+ Fortinet 防火墙被定向，409 管理员访问确认，354 完整攻击链执行；INC Ransom / Lynx 关联；重大受害者 FoxConn / Samsung / Oracle。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Microsoft SharePoint CVE-2026-45659 — KEV 截止 +3 天仍逾期，活跃攻击持续</h4>
+                    <p>CVSS 8.8 不安全反序列化 RCE；最低 Site Member 权限 + 低复杂度；中国关联 ClCRI1040 / LinenTyphoon / Storm-2603 / VioletTyphoon；KEV 截止 7/4 已逾期 3 天。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026年7月8日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "CVE-2026-53359 Januscape KVM": [0.35, 0.92]
+    "CVE-2026-48282 ColdFusion 10.0": [0.92, 0.98]
+    "BeyondTrust 三连击 9.2": [0.5, 0.9]
+    "UNK_MassTraction Roundcube": [0.85, 0.82]
+    "Cavern C2 伊朗": [0.7, 0.78]
+    "ModSecurity CVE-2026-52747": [0.2, 0.55]
+    "Gitea CVE-2026-20896": [0.55, 0.85]
+    "PamStealer macOS": [0.8, 0.7]
+    "FortiBleed 430K": [0.95, 0.95]
+    "SharePoint CVE-2026-45659": [0.95, 0.88]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 7/8 安全事件类型分布
+    "虚拟化与云基础设施 (Januscape)" : 20
+    "企业应用与开发 (ColdFusion / BeyondTrust)" : 25
+    "国家级APT (UNK_MassTraction / Cavern)" : 20
+    "WAF与中间件 (ModSecurity / Gitea)" : 15
+    "操作系统与终端 (PamStealer / FortiBleed)" : 20
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月5日-7月8日网安事件
+    7月5日 : CitrixBleed 2.0 CVE-2026-8451 NetScaler SAML 24h被利用
+           : Gitea三大高危漏洞 (20896/58426/22874)
+           : Edge CVE-2026-58289 类型混淆RCE CVSS 9.0
+           : Tomcat CVE-2026-55957 JNDIRealm GSSAPI绕过
+           : Claude Cowork 沙箱逃逸 Armadin 披露
+           : ARToken M365 钓鱼面板 Cisco Talos 披露
+           : T3MP3ST 35工具AI红队框架 elder-plinius开源
+           : Exchange SSRF CVE-2026-45504 PoC 公开
+           : Azure CLI ROPC 密码喷洒 8100万次
+           : Microsoft 365 Apps Excel OOB RCE
+           : Apple "Hide My Email" 未修补漏洞 1年+ 公开
+           : Kali Linux 2026.2 发布 9 新工具
+    7月6日 : The Gentlemen 勒索 21种远程执行 worm自传播
+           : SkillCloak 8静态扫描仪 90%+ 绕过 ClawHavoc 300+skills
+           : TrojPix air-gap 208m EM 渗漏 8.1Mbps USENIX
+           : SilverFox ValleyRAT 8阶段 + 内核rootkit
+           : Microsoft Device Code 钓鱼 Securelist 4-5月活动
+           : IBM WebSphere CVE-2026-11712/11708/11595 XSS×2 + PT
+           : OpenSSH 10.4 修复 + 实验性PQ组合签名
+           : Gemini Live Voice token misconfig → 提示词注入
+           : Microsoft Edge CVE-2026-57992 UAF RCE CVSS 7.5
+    7月7日 : fast-mcp-telegram CVE-2026-52830 路径遍历 未授权Telegram会话
+           : Januscape CVE-2026-53359 KVM Shadow MMU 16年UAF VM逃逸
+           : Adobe ColdFusion CVE-2026-48282 CVSS 10.0 路径遍历在野利用
+           : BeyondTrust CVE-2026-40138/40139/40141 RS/PRA 三连击
+           : UNK_MassTraction China-linked Roundcube CVE-2024-42009 攻击美国大学
+           : 伊朗 Cavern C2 / Cavern Manticore 攻击以色列 IT/政府
+           : Sysdig披露 Gitea CVE-2026-20896 13天后被探测
+    7月8日 : F5 Labs 周度通报 5项威胁综述 (含 JADEPUFFER AI自治勒索)
+           : ModSecurity CVE-2026-52747/52761 WAF绕过 3.0.16已修
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Januscape CVE-2026-53359</span>
+                        <a href="https://cybersecuritynews.com/linux-kvm-vulnerability-januscape/">Linux KVM Januscape</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Januscape 深度</span>
+                        <a href="https://thehackernews.com/2026/07/linux-kvm-januscape.html">Januscape 16-Year KVM Escape</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub V4bel/Januscape — PoC</span>
+                        <a href="https://github.com/V4bel/Januscape">V4bel/Januscape Repo</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT之家 — Linux KVM 16年历史漏洞</span>
+                        <a href="https://www.ithome.com/0/973/621.htm">IT之家 KVM 报道</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling — CVE-2026-53359</span>
+                        <a href="https://threat-modeling.com/cve-2026-53359-januscape-kvm-shadow-mmu-vm-escape/">Januscape Threat-Modeling</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling — ColdFusion CVE-2026-48282</span>
+                        <a href="https://threat-modeling.com/cve-2026-48282-adobe-coldfusion-path-traversal-active-exploitation/">ColdFusion CVSS 10.0</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityAffairs — ColdFusion 在野利用</span>
+                        <a href="https://securityaffairs.com/194837/hacking/adobe-coldfusion-flaw-cve-2026-48282-now-exploited-in-the-wild.html">ColdFusion Wild Exploit</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfoSecurity Magazine — ColdFusion</span>
+                        <a href="https://www.infosecurity-magazine.com/news/exploit-maximum-severity-adobe/">Max Severity Adobe Flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">奇安信 CERT — ColdFusion</span>
+                        <a href="https://www.secrss.com/index.php/articles/91865">奇安信 ColdFusion 通告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — BeyondTrust 三连击</span>
+                        <a href="https://thehackernews.com/2026/07/beyondtrust-patches-critical-auth.html">BeyondTrust Patches Critical Auth</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling — BeyondTrust CVE-2026-40138/40139</span>
+                        <a href="https://threat-modeling.com/cve-2026-40138-cve-2026-40139-beyondtrust-remote-support-pra-auth-bypass/">BeyondTrust Auth Bypass</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BeyondTrust 官方 — BT26-03</span>
+                        <a href="https://www.beyondtrust.com/trust-center/security-advisories/bt26-03">BT26-03 advisory</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberPress — BeyondTrust PRA</span>
+                        <a href="https://cyberpress.org/beyondtrust-remote-support-privileged-access/">BeyondTrust PRA</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review — UNK_MassTraction</span>
+                        <a href="https://dailysecurityreview.com/threat-actors/unk_masstraction-exploits-roundcube-xss-to-hit-us-physics-departments/">UNK_MassTraction Roundcube</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling — Roundcube CVE-2024-42009</span>
+                        <a href="https://threat-modeling.com/cve-2024-42009-roundcube-china-aligned-unk-masstraction-universities/">Roundcube China-Aligned</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfoSecurity Magazine — China 攻击大学</span>
+                        <a href="https://www.infosecurity-magazine.com/news/china-aligned-cluster-roundcube/">China Cluster Roundcube</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Check Point Research — Cavern Manticore</span>
+                        <a href="https://research.checkpoint.com/2026/cavern-manticore-exposing-iran-linked-modular-c2-framework/">Cavern Manticore CPR</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling — Iran Cavern C2</span>
+                        <a href="https://threat-modeling.com/iran-cavern-c2-framework-cav3rn-targeting-israel/">Cavern C2 Israel</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FreeBuf — 伊朗黑客 Cavern C2</span>
+                        <a href="https://www.freebuf.com/articles/489067.html">伊朗黑客 Cavern C2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — ModSecurity</span>
+                        <a href="https://cybersecuritynews.com/modsecurity-vulnerabilities/">ModSecurity Vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ModSecurity 官方 — CVE-2026-52747/52761</span>
+                        <a href="https://modsecurity.org/20260629/about-cve-2026-52747-and-2026-52761/">ModSecurity Official Post</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FreeBuf — ModSecurity 漏洞分析</span>
+                        <a href="https://www.freebuf.com/articles/web/489019.html">ModSecurity 漏洞分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Gitea CVE-2026-20896</span>
+                        <a href="https://cybersecuritynews.com/gitea-docker-vulnerability/">Gitea Docker Vulnerability</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Gitea 探测</span>
+                        <a href="https://thehackernews.com/2026/07/threat-actors-probe-gitea-docker-flaw.html">Threat Actors Probe Gitea</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Jamf Threat Labs — PamStealer</span>
+                        <a href="https://www.jamf.com/blog/pamstealer-macos-infostealer/">PamStealer Blog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT之家 — PamStealer 披露</span>
+                        <a href="https://www.ithome.com/0/971/966.htm">PamStealer IT之家</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">F5 Labs — 周度威胁通报 7/8</span>
+                        <a href="https://www.f5.com/labs/articles/weekly-threat-bulletin-july-8th-2026">F5 Labs 7/8 Bulletin</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OpenVPN Blog — 周度威胁综述</span>
+                        <a href="https://blog.openvpn.net/this-week-in-cybersecurity-the-first-fully-ai-run-ransomware-attack-shinyhunters-3.8-million-record-medtronic-breach-and-a-2-million-device-proxy-botnet-goes-dark">Weekly Ransomware Review</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA — SharePoint CVE-2026-45659 KEV</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV Catalog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月8日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
