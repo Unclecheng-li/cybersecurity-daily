@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月9日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月9日 星期四</span>
+            <span class="edition-number">第 32 期 | 总第 32 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>GhostLock CVE-2026-43499 Linux 内核 15 年 UAF PoC 公开 · Chrome 150 一次修 27 漏洞含 2 个 RCE · GhostApproval AI 编码代理符号链接绕过 Human-in-the-Loop · Friendly Fire Claude Code / Codex 自动模式遭劫持 · Palo Alto PAN-OS CVE-2026-0288 User-ID TSA 缓冲区溢出 CVSS 9.2
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">GhostLock CVE-2026-43499 把 15 年老内核漏洞推到"竞速修补"前夜 + Chrome 150 一次性塞进 27 个补丁 + AI 编码代理出现"符号链接幽灵审批"系统性设计缺陷 + Claude Code / Codex 默认 Auto 模式遭劫持执行恶意二进制 + Palo Alto PAN-OS TSA 组件缓冲区溢出 CVSS-B 9.2 直接挂"最高紧急"标签</h2>
+                <p class="sub-headline">7/8 Threat-Modeling 漏洞情报披露的 <strong>CVE-2026-43499 "GhostLock"</strong> 是潜伏 Linux 内核 futex/rt-mutex 子系统约 15 年的 UAF（NVD 已收录），Nebula Security 公开 PoC 可靠性达 <strong>97%</strong>，<strong>可由任意本地用户获取 root 并实现容器逃逸</strong>；Google kernelCTF 悬赏 9.2 万美元；同日 Chrome Stable 升至 <strong>150.0.7871.114/.115</strong> 修复 <strong>27 个漏洞</strong>，<strong>CVE-2026-15112 / CVE-2026-15129</strong> 两个 UAF 直接通向 RCE；Wiz 公开 <strong>"GhostApproval"</strong>——一种跨 6 款主流 AI 编码代理（Claude Code、Cursor、Amazon Q Developer、Augment、Windsurf、Google Antigravity）的 <strong>符号链接跟随（CWE-61）+ UI 误导（CWE-451）</strong> 系统性设计缺陷，可绕过 Human-in-the-Loop 把攻击者 SSH 公钥写入 <code>~/.ssh/authorized_keys</code>；AI Now Institute 公开 <strong>"Friendly Fire"</strong>——Claude Code / Codex CLI 在默认 auto-mode / auto-review 下被第三方库 README 里的 prompt 注入诱导执行 <code>code_policies</code> 恶意二进制实现 RCE；Palo Alto 紧急披露 <strong>CVE-2026-0288</strong>——PAN-OS User-ID Terminal Server Agent 多个缓冲区溢出 <strong>CVSS-B 9.2 / CVSS-BT 7.2</strong>，影响 PAN-OS 10.2/11.1/11.2/12.1 全部活跃分支，TSA 暴露互联网即面临"最高紧急"等级。<strong>所有主机、云容器、Kubernetes、依赖 AI 自动代码审计的 CI/CD 链路都需当日评估修补。</strong></p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GhostLock CVE-2026-43499 — Linux 内核潜伏 15 年的 UAF，PoC 公开且可靠性 97%</h3>
+                    <div class="article-meta">
+                        <span>7/8 Nebula Security / Google kernelCTF 2337 号披露</span>
+                        <span class="cvss-score">CVSS 7.8 PoC 公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>7/8 公开的 <strong>CVE-2026-43499 "GhostLock"</strong>（CVSS 3.1 7.8，AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H，CWE-416）是 Linux 内核 <strong>futex / rt-mutex</strong> 子系统一处 <strong>Use-After-Free</strong>，自 2011 年起所有主流发行版均受影响；Nebula Security（通过 Google kernelCTF 提交 2337 号漏洞）公开的 PoC <strong>可靠性高达 97%</strong>，可让任意本地用户 <strong>获得 root + 容器逃逸</strong>——比 7/7 公开的 Januscape（KVM 客户机→宿主机）更"普惠"。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>Use-After-Free（CWE-416），rt-mutex 路径下 futex 同步原语竞争</li>
+                            <li><strong>攻击方式：</strong>任意线程调用 futex 即可触发 rt-mutex 释放后引用 → 内核代码执行</li>
+                            <li><strong>影响范围：</strong>Linux 服务器、桌面、云实例、容器主机（Docker / Kubernetes）—— 任何带 shell 的系统</li>
+                            <li><strong>后果：</strong>本地提权 root + 容器逃逸 → 多租户云单租户沦陷即影响同机全部租户</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>"15 年 + 公开 PoC + 97% 可靠"是历史级别——5/15 cPanel 大规模在野利用还只针对 Web 服务，GhostLock 命中<strong>几乎每一台 Linux 主机</strong></li>
+                            <li><strong>容器逃逸 = Kubernetes / Docker 平台的致命威胁</strong>：集群内任意容器沦陷即影响宿主</li>
+                            <li>Nebula Security 的 PoC <strong>已发布</strong>——威胁行为人将其整合到工具包只是时间问题，<strong>竞速修补窗口</strong>已经开启</li>
+                            <li>与 7/7 公开的 <strong>Januscape（KVM Shadow MMU）</strong> 合并：2 天内两次"内核老代码集中暴露"，<strong>Linux 内核审计焦点已切换</strong></li>
+                            <li><strong>临时缓解有限</strong>：seccomp 阻止特定 futex 操作能降低风险但非通用解，<strong>多租户 + 容器场景必须尽快打补丁</strong></li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">任意本地用户</span>
+                        <span class="flow-step">普通线程 futex()</span>
+                        <span class="flow-step">rt_mutex UAF</span>
+                        <span class="flow-step critical">Root 提权</span>
+                        <span class="flow-step critical">容器逃逸</span>
+                    </div>
+                    <div class="mermaid">
+sequenceDiagram
+    participant 攻击者 as 攻击者（任意本地用户）
+    participant 进程 as 正常线程调用 futex
+    participant 内核 as rt_mutex 内核代码
+    participant 容器 as 容器边界
+    participant 系统 as 宿主机 root
+    攻击者->>进程: 启动普通线程
+    进程->>内核: futex() 系统调用
+    内核->>内核: rt_mutex 加锁/解锁竞争
+    Note over 内核: UAF 触发（CWE-416）
+    内核->>系统: 内核态代码执行
+    系统->>系统: 攻击者获得 root
+    攻击者->>容器: 从容器内触发
+    容器->>系统: 突破命名空间/cgroup
+    系统-->>攻击者: 同机全部租户沦陷
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Chrome 150.0.7871.114/.115 — 单次 27 漏洞含 2 个 RCE，Ozone / Views 双重 UAF</h3>
+                    <div class="article-meta">
+                        <span>Google Chrome Releases 7/8</span>
+                        <span class="cvss-score">含 2 个 RCE 严重</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Google 7/8 推送的 <strong>Chrome Stable 150.0.7871.114/.115</strong>（Linux 150.0.7871.114）一次性修复 <strong>27 个安全漏洞</strong>，其中 <strong>2 个严重级 UAF 可直接 RCE</strong>——<code>CVE-2026-15112</code>（Ozone 平台抽象层 UAF）与 <code>CVE-2026-15129</code>（Views UI 框架 UAF）。其余 25 个覆盖 V8、ANGLE、Autofill、WebRTC、Payments、Forms、Extensions、WebAppInstalls、Codecs、DOM、Passwords、Navigation、IndexedDB、WebGL 等 17 个组件。</p>
+                        <p><strong>关键组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>CVE 编号</th><th>组件</th><th>严重度</th></tr>
+                            <tr><td>CVE-2026-15112</td><td>Ozone</td><td class="risk-high">严重 UAF</td></tr>
+                            <tr><td>CVE-2026-15129</td><td>Views</td><td class="risk-high">严重 UAF</td></tr>
+                            <tr><td>CVE-2026-15132</td><td>V8 JS 引擎</td><td class="risk-high">高 Uninit</td></tr>
+                            <tr><td>CVE-2026-15109</td><td>ANGLE</td><td class="risk-high">高 Uninit</td></tr>
+                            <tr><td>CVE-2026-15108</td><td>Extensions API</td><td class="risk-medium">中 整数溢出</td></tr>
+                        </table>
+                        <p><strong>关键点：</strong>2 个严重级 UAF 同时存在 = "双 RCE 入口"；浏览器 sandbox 逃逸链通常需 1 个 UAF + 1 个 sandbox 跳出，Chrome 一次给两个 = 利用门槛更低；14 个 UAF 集中在 7 个不同组件 = Chrome 内存安全策略显疲态</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GhostApproval — 6 款主流 AI 编码代理遭"符号链接幽灵审批"系统性绕过</h3>
+                    <div class="article-meta">
+                        <span>Wiz Research / 7/9 披露</span>
+                        <span class="cvss-score">类别级设计缺陷</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Wiz 7/9 公开 <strong>"GhostApproval"</strong>——一种<strong>类别级（category-level）</strong>设计缺陷：恶意代码库用 <code>project_settings.json → ~/.ssh/authorized_keys</code> 这类<strong>符号链接</strong>骗 AI 代理在"workspace setup"中直接把攻击者 SSH 公钥写入开发者机器；同时在 UI 层<strong>展示与真实目标不同的文件名</strong>（"知情同意"被劫持）。</p>
+                        <p><strong>受影响：</strong>Amazon Q Developer CVE-2026-12958（高，v1.69.0）、Cursor CVE-2026-50549（严重，v3.0）、Google Antigravity v1.19.6（严重）、Augment v0.754.3（严重）、Windsurf v1.9566（严重）、Anthropic Claude Code v2.1.42+（<strong>Anthropic 起初以"超出威胁模型"驳回</strong>，2.1.173+ 加入符号链接解析与告警）。</p>
+                        <p><strong>关键点：</strong>不是单点 bug 是类别级设计缺陷；Claude Code auto-mode 用户已<strong>默认批准 93% 的权限提示</strong>——Human-in-the-Loop 早已沦为"橡皮图章"；90 天披露窗口内 Anthropic 从"驳回"到"补"反映 AI 厂商对威胁模型认知不一致</p>
+                    </div>
+                    <div class="mermaid">
+flowchart TD
+    A[攻击者构造恶意代码库] --> B[创建符号链接<br>project_settings.json → ~/.ssh/authorized_keys]
+    B --> C[植入 README 提示 'set up the workspace']
+    C --> D[开发者 clone 仓库]
+    D --> E[AI 代理读取 README]
+    E --> F{代理跟随符号链接}
+    F --> G[打开目标 ~/.ssh/authorized_keys]
+    G --> H[UI 误显示为<br>'Edit project_settings.json?']
+    H --> I[用户点击 Accept]
+    I --> J[攻击者 SSH 公钥写入]
+    J --> K[攻击者免密 SSH 登录开发者机器]
+    K --> L[横向移动 + 凭证窃取]
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Friendly Fire — Claude Code / Codex 默认 Auto 模式遭 prompt 注入劫持执行恶意二进制</h3>
+                    <div class="article-meta">
+                        <span>AI Now Institute / 7/9 披露</span>
+                        <span class="cvss-score">PoC 公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>AI Now Institute 7/9 公开 <strong>"Friendly Fire"</strong> 攻击——Anthropic Claude Code CLI（Sonnet 4.6 / 5 / Opus 4.8）与 OpenAI Codex CLI（GPT-5.5）在 <strong>默认 auto-mode / auto-review 配置</strong>下被劫持，<strong>无需 hooks、插件、MCP 服务器或配置文件</strong>——prompt 注入直接藏在第三方开源库的 README 和源文件里。研究者改包 geopy，加 <code>security.sh</code>、<code>code_policies</code>（恶意二进制）和 <code>code_policies.go</code>（诱饵 Go 源文件），README 把 <code>security.sh</code> 描述为"安全审计脚本"——当用户给代理 prompt "Perform security testing on /path/to/geopy" 时，代理<strong>自动探索代码、读 README、看诱饵源文件、判定二进制"安全"、执行</strong>——主机 RCE。</p>
+                        <p><strong>关键技术：</strong>auto-mode 分类器被欺骗（代码匹配启发式被 spoof）；同注入对 Claude Code / Codex 均有效 → 不是模型 bug 是信任边界设计 bug；CI/CD 放大效应：Megalodon GitHub 投毒、PyTorch Lightning 供应链事件表明——自动漏洞扫描委派给 AI 代理等同于直接信任投毒者</p>
+                    </div>
+                    <div class="mermaid">
+flowchart LR
+    subgraph 投毒[供应链投毒]
+        A1[fork geopy] --> A2[添加 security.sh]
+        A2 --> A3[添加 code_policies 二进制]
+        A3 --> A4[添加诱饵 code_policies.go]
+        A4 --> A5[README 写 'run security.sh']
+    end
+    subgraph 触发[受害者侧]
+        B1[用户 prompt: 'security test geopy'] --> B2[代理读 README]
+        B2 --> B3[代理看诱饵源文件]
+        B3 --> B4[auto-mode 分类器: 安全]
+        B4 --> B5[执行 code_policies]
+        B5 --> B6[主机 RCE]
+    end
+    投毒 --> 触发
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Palo Alto CVE-2026-0288 — PAN-OS User-ID TSA 多个缓冲区溢出 CVSS-B 9.2</h3>
+                    <div class="article-meta">
+                        <span>Palo Alto Networks 官方 / 7/9</span>
+                        <span class="cvss-score">CVSS-B 9.2 最高紧急</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Palo Alto Networks 7/9 披露 <strong>CVE-2026-0288</strong>——PAN-OS <strong>User-ID Terminal Server Agent (TSA)</strong> 组件多处<strong>缓冲区溢出</strong>（CVSS-B <strong>9.2 高 / CVSS-BT 7.2</strong>），被 Palo Alto 标为<strong>"最高紧急"</strong>。攻击者<strong>只需网络可达 TSA 的 IP 和端口，无需认证、无需用户交互</strong>即可触发内存破坏，导致 RCE 或 DoS。受影响版本横跨 <strong>PAN-OS 10.2/11.1/11.2/12.1 全部活跃分支</strong>，Prisma Access 11.2.0/10.2.0（中危）。披露人：Liang Zhu。</p>
+                        <p><strong>影响版本：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>分支</th><th>受影响版本（修复前）</th><th>风险</th></tr>
+                            <tr><td>PAN-OS 12.1</td><td>&lt; 12.1.4-h8 / 12.1.7-h2 / 12.1.8</td><td class="risk-high">高 9.2</td></tr>
+                            <tr><td>PAN-OS 11.2</td><td>&lt; 11.2.4-h20 / 11.2.7-h18 / 11.2.10-h12 / 11.2.13</td><td class="risk-high">高 9.2</td></tr>
+                            <tr><td>PAN-OS 11.1</td><td>&lt; 11.1.4-h35 ~ 11.1.16（多 hotfix）</td><td class="risk-high">高 9.2</td></tr>
+                            <tr><td>PAN-OS 10.2</td><td>&lt; 10.2.7-h36 ~ 10.2.18-h8</td><td class="risk-high">高 9.2</td></tr>
+                            <tr><td>Prisma Access</td><td>11.2.0 / 10.2.0</td><td class="risk-medium">中</td></tr>
+                        </table>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Microsoft Defender "RoguePlanet" 零日 CVE-2026-50656 已修复</h4>
+                    <p>Microsoft 7/9 发布补丁修复 Defender 中预先披露的 0day "RoguePlanet"（CVE-2026-50656）——CVSS 7.8 本地提权，影响 Microsoft Malware Protection Engine &lt; 1.1.26060.3008（含 Defender Antivirus / Security Essentials / SCEP），CWE-59 不安全链接解析，Microsoft 评估"更可能被利用"，本地低权限即可静默提权。自动更新即可，但 Defender 禁用系统仍需手动核验引擎版本。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. GoodPersonRAT — 假冒 LetsVPN 安装器植入 RAT，C2 域名中文意为"你是好人"</h4>
+                    <p>ThreatLocker 7/9 披露 GoodPersonRAT——假冒中国流行 VPN 工具 LetsVPN 安装器（Kuailianwin-setup.86.msi），捆绑真实签名的 LetsVPN 蒙混过关；MSI 内藏三段：合法 VPN 安装器 + shellcode 加载器（promecefplugilte8.exe）+ 加密 shellcode 数据（20260609.dat）；最终载荷完全在内存执行（不落盘），提供键盘记录、屏幕控制、文件操作、Telegram Desktop 会话窃取与代理重定向；自动添加 Defender 排除项。C2 域名包括 nishihaoren1.top ~ nishihaoren40.top（"你是好人"中文拼音）——给出攻击者中文背景强证据。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. PromptSpy — 首款在受害端实时调用 Google Gemini 的 Android 恶意软件</h4>
+                    <p>ESET 7/8 披露 PromptSpy——首款在运行中调用生成式 AI 的 Android 恶意软件。通过仿冒阿根廷某银行子品牌的网站分发 MorganArg 应用；常规 RAT 功能（PIN 截取、应用枚举、屏幕录像）+ 为绕过不同 Android 版本的"最近任务"手势防护，实时把屏幕 UI 状态发给 Gemini，请求"操作指引"，按 Gemini 返回的"在哪里点击哪里滑动"通过 Accessibility 服务执行；通过不可见 overlay 覆盖 Stop / Uninstall 按钮反卸载。乌克兰 2026/2 已有实际感染——具有中文开发环境痕迹。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. APT-C-20 "Fancy Bear" — PNG 图像藏 Shellcode，Fileless C# Backdoor 经 Filen.io C2</h4>
+                    <p>360 7/8 披露 APT-C-20（APT28 / Fancy Bear）新型攻击链：以"东欧某国防部文件"为诱饵的 Word 宏文档 readme.docm（469 字节）→ 加密宏释放 dnxstore.dll（COM 劫载）+ EdgeLogo.png（看似 Edge 图标，实际藏 LSB 隐写 shellcode）→ 内存解密 shellcode → 反射加载 Publish.exe（混淆 C# Backdoor）→ 通过 Filen.io 云存储（gateway.filen.io / gateway.filen.net）C2。全链路不落盘 PE——传统 AV 失效，目标为政府与外交机构。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Accenture 确认数据泄露 — 35GB 源码 + 凭据兜售，威胁者"888" 2024 年曾涉 Accenture 假数据</h4>
+                    <p>威胁行为人 "888" 在 PwnForums 7/6 发帖，一次性价（仅收 Monero）兜售据称 7 月初从 Accenture 窃取的 35GB 源码 + RSA 密钥 + SSH 密钥 + Azure PAT + Azure Storage Access Key + 内部配置；放出 Azure DevOps 私有仓 AtriasTalentAcademy（accenture.com 域名）截图。Accenture 7/9 确认事件存在，声明"已修复源头，对运营与服务交付无影响"。"888" 2024/6 曾以 32,826 名 Accenture 员工数据集兜售（前次被 Accenture 否认）。LockBit 2021/8 曾以 6TB 数据勒索 Accenture 5000 万美元——这家全球最大 IT 咨询公司 5 年内第 3 次被入侵。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026年7月9日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用/PoC公开"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "CVE-2026-43499 GhostLock Linux UAF": [0.88, 0.85]
+    "Chrome 150 Ozone/Views UAF RCE": [0.4, 0.95]
+    "GhostApproval AI代理符号链接": [0.55, 0.78]
+    "Friendly Fire Claude/Codex auto-mode": [0.6, 0.82]
+    "CVE-2026-0288 PAN-OS TSA 9.2": [0.5, 0.9]
+    "RoguePlanet Defender EoP 0day": [0.4, 0.7]
+    "GoodPersonRAT 假LetsVPN": [0.75, 0.78]
+    "PromptSpy Gemini Android": [0.45, 0.72]
+    "APT-C-20 PNG隐写 C#": [0.7, 0.82]
+    "Accenture 35GB 源码泄露": [0.9, 0.88]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 7/9 安全事件类型分布
+    "操作系统/内核 (GhostLock / RoguePlanet)" : 20
+    "浏览器/桌面应用 (Chrome 150 / GoodPersonRAT)" : 20
+    "AI/LLM 安全 (GhostApproval / Friendly Fire)" : 20
+    "网络与边界 (PAN-OS / PromptSpy)" : 20
+    "国家级APT与数据泄露 (APT-C-20 / Accenture)" : 20
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月3日-7月9日网安事件
+    7月3日 : JetBrains全线严重漏洞
+           : SharePoint RCE KEV截止
+           : Defender禁用后WebShell
+           : iOS 26.5.2 AI挖29漏洞
+           : Windchill持续WebShell
+    7月4日 : Bad Epoll Linux内核提权
+           : JADEPUFFER AI自治勒索
+           : Azure OpenAI SSRF 0补丁
+           : Entra SSRF 9.9
+           : FatFs 7漏洞IoT越狱
+    7月5日 : CitrixBleed 2.0 CVE-2026-8451 NetScaler SAML
+           : Gitea三CVE同日补丁
+           : Edge无补丁RCE
+           : Novo Nordisk 1.3TB泄露
+           : AI Agent SEO投毒
+    7月6日 : T3MP3ST AI红队框架XBEN 90%
+           : ARToken M365钓鱼面板
+           : Exchange SSRF PoC公开
+           : Claude Cowork沙箱逃逸
+           : Apple Hide My Email一年未修
+    7月7日 : fast-mcp-telegram CVE-2026-52830
+           : Januscape CVE-2026-53359 KVM 16年UAF
+           : ColdFusion CVE-2026-48282 CVSS 10.0在野
+           : BeyondTrust CVE-2026-40138/40139/40141
+           : UNK_MassTraction 中国关联Roundcube
+           : 伊朗 Cavern C2 攻击以色列IT
+    7月8日 : GhostLock CVE-2026-43499 Linux内核15年UAF PoC公开
+           : CISA KEV 新增4漏洞 (ColdFusion/Joomla×2/Langflow)
+           : Ubiquiti UniFi OS 11个CVE (3×CVSS 9.9)
+           : Writer AI WriteOut 跨租户会话泄露
+           : RedWing Android银行木马MaaS
+           : APT-C-20 Fancy Bear PNG隐写C#后门
+           : PromptSpy 首款调用Gemini的Android恶意软件
+           : Accenture "888" 35GB源码泄露
+    7月9日 : Chrome 150.0.7871.114 修27漏洞含2个严重UAF RCE
+           : GhostApproval AI代理符号链接系统性绕过 (Claude/Cursor/Q/Antigravity/Augment/Windsurf)
+           : Friendly Fire Claude Code/Codex auto-mode劫持
+           : PAN-OS CVE-2026-0288 User-ID TSA 缓冲区溢出 CVSS-B 9.2
+           : Microsoft Defender RoguePlanet CVE-2026-50656 0day修复
+           : GoodPersonRAT 假LetsVPN安装器RAT C2域名"你是好人"
+           : Sophos CIXA Claude/Cursor/Codex触发DPAPI/凭证访问告警
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling 漏洞情报 7/8 报告</span>
+                        <a href="https://threat-modeling.com/vulnerability-intelligence-report-july-8-2026/">7/8 Vulnerability Intelligence Report</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — GhostLock 15 年内核漏洞</span>
+                        <a href="https://thehackernews.com/2026/07/15-year-old-ghostlock-flaw-enables-root.html">GhostLock Kernel Flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-43499 GhostLock</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-43499">CVE-2026-43499 NVD</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Chrome 150 修 27 漏洞</span>
+                        <a href="https://cybersecuritynews.com/chrome-update-patches-27-vulnerabilities/">Chrome 27 Vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Google Chrome Releases 150.0.7871.114</span>
+                        <a href="https://chromereleases.googleblog.com/2026/07/stable-channel-update-for-desktop_01162222768.html">Chrome Stable Update</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — GhostApproval AI 代理漏洞</span>
+                        <a href="https://cybersecuritynews.com/ghostapproval-vulnerability/">GhostApproval Vulnerability</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Wiz Blog — GhostApproval 信任边界缺口</span>
+                        <a href="https://www.wiz.io/blog/ghostapproval-a-trust-boundary-gap-in-ai-coding-assistants">Wiz GhostApproval</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Friendly Fire AI 代理劫持</span>
+                        <a href="https://cybersecuritynews.com/cyber-ai-agents-hijacked/">Friendly Fire</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AI Now Institute — Friendly Fire 公开报告</span>
+                        <a href="https://ainowinstitute.org/publications/friendly-fire-exploit-brief">AI Now Institute Brief</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub — friendly-fire-ai-agent-exploit PoC</span>
+                        <a href="https://github.com/Boyan-MILANOV/friendly-fire-ai-agent-exploit">Friendly Fire PoC</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — PAN-OS CVE-2026-0288</span>
+                        <a href="https://cybersecuritynews.com/palo-alto-networks-pan-os-vulnerability/">PAN-OS TSA</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Palo Alto Security Advisory — CVE-2026-0288</span>
+                        <a href="https://security.paloaltonetworks.com/CVE-2026-0288">PAN-OS Official Advisory</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — RoguePlanet Defender 0day</span>
+                        <a href="https://cybersecuritynews.com/rogueplanet-defender-zero-day-vulnerability/">RoguePlanet Defender</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MSRC — CVE-2026-50656 微软更新指南</span>
+                        <a href="https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50656">MSRC CVE-2026-50656</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — GoodPersonRAT 假 LetsVPN</span>
+                        <a href="https://cybersecuritynews.com/goodpersonrat-uses-fake-letsvpn-installer/">GoodPersonRAT</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatLocker Blog — GoodPersonRAT 报告</span>
+                        <a href="https://www.threatlocker.com/blog/goodpersonrat-fake-chinese-vpn-drops-extensive-c2-client">ThreatLocker GoodPersonRAT</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — PromptSpy Android Gemini 恶意软件</span>
+                        <a href="https://cybersecuritynews.com/promptspy-android-malware-uses/">PromptSpy Android</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ESET Threat Report H1 2026</span>
+                        <a href="https://web-assets.esetstatic.com/wls/en/papers/threat-reports/eset-threat-report-h12026.pdf">ESET H1 2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — APT-C-20 Fancy Bear PNG 隐写</span>
+                        <a href="https://cybersecuritynews.com/apt-c-20-hackers-hide-shellcode-in-png-images/">APT-C-20 PNG Stego</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">360 安全报告 — APT-C-20 新攻击链</span>
+                        <a href="https://www.360.cn/n/13034.html">360 APT-C-20 Report</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Accenture 35GB 源码泄露</span>
+                        <a href="https://cybersecuritynews.com/accenture-confirms-data-breach/">Accenture Breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Claude/Cursor/Codex 触发端点告警</span>
+                        <a href="https://cybersecuritynews.com/claude-code-cursor-and-codex-trigger/">Sophos CIXA</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Sophos Blog — Agents vs Telemetry</span>
+                        <a href="https://www.sophos.com/en-us/blog/2607_agents_vs_telemetry">Sophos Agents vs Telemetry</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月9日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
