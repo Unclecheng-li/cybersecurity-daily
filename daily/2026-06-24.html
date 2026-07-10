@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年6月24日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年6月24日 星期二</span>
+            <span class="edition-number">第 42 期 | 总第 42 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>CISA四漏洞KEV紧急修复 | Tata Electronics 630GB泄露 | curl 25年老漏洞修复 | Secure Boot证书过期 | LastPass供应链泄露 | Chrome扩展后门
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">CISA紧急新增四个KEV漏洞 — Ubiquiti UniFi OS三连击 + Lantronix远程代码执行，6月26日修复截止</h2>
+                <p class="sub-headline">三个UniFi OS漏洞可链式利用实现未授权访问→文件读取→命令注入→root提权，勒索软件运营商可能已在利用</p>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">紧急</span>
+                    <h3 class="article-title">CISA新增四个KEV漏洞 — Ubiquiti UniFi OS三连击 + Lantronix EDS5000</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-34908/34909/34910 + CVE-2025-67038 | 修复截止：6月26日</span>
+                        <span class="cvss-score">在野利用</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA于6月23日将四个在野利用的漏洞添加到KEV目录。其中三个影响Ubiquiti UniFi OS，可被链式利用实现未授权访问、文件读取和命令注入；另一个影响Lantronix EDS5000设备，允许远程命令执行。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>产品</th><th>类型</th><th>风险</th></tr>
+                            <tr><td>CVE-2026-34908</td><td>UniFi OS</td><td>访问控制不当</td><td class="risk-high">未授权修改配置</td></tr>
+                            <tr><td>CVE-2026-34909</td><td>UniFi OS</td><td>路径遍历</td><td class="risk-high">读取系统文件</td></tr>
+                            <tr><td>CVE-2026-34910</td><td>UniFi OS</td><td>输入验证不当</td><td class="risk-high">命令注入</td></tr>
+                            <tr><td>CVE-2025-67038</td><td>Lantronix EDS5000</td><td>代码注入</td><td class="risk-medium">远程命令执行</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>三个UniFi OS漏洞可链式利用：访问控制绕过 → 路径遍历 → 命令注入 → root</li>
+                            <li>UniFi设备广泛部署于企业网络核心，一旦沦陷可横向移动</li>
+                            <li>CISA联邦机构修复截止日为6月26日，仅剩2天</li>
+                            <li>勒索软件运营商可能利用此链入侵企业网络</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">网络访问</span>
+                        <span class="flow-step">CVE-34908绕过</span>
+                        <span class="flow-step">CVE-34909遍历</span>
+                        <span class="flow-step critical">CVE-34910注入</span>
+                        <span class="flow-step critical">root权限</span>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Tata Electronics遭World Leaks勒索 — 630GB Apple/Tesla机密泄露</h3>
+                    <div class="article-meta">
+                        <span>200,000+文件 | World Leaks组织</span>
+                        <span class="cvss-score">数据泄露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>印度电子制造巨头Tata Electronics确认遭受勒索软件攻击。World Leaks在暗网发布超过20万份文件（630GB），包含Apple iPhone制造数据和Tesla零件设计。</p>
+                        <ul>
+                            <li>Apple工厂数据、质量检查标准、iPhone电路板组件规范</li>
+                            <li>Tesla NV36充电口控制器设计、Project Highland工程图纸</li>
+                            <li>员工护照副本（含外籍员工）</li>
+                            <li>Tata制造约1/3的Apple iPhone产量（印度）</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">curl 8.21.0发布 — 修复25年老漏洞CVE-2026-8932及18个CVE</h3>
+                    <div class="article-meta">
+                        <span>300亿设备受影响 | AI辅助发现</span>
+                        <span class="cvss-score">立即更新</span>
+                    </div>
+                    <div class="article-body">
+                        <p>curl维护者Daniel Stenberg于6月24日发布curl 8.21.0，修复创纪录的18个CVE。CVE-2026-8932是curl历史上最古老的安全漏洞，潜伏超过25年。</p>
+                        <ul>
+                            <li><strong>CVE-2026-8932：</strong>mTLS连接复用缺陷，认证绕过</li>
+                            <li><strong>CVE-2026-8926：</strong>netrc凭据处理，密码混淆</li>
+                            <li><strong>CVE-2026-8925：</strong>SASL认证double-free</li>
+                            <li><strong>CVE-2026-9080：</strong>HTTP/2流依赖use-after-free</li>
+                            <li>AISLE平台发现6个CVE，Anthropic Mythos触发审计浪潮</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Windows Secure Boot证书过期 — 2011年KEK CA正式失效</h3>
+                    <div class="article-meta">
+                        <span>数十亿PC受影响 | 2026年6月24日</span>
+                        <span class="cvss-score">降级安全状态</span>
+                    </div>
+                    <div class="article-body">
+                        <p>微软2011年部署的Secure Boot根证书——Microsoft Corporation KEK CA 2011于今日正式过期。这是Windows生态系统启动层信任基础的代际更迭。</p>
+                        <ul>
+                            <li>未更新PC无法接收新的启动安全缓解措施</li>
+                            <li>进入"降级安全状态"，无法修复BlackLotus等bootkit</li>
+                            <li>Windows 10用户尤其受影响（2025年10月停止支持）</li>
+                            <li>Copilot+ PC和2024年后出厂设备已预装新证书</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">LastPass再次数据泄露 — 通过Klue供应链攻击窃取OAuth令牌</h3>
+                    <div class="article-meta">
+                        <span>第三方供应商Klue | Salesforce数据</span>
+                        <span class="cvss-score">供应链攻击</span>
+                    </div>
+                    <div class="article-body">
+                        <p>密码管理服务LastPass确认在Klue供应链攻击中再次遭遇数据泄露。攻击者通过被入侵的Klue软件窃取OAuth令牌，访问Salesforce CRM中的客户数据。</p>
+                        <ul>
+                            <li>泄露内容：客户姓名、电话、邮箱、地址</li>
+                            <li>这是LastPass继2015、2019、2022年后第四次重大安全事件</li>
+                            <li>Klue攻击影响多家安全公司（Huntress/Recorded Future等）</li>
+                            <li>建议用户考虑替代方案（如Bitwarden）</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">恶意Chrome扩展利用Native Messaging执行PowerShell后门</h3>
+                    <div class="article-meta">
+                        <span>意大利恶意邮件活动 | Windows系统</span>
+                        <span class="cvss-score">浏览器沙箱逃逸</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全研究人员发现恶意Chrome扩展通过Native Messaging API逃逸浏览器沙箱，在Windows系统上执行PowerShell命令，将浏览器转变为远程后门。</p>
+                        <div class="attack-flow">
+                            <span class="flow-step">恶意邮件</span>
+                            <span class="flow-step">安装扩展</span>
+                            <span class="flow-step">Native Messaging</span>
+                            <span class="flow-step critical">PowerShell</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Quick News Section -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Shai-Hulud npm供应链攻击持续演化</h4>
+                    <p>新变体针对云和无服务器基础设施开发者，窃取GitHub、npm、云、CI/CD和SSH凭据。微软5月已披露Mini Shai-Hulud变体通过@antv包感染CI/CD环境。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. LokiBot采用新多阶段攻击链</h4>
+                    <p>利用JScript附件 + .NET注入器 + 进程注入技术窃取凭据，绕过传统边界安全控制。2026年仍是活跃的信息窃取木马。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. AiTM钓鱼套件针对AWS用户</h4>
+                    <p>实时窃取AWS控制台凭据和MFA代码，在受害者登录时同步劫持会话。企业AWS环境面临严重风险。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. CISA KEV修复逾期追踪</h4>
+                    <p>Splunk CVE-2026-20253已逾期3天，Cisco SD-WAN CVE-2026-20262已逾期1天，在野利用仍在继续。</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "UniFi OS三连击 KEV": [0.9, 0.85]
+    "Tata Electronics泄露": [0.85, 0.8]
+    "curl 25年老漏洞": [0.6, 0.75]
+    "Secure Boot证书过期": [0.95, 0.7]
+    "LastPass/Klue供应链": [0.8, 0.65]
+    "Chrome扩展后门": [0.7, 0.6]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日安全事件类型分布
+    "漏洞利用/CVE" : 35
+    "供应链攻击" : 25
+    "数据泄露" : 20
+    "勒索软件" : 10
+    "钓鱼/恶意软件" : 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attack Flow Diagram -->
+            <h3 class="section-header">UniFi OS漏洞链利用流程</h3>
+            <div class="chart-container" style="margin-bottom:40px;">
+                <div class="mermaid">
+flowchart TD
+    A[攻击者获取网络访问] --> B[CVE-2026-34908: 访问控制绕过]
+    B --> C[未授权修改系统配置]
+    C --> D[CVE-2026-34909: 路径遍历]
+    D --> E[读取底层系统文件/获取账户]
+    E --> F[CVE-2026-34910: 命令注入]
+    F --> G[执行任意命令获取root权限]
+    G --> H[横向移动/凭证窃取/数据外传]
+                </div>
+            </div>
+
+            <!-- Sequence Diagram -->
+            <h3 class="section-header">curl CVE-2026-8932 mTLS绕过机制</h3>
+            <div class="chart-container" style="margin-bottom:40px;">
+                <div class="mermaid">
+sequenceDiagram
+    participant Client as 客户端
+    participant libcurl as libcurl连接池
+    participant Server as 服务器
+    
+    Client->>libcurl: 连接A (证书X)
+    libcurl->>Server: mTLS握手 (证书X)
+    Server-->>libcurl: 认证成功
+    libcurl-->>Client: 连接A建立
+    
+    Client->>libcurl: 连接B (证书Y, 同一主机)
+    Note over libcurl: 漏洞: 复用连接A<br/>未验证证书变更
+    libcurl->>Server: 复用连接A (仍用证书X)
+    Server-->>libcurl: 成功 (错误认证)
+    libcurl-->>Client: 连接B建立 (认证绕过!)
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div style="margin-bottom:40px;">
+                <div class="mermaid">
+timeline
+    title 2026年6月第4周网安事件
+    6月22日 : Tata Electronics遭World Leaks勒索
+           : 630GB Apple/Tesla机密文件泄露
+           : Chrome扩展Native Messaging后门曝光
+    6月23日 : CISA新增四个KEV漏洞
+           : Ubiquiti UniFi OS三连击
+           : Lantronix EDS5000代码注入
+    6月24日 : Secure Boot KEK CA 2011证书过期
+           : curl 8.21.0发布修复18个CVE
+           : CVE-2026-8932 25年老漏洞修复
+           : LastPass确认Klue供应链泄露
+           : CISA KEV修复截止日倒计时2天
+    6月25日 : Shai-Hulud npm供应链新变体
+           : LokiBot多阶段攻击链更新
+           : AiTM钓鱼套件针对AWS
+    6月26日 : CISA KEV修复截止日到期
+           : UniFi OS/Lantronix EDS5000
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurityNews</span>
+                        <a href="https://cybersecuritynews.com/cisa-ubiquiti-unifi-os-vulnerability/">CISA Warns of Ubiquiti UniFi OS Vulnerability</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Realist Juggernaut</span>
+                        <a href="https://therealistjuggernaut.com/2026/06/24/cisa-adds-four-actively-exploited-vulnerabilities-to-known-exploited-vulnerabilities-catalog/">CISA Adds Four Actively Exploited Vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurityNews</span>
+                        <a href="https://cybersecuritynews.com/tata-electronics-data-breach/">Tata Electronics Data Breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernews</span>
+                        <a href="https://cybernews.com/security/tata-electronics-breach-apple-tesla-secret-files/">Tata breach exposes Apple, Tesla secret files</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechCrunch</span>
+                        <a href="https://techcrunch.com/2026/06/22/tata-electronics-a-major-tech-supplier-to-apple-and-tesla-confirms-data-breach/">Tata Electronics confirms data breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurityNews</span>
+                        <a href="https://cybersecuritynews.com/25-year-old-curl-vulnerability/">25-Year-Old Vulnerability in curl</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Digital Warfare</span>
+                        <a href="https://digitalwarfare.com/curl-flaw-cve-2026-8932-undetected-for-25-years-now-patched/">curl flaw CVE-2026-8932</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">XDA Developers</span>
+                        <a href="https://www.xda-developers.com/microsoft-secure-boot-certificates-expire-june-2026-older-pcs/">Microsoft Secure Boot certificates expire</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">知乎</span>
+                        <a href="https://zhuanlan.zhihu.com/p/2015141187628074602">2026年UEFI证书过期事件的技术解析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechPP</span>
+                        <a href="https://techpp.com/2026/06/24/daily-brief-june-24-2026-lastpass-data-breach/">Daily Brief June 24 2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberPress</span>
+                        <a href="https://cyberpress.org/chrome-policies-force-extensions/">Chrome Policies Force Extensions</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">D3Lab</span>
+                        <a href="https://www.d3lab.net/breaking-out-of-chromes-sandbox-a-native-messaging-backdoor-observed-in-italy/">Chrome Native Messaging Backdoor</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft Security Blog</span>
+                        <a href="https://www.microsoft.com/en-us/security/blog/2026/05/20/mini-shai-hulud-compromised-antv-npm-packages-enable-ci-cd-credential-theft/">Mini Shai-Hulud npm packages</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Reuters</span>
+                        <a href="https://www.reuters.com/business/media-telecom/indias-tata-electronics-hit-by-cyber-breach-claiming-expose-apple-tesla-trade-2026-06-22/">Tata Electronics cyber breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">KEV Catalog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年6月24日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

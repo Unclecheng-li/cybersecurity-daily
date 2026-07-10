@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年6月23日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年6月23日 星期一</span>
+            <span class="edition-number">第 41 期 | 总第 41 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>FortiBleed · Squidbleed · DifyTap · PixelSmash · AutoJack · GPT-5.5-Cyber
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">FortiBleed攻击活动升级：43万台FortiGate设备遭入侵，1.1亿凭证被盗</h2>
+                <p class="sub-headline">安全研究人员披露，一个名为FortiBleed的大规模攻击活动已系统性入侵全球超过430,000台Fortinet FortiGate防火墙和SSL VPN设备，窃取超过1.1亿条认证凭证。攻击者使用自定义Golang工具FortigateSniffer，在受感染设备上静默嗅探凭证数据。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">FortiBleed攻击活动 — 大规模凭证窃取</h3>
+                    <div class="article-meta">
+                        <span>CVE: 无特定CVE（利用已知漏洞+凭证卫生问题）</span>
+                        <span class="cvss-score">在野利用，持续进行中</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全公司SOCRadar披露，一个名为FortiBleed的大规模攻击活动已持续数月，系统性地入侵全球Fortinet FortiGate防火墙和SSL VPN设备。攻击者使用自定义Golang工具FortigateSniffer，在受感染设备上静默嗅探凭证数据。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>凭证窃取+已知漏洞利用</li>
+                            <li><strong>攻击方式：</strong>利用已知漏洞入侵设备，部署嗅探器</li>
+                            <li><strong>影响范围：</strong>430,000+设备，194个国家</li>
+                            <li><strong>后果：</strong>1.1亿凭证泄露，企业二次攻击风险</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>规模空前：43万台设备受影响，1.1亿凭证被盗</li>
+                            <li>持续数月：攻击自2026年2月起持续进行</li>
+                            <li>凭证卫生问题：非零日漏洞，而是凭据管理不当</li>
+                        </ul>
+                    </div>
+                    <!-- 攻击流程图 -->
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">利用已知漏洞</span>
+                        <span class="flow-step">入侵FortiGate</span>
+                        <span class="flow-step">部署FortigateSniffer</span>
+                        <span class="flow-step critical">窃取1.1亿凭证</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Squidbleed漏洞 — 29年历史的代理服务器漏洞</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-47729</span>
+                        <span class="cvss-score">已修补（Squid 6.13）</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全研究人员发现Squid Web代理软件中存在一个始于1997年的堆越界读取漏洞，被命名为Squidbleed。该漏洞可泄露同一代理上其他用户的明文HTTP请求，包括凭证和会话令牌。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>Squid代理服务器</td><td class="risk-high">高危</td></tr>
+                            <tr><td>共享网络环境</td><td class="risk-high">高危</td></tr>
+                            <tr><td>HTTP明文传输</td><td class="risk-medium">中高危</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">DifyTap漏洞 — AI工作流平台跨租户数据泄露</h3>
+                    <div class="article-meta">
+                        <span>4个漏洞（2严重+2无需认证）</span>
+                        <span class="cvss-score">已修补</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">FFmpeg PixelSmash漏洞 — 视频解码器远程代码执行</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-8461</span>
+                        <span class="cvss-score">已修复（FFmpeg 8.1.2）</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Microsoft AutoGen Studio AutoJack漏洞 — AI代理劫持</h3>
+                    <div class="article-meta">
+                        <span>AutoJack漏洞链</span>
+                        <span class="cvss-score">已修复</span>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. WhatsApp钓鱼攻击 — 虚假商业文档传播恶意软件</h4>
+                    <p>一场持续的恶意软件活动正通过WhatsApp传播欺诈性消息，诱骗用户下载VBScript文件，最终导致系统被远程控制。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. JaredFromSubway MEV机器人被盗1500万美元</h4>
+                    <p>以太坊上著名的MEV机器人"JaredFromSubway"遭黑客攻击，损失1500万美元。攻击者通过制造虚假交易机会来操纵该机器人的逻辑漏洞。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Apple Usbliter8 BootROM漏洞 — 无法修复的硬件漏洞</h4>
+                    <p>安全公司Paradigm Shift发现Apple A12/A13芯片的BootROM漏洞，命名为Usbliter8。该漏洞无法通过软件修复，影响iPhone XR/XS/SE2/11系列。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. ClawHub插件供应链攻击 — 23个插件滥用官方范围</h4>
+                    <p>研究人员发现23个ClawHub插件滥用官方组织范围（@openclaw/和@clawhub/），冒充可信AI代理工具，构成供应链攻击风险。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. OpenAI发布GPT-5.5-Cyber完整版</h4>
+                    <p>OpenAI正式发布GPT-5.5-Cyber完整版，专为高级漏洞检测、补丁生成和自动修复设计。在CyberGym基准测试中以85.6%得分超越Anthropic Mythos。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 加拿大CSIS首次使用法院令清除僵尸网络</h4>
+                    <p>加拿大安全情报局（CSIS）获得法院授权，首次使用威胁减轻令，直接清除位于加拿大的受感染设备上的两个外国运营僵尸网络。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "FortiBleed": [0.95, 0.9]
+    "Squidbleed": [0.85, 0.85]
+    "DifyTap": [0.8, 0.9]
+    "PixelSmash": [0.7, 0.8]
+    "AutoJack": [0.75, 0.75]
+    "Usbliter8": [0.9, 0.95]
+    "ClawHub": [0.6, 0.7]
+    "WhatsApp钓鱼": [0.85, 0.6]
+    "MEV机器人": [0.8, 0.65]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "漏洞利用" : 35
+    "供应链攻击" : 20
+    "钓鱼攻击" : 15
+    "数据泄露" : 15
+    "勒索软件" : 10
+    "执法行动" : 5
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年6月第4周网安事件
+    6月19日 : Apple Usbliter8 BootROM漏洞披露
+           : Microsoft AutoJack漏洞披露
+    6月22日 : Squidbleed漏洞公开
+           : DifyTap漏洞披露
+           : FFmpeg PixelSmash漏洞修复
+           : WhatsApp钓鱼攻击活动
+           : JaredFromSubway MEV机器人被盗
+           : ClawHub插件供应链攻击
+           : 加拿大CSIS僵尸网络清除
+    6月23日 : FortiBleed攻击活动升级
+           : OpenAI发布GPT-5.5-Cyber
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">FortiBleed攻击活动</span>
+                        <a href="https://cybersecuritynews.com/fortigatesniffer-tool-fortibleed/">Cyber Security News: FortigateSniffer Tool</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FortiBleed攻击活动</span>
+                        <a href="https://securityweek.com/fortinet-responds-to-fortibleed-campaign/">SecurityWeek: FortiBleed Campaign</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Squidbleed漏洞</span>
+                        <a href="https://thehackernews.com/2026/06/29-year-old-squid-proxy-bug-squidbleed.html">The Hacker News: 29-Year-Old Squid Proxy Bug</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Squidbleed漏洞</span>
+                        <a href="https://cloud.tencent.com/announce/detail/2333">腾讯云: Squidbleed安全通告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DifyTap漏洞</span>
+                        <a href="https://thehackernews.com/2026/06/researchers-detail-difytap-flaws-in.html">The Hacker News: DifyTap Flaws in Dify</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FFmpeg PixelSmash漏洞</span>
+                        <a href="https://bleepingcomputer.com/news/security/ffmpeg-fixes-pixelsmash-flaw-in-widely-used-video-decoder/">BleepingComputer: FFmpeg PixelSmash Flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft AutoJack漏洞</span>
+                        <a href="https://cybersecuritynews.com/autojack/">Cyber Security News: AutoJack Attack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WhatsApp钓鱼攻击</span>
+                        <a href="https://bleepingcomputer.com/news/security/whatsapp-phishing-attack-uses-fake-business-docs-to-hack-pcs/">BleepingComputer: WhatsApp Phishing Attack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MEV机器人被盗</span>
+                        <a href="https://cryptotimes.io/2026/06/22/ethereum-mev-bot-jaredfromsubway-drained-in-15m-honeypot-attack/">CryptoTimes: JaredFromSubway MEV Bot Hacked</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Apple Usbliter8漏洞</span>
+                        <a href="https://new.qq.com/rain/a/20260619A07ZML00">腾讯新闻: iPhone新漏洞曝光</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ClawHub插件供应链攻击</span>
+                        <a href="https://cybersecuritynews.com/23-clawhub-plugins-abuse-official-org-scopes/">Cyber Security News: 23 ClawHub Plugins</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OpenAI GPT-5.5-Cyber</span>
+                        <a href="https://cybersecuritynews.com/gpt-5-5-cyber/">Cyber Security News: GPT-5.5-Cyber Launch</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">加拿大CSIS僵尸网络清除</span>
+                        <a href="https://thehackernews.com/2026/06/canadas-spy-agency-used-first-of-its.html">The Hacker News: Canada CSIS Botnet Takedown</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年6月23日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

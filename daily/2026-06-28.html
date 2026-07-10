@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年6月28日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年6月28日 星期日</span>
+            <span class="edition-number">第 46 期 | 总第 46 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Node.js CVE-2026-48930 TLS证书授权静默重绑定CVSS 9.8 · PTC Windchill CVE-2026-12569未授权RCE+Webshell CISA KEV今日截止 · Amazon Q CVE-2026-12957 MCP自动执行窃取云凭证 · DirtyClone CVE-2026-43503 Linux内核本地提权 · 0DIN演示GitHub仓库劫持AI编码代理 · Cisco UCM CVE-2026-20230 KEV今日截止 · DCloud Uni-App 20万诈骗网站 · 法国INSEE数据泄露
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Node.js CVE-2026-48930 — TLS 证书授权机构静默重绑定，CVSS 9.8 Critical</h2>
+                <p class="sub-headline">嵌入空字节主机名导致 TLS 连接静默劫持 | 影响 Node.js 22.x/24.x | 120万+站点 | C层/JS层处理不一致</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Node.js CVE-2026-48930 — TLS 证书授权机构静默重绑定</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-48930 | Node.js 22.x/24.x | CVSS 9.8</span>
+                        <span class="cvss-score">6月安全发布</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Node.js 2026年6月安全发布修复了其历史上最严重的 TLS 漏洞之一。CVE-2026-48930 允许攻击者通过在主机名中嵌入空字节（\0），利用 C 语言解析器与 JavaScript 验证器之间的处理差异，实现静默 TLS 证书授权机构重绑定。</p>
+                        <p><strong>漏洞机制：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>CWE-170 空字节截断 → TLS 证书授权重绑定</li>
+                            <li><strong>攻击方式：</strong>嵌入空字节的主机名被 C 层 getaddrinfo() 截断，但 JS 层验证器不截断</li>
+                            <li><strong>影响：</strong>HTTPS/WSS 连接被静默重定向到攻击者服务器，客户端无告警</li>
+                            <li><strong>影响范围：</strong>Node.js 22.x 和 24.x 所有受支持版本，120万+站点</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong>这是 TLS 客户端层面的设计缺陷，影响所有使用 Node.js 的 API 网关、微服务和 SSR 应用。同批次还修复了 CVE-2026-48618（通配符绕过）、CVE-2026-50741（修复绕过）等共 12 个漏洞。</p>
+                    </div>
+                    <!-- 攻击流程图 -->
+                    <div class="attack-flow">
+                        <span class="flow-step">嵌入\0字节主机名</span>
+                        <span class="flow-step">C层截断</span>
+                        <span class="flow-step">JS层不截断</span>
+                        <span class="flow-step critical">TLS重绑定</span>
+                        <span class="flow-step critical">连接劫持</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">PTC Windchill CVE-2026-12569 — 未授权 RCE + Webshell</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-12569 | CVSS 9.3 | CISA KEV 6/28截止</span>
+                        <span class="cvss-score">在野利用</span>
+                    </div>
+                    <div class="article-body">
+                        <p>PTC Windchill PDMlink 和 FlexPLM 曝出未授权远程代码执行漏洞，由于反序列化不受信任数据，攻击者可执行任意代码。PTC 确认攻击者正在部署 JSP Webshell，CISA 于 6/25 加入 KEV 目录。</p>
+                        <table class="affected-table">
+                            <tr><th>IoC</th><th>详情</th></tr>
+                            <tr><td>C2地址</td><td class="risk-high">5.180.41.35</td></tr>
+                            <tr><td>Webshell路径</td><td>/Windchill/login/[0-9a-f]{16}.jsp</td></tr>
+                            <tr><td>文件哈希</td><td>55a1eb4c...023a30c</td></tr>
+                            <tr><td>活动标志</td><td class="risk-medium">/tmp/flst.txt</td></tr>
+                        </table>
+                        <p>PTC 产品首次进入 CISA KEV。制造业（航空航天/汽车/国防）广泛使用，沦陷意味着产品设计图纸和供应链数据暴露。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Amazon Q CVE-2026-12957 — MCP 自动执行窃取云凭证</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-12957 | Wiz Research | 已修复 v1.65.0</span>
+                        <span class="cvss-score">高危</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Wiz Research 发现 Amazon Q Developer VS Code 扩展在加载工作区时自动执行 .amazonq/mcp.json 中的 MCP 配置，无需用户同意。攻击者创建恶意仓库，开发者克隆打开后 AWS 凭证即被窃取。</p>
+                        <p><strong>跨生态影响：</strong>Claude Code、Cursor、Windsurf 均存在类似问题。MCP 自动执行已成为 AI 开发工具的行业级安全隐患。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">DirtyClone CVE-2026-43503 — Linux 内核本地提权</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-43503 | CVSS 8.8 | JFrog 发现</span>
+                        <span class="cvss-score">DirtyFrag家族第5个</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Linux 内核 XFRM/IPsec 子系统本地提权漏洞。通过克隆网络数据包丢失安全标志，覆写页面缓存中的 /usr/bin/su 认证逻辑获取 root。磁盘文件不变，对文件完整性监控和审计日志完全不可见。</p>
+                        <p><strong>影响：</strong>Debian/Fedora 默认受影响，云环境和容器多租户场景风险最高。DirtyFrag 家族已累计 5 个变种。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">0DIN 演示 — 干净 GitHub 仓库劫持 AI 编码代理</h3>
+                    <div class="article-meta">
+                        <span>6月25日 | Mozilla 0DIN | 无 CVE</span>
+                        <span class="cvss-score">概念验证</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Mozilla 0DIN 演示：一个完全干净的 GitHub 仓库可让 Claude Code 打开反向 Shell。恶意 payload 不存在于仓库中，而是通过 DNS TXT 记录在运行时获取。</p>
+                        <p>"Claude Code 从未决定打开一个 shell。它决定修复一个错误。" — 三层间接引用使攻击对所有扫描器不可见。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Cisco UCM CVE-2026-20230 — SSRF → Root 提权</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.8 | CISA KEV 6/28截止</span>
+                        <span class="cvss-score">在野利用</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Cisco Unified Communications Manager Web 组件 SSRF 漏洞，攻击者可通过未授权访问实现任意文件写入并提权至 Root。CUCM 是企业/政府电话系统核心，沦陷后通话录音和 SIP 信令全部泄露。</p>
+                        <p>PoC 已于 6/24 公开，今日是 CISA KEV 修复截止日。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 7 -->
+                <article class="article-card">
+                    <span class="article-number">7</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">DCloud Uni-App 被滥用 — 20万投资诈骗网站</h3>
+                    <div class="article-meta">
+                        <span>Infoblox 报告 | 6月27日</span>
+                        <span class="cvss-score">诈骗基础设施</span>
+                    </div>
+                    <div class="article-body">
+                        <p>威胁行为者利用中国开源跨平台框架 DCloud Uni-App 批量创建投资诈骗网站模板。Infoblox 已识别超过 200,000 个诈骗网站，主要伪装为加密货币/股票投资平台。</p>
+                        <p>这不是框架漏洞，而是合法开源工具被大规模武器化的典型案例。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>8. Node.js 6月安全发布 — 12个漏洞修复</h4>
+                    <p>除 CVE-2026-48930 外，还修复了 TLS 通配符绕过、WebCrypto DoS、HTTP/2 OOM、代理凭证泄露等漏洞。建议所有 Node.js 22.x/24.x 用户立即更新。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. X 平台 AI 审核封禁安全研究人员</h4>
+                    <p>X 的 AI 审核机器人将安全研究帖子标记为"恶意行为"并封禁账号，引发安全社区强烈抗议。安全研究人员称其正常的安全披露帖子被误判。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. CISA KEV 逾期追踪 — 23个漏洞逾期</h4>
+                    <p>今日截止：PTC Windchill + Cisco UCM。已逾期：Splunk（+7天）、PAN-OS（+27天，逾期最久）。6月共新增 22 个 KEV 条目。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 法国统计局 INSEE 遭攻击 — 1.28万员工数据泄露</h4>
+                    <p>攻击者"Saturne"在暗网发布 INSEE 内部通讯录数据库，含 12,796 名员工姓名和工作联系方式。法国政府机构近期第三次重大泄露。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. Anthropic Mythos 5 获美国政府批准有限发布</h4>
+                    <p>被认为是最强大的 AI 模型之一，安全社区关注其在网络攻击中的潜在滥用风险。OpenAI 同日限制 GPT-5.6 模型访问权限。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>13. 7-Zip 26.02 发布 — 修复多个安全漏洞</h4>
+                    <p>广泛部署的压缩工具发布新版本修复安全问题。建议所有用户更新至 26.02 版本。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title "今日漏洞严重性 × 利用状态"
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Node.js CVE-2026-48930": [0.6, 0.95]
+    "PTC Windchill CVE-2026-12569": [0.95, 0.9]
+    "Amazon Q CVE-2026-12957": [0.5, 0.8]
+    "DirtyClone CVE-2026-43503": [0.7, 0.85]
+    "Cisco UCM CVE-2026-20230": [0.95, 0.92]
+    "Splunk CVE-2026-20253": [0.92, 0.9]
+    "GitHub Megalodon 10000": [0.8, 0.75]
+    "Gogs CVE-2026-52813": [0.85, 0.9]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日安全事件类型分布</div>
+                    <div class="mermaid">
+pie title "今日安全事件类型分布"
+    "TLS/密码学漏洞" : 20
+    "AI编码工具链攻击" : 25
+    "Linux内核LPE" : 15
+    "企业PLM/PDM RCE" : 15
+    "网络基础设施(Cisco)" : 10
+    "数据泄露" : 10
+    "诈骗基础设施" : 5
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== DirtyClone 攻击链 ===== -->
+            <h3 class="section-header">DirtyClone CVE-2026-43503 攻击链路</h3>
+            <div class="chart-container" style="margin-bottom:40px;">
+                <div class="mermaid">
+flowchart TD
+    A[攻击者获得低权限Shell] --> B[内存映射 /usr/bin/su]
+    B --> C["vmsplice 将页面缓存附加到socket缓冲区"]
+    C --> D[配置本地 XFRM/ESP 隧道]
+    D --> E[netfilter TEE 触发数据包克隆]
+    E --> F["__pskb_copy_fclone 丢失安全标志"]
+    F --> G[IPsec 就地解密覆写页面缓存]
+    G --> H[AES-CBC 精确修改认证逻辑]
+    H --> I[执行被篡改的 su]
+    I --> J[Root权限 - 磁盘文件不变 - 无审计日志]
+                </div>
+            </div>
+
+            <!-- ===== AI 编码工具链攻击态势 ===== -->
+            <h3 class="section-header">AI 编码工具链攻击态势</h3>
+            <div class="chart-container" style="margin-bottom:40px;">
+                <div class="mermaid">
+flowchart LR
+    subgraph 攻击面
+        A1[恶意GitHub仓库]
+        A2[恶意MCP配置]
+        A3[恶意npm/PyPI包]
+        A4[DNS TXT记录]
+    end
+    subgraph AI代理
+        B1[Claude Code]
+        B2[Amazon Q]
+        B3[Cursor]
+        B4[Windsurf]
+    end
+    subgraph 攻击结果
+        C1[反向Shell]
+        C2[云凭证窃取]
+        C3[API密钥泄露]
+        C4[持久化后门]
+    end
+    A1 --> B1
+    A2 --> B2
+    A3 --> B1
+    A4 --> B1
+    B1 --> C1
+    B2 --> C2
+    B1 --> C3
+    B1 --> C4
+                </div>
+            </div>
+
+            <!-- ===== Node.js TLS 漏洞时序图 ===== -->
+            <h3 class="section-header">Node.js CVE-2026-48930 攻击时序</h3>
+            <div class="chart-container" style="margin-bottom:40px;">
+                <div class="mermaid">
+sequenceDiagram
+    participant Attacker as 攻击者
+    participant DNS as DNS服务器
+    participant Node as Node.js应用
+    participant TLS as TLS连接
+    participant Backend as 后端服务
+
+    Attacker->>DNS: 构造含空字节的主机名
+    DNS->>Node: 解析返回恶意IP
+    Node->>TLS: C层截断主机名
+    TLS->>TLS: JS层验证完整主机名
+    TLS->>Backend: 连接攻击者服务器
+    Backend->>Attacker: 建立TLS会话(静默重绑定)
+    Note over Attacker: 客户端无告警 连接被劫持
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div style="margin-bottom:40px;">
+                <div class="mermaid">
+timeline
+    title 2026年6月第4-5周网安事件
+    6月23日 : CISA新增四个KEV漏洞
+           : Ubiquiti UniFi OS三连击
+    6月24日 : Secure Boot KEK CA证书过期
+           : curl 8.21.0修复25年老漏洞
+           : LastPass确认Klue供应链泄露
+    6月25日 : Cisco SD-WAN零日CVE-2026-20245
+           : Operation Endgame捣毁Amadey/StealC
+           : Squidbleed PoC公开
+    6月26日 : Splunk CVE-2026-20253 KEV截止
+           : PTC Windchill CVE-2026-12569加入KEV
+           : DirtyClone CVE-2026-43503披露
+    6月27日 : Gogs CVE-2026-52813 PoC传播
+           : Linux DirtyCBC加act_pedit复现
+           : Node.js CVE-2026-48930 TLS漏洞发布
+           : 0DIN演示AI代理劫持攻击
+    6月28日 : PTC Windchill加Cisco UCM KEV截止
+           : Amazon Q CVE-2026-12957公开
+           : DCloud Uni-App 20万诈骗站披露
+           : 法国INSEE数据泄露确认
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Node.js 官方安全发布</span>
+                        <a href="https://nodejs.org/en/blog/vulnerability/june-2026-security-releases">Node.js June 2026 Security Releases</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE Feed (CVE-2026-48930)</span>
+                        <a href="https://cvefeed.io/vuln/detail/CVE-2026-48930">CVE-2026-48930 Detail</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News (PTC Windchill)</span>
+                        <a href="https://thehackernews.com/2026/06/cisa-adds-exploited-ptc-windchill-rce.html">CISA Adds PTC Windchill RCE to KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PTC 安全公告</span>
+                        <a href="https://www.ptc.com/en/about/trust-center/advisory-center/active-advisories/windchill-flexplm-rce-vulnerability">PTC Windchill Advisory</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Wiz Research (Amazon Q)</span>
+                        <a href="https://www.wiz.io/blog/amazon-q-vulnerability">Amazon Q MCP Auto-Execution</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurityNews (DirtyClone)</span>
+                        <a href="https://cybersecuritynews.com/dirtyclone-linux-vulnerability/">DirtyClone Linux LPE</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">JFrog Research (DirtyClone)</span>
+                        <a href="https://research.jfrog.com/post/dissecting-and-exploiting-linux-lpe-variant-dirtyclone-cve-2026-43503/">DirtyClone Deep Dive</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">0DIN (AI Agent 劫持)</span>
+                        <a href="https://0din.ai/blog/clone-this-repo-and-i-own-your-machine">Clone This Repo and I Own Your Machine</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/clean-github-repo-tricks-ai-coding-agents-into-running-malware/">GitHub Repo Tricks AI Agents</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek (DCloud)</span>
+                        <a href="https://www.securityweek.com/chinese-framework-powers-200000-scam-sites/">DCloud Uni-App 200K Scam Sites</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernews (INSEE)</span>
+                        <a href="https://cybernews.com/security/france-statistics-agency-insee-cyberattack-taff-data/">France INSEE Data Breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernews (X封禁)</span>
+                        <a href="https://cybernews.com/news/x-ai-bots-suspend-security-researchers-malicious-behavior/">X Suspends Security Researchers</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling (6/27情报)</span>
+                        <a href="https://threat-modeling.com/vulnerability-intelligence-report-june-27-2026/">Vulnerability Intelligence Report</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/06/25/cisa-adds-two-known-exploited-vulnerabilities-catalog">KEV Catalog Update</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">KEV 2026 总览</span>
+                        <a href="https://kev.5sn.com/2026/">CISA KEV 2026 Overview</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年6月28日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

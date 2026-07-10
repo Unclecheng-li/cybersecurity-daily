@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年6月29日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年6月29日 星期一</span>
+            <span class="edition-number">第 47 期 | 总第 47 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>KDDI数据泄露 · npm供应链攻击 · 智谱AI GLM-5.2 · RedAmon · GPT-5.6 Sol
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">日本KDDI数据泄露影响1420万邮箱账户</h2>
+                <p class="sub-headline">电信巨头遭入侵，6家ISP邮箱系统沦陷，1422万用户凭证面临风险</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">日本KDDI数据泄露 — 1420万邮箱凭证外泄</h3>
+                    <div class="article-meta">
+                        <span>影响规模：1422万账户</span>
+                        <span class="cvss-score">第三方软件漏洞</span>
+                    </div>
+                    <div class="article-body">
+                        <p>日本电信运营商KDDI Corporation披露了一起重大数据泄露事件。攻击者入侵了该公司的一个邮件系统，该系统同时服务于日本另外五家互联网服务提供商（ISP）。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>第三方软件漏洞利用</li>
+                            <li><strong>发现时间：</strong>2026年6月17日</li>
+                            <li><strong>影响范围：</strong>KDDI及5家ISP（STNet、JCOM、Chubu Telecommunications、NIFTY、BIGLOBE）</li>
+                            <li><strong>泄露数据：</strong>邮箱地址和密码（部分密码为哈希/加密存储）</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>影响范围极广，波及日本主要ISP生态系统</li>
+                            <li>部分密码可能以明文形式存储，存在直接账户劫持风险</li>
+                            <li>凸显第三方软件供应链风险在电信基础设施中的放大效应</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">利用第三方漏洞</span>
+                        <span class="flow-step">入侵KDDI邮件系统</span>
+                        <span class="flow-step critical">获取6家ISP凭证</span>
+                        <span class="flow-step critical">1422万账户风险</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">npm/Go供应链攻击 — VS Code任务部署信息窃取器</h3>
+                    <div class="article-meta">
+                        <span>朝鲜黑客关联 | Contagious Interview</span>
+                        <span class="cvss-score">供应链攻击</span>
+                    </div>
+                    <div class="article-body">
+                        <p>JFrog安全研究人员发现被劫持的npm和Go软件包利用VS Code自动任务机制部署Python信息窃取程序，避开npm v12安全加固。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>html-to-gutenberg (npm)</td><td class="risk-high">恶意包</td></tr>
+                            <tr><td>fetch-page-assets (npm)</td><td class="risk-high">恶意包</td></tr>
+                            <tr><td>16个Go包</td><td class="risk-high">恶意包</td></tr>
+                            <tr><td>VS Code任务机制</td><td class="risk-medium">滥用风险</td></tr>
+                        </table>
+                        <p><strong>窃取范围：</strong>浏览器凭证、加密货币钱包、开发者工具、云存储元数据</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">智谱AI GLM-5.2挑战美国AI出口管制</h3>
+                    <div class="article-meta">
+                        <span>开源模型 | 漏洞检测能力</span>
+                        <span class="cvss-score">政策影响</span>
+                    </div>
+                    <div class="article-body">
+                        <p>智谱AI开源模型GLM-5.2在IDOR漏洞检测任务上F1分数达39%，超过Claude Mythos的32-37%，成本仅1/6。</p>
+                        <p><strong>关键指标：</strong></p>
+                        <ul>
+                            <li><strong>检测能力：</strong>F1分数39% vs 32-37%</li>
+                            <li><strong>成本优势：</strong>$0.17/漏洞 vs $1.00+/漏洞</li>
+                            <li><strong>访问模式：</strong>开源公开 vs 受限管制</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">RedAmon — AI驱动自动化渗透测试平台</h3>
+                    <div class="article-meta">
+                        <span>开源 | 全链路自动化</span>
+                        <span class="cvss-score">攻防工具</span>
+                    </div>
+                    <div class="article-body">
+                        <p>新型开源攻击平台实现侦察→漏洞利用→后渗透→AI分类→代码修复→GitHub PR全链路自动化。</p>
+                        <p><strong>核心能力：</strong></p>
+                        <ul>
+                            <li>40+安全工具并行侦察</li>
+                            <li>LangGraph AI代理 + MCP服务器</li>
+                            <li>CypherFix自动修复引擎</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">OpenAI GPT-5.6 Sol — 政府控制下的有限发布</h3>
+                    <div class="article-meta">
+                        <span>有限访问 | 多层安全防护</span>
+                        <span class="cvss-score">AI治理</span>
+                    </div>
+                    <div class="article-body">
+                        <p>OpenAI GPT-5.6系列开启有限预览，美国政府首次要求逐客户审批访问权限。</p>
+                        <p><strong>关键特性：</strong></p>
+                        <ul>
+                            <li><strong>Sol：</strong>旗舰模型，Terminal-Bench 88.8%</li>
+                            <li><strong>安全防护：</strong>70万+ GPU小时红队测试</li>
+                            <li><strong>治理模式：</strong>政府控制+企业自主的平衡</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. AssuranceAmerica数据泄露影响110万人</h4>
+                    <p>美国保险公司数据泄露影响7个州至少110万居民，涉及社保号等敏感信息。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Jaguar Land Rover攻击归因俄罗斯黑客</h4>
+                    <p>2025年JLR勒索攻击确认由俄罗斯黑客实施，造成英国经济£19亿损失。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. NAIC遭网络攻击后暂停投资风险评级</h4>
+                    <p>美国保险监督官协会在遭受网络攻击后暂停投资风险评级服务。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 新西兰药房数据泄露暴露患者私人信息</h4>
+                    <p>惠灵顿药房因网站错误导致29名患者私人医疗信息泄露。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "KDDI邮件系统": [0.9, 0.95]
+    "VS Code任务供应链": [0.85, 0.88]
+    "GLM-5.2安全影响": [0.6, 0.7]
+    "RedAmon工具风险": [0.5, 0.65]
+    "GPT-5.6安全边界": [0.4, 0.6]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "数据泄露" : 35
+    "供应链攻击" : 30
+    "AI安全" : 25
+    "网络犯罪" : 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年6月第5周网安事件
+    6月23日 : CISA新增四个KEV漏洞
+           : Ubiquiti UniFi OS三连击
+    6月24日 : Tata Electronics遭World Leaks勒索
+           : curl 8.21.0修复25年老漏洞
+           : Windows Secure Boot证书过期
+    6月25日 : Operation Endgame第二波行动
+           : Cisco UCM在野利用确认
+    6月26日 : ShapedPlugin WordPress供应链投毒
+           : Cisco SD-WAN零日CVE-2026-20245
+           : JLR攻击归因俄罗斯黑客
+    6月27日 : NAIC遭网络攻击
+    6月28日 : KDDI数据泄露1420万账户
+           : AssuranceAmerica数据泄露110万人
+    6月29日 : npm/Go供应链攻击
+           : 智谱AI GLM-5.2发布
+           : OpenAI GPT-5.6 Sol有限发布
+           : RedAmon AI渗透平台开源
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/data-breach-exposes-up-to-142-million-email-logins-at-six-isps/">Data breach exposes up to 14.2 million email logins at six ISPs</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/06/hijacked-npm-and-go-packages-use-vs.html">Hijacked npm and Go Packages Use VS Code Tasks to Deploy Python Infostealer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurityNews</span>
+                        <a href="https://cybersecuritynews.com/zhipu-ai-vulnerability-detection/">China's New Zhipu AI Reportedly Matches Claude Mythos in Vulnerability Detection</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurityNews</span>
+                        <a href="https://cybersecuritynews.com/redamon-ai-tool/">RedAmon AI Tool that Chains Reconnaissance, Exploitation, and Post-exploitation</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurityNews</span>
+                        <a href="https://cybersecuritynews.com/gpt-5-6-release/">OpenAI Released GPT-5.6 Sol With Limited Access and Strong Cyberattack Protections</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DataBreaches.Net</span>
+                        <a href="https://databreaches.net/2026/06/28/assuranceamerica-breach-may-have-affected-more-than-1-1-million-people-in-seven-states/">AssuranceAmerica breach may have affected more than 1.1 million people</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DataBreaches.Net</span>
+                        <a href="https://databreaches.net/2026/06/26/russian-hackers-behind-the-2-5-billion-jaguar-land-rover-cyberattack-investigators-say/">Russian Hackers Behind the $2.5 Billion Jaguar Land Rover Cyberattack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DataBreaches.Net</span>
+                        <a href="https://databreaches.net/2026/06/27/naic-suspends-investment-risk-designations-after-cyber-attack/">NAIC suspends investment risk designations after cyber attack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">JFrog Research</span>
+                        <a href="https://research.jfrog.com/post/hijacked-npm-vscode-tasks-blockchain/">Hijacked npm Packages via VS Code Tasks</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年6月29日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

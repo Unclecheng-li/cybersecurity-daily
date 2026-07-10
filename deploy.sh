@@ -25,66 +25,72 @@ else
 fi
 
 echo "==> [2/4] 自动更新 index.html 存档数据..."
-# 扫描 daily/ 目录下所有 YYYY-MM-DD.html，自动生成 ARCHIVE_DATA 并替换到 index.html
+# 扫描 daily/ 目录下所有 YYYY-MM-DD.html，
+# 保留 index.html 中已有的关键词，仅补充新增的日期条目
 $PYTHON -c "
 import os, re, json
 from datetime import datetime
 
 daily_dir = 'daily'
 index_path = 'index.html'
-
-# 收集所有日报HTML文件
-entries = []
 weekdays = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
 
-for f in sorted(os.listdir(daily_dir), reverse=True):
-    m = re.match(r'(\d{4}-\d{2}-\d{2})\.html$', f)
-    if not m:
-        continue
-    date_str = m.group(1)
-
-    # 从HTML中提取关键词
-    keywords = ''
-    filepath = os.path.join(daily_dir, f)
-    try:
-        with open(filepath, 'r', encoding='utf-8') as fh:
-            content = fh.read()
-            # 尝试从 keywords-banner 提取
-            kw_match = re.search(r'keywords-banner[^>]*>(.*?)</div>', content, re.DOTALL)
-            if kw_match:
-                raw = re.sub(r'<[^>]+>', '', kw_match.group(1)).strip()
-                raw = re.sub(r'^.*?[：:]\s*', '', raw)
-                keywords = raw
-    except Exception:
-        pass
-
-    # 计算星期
-    try:
-        d = datetime.strptime(date_str, '%Y-%m-%d')
-        weekday = weekdays[d.weekday()]
-    except Exception:
-        weekday = ''
-
-    entries.append({
-        'date': date_str,
-        'weekday': weekday,
-        'keywords': keywords
-    })
-
-# 已按日期降序排列
-entries.sort(key=lambda x: x['date'], reverse=True)
-
-# 生成 ARCHIVE_DATA JS 代码
-js_data = json.dumps(entries, ensure_ascii=False, indent=4)
-# 缩进适配 HTML
-js_lines = js_data.split('\n')
-js_indented = '\n'.join('            ' + line if i > 0 else '        ' + line for i, line in enumerate(js_lines))
-
-# 替换 index.html 中的 ARCHIVE_DATA
+# 1. 读取 index.html 中已有的 ARCHIVE_DATA
 with open(index_path, 'r', encoding='utf-8') as f:
     html = f.read()
 
-pattern = r'(var ARCHIVE_DATA = )\[.*?\](;)'
+existing = {}
+m = re.search(r'var ARCHIVE_DATA\s*=\s*(\[.*?\]);', html, re.DOTALL)
+if m:
+    try:
+        old_data = json.loads(m.group(1))
+        for item in old_data:
+            existing[item['date']] = item
+    except Exception:
+        pass
+
+# 2. 扫描 daily/ 目录，找出新增的日期
+new_dates = set()
+for f in os.listdir(daily_dir):
+    dm = re.match(r'(\d{4}-\d{2}-\d{2})\.html$', f)
+    if dm:
+        new_dates.add(dm.group(1))
+
+# 3. 合并：保留已有关键词 + 补充新日期
+entries = []
+for date_str in sorted(new_dates | set(existing.keys()), reverse=True):
+    if date_str in existing:
+        entries.append(existing[date_str])
+    else:
+        try:
+            d = datetime.strptime(date_str, '%Y-%m-%d')
+            weekday = weekdays[d.weekday()]
+        except Exception:
+            weekday = ''
+        # 尝试从HTML提取关键词
+        keywords = ''
+        filepath = os.path.join(daily_dir, date_str + '.html')
+        if os.path.exists(filepath):
+            try:
+                with open(filepath, 'r', encoding='utf-8') as fh:
+                    content = fh.read()
+                    kw_match = re.search(r'<div[^>]*keywords-banner[^>]*>\s*<strong>[^<]*</strong>(.*?)</div>', content, re.DOTALL)
+                    if kw_match:
+                        raw = re.sub(r'<[^>]+>', '', kw_match.group(1)).strip()
+                        keywords = raw
+            except Exception:
+                pass
+        entries.append({
+            'date': date_str,
+            'weekday': weekday,
+            'keywords': keywords
+        })
+
+entries.sort(key=lambda x: x['date'], reverse=True)
+
+# 4. 替换 index.html 中的 ARCHIVE_DATA
+js_data = json.dumps(entries, ensure_ascii=False, indent=4)
+pattern = r'(var ARCHIVE_DATA\s*=\s*)\[.*?\](;)'
 replacement = r'\1' + js_data + r'\2'
 new_html, count = re.subn(pattern, replacement, html, flags=re.DOTALL)
 

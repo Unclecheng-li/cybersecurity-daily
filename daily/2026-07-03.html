@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月3日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月3日 星期五</span>
+            <span class="edition-number">第 26 期 | 总第 26 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>JetBrains全产品线严重漏洞 (Hub/YouTrack/IntelliJ/TeamCity) · SharePoint CVE-2026-45659 KEV 7/4截止 · Defender禁用攻击活动 (Huntress) · Apple iOS 26.5.2 4个WebKit AI发现 · PTC Windchill CVE-2026-12569 持续WebShell
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">JetBrains 全系列 IDE 严重漏洞 — 认证绕过 + 账户接管 + 远程代码执行</h2>
+                <p class="sub-headline">覆盖 IntelliJ / PyCharm / WebStorm / GoLand / Hub / YouTrack / TeamCity / Kotlin；攻击者可从单点失守控制 CI/CD 与全量开发资产</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">JetBrains 全产品线严重漏洞 — 认证绕过、账户接管、远程代码执行三重打击</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-49367 等</span>
+                        <span class="cvss-score">全产品线 · 需立即升级</span>
+                    </div>
+                    <div class="article-body">
+                        <p>JetBrains 7月2日发布大规模安全更新，<strong>修补覆盖整个产品线的多重严重漏洞</strong>——这些漏洞组合可实现<strong>从零凭据 → 账户接管 → RCE → CI/CD 供应链失守</strong>的完整攻击链。受影响组件包括 Hub、YouTrack、IntelliJ、Kotlin、GoLand、TeamCity 等核心开发与 CI/CD 工具。</p>
+                        <p><strong>核心漏洞清单：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>漏洞类型</th><th>影响</th></tr>
+                            <tr><td>JetBrains Hub</td><td>可预测恢复码 → 账户接管</td><td class="risk-high">任意账户劫持</td></tr>
+                            <tr><td>JetBrains Hub</td><td>认证信息跨账户附加 → 提权</td><td class="risk-high">权限提升</td></tr>
+                            <tr><td>JetBrains Hub</td><td>直接数据库访问 → 认证绕过</td><td class="risk-high">完整管理员控制</td></tr>
+                            <tr><td>YouTrack</td><td>直接数据库访问 → 认证绕过</td><td class="risk-high">工单系统管理员控制</td></tr>
+                            <tr><td>Kotlin</td><td>构建缓存元数据不安全反序列化</td><td class="risk-high">构建期 RCE</td></tr>
+                            <tr><td>GoLand</td><td>不受信任项目配置 → RCE</td><td class="risk-high">打开恶意项目即触发</td></tr>
+                            <tr><td>IntelliJ IDEA</td><td>CVE-2026-49367 访客用户命令执行</td><td class="risk-high">IDE 内 RCE</td></tr>
+                            <tr><td>IntelliJ IDEA</td><td>文件名补全命令注入</td><td class="risk-high">内容投毒触发 RCE</td></tr>
+                            <tr><td>TeamCity</td><td>Perforce 连接设置 RCE</td><td class="risk-high">供应链核心 RCE</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>覆盖面广</strong>：JetBrains IDE 在全球开发者中渗透率极高，<strong>所有近期 2024-2026 版本均受影响</strong></li>
+                            <li><strong>CI/CD 供应链核心</strong>：TeamCity 是大量企业的构建中枢，RCE 意味着<strong>所有产物可被污染</strong></li>
+                            <li><strong>认证绕过即可</strong>：直接数据库访问的攻击路径<strong>完全不需要任何凭据</strong></li>
+                            <li><strong>攻击链可组合</strong>：单一组件失守 → 复用凭据 → 另一组件 RCE → 横向至生产</li>
+                            <li><strong>多租户共享部署风险高</strong>：跨项目数据泄露 + 构建篡改</li>
+                        </ul>
+                    </div>
+                    <!-- 攻击流程图 -->
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">猜测恢复码/直访 DB</span>
+                        <span class="flow-step critical">Hub/YouTrack 认证绕过</span>
+                        <span class="flow-step">高权限账户接管</span>
+                        <span class="flow-step">TeamCity/IDE RCE</span>
+                        <span class="flow-step critical">供应链构建投毒</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Microsoft SharePoint CVE-2026-45659 — CISA KEV 7/4 截止，仅剩 2 天</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-45659</span>
+                        <span class="cvss-score">CVSS 8.8 · KEV 7/4 截止</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 于 7/1 将 Microsoft SharePoint Server <strong>反序列化 RCE 漏洞</strong>加入 KEV 目录，FCEB 机构<strong>必须在 7/4 前完成修复</strong>。最关键的是：<strong>微软在 5 月补丁周期发布了修复，但"忘记披露"——安全公告直到 5/21 才发布</strong>。CISA 已确认<strong>正在被主动利用</strong>。</p>
+                        <p><strong>关键属性：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>属性</th><th>详情</th></tr>
+                            <tr><td>CVE 编号</td><td>CVE-2026-45659</td></tr>
+                            <tr><td>CVSS 评分</td><td class="risk-high">8.8（高）</td></tr>
+                            <tr><td>攻击者要求</td><td>已认证 + Site Member 最低权限</td></tr>
+                            <tr><td>受影响版本</td><td>SharePoint Server Subscription / 2019 / 2016</td></tr>
+                            <tr><td>KEV 截止</td><td class="risk-high">7/4/2026</td></tr>
+                        </table>
+                        <p><strong>关联攻击者 Storm-2603：</strong>与 Warlock 勒索团伙有关联，<strong>专门针对本地 SharePoint 漏洞</strong>，通过 Velociraptor DFIR 工具混合恶意与可信管理行为。微软 6/22 披露 Storm-2603 与另一个无关攻击组织<strong>并行驻留同一网络</strong>——使事件响应更困难。</p>
+                        <p><strong>建议：</strong>确认 5月 SharePoint 补丁已应用；审计 Site Member 权限；检查 SharePoint 服务器日志中的异常反序列化活动。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">攻击者先禁用 Defender + Sysmon + WAF，再丢 Mimikatz — 防御压制型杀伤链</h3>
+                    <div class="article-meta">
+                        <span>Huntress 7/2 披露</span>
+                        <span class="cvss-score">UA4fp7R.aspx 隐写 WebShell</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Huntress 7/2 披露了一起令人警觉的入侵事件：攻击者<strong>系统性禁用 Microsoft Defender、Sysmon、WAF</strong>，然后再通过 Mimikatz 提取凭证。<strong>这一技术与本周连续披露的 Defender 漏洞（BlueHammer 勒索软件 + RoguePlanet 0day）形成叠加威胁</strong>。</p>
+                        <p><strong>禁用顺序：</strong></p>
+                        <ul>
+                            <li>i.bat 禁用 IIS HTTP 日志</li>
+                            <li>PowerShell 关闭 Defender 实时监控/行为监控/脚本扫描/样本提交</li>
+                            <li>taskkill 终止 Sysmon / Filebeat / Cortex / SentinelOne / Dr.Web</li>
+                            <li>Image File Execution Options 冻结监控进程</li>
+                            <li>appcmd 卸载 ModSecurity WAF</li>
+                        </ul>
+                        <p><strong>Steganographic WebShell 关键技术：</strong></p>
+                        <ul>
+                            <li><code>UA4fp7R.aspx</code> 隐藏在图片文件中</li>
+                            <li>字符串标记 <code>ONEPIECE</code> 用于关联同类 WebShell</li>
+                            <li>同伙 WebShell：<code>03Fl3i.aspx</code>、<code>WRBYTR5750images.aspx</code>、<code>MRBTPS5754images.aspx</code>、<code>jT1Ds.php</code>、<code>RG0eQV6.php</code></li>
+                        </ul>
+                        <p><strong>关键 IoC SHA256：</strong></p>
+                        <p>WebShell: <code>bd74a00f4d2ec3bf50d13ddf324bb368b2464d547abd0c572ef5e2f77943a92</code></p>
+                        <p>i.bat: <code>94cd18f3f030fcc9b259dc410b17ea72a1f9800ee654f8e0f07a87bb9443b59</code></p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Apple 紧急发布 iOS 26.5.2 — 29+ 漏洞，4 个 WebKit 由 AI 工具发现</h3>
+                    <div class="article-meta">
+                        <span>iOS 26.5.2</span>
+                        <span class="cvss-score">29+ 漏洞 · AI 协助发现</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Apple 7/1 罕见地<strong>提前发布 iOS 26.5.2 安全更新</strong>，一次性修补 <strong>29+ 漏洞（其中 23 个 WebKit 漏洞）</strong>。<strong>4 个 WebKit 漏洞是由 OpenAI Codex 与 Anthropic Claude AI 工具协助发现</strong>。Apple 公开承认：AI 工具正显著缩短漏洞发现到利用的窗口期。</p>
+                        <p><strong>漏洞模块分布：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>模块</th><th>漏洞数</th></tr>
+                            <tr><td>WebKit</td><td class="risk-high">23</td></tr>
+                            <tr><td>iOS / iPadOS</td><td class="risk-medium">多个</td></tr>
+                            <tr><td>macOS</td><td class="risk-medium">多个</td></tr>
+                            <tr><td>Safari</td><td class="risk-medium">多个</td></tr>
+                        </table>
+                        <p><strong>标志意义：</strong>Apple 公开承认 AI 漏洞发现的加速影响——<strong>iOS 26.5.2 提前发布</strong>，原计划可能更晚。WebKit 影响面极广：Safari + 邮件预览 + 第三方应用 + iMessage 预览。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">PTC Windchill CVE-2026-12569 — 持续大规模 WebShell 部署</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-12569</span>
+                        <span class="cvss-score">CVSS 9.3 · KEV 6/26 收录</span>
+                    </div>
+                    <div class="article-body">
+                        <p>PTC Windchill / FlexPLM <strong>反序列化 RCE 漏洞 CVE-2026-12569</strong> 持续在野利用——攻击者大规模部署 <strong>JSP WebShell</strong> 维持持久化访问。Windchill 被广泛用于<strong>制造、工程、航空航天、汽车</strong>等行业的 IP 与产品设计管理，<strong>失陷意味着核心知识产权泄露</strong>。</p>
+                        <p><strong>关键属性：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>属性</th><th>详情</th></tr>
+                            <tr><td>CVE 编号</td><td>CVE-2026-12569</td></tr>
+                            <tr><td>CVSS 评分</td><td class="risk-high">9.3（严重）</td></tr>
+                            <tr><td>漏洞类型</td><td>输入验证不当 → 未认证 RCE</td></tr>
+                            <tr><td>CISA KEV</td><td class="risk-high">6/26 收录</td></tr>
+                            <tr><td>攻击次数</td><td class="risk-medium">3 个月内第二波</td></tr>
+                        </table>
+                        <p><strong>影响：</strong>Windchill 集中管理 IP 与工程文档——失陷等于核心商业机密泄露。<strong>未认证 RCE</strong>，互联网暴露的 Windchill 实例极度危险。JSP WebShell 持久化——即使修复仍需彻底清理后门。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Defender RoguePlanet 0day — 7/8 Patch Tuesday 修复</h4>
+                    <p>微软 7/2 透露 RoguePlanet 新 0day（RedSun 系列）将在 7/8 Patch Tuesday 包含修复补丁。在此之前应启用 Tamper Protection 与监控服务停止事件。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Adobe ColdFusion 72h 修复窗口今日（7/3）到期</h4>
+                    <p>7/1 发布的 6 个 CVSS 10.0 + 5 个 8-9.x ColdFusion 漏洞 72小时修复窗口今日到期。ColdFusion 在 CISA KEV 目录中已有 16 个被在野利用 CVE——历史经验：补丁发布后数天即被利用。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Microsoft 漏洞统计：提权类占 42% — 提权成最关键环节</h4>
+                    <p>微软 2026 年漏洞统计显示提权 (EoP) 类漏洞占 42%——单类最大。反映现代攻击链现实：初始访问日益商品化，关键提权步骤决定是否从入侵演变为破坏。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. SimpleHelp CVE-2026-48558 KEV 逾期 — FCEB 强制上报期</h4>
+                    <p>7/2 是 SimpleHelp 满分漏洞 CVE-2026-48558 的 FCEB 强制修复截止日。仍未修复的 FCEB 机构自今日起进入 KEV 逾期状态——安全责任将逐级上报至 DHS。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. KDDI 数据泄露扩展 — 1420 万 ISP 客户凭证外泄</h4>
+                    <p>日本电信巨头 KDDI 披露 6/28 攻击事件——1420 万 ISP 客户邮箱 + 密码组合泄露，归因为第三方软件漏洞利用。虽无金融系统影响，但为未来撞库、钓鱼、BEC、账户接管活动提供大量弹药。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Tails OS 可被去匿名化 — DirtyClone + pedit COW 组合利用</h4>
+                    <p>安全研究人员证实 DirtyClone (CVE-2026-43503) + pedit COW Linux 内核利用可组合去匿名化 Tails OS 用户——Bypasses Tails 关闭时的内存擦除过程。高风险用户应立即更新 Tails 至最新版本。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026年7月3日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "立即修复 (7天内)"
+    quadrant-2 "48h 修复 (KEV截止)"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "JetBrains IDE 认证绕过+RCE": [0.4, 0.92]
+    "SharePoint CVE-2026-45659": [0.85, 0.85]
+    "Defender 禁用攻击活动": [0.9, 0.88]
+    "Apple iOS 26.5.2 (29+ 漏洞)": [0.3, 0.78]
+    "PTC Windchill CVE-2026-12569": [0.92, 0.93]
+    "Adobe ColdFusion CVSS 10.0×6": [0.45, 0.99]
+    "SimpleHelp CVE-2026-48558": [0.99, 0.99]
+    "DirtyClone CVE-2026-43503": [0.4, 0.88]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">7/3 安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 7/3 安全事件类型分布
+    "开发工具链 / IDE 漏洞" : 28
+    "企业协作平台 (SharePoint/Windchill)" : 24
+    "防御压制 / 检测绕过" : 18
+    "客户端 / 移动系统漏洞" : 15
+    "操作系统 / 内核本地提权" : 10
+    "凭证泄露 / 第三方风险" : 5
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月1日-7月3日网安事件
+    7月1日 : Adobe ColdFusion 11个严重漏洞6个CVSS 10.0
+           : Chrome 151 史上最多382漏洞
+           : Defender RoguePlanet 新0day确认
+           : WinRAR 7.23 RAR5 RCE修复
+           : Splunk SSG反序列化RCE PoC公开
+           : Rancher CVE-2026-41053认证绕过
+           : Tomcat/ActiveMQ 多个CVE
+           : CISA KEV 收录 SharePoint CVE-2026-45659
+           : Apple iOS 26.5.2 紧急发布 (29+漏洞)
+           : PTC Windchill CVE-2026-12569 持续WebShell
+    7月2日 : SimpleHelp CVE-2026-48558 KEV截止日
+           : Defender RoguePlanet补丁待发布
+           : Defender禁用攻击活动披露 (Huntress)
+           : JetBrains全产品线严重漏洞
+           : River Bank & Trust 勒索事件披露
+           : 微软2026漏洞统计:提权占42%
+    7月3日 : Adobe ColdFusion 72h修复窗口到期
+           : SharePoint CVE-2026-45659 KEV 7/4倒计时
+           : Defender RoguePlanet 7/8补丁预告
+           : 7月Patch Tuesday (7/8) 临近
+           : DirtyClone + pedit Tails去匿名化披露
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling.com</span>
+                        <a href="https://threat-modeling.com/jetbrains-critical-vulnerabilities-authentication-bypass-rce-all-ides/">JetBrains Critical Vulnerabilities: Authentication Bypass and RCE Across All IDEs</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CybersecurityNews</span>
+                        <a href="https://cybersecuritynews.com/jetbrains-vulnerabilities/">Critical JetBrains Vulnerabilities Enable Authentication Bypass and Code Execution</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SentinelOne</span>
+                        <a href="https://www.sentinelone.com/vulnerability-database/cve-2026-49367/">CVE-2026-49367: JetBrains IntelliJ IDEA Auth Bypass Flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">JetBrains</span>
+                        <a href="https://www.jetbrains.com/privacy-security/issues-fixed/">JetBrains Security Bulletins</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/07/sharepoint-rce-cve-2026-45659-added-to.html">SharePoint RCE CVE-2026-45659 Added to CISA KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling.com</span>
+                        <a href="https://threat-modeling.com/cve-2026-45659-microsoft-sharepoint-deserialization-rce-cisa-kev/">CVE-2026-45659 Microsoft SharePoint Deserialization RCE</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">Known Exploited Vulnerabilities Catalog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft</span>
+                        <a href="https://www.microsoft.com/en-us/security/blog/2026/06/22/one-intrusion-two-cyberattackers-uncovering-parallel-threat-activity/">One Intrusion, Two Cyberattackers: Parallel Threat Activity</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CybersecurityNews</span>
+                        <a href="https://cybersecuritynews.com/hackers-disable-defender-sysmon/">Hackers Disable Defender, Sysmon, and WAF Before Mimikatz</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Huntress</span>
+                        <a href="https://www.huntress.com/blog/mimikatz-credential-dumping-defence-impairment">Defence Impairment Olympics</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechTimes</span>
+                        <a href="https://www.techtimes.com/articles/319418/20260701/ai-exploit-speed-forces-apple-push-29-ios-2652-patches-before-attackers-strike.htm">AI Exploit Speed Forces Apple To Push 29 iOS 26.5.2 Patches</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iThome</span>
+                        <a href="https://www.ithome.com.tw/news/177010">Apple 修補 30餘項 iOS、macOS 與 Safari 漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/06/cisa-adds-exploited-ptc-windchill-rce.html">CISA Adds Exploited PTC Windchill RCE Flaw to KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PTC</span>
+                        <a href="https://www.ptc.com/en/about/trust-center/advisory-center/active-advisories/windchill-flexplm-rce-vulnerability">PTC Security Advisory Windchill FlexPLM RCE</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DIesec</span>
+                        <a href="https://diesec.com/2026/06/ptc-windchill-rce-cve-2026-12569/">PTC Windchill RCE CVE-2026-12569: Web Shells Actively Deployed</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat-Modeling.com</span>
+                        <a href="https://threat-modeling.com/vulnerability-intelligence-report-july-2-2026/">Vulnerability Intelligence Report July 2, 2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Integrity360</span>
+                        <a href="https://www.integrity360.com/cyber-news-roundup-july-3rd-2026">Cyber News Roundup July 3rd 2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CybersecurityNews</span>
+                        <a href="https://cybersecuritynews.com/dirtyclone-linux-vulnerability/">DirtyClone Linux Vulnerability</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DailyHODL</span>
+                        <a href="https://dailyhodl.com/2026/07/02/billion-dollar-lender-suffers-data-breach-warns-unauthorized-threat-actor-launched-ransomware-attack/">River Bank & Trust Ransomware Data Breach</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月3日 星期五
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
