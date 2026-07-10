@@ -2,6 +2,7 @@
 
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import java.util.Calendar
 
@@ -19,14 +20,13 @@ class WidgetUpdateWorker(
             return fetchAndUpdate()
         }
 
-        // Periodic refresh: lightweight date check first
+        // Periodic refresh: time-gated lightweight check
         val now = Calendar.getInstance()
         val hour = now.get(Calendar.HOUR_OF_DAY)
         if (hour < 12) {
-            return Result.success() // Skip before noon
+            return Result.success()
         }
 
-        // Check if new content is available
         val latestDate = try {
             ReportFetcher.fetchLatestDateOnly()
         } catch (_: Exception) {
@@ -39,10 +39,9 @@ class WidgetUpdateWorker(
 
         val lastKnown = SettingsManager.lastKnownDate
         if (latestDate == lastKnown && lastKnown.isNotEmpty()) {
-            return Result.success() // Already up to date
+            return Result.success()
         }
 
-        // New content found, fetch and update
         return fetchAndUpdate()
     }
 
