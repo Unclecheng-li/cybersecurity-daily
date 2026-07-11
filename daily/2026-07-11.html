@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月11日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月11日 星期六</span>
+            <span class="edition-number">第 34 期 | 总第 34 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>XRING XQUIC 4年无补丁260B DoS · WP-SHELLSTORM 1.4M名单25K沦陷 · 银狐MODBEACON Rust gRPC · PrestaShop CVSS 10.0 RCE · Langflow IDOR进KEV
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">阿里 XQUIC 库的 XRING 缺陷潜伏 4 年零补丁、260B 合法流量即可远程 DoS 主流 HTTP/3 服务；SOC Radar + Ctrl-Alt-Intel 联手曝光中国相关团伙 WP-SHELLSTORM 的"开门服务器"，22 天裸跑泄露 1.4M 目标名单、25K+ 真实沦陷的 WordPress/Joomla 站点；银狐（Silver Fox）/ Ghost 分发商以 Rust 新特马 MODBEACON 复用 Xray/V2Ray gRPC 信道继续对国内科技、教育、国企定向投放；PrestaShop ps_facetedsearch 模块曝出 CVSS 10.0 满分未认证 RCE；Langflow CVE-2026-55255 IDOR 已进 CISA KEV、7/10 是联邦机构修补大限；U-Boot 引导加载程序六连漏洞含 2 个预签名代码执行；Injective Labs 官方 npm SDK 被供应链投毒窃私钥；Binarly 复盘六款引导加载缺陷 + Ledger Donjon 披露 Tangem 钱包激光攻击无补丁路径</h2>
+                <p class="sub-headline">7/10-7/11 的安全态势呈现<strong>"无补丁大厂组件 + 大规模 CMS 后门经纪 + 中国相关 APT 工具升级 + AI/加密供应链连环拳"</strong>四条主线交织：FoxIO 研究员 Sébastien Féry 7/8 披露 <strong>XRING</strong>——阿里 XQUIC（QUIC / HTTP/3 库）一行错误代码导致的 size_t 下整数下溢，260B 的 QPACK 合规流量就能让服务端进程崩溃，<strong>自 2022/1 首次发布以来所有版本（含 v1.9.4）受影响，4 次跟进阿里无回应，至 7/10 仍无补丁、无 CVE</strong>；SOCRadar + Ctrl-Alt-Intel 联手曝光 <strong>WP-SHELLSTORM</strong>——团伙自己一台 US VPS 跑 Python SimpleHTTPServer 22 天不设密，800MB 文件直接裸跑在 137.175.93[.]126：webshell / 漏洞脚本 / 扫描日志 / bash 历史 / 1.4M+ 目标名单 / cloud 凭证一应俱全，工具覆盖 27 个已知漏洞，<strong>核心是 Breeze 缓存插件 CVE-2026-3844</strong>（内部计数器 17000+ 站点写入 webshell）+ <strong>Joomla JCE CVE-2026-48907</strong>，归因指向中文 / 简体代码 / FOFA 使用；奇安信红雨滴 7/7 披露的 <strong>MODBEACON</strong> 进一步揭示银狐/Ghost 分发商"军火商 + 流量中间商"复合身份——Rust 编写、gRPC over HTTP/2、Xray/V2Ray 传输层改装、WMI 永久订阅持久化、AWS/Cloudflare CDN 部署，<strong>主目标是中国境内科技、教育、国企</strong>，延续 6 月柬埔寨定向投放节奏；vuln.today 7/11 一次性放出 6 个 Critical WordPress 插件 / Python / Apache 漏洞，其中 <strong>PrestaShop ps_facetedsearch CVE-2026-54159 CVSS 10.0</strong> 未认证 RCE 与 <strong>miniOrange Social Login CVE-2026-12761</strong> 未认证账户接管尤其刺眼；Langflow <strong>CVE-2026-55255</strong> IDOR 已于 7/7 进 CISA KEV，<strong>7/10 是 FCEB 机构修补大限</strong>（针对联邦 3 天内整改的 BOD 26-04 节奏）；Binarly 公开 <strong>U-Boot 6 漏洞</strong>中 4 个 DoS + 2 个可在 FIT 数字签名校验<strong>前</strong>执行恶意代码，影响家用路由器/摄像头/服务器 BMC；Injective Labs 官方 GitHub 仓被劫持后通过合法贡献者账号提交恶意 commit，污染 17 个 <strong>@injectivelabs/sdk-ts@1.20.21</strong> 类包窃加密货币私钥/助记词；Tangem 硬件钱包被 Ledger Donjon 证实可通过时序激光脉冲重置密码（无补丁）；Coinspect 公开 <strong>"Ill Bloom"</strong> 加密钱包弱熵漏洞，5 月以来已造成 500 万美元+损失。<strong>所有依赖阿里云 CDN / HTTP/3、WordPress/Joomla 站点、阿里云生态加密货币交易平台、Tangem/老旧软件钱包持有者、AI Workflow 平台 Langflow 部署方、XQUIC/Tengine 自运维方均需今日复盘。</strong></p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">XRING — 阿里 XQUIC 库一行错误代码潜伏 4 年零补丁，260B 合法流量远程 DoS HTTP/3 服务</h3>
+                    <div class="article-meta">
+                        <span>FoxIO 研究员 Sébastien Féry 7/8 公开 / 阿里至 7/10 无回应</span>
+                        <span class="cvss-score">无 CVE 无补丁 远程 DoS</span>
+                    </div>
+                    <div class="article-body">
+                        <p>FoxIO 研究员 Sébastien Féry 7/8 公开 <strong>XRING</strong>——阿里开源 QUIC / HTTP/3 库 <strong>XQUIC</strong> 的 QPACK 表扩容代码中"一行变量用错"，导致 size_t 整数下溢 + 巨型 memcpy 跨内存写入。攻击者只需发送 <strong>~260 字节完全合规的 QPACK 流量</strong>（64→65 字节 grow），命中特定的环形缓冲区换行布局即可让服务端进程崩溃——<strong>无需登录、无需畸形包、无需畸形值</strong>。</p>
+                        <p><strong>关键事实：</strong></p>
+                        <ul>
+                            <li><strong>影响范围</strong>：所有 XQUIC 版本（自 2022/1 首次发布到 v1.9.4，含最新版）</li>
+                            <li><strong>下游</strong>：阿里基于 Nginx 的 <strong>Tengine</strong>（淘宝、支付宝、阿里云 CDN 在用）</li>
+                            <li><strong>披露时间线</strong>：4/7 通过 XQUIC 安全政策向阿里报告 → 5/9 前 5 次跟进无回应 → 7/8 公开 → 7/10 仍无补丁、无 CVE</li>
+                            <li><strong>临时缓解</strong>：将 <code>SETTINGS_QPACK_MAX_TABLE_CAPACITY</code> 设为 0（关闭 QPACK 动态表）或完全禁用 HTTP/3</li>
+                            <li><strong>相关历史</strong>：三周前 NGINX HTTP/3 模块曝 CVE-2026-42530（UAF 同 QPACK encoder stream 攻击面）；6 月 HTTP/2 Bomb 系列（HPACK 滥用）打穿 Nginx/Apache/IIS/Envoy</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>潜伏 4 年（2022/1 起）+ 4 次沟通无回应 + 公开日仍无补丁</strong>——这是 2026 年"开源 + 大厂"组件治理失效的标杆案例</li>
+                            <li>阿里云生态（含电商、CDN、API 网关）凡开启默认 QPACK 的 HTTP/3 端点均暴露——<strong>与 CUPS 系列 2024-2026 反复出现的"被忽视组件"同根病灶</strong></li>
+                            <li>XRING 与 6 月 HTTP/2 Bomb、NGINX CVE-2026-42530 形成 <strong>HTTP/2/HTTP/3 header 压缩逻辑已成 RCE/DoS 高发面</strong>——任何 HTTP/3 部署方都应将"压缩逻辑补丁"纳入紧急变更窗口</li>
+                            <li><strong>缓解优先级</strong>：① 立即禁用 HTTP/3；② 如不能禁用，至少关闭 QPACK 动态表；③ 在外暴露的阿里云 CDN / API 网关前加 WAF / 反向代理层；④ 监控 XQUIC 仓库后续 30 天内的 release 与 CVE 公告</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">260B QPACK 合规流量</span>
+                        <span class="flow-step">XQUIC QPACK 扩容</span>
+                        <span class="flow-step critical">size_t 下溢</span>
+                        <span class="flow-step critical">远程 DoS</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">WP-SHELLSTORM — 攻击者失误暴露服务器 22 天裸跑，1.4M 目标名单 + 25K+ 沦陷 + 27 个 CVE 工具箱公开</h3>
+                    <div class="article-meta">
+                        <span>SOCRadar + Ctrl-Alt-Intel 7/9-7/10 联合曝光</span>
+                        <span class="cvss-score">大规模后门经纪</span>
+                    </div>
+                    <div class="article-body">
+                        <p>SOCRadar Threat Intelligence Team + Ctrl-Alt-Intel 联合曝光 <strong>WP-SHELLSTORM</strong>——一个中文相关 "webshell 访问经纪" 团伙，7/10 The Hacker News / TechRepublic 报道。其一台位于 137.175.93[.]126（US VPS）的 Python SimpleHTTPServer 因操作员忘记关闭 / 没设认证，<strong>从 2026/6/11 起 22 天对外公开</strong>，800MB、434 个文件（webshell、漏洞脚本、扫描日志、bash 历史、C2 配置、AWS / Oracle Cloud / 阿里云 / 腾讯云 / DigitalOcean 多云凭证、数据库密码、加密密钥）一应俱全。</p>
+                        <p><strong>核心数据：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>指标</th><th>数值</th></tr>
+                            <tr><td>目标名单总规模</td><td class="risk-high">1.4M+ 域名</td></tr>
+                            <tr><td>工具覆盖</td><td>27 个已知 CVE</td></tr>
+                            <tr><td>沦陷计数</td><td class="risk-high">25,195 站点（Ctrl-Alt-Intel 去重）</td></tr>
+                            <tr><td>在线活跃 webshell</td><td class="risk-high">5,700+（SOCRadar）</td></tr>
+                            <tr><td>Breeze 单点产能</td><td>45,000 目标 → 17,000+ webshell</td></tr>
+                            <tr><td>Joomla 次要高产</td><td>56 万目标 → 77 命中</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">MODBEACON — 银狐/Ghost 分发商以 Rust + gRPC 升级工具栈，科技 / 教育 / 国企成定向靶标</h3>
+                    <div class="article-meta">
+                        <span>奇安信红雨滴 7/7 公开 / 中国相关团伙 Silver Fox / UTG-Q-1000</span>
+                        <span class="cvss-score">定向 APT 投放</span>
+                    </div>
+                    <div class="article-body">
+                        <p>奇安信威胁情报中心红雨滴团队 7/7 公开 <strong>MODBEACON</strong>——一个 Rust 编写的模块化 RAT，归属于中国相关网络犯罪团伙 <strong>Silver Fox / UTG-Q-1000</strong>（Ghost 分发商）。该分发商使用 Gh0st RAT + WinOS / ValleyRAT 变种 + 新 MODBEACON 进行"分发 + 投放"分工，是典型的 <strong>"军火商 + 流量中间商"复合体</strong>。</p>
+                        <p><strong>核心能力：</strong></p>
+                        <ul>
+                            <li><strong>语言</strong>：Rust（规避 AV/EDR 静态签名）</li>
+                            <li><strong>部署形态</strong>：内存态 stage/implant，无文件落盘</li>
+                            <li><strong>通信</strong>：gRPC over HTTP/2 + TLS，<strong>复用 Xray/V2Ray 翻墙框架的传输层</strong>作 C2 通道</li>
+                            <li><strong>持久化</strong>：服务 + 计划任务 + WMI 永久订阅事件（<code>CBPUserTimer</code> 定时器）</li>
+                            <li><strong>插件架构</strong>：native-v3 插件（entry/init/fini RVA），按需下发</li>
+                            <li><strong>C2 基础设施</strong>：Amazon + Cloudflare CDN</li>
+                            <li><strong>目标</strong>：中国境内科技、教育、国企；外延柬埔寨博彩"黑吃黑"</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">PrestaShop CVE-2026-54159 + WordPress / Python / Apache 多 Critical 漏洞 7/11 集中披露</h3>
+                    <div class="article-meta">
+                        <span>vuln.today 7/11 一次性放出 6 Python + 8 Apache + 多 WP Critical</span>
+                        <span class="cvss-score">CVSS 10.0 满分 RCE</span>
+                    </div>
+                    <div class="article-body">
+                        <p>vuln.today 7/11 一次性放出 6 个 Python 漏洞（1 Critical + 5 High）+ 8 个 Apache 漏洞（3 Critical + 5 High）+ 多个 WordPress / PrestaShop 严重 RCE / 认证绕过。最刺眼的几条：</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>组件</th><th>CVSS</th><th>类型</th></tr>
+                            <tr><td>CVE-2026-54159</td><td>PrestaShop ps_facetedsearch（3.0.0-4.0.3）</td><td class="risk-high">10.0</td><td>未认证 RCE</td></tr>
+                            <tr><td>CVE-2026-12761</td><td>miniOrange Social Login WP</td><td class="risk-high">Critical</td><td>未认证账户接管</td></tr>
+                            <tr><td>CVE-2026-56261</td><td>Crawl4AI Docker API (<0.8.7)</td><td class="risk-high">Critical</td><td>未认证 SSRF</td></tr>
+                            <tr><td>CVE-2026-15300</td><td>GEO my WP (≤4.5.4)</td><td class="risk-high">Critical</td><td>未认证 SQL 注入</td></tr>
+                            <tr><td>CVE-2026-15282</td><td>Instant Appointment WP</td><td class="risk-high">Critical</td><td>未认证任意文件上传</td></tr>
+                            <tr><td>CVE-2026-61444</td><td>PraisonAI (<4.6.78)</td><td class="risk-high">Critical</td><td>多代理 LLM 框架 RCE</td></tr>
+                        </table>
+                        <p><strong>PrestaShop 重点</strong>：CVSS 10.0 满分 + 未认证 RCE——任何仍在跑 ps_facetedsearch 3.x/4.0.x 的 PrestaShop 店铺必沦陷</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Langflow CVE-2026-55255 — IDOR 认证绕过 CVSS 9.9，已进 CISA KEV，7/10 为联邦机构修补大限</h3>
+                    <div class="article-meta">
+                        <span>CISA KEV 2026-07-07 加入 / 联邦机构 2026-07-10 截止</span>
+                        <span class="cvss-score">CVSS 9.9 IDOR</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Langflow 的 <code>/api/v1/responses</code> 端点存在经典 IDOR 缺陷（CWE-639）：<strong>任何已认证用户只需在请求中替换 <code>model</code> 字段为受害者的 flow ID，即可执行受害者的全部 AI workflow</strong>——背后可能是私有模型文件、含凭证 / API key 的 agent、连接内部系统的集成逻辑。</p>
+                        <p><strong>关键事实：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>维度</th><th>细节</th></tr>
+                            <tr><td>CVE</td><td class="risk-high">CVE-2026-55255</td></tr>
+                            <tr><td>CVSS</td><td class="risk-high">9.9（GitHub CNA）</td></tr>
+                            <tr><td>类型</td><td>IDOR（CWE-639 用户控制密钥绕过授权）</td></tr>
+                            <tr><td>影响</td><td>Langflow &lt; 1.9.1（补丁在 1.9.1 修复，1.9.2+ 推荐）</td></tr>
+                            <tr><td>KEV 加入</td><td class="risk-high">2026-07-07</td></tr>
+                            <tr><td>联邦机构修补截止</td><td class="risk-high">2026-07-10</td></tr>
+                            <tr><td>复盘利用</td><td>6/25 Sysdig 已观察攻击者借此在多个云环境横向渗透</td></tr>
+                        </table>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. U-Boot 引导加载程序六连漏洞 — 2 个可在 FIT 数字签名校验前执行代码</h4>
+                    <p>Binarly 公开 U-Boot 6 个新漏洞（4 个 DoS + 2 个代码执行），攻击者把恶意 FIT（Flattened Image Tree）镜像送入引导阶段，在 U-Boot 校验数字签名之前触发——影响家用路由器、智能摄像头、服务器 BMC 管理芯片。所有基于 U-Boot 的边缘设备本周内必须升级固件。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Injective Labs SDK 供应链投毒 — 17 个 @injectivelabs/sdk-ts@1.20.21 包窃钱包私钥</h4>
+                    <p>Injective Labs 官方 GitHub 仓库 7/8 被劫持，攻击者通过"有合法贡献历史"的开发者账号提交恶意 commit，污染 @injectivelabs/sdk-ts@1.20.21 + 17 个 @injectiveLabs/* 包的同版本，伪装"遥测"功能窃加密货币钱包私钥与助记词；GitHub 上对应 release 制品仍可下载——所有 Injective 生态 DApp / 钱包 / 索引器应立即锁版本。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Tangem 硬件钱包激光攻击重置密码 — 无补丁，已售出卡片均受影响</h4>
+                    <p>Ledger Donjon 证实可通过精确时序激光脉冲注入 Samsung S3D232A 芯片重置密码为攻击者自定义值（无需旧密码、无需备份卡），成本约 25 万美元实验室设备，需物理接触 + 切开卡片外壳。Tangem 卡片无软件更新能力，所有已售出卡片均受影响——卡片已丢失或被盗且金额较大的用户应立即转移资产。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. "Ill Bloom" 加密钱包弱熵漏洞 — 5 月以来已造成 500 万美元+损失</h4>
+                    <p>Coinspect 公开部分老旧 / 小众钱包（浏览器扩展和移动 App，部分可追溯至 2018 年）助记词生成时随机数熵不足，攻击者可暴力枚举并还原私钥。已确认损失超 500 万美元（5/27 协调攻击窃取约 310 万美元，涉及 431 个钱包；后续 210 万美元 USDT 被盗）。硬件钱包与主流软件钱包不受影响。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. BlackCat 勒索软件谈判员获刑 70 个月 — RaaS 生态内部信任崩塌样本</h4>
+                    <p>佛罗里达州 Angelo Martino（41岁）被联邦法院判处 70 个月（近 6 年）监禁——他作为勒索软件谈判顾问代表 5 名受害方的同时，向 BlackCat/ALPHV 泄露受害方谈判策略与底价，被法官定性为"双面间谍，最大化客户伤害与网络犯罪分子的经济利益"。典型 RaaS 生态内部信任崩塌案例——所有聘请第三方谈判方的受害企业需重新评估信任模型。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 281 款免费 Android VPN 应用泄露用户数据 — 累计安装超 24 亿次</h4>
+                    <p>密歇根大学 / 新墨西哥大学 / IIT Delhi 联合发布 MVPNalyzer 报告（2 月 NDSS 安全会议公开）：281 款 Google Play 热门免费 VPN 应用中，29 款泄露 DNS 等用户流量 / 61 款明文传输部分数据 / 5 款明文传输配置文件——任何使用免费 VPN 的 Android 用户应立即卸载并改用企业级方案。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026年7月11日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用/PoC公开"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "XRING XQUIC 无补丁 4 年": [0.65, 0.92]
+    "WP-SHELLSTORM 1.4M 名单 25K 沦陷": [0.92, 0.88]
+    "MODBEACON 银狐 Rust gRPC 投放": [0.85, 0.82]
+    "PrestaShop CVE-2026-54159 CVSS 10.0": [0.55, 0.98]
+    "miniOrange CVE-2026-12761 接管账户": [0.7, 0.92]
+    "Langflow CVE-2026-55255 进 KEV": [0.95, 0.85]
+    "U-Boot 6 漏洞预签名执行": [0.45, 0.85]
+    "Injective Labs SDK 供应链投毒": [0.88, 0.88]
+    "Tangem 激光攻击无补丁": [0.3, 0.78]
+    "Ill Bloom 加密钱包 500 万损失": [0.88, 0.82]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 7/11 安全事件类型分布
+    "无补丁大厂组件 (XRING/U-Boot)" : 22
+    "CMS + 大规模后门经纪 (WP-SHELLSTORM)" : 24
+    "中国相关APT + 工具升级 (MODBEACON)" : 18
+    "WordPress/Python/Apache 多 Critical" : 22
+    "加密货币 + AI/工作流漏洞" : 14
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月5日-7月11日网安事件
+    7月5日 : CitrixBleed 2.0 CVE-2026-8451 NetScaler SAML
+           : Gitea三CVE同日补丁
+           : Edge无补丁RCE
+           : Novo Nordisk 1.3TB泄露
+           : AI Agent SEO投毒
+    7月6日 : T3MP3ST AI红队框架XBEN 90%
+           : ARToken M365钓鱼面板
+           : Exchange SSRF PoC公开
+           : Claude Cowork沙箱逃逸
+           : Apple Hide My Email一年未修
+    7月7日 : CISA KEV新增3洞 (JoomShaper/Langflow/Joomlack)
+           : fast-mcp-telegram CVE-2026-52830
+           : Januscape CVE-2026-53359 KVM 16年UAF
+           : ColdFusion CVE-2026-48282 CVSS 10.0在野
+           : BeyondTrust CVE-2026-40138/40139/40141
+           : UNK_MassTraction 中国关联Roundcube
+           : 伊朗 Cavern C2 攻击以色列IT
+           : 奇安信披露银狐MODBEACON
+    7月8日 : GhostLock CVE-2026-43499 Linux内核15年UAF PoC公开
+           : CISA KEV 新增4漏洞 (ColdFusion/Joomla×2/Langflow)
+           : Ubiquiti UniFi OS 11个CVE (3×CVSS 9.9)
+           : Writer AI WriteOut 跨租户会话泄露
+           : RedWing Android银行木马MaaS
+           : APT-C-20 Fancy Bear PNG隐写C#后门
+           : PromptSpy 首款调用Gemini的Android恶意软件
+           : Accenture "888" 35GB源码泄露
+    7月9日 : Chrome 150.0.7871.114 修27漏洞含2个严重UAF RCE
+           : GhostApproval AI代理符号链接系统性绕过
+           : Friendly Fire Claude Code/Codex auto-mode劫持
+           : PAN-OS CVE-2026-0288 User-ID TSA 缓冲区溢出 CVSS-B 9.2
+           : Microsoft Defender RoguePlanet CVE-2026-50656 0day修复
+           : GoodPersonRAT 假LetsVPN安装器RAT
+           : Sophos CIXA Claude/Cursor/Codex触发端点告警
+           : UpdraftPlus CVE-2026-10795 在野利用 4.9K 攻击/24h
+           : Injective Labs SDK 供应链投毒
+    7月10日 : HPLIP CVE-2026-14544 CVSS 9.8 RCE (旧补丁未补全)
+           : RoundCube 1.7 6漏洞含2个0-click XSS (Samsung R&D报告)
+           : O-UNC-066 vishing + Entra Passkey 钓鱼劫持企业账户
+           : GodDamn勒索Monster→Beast→GodDamn第三次改名+PoisonX驱动
+           : ACSC警告大规模CMS Webshell投放
+           : RedHook Android RAT 滥用ADB Wireless Debugging uid 2000
+           : Socket.dev抓17个npm+PyPI Paysafe/Skrill/Neteller仿冒包
+           : Sygnia公开AI辅助72小时接管AWS全环境
+           : OpenAI发布GPT-5.6 Sol ExploitBench 73.5%
+           : NVD收录UniFi OS CVE-2026-54402命令注入
+    7月11日 : XRING 阿里XQUIC 一行错误4年无补丁 260B DoS
+           : WP-SHELLSTORM 1.4M目标名单 + 25K沦陷 27 CVE工具箱曝光
+           : 银狐MODBEACON Rust gRPC 复用Xray/V2Ray C2
+           : PrestaShop CVE-2026-54159 CVSS 10.0 未认证RCE
+           : miniOrange CVE-2026-12761 WP账户接管
+           : Langflow CVE-2026-55255 IDOR KEV联邦7/10截止
+           : U-Boot 6漏洞预签名执行 (Binarly)
+           : Tangem硬件钱包激光攻击无补丁
+           : Ill Bloom加密钱包500万美元损失
+           : BlackCat勒索谈判员70月监禁
+           : 281 Android VPN 24亿次安装数据泄露
+           : vuln.today一次性放6 Python + 8 Apache + 多WP Critical
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">FoxIO — XRING: Crashing XQUIC with spec-compliant QPACK instructions</span>
+                        <a href="https://vuink.com/post/sbkvb-d-dvb/blog/xring-crashing-xquic-with-spec-compliant-qpack-instructions">XRING Technical Writeup</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Unpatched XRING Flaw in XQUIC</span>
+                        <a href="https://thehackernews.com/2026/07/unpatched-xring-flaw-in-xquic-lets.html">XRING HTTP/3 DoS</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SOCRadar — How WP-SHELLSTORM Exposed 1.4M WordPress Sites</span>
+                        <a href="https://socradar.io/blog/wp-shellstorm-expose-1-4m-wordpress-sites/">WP-SHELLSTORM Investigation</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Exposed Hacker Server Reveals WP-SHELLSTORM</span>
+                        <a href="https://thehackernews.com/2026/07/exposed-hacker-server-reveals-wp-shellstorm.html">WP-SHELLSTORM 25K Sites</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechRepublic — Exposed Server Reveals 25,000 Compromised WordPress</span>
+                        <a href="https://www.techrepublic.com/article/news-wp-shellstorm-wordpress-webshell-attack">WP-SHELLSTORM TechRepublic</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">奇安信威胁情报中心 — Operation Phnom Penh 银狐 MODBEACON</span>
+                        <a href="https://ti.qianxin.com/blog/articles/operation-phnom-penh-silverfox-ghost-distributor-targets-specific-victims-with-modbeacon-cn/">MODBEACON 奇安信披露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — New MODBEACON RAT Uses gRPC Streaming</span>
+                        <a href="https://thehackernews.com/2026/07/new-modbeacon-rat-uses-grpc-streaming.html">MODBEACON gRPC RAT</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">vuln.today — PrestaShop CVE-2026-54159 CVSS 10.0 RCE</span>
+                        <a href="https://vuln.today/articles">vuln.today 7/11 Articles</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Security Advisory — Langflow CVE-2026-55255 IDOR</span>
+                        <a href="https://github.com/advisories/GHSA-qrpv-q767-xqq2">Langflow IDOR Advisory</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV Catalog — CVE-2026-55255 Langflow</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Sysdig — Understanding Langflow CVE-2026-55255</span>
+                        <a href="https://webflow.sysdig.com/blog/understanding-langflow-cve-2026-55255-and-why-higher-cvss-vulnerabilities-arent-always-the-most-exploited">Sysdig Langflow Analysis</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Six New U-Boot Flaws</span>
+                        <a href="https://thehackernews.com/2026/07/six-new-u-boot-flaws-could-let-malicious.html">U-Boot 6 Vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Injective Labs GitHub Compromise</span>
+                        <a href="https://thehackernews.com/2026/07/injective-labs-github-compromise-pushes.html">Injective Labs SDK</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Laser Attack Resets Tangem Wallet</span>
+                        <a href="https://thehackernews.com/2026/07/laser-attack-resets-tangem-wallet.html">Tangem Hardware Wallet</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Ill Bloom Crypto Wallet Vulnerability</span>
+                        <a href="https://thehackernews.com/2026/07/attackers-exploit-ill-bloom-vulnerability.html">Ill Bloom $5M Loss</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — BlackCat Ransomware Negotiator 70 Months</span>
+                        <a href="https://thehackernews.com/2026/07/ransomware-negotiator-gets-70-months-in-prison.html">BlackCat Negotiator Sentenced</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — 281 Free Android VPN Apps Leak Data</span>
+                        <a href="https://thehackernews.com/2026/07/study-of-281-free-android-vpn-apps.html">281 Android VPN Apps</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Hackers Use Fake Microsoft Entra Passkey</span>
+                        <a href="https://thehackernews.com/2026/07/hackers-use-fake-microsoft-entra-passkey-enrollment.html">Entra Passkey Phishing</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — UpdraftPlus CVE-2026-10795</span>
+                        <a href="https://securityonline.info/updraftplus-cve-2026-10795-exploit">UpdraftPlus CVE-2026-10795</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Oracle E-Business CVE-2026-46817</span>
+                        <a href="https://cybersecuritynews.com/oracle-e-business-flaw-actively-exploited/">Oracle EBS Active Exploitation</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tencent Cloud Developer — SilverFox 组织假冒官方钓鱼</span>
+                        <a href="https://cloud.tencent.com/developer/article/2666999">SilverFox 攻击机理研究</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月11日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
