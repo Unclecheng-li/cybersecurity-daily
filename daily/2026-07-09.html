@@ -435,8 +435,8 @@
 
             <!-- ===== 头条 ===== -->
             <div class="headline-section">
-                <h2 class="main-headline">GhostLock CVE-2026-43499 把 15 年老内核漏洞推到"竞速修补"前夜 + Chrome 150 一次性塞进 27 个补丁 + AI 编码代理出现"符号链接幽灵审批"系统性设计缺陷 + Claude Code / Codex 默认 Auto 模式遭劫持执行恶意二进制 + Palo Alto PAN-OS TSA 组件缓冲区溢出 CVSS-B 9.2 直接挂"最高紧急"标签</h2>
-                <p class="sub-headline">7/8 Threat-Modeling 漏洞情报披露的 <strong>CVE-2026-43499 "GhostLock"</strong> 是潜伏 Linux 内核 futex/rt-mutex 子系统约 15 年的 UAF（NVD 已收录），Nebula Security 公开 PoC 可靠性达 <strong>97%</strong>，<strong>可由任意本地用户获取 root 并实现容器逃逸</strong>；Google kernelCTF 悬赏 9.2 万美元；同日 Chrome Stable 升至 <strong>150.0.7871.114/.115</strong> 修复 <strong>27 个漏洞</strong>，<strong>CVE-2026-15112 / CVE-2026-15129</strong> 两个 UAF 直接通向 RCE；Wiz 公开 <strong>"GhostApproval"</strong>——一种跨 6 款主流 AI 编码代理（Claude Code、Cursor、Amazon Q Developer、Augment、Windsurf、Google Antigravity）的 <strong>符号链接跟随（CWE-61）+ UI 误导（CWE-451）</strong> 系统性设计缺陷，可绕过 Human-in-the-Loop 把攻击者 SSH 公钥写入 <code>~/.ssh/authorized_keys</code>；AI Now Institute 公开 <strong>"Friendly Fire"</strong>——Claude Code / Codex CLI 在默认 auto-mode / auto-review 下被第三方库 README 里的 prompt 注入诱导执行 <code>code_policies</code> 恶意二进制实现 RCE；Palo Alto 紧急披露 <strong>CVE-2026-0288</strong>——PAN-OS User-ID Terminal Server Agent 多个缓冲区溢出 <strong>CVSS-B 9.2 / CVSS-BT 7.2</strong>，影响 PAN-OS 10.2/11.1/11.2/12.1 全部活跃分支，TSA 暴露互联网即面临"最高紧急"等级。<strong>所有主机、云容器、Kubernetes、依赖 AI 自动代码审计的 CI/CD 链路都需当日评估修补。</strong></p>
+                <h2 class="main-headline">CVE-2026-43499 GhostLock — Linux 内核 futex/rt-mutex 子系统 UAF 潜伏 15 年 PoC 公开：可靠性 97%，任意本地用户一键 root + 容器逃逸，Google kernelCTF 悬赏 9.2 万美元</h2>
+                <p class="sub-headline">Chrome 150 一次修 27 漏洞含 2 个严重级 RCE UAF；Wiz 公开 GhostApproval 跨 6 款 AI 编码代理符号链接绕过 Human-in-the-Loop，把 SSH 公钥写入 ~/.ssh/authorized_keys；PAN-OS CVE-2026-0288 TSA 缓冲区溢出 CVSS-B 9.2 影响 PAN-OS 10.2/11.1/11.2/12.1 全部活跃分支。</p>
             </div>
 
             <!-- ===== 文章卡片网格 ===== -->

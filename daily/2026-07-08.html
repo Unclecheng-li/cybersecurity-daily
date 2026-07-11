@@ -435,8 +435,8 @@
 
             <!-- ===== 头条 ===== -->
             <div class="headline-section">
-                <h2 class="main-headline">Januscape CVE-2026-53359 让 Linux KVM 的 16 年老代码首次尝到 "客户机逃逸宿主" 的滋味 + Adobe ColdFusion CVE-2026-48282 CVSS 10.0 已被积极利用 + BeyondTrust 双 9.2 + 8.5 三连击让 PAM 设备门户门洞大开</h2>
-                <p class="sub-headline">7/7 公开的 CVE-2026-53359 是一项代号 "Januscape" 的 KVM Shadow MMU Use-After-Free，自 2010 年 Linux 内核 2.6.36 引入（commit 2032a93d66fa）起在 x86 影子 MMU 代码里潜伏约 16 年才被 Google kvmCTF 研究员 Hyunwoo Kim（@v4bel）发现；当前 PoC 至少能让恶意客户机让宿主机崩溃（DoS），研究员声称手握可实现宿主机代码执行的未公开利用；Adobe ColdFusion CVE-2026-48282 是 CVSS 10.0 满分路径遍历，影响 2025.9 / 2023.20 及更早版本，正在被积极利用，Scope Changed、无需交互；BeyondTrust 一次性披露 RS/PRA 产品线 CVE-2026-40138（CVSS 9.2 预认证认证绕过）+ CVE-2026-40139（CVSS 9.2 同）+ CVE-2026-40141（CVSS 8.5 输入验证不足）——7/8 当天把"16 年 VM 逃逸 + 10.0 满分在野 + 三连击 PAM 设备门户"摆到同一天。</p>
+                <h2 class="main-headline">CVE-2026-48282 — Adobe ColdFusion 路径遍历 CVSS 10.0 满分已在野利用：影响 2025.9 / 2023.20 及更早，预认证 RCE 一举接管服务器</h2>
+                <p class="sub-headline">CVE-2026-53359 "Januscape" Linux KVM Shadow MMU UAF 潜伏约 16 年首公开，Google kvmCTF 研究员 Hyunwoo Kim（@v4bel）公开 PoC 至少让恶意客户机崩宿主；BeyondTrust RS/PRA 三连击 CVE-2026-40138/40139/40141 双 CVSS 9.2 + 8.5 让 PAM 设备门户洞开。</p>
             </div>
 
             <!-- ===== 文章卡片网格 ===== -->
