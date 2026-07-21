@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月21日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月21日 星期二</span>
+            <span class="edition-number">第 108 期 | 总第 108 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>ServiceNow 平台在野 · HuggingFace AI代理入侵 · Claude点击绕过 · JADEPUFFER EncForge · HOLLOWGRAPH M365C
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">ServiceNow AI 平台预认证沙箱逃逸 RCE（CVE-2026-6875）已确认在野：补丁发布 4 天即武器化</h2>
+                <p class="sub-headline">CVE-2026-6875（CVSS 9.5/9.8 代码注入）预认证沙箱逃逸，攻击者走与公开 PoC 不同的 gadget 命中同一 sink，MID Server 成内网跳板</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">ServiceNow AI 平台预认证沙箱逃逸 RCE：补丁 4 天即在野，攻击者绕开公开 PoC</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.5 / 9.8</span>
+                        <span class="cvss-score">在野利用 · 已发布补丁</span>
+                    </div>
+                    <div class="article-body">
+                        <p>ServiceNow AI Platform 的 /assessment_thanks.do 预认证端点存在沙箱逃逸 RCE：GlideRecord 查询将用户可控输入传入查询函数，特制 JavaScript 在查询执行前被求值；攻击者借 gs.include() 加载受限脚本库、操纵其全局对象，使代码在更宽松上下文编译执行，逃出沙箱获得原语，进而读任意表、建管理员、接管 MID Server。平台支撑 85% 财富 500 强。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>GlideRecord 查询代码注入 + 脚本沙箱逃逸 (CWE-94)</li>
+                            <li><strong>攻击方式：</strong>向 /assessment_thanks.do 发特制请求，注入恶意 JS 并经 gs.include() 绕过沙箱限制</li>
+                            <li><strong>影响范围：</strong>Australia Patch 2 及更早、Yokohama/Zurich/Brazil 多发行版未打补丁实例</li>
+                            <li><strong>后果：</strong>预认证 RCE、读全表、建管理员、经 MID Server 横向至企业内网</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>"披露即武器化"窗口压缩到 4 天，且攻击者走不同沙箱逃逸 gadget，只封堵 PoC 无效</li>
+                            <li>云实例 24h 修复、本地实例需手动推进强制阶段，暴露窗口被拉长</li>
+                            <li>MID Server 是云与企业内网之桥，SaaS 突破影响远超实例本身</li>
+                        </ul>
+                    </div>
+                    <!-- 可选：攻击流程图 -->
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">触发点</span>
+                        <span class="flow-step">漏洞利用</span>
+                        <span class="flow-step critical">RCE执行</span>
+                        <span class="flow-step critical">目标沦陷</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Hugging Face 遭自主 AI 代理全程入侵：数据处理流水线成首个攻击面</h3>
+                    <div class="article-meta">
+                        <span>自主 AI 代理端到端入侵</span>
+                        <span class="cvss-score">7/16 披露 · 已报案</span>
+                    </div>
+                    <div class="article-body">
+                        <p>恶意数据集滥用两条代码执行路径（远程代码加载器 + 配置模板注入）在处理 Worker 上获得代码执行，提升至节点级、收割云/集群凭证，周末内横向至多内部集群；防御方调用商业前沿模型分析 17,000 条日志被护栏拦截，改用自托管开源 GLM 5.2 完成溯源。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>数据集处理流水线(2条代码执行路径)</td><td class="risk-high">高危</td></tr>
+                            <tr><td>MID Server / 内网桥接</td><td class="risk-medium">中高危</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Claude for Chrome 扩展两处未修复漏洞：合成点击 + 权限跳过</h3>
+                    <div class="article-meta">
+                        <span>Manifold 上报 · 无 CVE</span>
+                        <span class="cvss-score">1.0.80 仍未修 · 8 版本未变</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">JADEPUFFER 升级 EncForge：首个专攻 AI/ML 资产的勒索软件</h3>
+                    <div class="article-meta">
+                        <span>Langflow CVE-2025-3248 入口 · 在野</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">HOLLOWGRAPH 滥用 Microsoft 365 日历做隐蔽 C2：未来日期"死投"</h3>
+                    <div class="article-meta">
+                        <span>7/20 披露 · 归因 Cavern/Group-IB</span>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Paidwork 微任务平台 2300 万用户数据泄露</h4>
+                    <p>源于 2024-03 入侵，11GB 生产数据现犯罪论坛，含银行账号/照片/交易记录与 bcrypt 哈希，已入 Have I Been Pwned。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. WP2Shell 链披露约 3 天遭大规模在野利用</h4>
+                    <p>CVE-2026-63030+60137 预认证 RCE 链进入"披露即武器化"快车道，WAF 探测激增。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. SonicWall SMA1000 零日持续在野</h4>
+                    <p>CVE-2026-15409/15410（SSRF+代码注入），联邦大限 7/17 已过；修复≠缓解，须重镜像+轮换凭据。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. UAC-0145/Sandworm ClickFix 袭乌 + 北约摄像头侦察</h4>
+                    <p>GRU 将网络行动嵌入动能军事战略，入侵 IP 摄像头监视北约后勤。</p>
+                </div>
+            </div>
+                <div class="quick-item">
+                    <h4>10. 英国拟禁公共部门/关键基础设施支付赎金</h4>
+                    <p>Sophos 称近半数遭勒索企业最终付款，政策重心转向降低勒索盈利能力。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Hugging Face 已报案并建议用户轮换 token</h4>
+                    <p>事件仍评估是否波及伙伴/客户数据，社区应轮换访问令牌并复查近期活动。</p>
+                </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "ServiceNow CVE-2026-6875": [0.9, 0.95]
+    "HuggingFace AI代理入侵": [0.95, 0.9]
+    "JADEPUFFER EncForge": [0.7, 0.9]
+    "Claude扩展合成点击": [0.55, 0.85]
+    "HOLLOWGRAPH M365C2": [0.4, 0.8]
+    "WP2Shell 在野": [0.95, 0.9]
+    "Paidwork 2300万泄露": [0.25, 0.7]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日安全事件类型分布
+    "AI/代理型攻击" : 30
+    "企业平台RCE漏洞" : 25
+    "在野利用/KEV" : 18
+    "数据泄露事件" : 15
+    "供应链/框架漏洞" : 12
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月第3-4周网安事件
+    7月15日 : 微软7月补丁约570 CVE 3零日2在野
+           : Oracle EBS Payments CVE-2026-46817 入KEV
+    7月16日 : Cursor 恶意仓库零日全披露
+           : HuggingFace披露自主AI代理入侵(7/13当周)
+    7月17日 : SharePoint CVE-2026-56164 联邦大限到期
+           : SonicWall SMA1000 联邦大限到期
+    7月18日 : Palo Alto 13枚漏洞集中披露(A26-07-18)
+           : WordPress wp2shell 链PoC公开
+    7月19日 : ServiceNow CVE-2026-6875 确认在野(Defused)
+           : Metabase/OpenShift AI 高危RCE披露
+    7月20日 : JADEPUFFER 升级 EncForge 专攻AI资产
+           : HOLLOWGRAPH 滥用M365日历做C2(Group-IB)
+    7月21日 : Paidwork 2300万用户数据泄露曝光
+           : Claude扩展合成点击漏洞仍未修复(1.0.80)
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">dbappsecurity</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=15605">ServiceNow CVE-2026-6875 详情</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix</span>
+                        <a href="https://aviatrix.ai/threat-research-center/critical-servicenow-code-execution-flaw-cve-2026-6875-exploited">ServiceNow 在野利用</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">threataft</span>
+                        <a href="https://threataft.com/articles/servicenow-sandbox-escape-rce-cve-2026-6875">CVE-2026-6875 技术深潜</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SCWorld</span>
+                        <a href="https://www.scworld.com/news/servicenow-ai-platform-exploited-in-the-wild">补丁后数日即遭在野</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Hugging Face</span>
+                        <a href="https://huggingface.co/blog/security-incident-july-2026">自主 AI 代理入侵披露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">dbappsecurity</span>
+                        <a href="https://starmap.dbappsecurity.com.cn/info/15612">HuggingFace 遭 AI 代理入侵</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VentureBeat</span>
+                        <a href="https://venturebeat.com/security/safety-guardrails-blocked-hugging-faces-defenders-not-the-attacker-when-an-ai-agent-breached-its-systems">护栏反锁防御方</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cloud Security Alliance</span>
+                        <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-claude-chrome-extension-click-simulation-f">Claude 扩展合成点击缺陷</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">forGeeks</span>
+                        <a href="https://forgeeks.dev/claude-chrome-extension-security-flaws">Claude 扩展仍暴露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Sysdig</span>
+                        <a href="https://webflow.sysdig.com/blog/jadepuffer-evolves-the-agentic-threat-actor-deploys-ransomware-built-to-destroy-ai-models">JADEPUFFER EncForge</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iSec</span>
+                        <a href="https://www.isec.news/2026/07/21/new-encforge-ransomware-targets-ai-files-after-langflow-breach">EncForge 专攻 AI 文件</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-07-21">Daily Threat Digest 7/21</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">dbappsecurity</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=15618">Paidwork 2300万泄露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6875">CVE-2026-6875</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">Known Exploited Vulns 目录</a>
+                    </div>
+                </div></div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月21日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
