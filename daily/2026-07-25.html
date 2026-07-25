@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月25日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月25日 星期六</span>
+            <span class="edition-number">第 112 期 | 总第 112 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Langflow 10.0 RCE入KEV大限 · Azure云群7/24六枚10.0 · ManageEngine 10.0未认证RCE · rclone 9.8命令执行 · RefluXFS提权
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Langflow 未认证RCE入KEV大限已至 · Azure单日六枚云基础设施10.0 · ManageEngine 10.0未认证RCE · rclone 9.8命令执行 · RefluXFS Linux提权</h2>
+                <p class="sub-headline">CVE-2026-0770 联邦大限7/24关闭(220+在野) · Azure App Service/AKS/Key Vault/DNS/Exchange Online 10.0 · ADAudit Plus 域级RCE · rclone绕过旧补丁 · Qualys披露9年XFS竞态</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Langflow CVE-2026-0770 未认证 RCE 入 KEV，联邦大限 7/24 关闭</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-0770 · CVSS 10.0 (CWE-829)</span>
+                        <span class="cvss-score">在野利用 · 大限7/24</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 于 7/21 将 Langflow（开源 AI 智能体可视化构建框架）的 CVE-2026-0770 加入 KEV，要求 FCEB 机构在 7/24 前完成修复（修复版本 Langflow 1.9.0）。漏洞位于 <code>/api/v1/validate/code</code> 端点对 <code>exec_globals</code> 参数处理，未认证攻击者可以低复杂度获取 root 远程代码执行。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>不可信控制域功能引入（CWE-829）/ 代码注入 RCE</li>
+                            <li><strong>攻击方式：</strong>向 validate 端点投递恶意 exec_globals，触发应用内代码执行</li>
+                            <li><strong>影响范围：</strong>暴露互联网的 Langflow 实例；AI 中间件常驻云凭证/环境变量</li>
+                            <li><strong>后果：</strong>root RCE、二阶脚本投递、AWS 凭证/容器元数据窃取</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>在野先于 KEV：KEVIntel 6/27 即观测，收录前 220+ 次尝试、64 个独立 IP</li>
+                            <li>"打补丁≠止血"：已发生凭证窃取，须排查历史请求并轮换密钥</li>
+                            <li>Langflow 成重复目标：CVE-2025-3248→JADEPUFFER、CVE-2026-33017、CVE-2026-55255</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">构造exec_globals</span>
+                        <span class="flow-step">POST validate端点</span>
+                        <span class="flow-step">不可信代码引入</span>
+                        <span class="flow-step critical">root RCE</span>
+                        <span class="flow-step critical">云凭证窃取</span>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Azure 云服务体系 7/24 单日爆发六枚 CVSS 10.0</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-58630/56163/62825/58275/57106/56191</span>
+                        <span class="cvss-score">云控制面 · 未认证</span>
+                    </div>
+                    <div class="article-body">
+                        <p>7/24 多家情报源披露微软云服务体系一批 CVSS 10.0 漏洞，集中在权限提升/认证绕过类，未经认证即可越权：App Service(CVE-2026-58630)、AKS(CVE-2026-56163)、Key Vault(CVE-2026-62825)、Azure DNS(CVE-2026-58275)、Data Quality SSRF(CVE-2026-57106)、Exchange Online(CVE-2026-56191)。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>Azure App Service / AKS / Key Vault</td><td class="risk-high">高危</td></tr>
+                            <tr><td>Azure DNS / Exchange Online / Data Quality</td><td class="risk-medium">中高危</td></tr>
+                        </table>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">ManageEngine ADAudit Plus CVE-2026-6516（10.0）未认证 RCE</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-6516 · CVSS 10.0</span>
+                        <span class="cvss-score">域级访问 · build 8606前</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Zoho ManageEngine ADAudit Plus Agent API 存在认证绕过+路径遍历组合漏洞，未认证攻击者链式触发可达远程代码执行。影响 build 8606 之前所有版本，修复 8606 已于 4/17 发布；西澳 SOC 于 20260724001 公告评为 Critical，提示域级访问风险。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>ADAudit Plus &lt; build 8606</td><td class="risk-high">高危</td></tr>
+                            <tr><td>域控/文件服务器/工作站 agent</td><td class="risk-medium">中高危</td></tr>
+                        </table>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">rclone CVE-2026-49980（9.8）rcd --rc-serve 未认证命令执行</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-49980 · CVSS 9.8</span>
+                        <span class="cvss-score">绕过CVE-2026-41179 · 1.74.3修</span>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">RefluXFS CVE-2026-64600：潜伏9年 Linux XFS 竞态提权</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-64600 · 本地提权</span>
+                        <span class="cvss-score">9年未察觉 · root</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. CISA 7/24 七项 ICS 公告（OT 批量 10.0）</h4>
+                    <p>配合早前 PLC 在野利用预警，为近期最大单日 ICS 公告批次，须复核 OT 网段隔离与远程访问 MFA。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Panduit IntraVUE CVE-2026-42933（10.0）</h4>
+                    <p>工业网络可视化软件变身活跃代理，完全绕过 OT 网段隔离，Exploit 已确认可用，工控环境需隔离或立即打补丁。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Logto 身份平台认证/授权失败（9.8）</h4>
+                    <p>核心认证协议处理多漏洞，可致完全认证绕过或权限提升，使用 Logto 做身份管理的系统面临整域失守风险。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Linux 内核本地提权簇</h4>
+                    <p>Bad Epoll(CVE-2026-46242, UAF, 99%成功率) + Copy Fail(CVE-2026-31431, 已入KEV, AKS非根Pod可提根)；容器逃逸与节点提权风险高。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. DbGate CVE-2026-47668（10.0）未认证 RCE</h4>
+                    <p>攻击者通过向 func 注入恶意 JavaScript 在 DbGate 服务器实现 RCE，数据库网关成新突破点。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Cal.com CVE-2025-71389（10.0）未认证 RCE</h4>
+                    <p>5.9.9 之前版本通过特制 React 组件未认证远程代码执行，SaaS 预约平台暴露面扩大。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Langflow CVE-2026-0770": [0.95, 0.95]
+    "Azure 云群(6×10.0)": [0.7, 0.9]
+    "ManageEngine CVE-2026-6516": [0.6, 0.95]
+    "rclone CVE-2026-49980": [0.4, 0.85]
+    "RefluXFS CVE-2026-64600": [0.3, 0.85]
+    "Panduit IntraVUE CVE-2026-42933": [0.8, 0.9]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "云/身份基础设施" : 30
+    "在野利用/KEV" : 24
+    "未认证RCE" : 22
+    "OT/ICS工业" : 14
+    "本地提权/内核" : 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title YYYY年M月第N周网安事件
+    7月21日 : Langflow CVE-2026-0770 入KEV(大限7/24)
+           : WordPress CVE-2026-63030/60137 入KEV
+    7月22日 : Check Point SmartConsole CVE-2026-16232 在野入KEV
+           : SharePoint CVE-2026-50522 入KEV(大限7/25)
+           : Redis QVD-2026-44936 补丁绕过变体披露
+    7月23日 : CISA Zimbra LAUNDRY BEAR 联合警报AA26-204A
+           : Chick-fil-A 凭证填充 / Craneware 医疗数据外泄
+    7月24日 : Azure 云群六枚10.0披露
+           : ManageEngine ADAudit Plus CVE-2026-6516 公告
+           : rclone CVE-2026-49980 详解 / CISA 七项ICS公告
+           : Langflow KEV 联邦大限今日关闭
+    7月25日 : Check Point CVE-2026-16232 KEV 大限今日到期
+           : 今日速递：RefluXFS / Logto / DbGate / Cal.com
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">Langflow CVE-2026-0770 KEV 条目</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ServnetUK / BleepingComputer</span>
+                        <a href="https://www.servnetuk.com/news/langflow-rce-cve-2026-0770-patch-2026">Langflow RCE CVE-2026-0770 利用与 KEV 解读</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ManageEngine 官方</span>
+                        <a href="https://www.manageengine.com/in/products/active-directory-audit/cve-2026-6516.html">CVE-2026-6516 修复说明（build 8606）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">西澳 SOC</span>
+                        <a href="https://soc.cyber.wa.gov.au/advisories/20260724001-ManageEngine-ADAudit-RCE-Vulnerability">20260724001 ManageEngine RCE 公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">rclone 论坛</span>
+                        <a href="https://forum.rclone.org/t/rclone-release-1-74-3/53880">Release 1.74.3（CVE-2026-49980 安全修复）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory</span>
+                        <a href="https://github.com/advisories/GHSA-QW24-GH76-8RVV">GHSA-qw24-gh76-8rvv（rclone 未认证命令执行）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-49980">CVE-2026-49980 Detail</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TheHackerWire</span>
+                        <a href="https://www.thehackerwire.com/critical-azure-app-service-privilege-escalation">Azure App Service CVE-2026-58630 权限提升</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FixTheCVE</span>
+                        <a href="https://fixthecve.com/trending">Trending CVEs（Azure 云群 / DbGate / Cal.com）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DataSecurityWiki</span>
+                        <a href="https://datasecuritywiki.com/microsoft-patch-tuesday-for-july-2026-snort-rules-and-prominent-vulnerabilities">Microsoft July 2026 Patch Tuesday 要点</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-07-24">2026-07-24 每日威胁情报（ICS/IntraVUE/Logto/RefluXFS）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Qualys / NCSC-FI</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-07-24">RefluXFS CVE-2026-64600（XFS 竞态提权）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/07/new-bad-epoll-linux-kernel-flaw-lets.html">Bad Epoll Linux 内核 UAF 提权</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft Learn</span>
+                        <a href="https://learn.microsoft.com/azure/aks/security-bulletins/overview">AKS 安全公告（Copy Fail CVE-2026-31431）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA ICS</span>
+                        <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">ICS 公告总览（7/24 七项）</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月25日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
