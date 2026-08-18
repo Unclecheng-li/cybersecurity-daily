@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年8月18日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年8月18日 星期二</span>
+            <span class="edition-number">第 135 期 | 总第 135 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>ShieldBreak 69414 0day · VMware 59310勒索 · macOS 65400 挖矿 · CISA 8/11 68820 · GeoServer无CVE RCE
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">单周 44 个在野零日：Defender「ShieldBreak」、VMware vCenter、macOS 屏幕共享三线 9.8 齐发</h2>
+                <p class="sub-headline">CVE-2026-69414（Defender 0day 无补丁）· CVE-2026-59310（vCenter 9.8 APT+勒索）· CVE-2026-65400（macOS 9.8 在野 root 挖矿，CISA 上调至 9.8 入 KEV）</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Microsoft Defender 零日「ShieldBreak」CVE-2026-69414：绕过 RoguePlanet 补丁、全补丁 Windows 100% 提权</h3>
+                    <div class="article-meta">
+                        <span>CVSS 待定（研究者称 100% 可靠）</span>
+                        <span class="cvss-score">无补丁 / 微软确认调查中</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全研究员公开名为 ShieldBreak 的 Microsoft Defender 零日概念验证，声称可完全绕过此前针对 CVE-2026-50656（RoguePlanet）的修复，在 Defender 云扫描期间的用户态回调中动态改写文件内容，使本地低权用户提权至 NT AUTHORITY\SYSTEM。研究者称该 PoC 在 Windows 10、Windows 11 与 Windows Server 2025 全补丁环境成功率 100%。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>端点防护平台权限提升 / 补丁绕过（CWE-269，绕过 RoguePlanet）</li>
+                            <li><strong>攻击方式：</strong>利用 Windows Cloud Filter API，在 Defender 云扫描用户态回调中改写文件，使检测失效</li>
+                            <li><strong>影响范围：</strong>启用 Microsoft Defender 的 Windows 10 / 11 / Server 2025</li>
+                            <li><strong>后果：</strong>先 neutral 端点防护再投送载荷，依赖单一 EDR 的防御体系被致盲</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>防护产品自身成突破口，「打谁之前先废掉保镖」，签名/行为式 EDR 若无分层监测即变盲点</li>
+                            <li>绕过已发布修复的 RoguePlanet，属「补丁后再绕过」范式，补丁闭环仍有盲区</li>
+                            <li>无可用补丁、全补丁环境 100% 可靠的公开 PoC 极大压缩防御窗口</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者 低权本地</span>
+                        <span class="flow-step">触发 Defender 云扫描</span>
+                        <span class="flow-step">Cloud Filter 回调</span>
+                        <span class="flow-step critical">绕过 RoguePlanet</span>
+                        <span class="flow-step critical">SYSTEM 提权</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">VMware vCenter CVE-2026-59310（CVSS 9.8）目录遍历 RCE 在野，疑似 APT 部署 Babuk 衍生勒索</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.8</span>
+                        <span class="cvss-score">在野利用 / APT + 勒索</span>
+                    </div>
+                    <div class="article-body">
+                        <p>VMware vCenter 曝出 CVSS 9.8 的目录遍历漏洞，网络可达的实例可经之执行任意代码。疑似与中国相关的 APT 借之入侵，植入恶意 Cron 与 reverse_ssh 持久化，并最终部署 Babuk 衍生勒索（被研判为掩盖入侵与反取证的烟幕）。已观测 361 个受害 IP、分布于 47 国。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>VMware vCenter（暴露实例）</td><td class="risk-high">严重 · 单点沦陷掌控全部虚拟机</td></tr>
+                            <tr><td>vSphere 虚拟化基础设施</td><td class="risk-medium">高危 · 整片虚拟化底座失守</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">macOS 屏幕共享 CVE-2026-65400（CVSS 9.8）在野 root + 门罗币挖矿，CISA 由 7.1 上调至 9.8 入 KEV</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.8（原 7.1）</span>
+                        <span class="cvss-score">在野利用 / KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>macOS 屏幕共享组件认证绕过漏洞，攻击者可对开启屏幕共享（TCP 5900 暴露）的 Mac 免凭据认证，取得 root 并安装门罗币挖矿程序。苹果 8/6 紧急 OOB 修复（Tahoe 26.6.1 / Sequoia 15.7.9 / Sonoma 14.8.9），CISA 8/14 将评分由 7.1 上调至 9.8 并认定可自动化利用，已入 KEV。</p>
+                        <p><strong>值得关注：</strong>所有观测案例均获 root；公开 PoC 出现后短时间内即在多台暴露主机实战，补丁窗口被压到数日；根因细节已在 Black Hat 现场演示，复用门槛极低。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">CISA KEV 8/11 三连：Lazarus 借 CVE-2026-68820、Cisco CVE-2026-20349、Metabase CVE-2026-72898</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-68820 / 20349 / 72898</span>
+                        <span class="cvss-score">入 KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 8/11 将三个在野漏洞纳入 KEV。Lazarus 借 Windows AFD.sys 释放后使用提权 CVE-2026-68820 打 Operation Dream Job，投递 ForestTiger 与新型后门 Troy，针对法/德/巴/印国防航天；Cisco ASA/FTD 堆检查漏洞 CVE-2026-20349 可未认证远程重载（DoS）；Metabase SQL 注入 CVE-2026-72898 可未认证拿管理员。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>Windows AFD.sys（CVE-2026-68820）</td><td class="risk-high">高危 · Lazarus 利用</td></tr>
+                            <tr><td>Cisco ASA/FTD（CVE-2026-20349）</td><td class="risk-medium">中高危 · 边界 DoS</td></tr>
+                            <tr><td>Metabase（CVE-2026-72898）</td><td class="risk-medium">中高危 · 未认证 SQLi</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">GeoServer 无 CVE 编号 SQL 注入 RCE 在野 + LiteLLM 供应链 153GB 凭据泄露</h3>
+                    <div class="article-meta">
+                        <span>GeoServer / LiteLLM</span>
+                        <span class="cvss-score">披露即野 / 供应链</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GeoServer 曝出 SQL 注入致 RCE 漏洞（尚未分配 CVE，已修于 3.0.1 / 2.28.5 / 2.27.6），公开披露后数小时内即遭在野利用（watchTowr 观测到来自少量 IP 的数百次尝试）。同期 LiteLLM AI 网关供应链事件披露：TeamPCP 攻陷 Trivy CI/CD 窃取 PyPI 凭据、发布木马化包，后续曝出 153GB 窃得凭据。</p>
+                        <p><strong>值得关注：</strong>「无 CVE 编号也在野」推翻「没编号=不紧急」的错觉；供应链攻击从投毒包升级到攻陷 CI/CD 偷凭据，受害面扩散至整个生态。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. 勒索 Q2 2026 同比 +33%</h4>
+                    <p>2,139 名受害登上泄露站、活跃团伙由 71 增至 93，新人「The Gentlemen」用 AI 编码助手 3 天搓出管理面板（Check Point Research）。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Unisoc 安卓内核链（无补丁）</h4>
+                    <p>接恶意 VoLTE 视频通话即拿内核权限，波及摩托罗拉/真我/小米，厂商未发补丁，BYOD 成供应链风险外延。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. SafePal 数据泄露</h4>
+                    <p>39,798 名硬件钱包客户因第三方电商插件漏洞暴露姓名/邮箱/电话/地址，数据已在暗网售卖（密钥未泄露）。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Lazarus ForestTiger / Troy</h4>
+                    <p>借 CVE-2026-68820 打 Operation Dream Job，针对法/德/巴/印国防航天，投递新型后门。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Amnesia Stealer（macOS）</h4>
+                    <p>经 ClickFix 投毒，窃 16 款 Chromium 浏览器、iCloud Keychain、文档等，并带浏览器交互控制模块。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Flowise / UpSnap 修复</h4>
+                    <p>Flowise CVE-2026-69264（9.4）CSVAgent 代码注入 RCE、UpSnap CVE-2026-49481/49819（9.6/9.8）命令注入与未授权超管创建均已修复（3.1.3 / 5.4.0）。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "ShieldBreak 69414": [0.95, 0.97]
+    "VMware 59310": [0.98, 0.99]
+    "macOS 65400": [0.98, 0.98]
+    "Lazarus 68820": [0.78, 0.92]
+    "Metabase 72898": [0.70, 0.88]
+    "GeoServer SQLi RCE": [0.82, 0.90]
+    "LiteLLM 供应链": [0.66, 0.84]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "边界/基础设施漏洞" : 28
+    "端点/平台提权" : 24
+    "勒索软件" : 18
+    "供应链攻击" : 16
+    "移动/APT" : 14
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年8月第3周网安事件
+    8月11日 : CISA KEV 8/11 三连 68820/20349/72898
+           : Lazarus 借 68820 打 Operation Dream Job
+    8月12日 : Unisoc 安卓内核链披露 无补丁
+           : UpSnap 49481/49819 RCE 修复 5.4.0
+    8月14日 : CISA 上调 macOS 65400 至 9.8 入 KEV
+           : GeoServer SQLi RCE 在野 watchTowr
+    8月15日 : LiteLLM 供应链 153GB 凭据泄露披露
+    8月16日 : ShieldBreak 69414 公开 PoC 100% 可靠
+    8月17日 : VMware vCenter 59310 9.8 在野 361受害47国
+           : macOS 65400 在野 root+门罗币挖矿 NCSC
+    8月18日 : 单周 44 零日 825 攻击 态势周报
+           : 勒索 Q2 +33% 2139 受害
+                </div>
+            </div>
+
+            <!-- ===== 攻击利用时序 ===== -->
+            <h3 class="section-header">攻击利用时序（ShieldBreak 绕过 Defender 防护链）</h3>
+            <div class="chart-container">
+                <div class="chart-title">ShieldBreak 利用时序</div>
+                <div class="mermaid">
+sequenceDiagram
+    participant A as 攻击者(低权本地)
+    participant F as Defender 云扫描
+    participant C as Cloud Filter API
+    participant S as 文件系统
+    participant P as SYSTEM 进程
+    A->>F: 投递诱饵文件触发云扫描
+    F->>C: 扫描期调用用户态回调
+    C->>S: 回调中动态改写文件内容
+    S-->>A: 绕过 RoguePlanet(CVE-2026-50656)检测
+    A->>P: 以 SYSTEM 写入/加载恶意负载
+    Note over A,P: ShieldBreak · 全补丁 Windows 10/11/Server 100% 可靠 · 无补丁
+                </div>
+            </div>
+
+            <!-- ===== 漏洞利用链 ===== -->
+            <h3 class="section-header">漏洞利用链（VMware vCenter 杀伤链）</h3>
+            <div class="chart-container">
+                <div class="chart-title">VMware vCenter 杀伤链</div>
+                <div class="mermaid">
+flowchart TD
+    A[攻击者 网络可达 vCenter] --> B["CVE-2026-59310 目录遍历"]
+    B --> C[任意代码执行]
+    C --> D[植入 Cron + reverse_ssh 持久化]
+    D --> E[疑似 APT 横向移动]
+    E --> F[Babuk 衍生勒索 烟幕]
+    F --> G[加密 + 反取证]
+    style A fill:#c41e3a,color:#fff
+    style G fill:#c41e3a,color:#fff
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">DefendEdge</span>
+                        <a href="https://www.defendedge.com/zero-day-exploit-surge-2026-enterprise-defenses-overwhelmed">单周 44 零日 / 825 攻击（ShieldBreak / VMware / macOS 综述）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安全日报 2026-08-17</span>
+                        <a href="https://www.yijinglab.com/industry/20260817090020">ShieldBreak / VMware vCenter / WindRelay 等</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">dev.to</span>
+                        <a href="https://dev.to/netsecops_io/daily-cybersecurity-intelligence-august-17-2026-jko">SafePal / macOS / ShieldBreak / LiteLLM / 勒索态势</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfoSec Today</span>
+                        <a href="https://www.infosectoday.io/%E2%9A%A1-weekly-recap-vmware-exploits-windows-0-day-mcp-attacks-browser-hijacks-and-more">VMware / Lazarus / macOS / GeoServer / Amnesia</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 8/11</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/08/11/cisa-adds-three-known-exploited-vulnerabilities-catalog">CVE-2026-20349 / 68820 / 72898</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV Catalog</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">已知被利用漏洞目录</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT之家 / 网易</span>
+                        <a href="https://www.163.com/dy/article/L4H55GT80511B8LM.html">macOS CVE-2026-65400 在野 root + 挖矿</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/08/attackers-exploit-vmware-vcenter.html">VMware vCenter CVE-2026-59310 在野</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-59310">CVE-2026-59310（VMware vCenter）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-69414">CVE-2026-69414（ShieldBreak / Defender）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-65400">CVE-2026-65400（macOS 屏幕共享）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix</span>
+                        <a href="https://aviatrix.ai/threat-research-center/cisa-adds-three-known-exploited-vulnerabilities-to-catalog-2026-08-04">CISA KEV 8/4 三连（Langflow / N-central / Tomcat）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">watchTowr</span>
+                        <a href="https://www.watchtowr.com/">GeoServer 在野利用监测</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Check Point</span>
+                        <a href="https://blog.checkpoint.com/">勒索 Q2 2026 +33% / 2,139 受害</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Group-IB</span>
+                        <a href="https://www.group-ib.com/blog/windrelay-nfc-spynote-rat-combo-fraud/">WindRelay NFC 支付中继 + SpyNote</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年8月18日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
