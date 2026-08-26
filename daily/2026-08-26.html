@@ -427,15 +427,15 @@
 
         <!-- ========== 关键词横幅 ========== -->
         <div class="keywords-banner">
-            <strong>今日关键词：</strong>CISA四连击KEV · vCenter 59310中国APT 361 IP · IKE 33824 AI自主攻击 · SAP 58231 10分RCE在野 · Citrix 8452在野
+            <strong>今日关键词：</strong>Poly 0826 9.2RCE · NetScaler 8452 9.8 · PostgreSQL 14669 8.8 · WebLogic 21962 KEV · KEV四漏洞AI自主
         </div>
 
         <!-- ========== 正文 ========== -->
         <div class="content-wrapper">
             <!-- ===== 头条 ===== -->
             <div class="headline-section">
-                <h2 class="main-headline">CISA 四连击 KEV 合围(vCenter 59310 / IKE 33824 / macOS 65400 / SharePoint 55040)、SAP 58231 满分RCE披露3天在野、Citrix 8452 预认证RCE在野、Siemens S7 PLC 遭 AI 脚本攻击、PTC Windchill 12569(Cl0p)——企业应用·边界设备·OT 三线承压</h2>
-                <p class="sub-headline">CVE-2026-59310(VMware 9.8,中国APT 361IP) · CVE-2026-33824(Windows IKE 9.8,DeepSeek自主攻击) · CVE-2026-58231(SAP 10.0在野) · CVE-2026-8452(Citrix预认证RCE在野)+CVE-2026-19490(9.3) · CISA AA26-231A(S7 PLC AI)</p>
+                <h2 class="main-headline">HP Poly 满分RCE披露(0826) · Citrix NetScaler 8452 公开PoC根RCE · PostgreSQL 14669 普通账号RCE · WebLogic 21962(10.0)入KEV · KEV四漏洞遭AI自主攻击——边界/中间件/数据库三线承压</h2>
+                <p class="sub-headline">CVE-2026-0826(HP Poly 9.2,Metasploit root) · CVE-2026-8452(NetScaler 9.8,root RCE) · CVE-2026-14669(PostgreSQL 8.8,to_char溢出) · CVE-2026-21962(WebLogic 10.0,KEV在野) · CVE-2026-33824/59310/55040/65400(KEV四+AI自主)</p>
             </div>
 
             <!-- ===== 文章卡片网格 ===== -->
@@ -443,85 +443,85 @@
                 <article class="article-card featured">
                     <span class="article-number">1</span>
                     <span class="severity-badge severity-critical">严重</span>
-                    <h3 class="article-title">CISA KEV 四大在野漏洞合围：macOS / SharePoint / vCenter / Windows IKE（8/18 纳入，联邦大限已过）</h3>
+                    <h3 class="article-title">HP Poly VoIP 话机栈溢出满分 RCE（CVE-2026-0826，CVSS 9.2）已被 Rapid7 披露并放出 Metasploit 模块</h3>
                     <div class="article-meta">
-                        <span>三条 CVSS 9.8 / 全部在野</span>
-                        <span class="cvss-score">BOD 26-04 大限 8/21 已过</span>
+                        <span>CVSS 9.2 / CWE-121</span>
+                        <span class="cvss-score">未认证 root RCE / 边界设备</span>
                     </div>
                     <div class="article-body">
-                        <p>CISA 于 8/18 一次性将四条漏洞纳入 KEV，联邦机构修复大限（BOD 26-04）为 <strong>8/21</strong>，现已过期。其中三条 CVSS 均为 9.8，全部已确认在野利用，厂商补丁均已就绪。</p>
+                        <p>HP Poly VVX / Trio 系列 VoIP 话机的 <code>polyapp</code> 二进制在解析 SIP 请求中 SDP 的 ICE <code>candidate</code> 属性时，<code>ParseICECandidate</code> 函数把攻击者可控数据 <code>memcpy</code> 进 256 字节栈缓冲且未做长度校验（栈溢出）。启用非默认 ICE 特性的 VVX 150/250/350/450 与 Trio 8800/8500/8300 均受影响；Metasploit 模块 <code>exploit/linux/misc/poly_unauth_rce_cve_2026_0826</code> 可实现未认证 root RCE。HP 已发固件：VVX 升 UCS 6.4.8、Trio 8300 升 8.1.7、Trio 8500/8800 升 7.2.8。</p>
                         <p><strong>漏洞机制/攻击方式：</strong></p>
                         <ul>
-                            <li><strong>类型：</strong>vCenter 路径遍历→RCE(59310) / Windows IKE 双重释放→预认证RCE(33824) / macOS 身份绕过(65400) / SharePoint 弱认证绕过(55040)</li>
-                            <li><strong>攻击方式：</strong>vCenter 被中国背景 APT 部署 reverse_ssh 后门（361 IP/47 国，Babuk 衍生勒索）；IKE 33824 由中文 actor 借 DeepSeek 等大模型实施 AI 赋能自主攻击</li>
-                            <li><strong>影响范围：</strong>虚拟化管理层、VPN 边缘、终端、企业协作平台</li>
-                            <li><strong>后果：</strong>管理平面整片沦陷、内网洞穿、门罗币挖矿与勒索</li>
+                            <li><strong>类型：</strong>栈缓冲区溢出（CWE-121）</li>
+                            <li><strong>攻击方式：</strong>向启用 ICE 的 Poly 话机发特制 SIP/SDP 请求触发溢出，借固定加载地址构造 ROP</li>
+                            <li><strong>影响范围：</strong>VVX 150/250/350/450、Trio 8800/8500/8300（开启 ICE）</li>
+                            <li><strong>后果：</strong>未认证拿到 root，部署反向 shell 与持久化，成为内网跳板</li>
                         </ul>
                         <p><strong>值得关注的原因：</strong></p>
                         <ul>
-                            <li>vCenter 是整座虚拟化 estate 的管理平面，路径遍历直达 RCE = 一台失守全部 VM 失守</li>
-                            <li>IKE 33824 被标注为 AI-enabled autonomous hacking campaign，攻击方用大模型调度利用脚本，降低高级漏洞门槛</li>
-                            <li>三条同为 9.8，CVSS 已失效能区分，修复须按"暴露面 × 爆炸半径 × 谁持有武器"重排</li>
+                            <li>VoIP/会议话机是内网"默认可信"的边界设备，root 沦陷即监听+横向跳板，且常绕过 EDR 视野</li>
+                            <li>Metasploit 模块把"理论可达"变成"一键 root"，暴露即高危</li>
+                            <li>旧固件无 ASLR、共享库地址固定，ROP 稳定；在网设备固件老化、补丁滞后，批量扫描风险高</li>
                         </ul>
                     </div>
                     <div class="attack-flow">
-                        <span class="flow-step">未认证攻击者</span>
-                        <span class="flow-step">互联网暴露边界</span>
-                        <span class="flow-step">59310/IKE 33824 触发</span>
-                        <span class="flow-step critical">RCE / 后门</span>
-                        <span class="flow-step critical">内网整片沦陷</span>
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">特制 SIP/SDP ICE</span>
+                        <span class="flow-step">栈溢出</span>
+                        <span class="flow-step critical">ROP root</span>
+                        <span class="flow-step critical">话机沦陷</span>
                     </div>
                 </article>
                 <article class="article-card">
                     <span class="article-number">2</span>
                     <span class="severity-badge severity-critical">严重</span>
-                    <h3 class="article-title">SAP Commerce Cloud CVE-2026-58231（CVSS 10.0）披露 3 天即在野，满分未认证 RCE</h3>
+                    <h3 class="article-title">Citrix NetScaler 预认证堆溢出根权限 RCE（CVE-2026-8452，CVSS 9.8）公开 PoC 已流出</h3>
                     <div class="article-meta">
-                        <span>CVSS 10.0 / Data Hub Adapter</span>
-                        <span class="cvss-score">在野 / 4200+ 暴露</span>
+                        <span>CVSS 9.8 / CWE-122</span>
+                        <span class="cvss-score">公开 PoC / 网络边界 AAA/Gateway</span>
                     </div>
                     <div class="article-body">
-                        <p>SAP Commerce Cloud 的 <strong>Data Hub Adapter</strong> 存在授权不足 + 输入校验缺失，未认证攻击者滥用<strong>默认认证客户端</strong>向 <code>*/datahub-webapp/v1/*</code> 提交特制请求即可执行任意代码。SAP 8/11 发补丁，Defused 蜜罐 8/14 探测、KEVIntel 8/15 确认 PoC 可用；据报 <strong>4,200+ 实例</strong>暴露于公网。</p>
-                        <p><strong>值得关注：</strong>满分 + 无认证 + 电商核心 + 3 天武器化的四要素叠加，可直接导致 Magecart 实时窃卡、网站篡改、服务器勒索并作为内网跳板；缓解须升级版本后<strong>重建并重构建署</strong>，仅限 IP Filter Set 为临时暴露面收缩。</p>
+                        <p>watchTowr Labs 将 Citrix 原定为"DoS/不可预测行为"的 CVE-2026-8452 逆向升格为预认证堆溢出 → root RCE。根因在 NetScaler SAML 签名规范化：旧版本把 SAML <code>SignedInfo</code> 中攻击者可控数据拷入定长缓冲未校验长度，溢出污染堆元数据，借"可执行堆 + 无 PIE/无 ASLR"映射到以 root 运行的 <code>nsppe</code> 指令指针。PoC 已公开（GitHub）。影响配置为 AAA 虚拟服务器或 Gateway 的 ADC/Gateway；修复版 14.1-72.61 / 13.1-63.18 / 13.1 FIPS 37.272，<strong>无配置级缓解，只能升级</strong>。</p>
+                        <p><strong>值得关注：</strong>NetScaler 是企业网络"前门"（VPN/SSO/负载均衡），root 沦陷即可拦截、解密、篡改流量并窃取 VPN 凭据；公开 PoC + 无补丁窗口 = 利用窗口极短，且 PoC 可让看门狗保持稳定使后门重启后存活。</p>
                     </div>
                 </article>
                 <article class="article-card">
                     <span class="article-number">3</span>
                     <span class="severity-badge severity-high">高危</span>
-                    <h3 class="article-title">Citrix NetScaler 双漏洞：CVE-2026-8452 预认证 RCE 在野 + CVE-2026-19490 认证绕过（9.3）</h3>
+                    <h3 class="article-title">PostgreSQL to_char() 堆溢出 RCE（CVE-2026-14669，CVSS 8.8）PoC 公开，普通账号即可打</h3>
                     <div class="article-meta">
-                        <span>8452 v4 8.8 / NVD 9.8 · 19490 v4 9.3</span>
-                        <span class="cvss-score">8452 在野 / 19490 披露</span>
+                        <span>CVSS 8.8 / CWE-122</span>
+                        <span class="cvss-score">PoC 公开 / 数据库基础设施</span>
                     </div>
                     <div class="article-body">
-                        <p><strong>CVE-2026-8452</strong>：SAML PrefixList 处理的内存溢出，watchTowr 已发布可抵达 root 的 PoC，加拿大网络安全中心 8/17 确认在野、已入 KEV（补丁 14.1-72.61 / 13.1-63.18）。<strong>CVE-2026-19490</strong>：认证绕过（CWE-288 备用路径）CVSS 9.3，8/19 披露（补丁 14.1-73.32 / 13.1-63.21）。两漏洞补丁版本不同，须分别核对实际安装版本。</p>
-                        <p><strong>值得关注：</strong>NetScaler 位于网络边界（SSL VPN / ZTNA），预认证 RCE 无需凭据与交互，等同把内网前门交出；Citrix Bleed 模式重演，边界设备认证绕过披露后利用窗口常被压缩到"天"级。</p>
+                        <p>PostgreSQL 核心 <code>datetime_to_char_body()</code> 处理 <code>to_char()</code> 的 <code>TZ</code>/<code>TZtz</code> 路径时，按格式串长度分配缓冲却把会话级用户可控 POSIX 时区缩写原样拷入且不校验长度。具备普通登录权限（无需 superuser）的攻击者用 <code>SET timezone</code> 设超长缩写再执行 <code>to_char(now(),'TZ')</code> 即触发堆溢出，配合 ROP 在 postgres 系统账户下执行任意命令。官方已于 8/13 在 18.5 / 17.11 / 16.15 / 15.19 / 14.24 修复；V12 Security、360 等已公开 PoC 并复现。</p>
+                        <p><strong>值得关注：</strong>"普通账号即可 RCE"意味着低权 DB 用户即可反制整库服务器、窃全库数据并横向；PoC 公开 + 14–18 全系列受影响 + 修复需升大版本，暴露实例（5432 对不可信网络开放）修复窗口长。</p>
                     </div>
                 </article>
                 <article class="article-card">
                     <span class="article-number">4</span>
-                    <span class="severity-badge severity-high">高危</span>
-                    <h3 class="article-title">CISA AA26-231A：AI 生成攻击脚本瞄准 Siemens S7 系列 PLC（能源 / 水务 / 制造）</h3>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Oracle WebLogic 双线承压：CVE-2026-21962（CVSS 10.0）入 KEV 在野 + 8 月 CPU 943 补丁</h3>
                     <div class="article-meta">
-                        <span>NSA·CISA·FBI·DOE·EPA 联署</span>
-                        <span class="cvss-score">首次政府确认 AI 写 ICS</span>
+                        <span>CVSS 10.0 / KEV 大限 8/27</span>
+                        <span class="cvss-score">在野 / 企业 Java 中间件</span>
                     </div>
                     <div class="article-body">
-                        <p>8/19 五部门联合公告，<strong>首次</strong>政府级确认威胁 actor 用 AI 生成利用脚本攻击 OT：Censys / ZoomEye 扫描暴露 PLC（端口 102 / S7comm）→ 基于 <code>snap7</code> / <code>python-snap7</code> 由 AI 生成脚本 → 伪装为合法 OT 监控工具读写 PLC 内存 / 配置 / 梯形图。影响 S7-200/300/400/1200/1500（含 F 安全控制器）。</p>
-                        <p><strong>值得关注：</strong>AI 夷平了 ICS 攻击的专业门槛；当前处于"read 测绘 + 预置位"阶段，破坏动作尚未大规模落地，是防御黄金窗口；第三方集成商远程访问致资产所有者不知暴露。</p>
+                        <p>CISA 将 <strong>CVE-2026-21962</strong>（Oracle HTTP Server / WebLogic Proxy Plug-in 不当访问控制，未认证经 HTTP 越权读写关键数据，CVSS 10.0）纳入 KEV，GreyNoise、CloudSEK 已观测在野利用，联邦大限 <strong>2026-08-27</strong>。同期 Oracle 8 月 CPU 放出 943 个修复，WebLogic 核心多条未认证 9.8 RCE：CVE-2026-60698（IIOP）、CVE-2026-60672/60696（T3/IIOP）、CVE-2026-60977（RMI），及需低权认证的 CVE-2026-60702（9.9）；身份侧还有 CVE-2026-61241（Oracle Internet Directory LDAP，10.0）。</p>
+                        <p><strong>值得关注：</strong>企业 Java 中间件老漏洞长期在野（CloudSEK 蜜罐同时捕获 CVE-2020-14882/14883、CVE-2020-2551、CVE-2017-10271）；新 10.0 + 9.8 叠加，互联网暴露的 T3/IIOP/RMI 服务须优先盘点收敛；大限 8/27 极近，临时禁协议仅是缓解。</p>
                     </div>
                 </article>
                 <article class="article-card">
                     <span class="article-number">5</span>
-                    <span class="severity-badge severity-medium">中高危</span>
-                    <h3 class="article-title">PTC Windchill CVE-2026-12569（关键 RCE）—— Cl0p 网页 shell 定向企业 PLM</h3>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">CISA KEV 8/18 四漏洞在野 + F5 披露"AI 自主攻击"：中国背景 APT 借 vCenter 投 Babuk、IKE 33824 遭 DeepSeek 驱动利用</h3>
                     <div class="article-meta">
-                        <span>关键 RCE / Cl0p</span>
-                        <span class="cvss-score">Windchill / FlexPLM</span>
+                        <span>CVSS 9.8 × 4 / 集中管控平面</span>
+                        <span class="cvss-score">在野 / 国家级 APT</span>
                     </div>
                     <div class="article-body">
-                        <p>Cl0p 勒索团伙使用自定义 Java web shell 针对 <strong>PTC Windchill / FlexPLM</strong> 服务器：利用 CVE-2026-12569 关键 RCE 后连接 Windchill 数据库、<strong>解密存储凭据</strong>、搜索文件仓库窃密，并用自定义 <code>X-windchill-req</code> HTTP 头接收命令。</p>
-                        <p><strong>值得关注：</strong>PLM 承载产品生命周期与研发文档，沦陷即设计资产与供应链情报外泄；解密存储凭据将单点 RCE 升级为凭据泄露 + 内网横向 + 数据窃取的组合拳。</p>
+                        <p>F5 Labs 8/26 周报重申 CISA 8/18 入 KEV 的四漏洞均在野：<strong>CVE-2026-33824</strong>（Windows IKE 双释放 9.8）被中国背景 APT 以手动运营 + <strong>DeepSeek 驱动"AI 自主攻击"战役</strong>利用；<strong>CVE-2026-59310</strong>（vCenter 路径遍历 9.8）被疑似中国背景 APT 用于部署后门/反向 SSH/Babuk 衍生勒索，攻陷 <strong>361 个独立 IP、横跨 47 国</strong>；<strong>CVE-2026-55040</strong>（SharePoint 弱认证 9.1）PoC 公开后遭利用；<strong>CVE-2026-65400</strong>（macOS 屏共享绕过 9.8）投门罗币挖矿。</p>
+                        <p><strong>值得关注：</strong>AI 自主攻击从概念走向实战，压缩"披露→修复"节奏；四漏洞集中于 VPN/IKE、虚拟化 vCenter、协作 SharePoint、终端 macOS 等集中管控平面，单点沦陷即全网失守。</p>
                     </div>
                 </article>
             </div>
@@ -530,20 +530,28 @@
             <h3 class="section-header">速览区</h3>
             <div class="quick-news">
                 <div class="quick-item">
-                    <h4>6. Android 恶意软件 Manic（ThreatFabric）</h4>
-                    <p>银行欺诈 + 间谍 + 远程控制三合一，主攻乌克兰（银行/政府/身份/通讯）及俄/欧金融加密服务；异常 Wi-Fi mesh 经其他感染手机中继数据。</p>
+                    <h4>6. Shai-Hulud / ChainDrop npm 供应链蠕虫（keyv/cacheable）</h4>
+                    <p>8/4 起攻击者接管 npm 维护者账号向 keyv@6.0.0、cacheable-request@13.0.20 等注入 preinstall 窃密钩子；CSA 通报超 1300 包版本、约 20 亿月下载被污染，借 npm OIDC 可信发布获"合法 provenance"自动传播（Unit 42/Chainguard/Wiz）。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>7. Dahua 14,000+ IP 摄像头沦陷</h4>
-                    <p>多阶段活动，主要影响乌/俄网络；自动化弱口令爆破 + 认证绕过 + P2P 中继（厂商云）远程访问。</p>
+                    <h4>7. Miasma / Hades npm+PyPI 双蠕虫（TeamPCP）</h4>
+                    <p>financially 动机组织 TeamPCP 操控两支自传播蠕虫：Miasma(npm)、Hades(PyPI，用 *-setup.pth 自启)已污染 100+ 包、471+ 恶意构件，瞄准生信/图ML/<strong>MCP</strong> 开发者，窃 .npmrc/.git-credentials/SSH 并续发投毒包。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>8. UNC6293 / UNC7005 / UNC5976 俄系间谍团伙</h4>
-                    <p>针对学术/政府/国防/航天的钓鱼与 OAuth / 设备代码钓鱼窃令牌；UNC6293/7005 关联 APT29（Ice Relic），UNC5976 针对航天。</p>
+                    <h4>8. SharePoint AI 辅助未认证 RCE 链持续在野</h4>
+                    <p>Rapid7 用 AI 代理（96 会话/256 提示/约 8 万次工具调用）发现 CVE-2026-55040 + CVE-2026-63520 链，可未认证打到 SYSTEM；PoC 8/11 公开，约 8500 个 SharePoint 实例公网暴露，蜜罐已捕获完整链式探测。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>9. Gunra 勒索利用 Fortinet 认证绕过</h4>
-                    <p>借 CVE-2024-55591 / CVE-2025-24472 绕过 MFA 获超级管理员权限并持久化（美韩联合公告）。</p>
+                    <h4>9. 9300+ 暴露 AWS 密钥仍有效（Truffle Security）</h4>
+                    <p>2022–2026 公开泄露的 AWS 访问密钥中 9300+ 仍激活，含 817 企业账户、526 root 级、242 管理员 IAM；Hugging Face 为最大单一来源——密钥轮换仍是最大盲区。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. 勒索软件 Week 34：251 受害 / 48 运营方 / 48 国</h4>
+                    <p>DBDigest 统计 8/17–8/23 全球勒索运营方新增宣称受害 251 起、覆盖 48 国、现 3 个新团伙；制造/政府/医疗高发，双 extortion 常态化。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. SynkLoader 借 Teams 钓鱼 + 伪造"PowerShell Cleaner"</h4>
+                    <p>攻击者冒充企业 IT 经 Microsoft Teams 诱导安装托管于 Azure 的虚假"PowerShell Cleaner"，多组件构成，可收集系统与 AD 信息、建计划任务持久化、仿冒锁屏窃密、反向代理与 VNC 远控，疑似为后续勒索铺路（Expel）。</p>
                 </div>
             </div>
 
@@ -561,27 +569,22 @@ quadrantChart
     quadrant-2 "密切关注"
     quadrant-3 "持续监控"
     quadrant-4 "常规更新"
-    "SAP 58231": [0.25, 0.98]
-    "vCenter 59310": [0.30, 0.92]
-    "Windows IKE 33824": [0.35, 0.90]
-    "Citrix 8452": [0.40, 0.88]
-    "Citrix 19490": [0.50, 0.82]
-    "PTC Windchill 12569": [0.55, 0.80]
-    "Siemens S7 PLC": [0.70, 0.85]
-    "macOS 65400": [0.45, 0.78]
-    "SharePoint 55040": [0.50, 0.75]
+    "WebLogic 21962": [0.85, 1.00]
+    "NetScaler 8452": [0.55, 0.98]
+    "Poly 0826": [0.35, 0.92]
+    "PostgreSQL 14669": [0.50, 0.88]
+    "SharePoint 55040": [0.80, 0.91]
                     </div>
                 </div>
                 <div class="chart-container">
                     <div class="chart-title">安全事件类型分布</div>
                     <div class="mermaid">
 pie title 安全事件类型分布
-    "企业应用/ERP RCE" : 25
-    "边界/VPN 设备漏洞" : 22
-    "关键基础设施/OT" : 18
-    "云凭证/AI-ML 平台" : 15
-    "移动/物联网威胁" : 12
-    "勒索/间谍活动" : 8
+    "企业中间件/应用服务器" : 25
+    "网络边界设备" : 20
+    "供应链攻击" : 22
+    "数据库基础设施" : 18
+    "云凭证治理" : 15
                     </div>
                 </div>
             </div>
@@ -591,19 +594,18 @@ pie title 安全事件类型分布
             <div class="timeline-section">
                 <div class="mermaid">
 timeline
-    title 2026年8月第4—5周网安事件
-    8月19日 : CISA AA26-231A 五部门联合公告<br>AI 脚本瞄准 Siemens S7 PLC
-           : Citrix 19490 认证绕过披露(9.3)
-    8月20日 : SAP 58231 蜜罐探测(披露3天)
-           : PTC Windchill 12569 Cl0p 网页shell
-    8月21日 : CISA KEV 补丁大限(BOD 26-04)到期
-           : MLflow 64849 加入 KEV
-    8月22日 : vCenter 59310 持续(361IP/47国)
-           : 联邦机构周末窗口收紧
-    8月23日 : Citrix 8452 在野确认范围扩大
-    8月25日 : WinSock AFD 68820(Lazarus)大限收口
-    8月26日 : F5 周报复盘 CISA 四连击 KEV
-           : SAP 58231 满分RCE在野发酵
+    title 2026年8月第4周网安事件
+    8月19日 : SharePoint AI链PoC公开
+           : Oracle 8月CPU 943补丁
+    8月20日 : TrueConf 72529/72530 KEV大限
+           : Zimbra 73570 波兰CERT在野
+    8月21日 : vCenter 59310 大限/361IP延续
+    8月22日 : Defender RoguePlanet绕过PoC
+    8月23日 : AFD.sys 68820(Lazarus)大限
+    8月25日 : CISA KEV WebLogic 21962(10.0)入册
+           : 勒索Week34 251受害
+    8月26日 : HP Poly 0826 满分RCE披露
+           : NetScaler 8452 公开PoC根RCE
                 </div>
             </div>
 
@@ -612,60 +614,88 @@ timeline
             <div class="references-section">
                 <div class="references-grid">
                     <div class="reference-item">
-                        <span class="reference-source">F5 Labs</span>
-                        <a href="https://www.f5.com/labs/articles/weekly-threat-bulletin-august-26th-2026">Weekly Threat Bulletin (Aug 26, 2026)</a>
+                        <span class="reference-source">Rapid7 Blog</span>
+                        <a href="https://www.rapid7.com/blog/post/ve-cve-2026-0826-critical-unauthenticated-stack-buffer-overflow-hp-poly-vvx-trio-voip-phones-fixed/">CVE-2026-0826 HP Poly VoIP 栈溢出 RCE</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">CISA KEV</span>
-                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">59310/33824/65400/55040 纳入 KEV（8/18）</a>
+                        <span class="reference-source">Rapid7 Metasploit</span>
+                        <a href="https://www.rapid7.com/db/modules/exploit_linux/misc/poly_unauth_rce_cve_2026_0826">poly_unauth_rce_cve_2026_0826 模块</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">Secure in Seconds</span>
-                        <a href="https://www.secureinseconds.com/blog/2026-08-22-cisa-kev-four-actively-exploited-flaws">CISA KEV 四漏洞明细与大限</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Cybersecurity Help</span>
-                        <a href="https://www.cybersecurity-help.cz/blog/5578.html">Week in Review (Aug 21)：四连击+Zimbra+SAP+PTC+AA26-231A</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">SecurityWeek</span>
-                        <a href="https://www.securityweek.com/critical-sap-commerce-cloud-vulnerability-exploited-3-days-after-disclosure/">SAP 58231 披露3天在野</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Integrity360</span>
-                        <a href="https://insights.integrity360.com/threat-advisories/sap-commerce-cloud-cve-2026-58231-targeted-in-exploitation-attempts">SAP 58231 4200+ 暴露实例</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Falcon Internet</span>
-                        <a href="https://www.falconinternet.com/blog/cve-2026-19490-cve-2026-8452-citrix-netscaler-auth-bypass-rce">Citrix 8452 / 19490 双漏洞</a>
+                        <span class="reference-source">watchTowr Labs</span>
+                        <a href="https://labs.watchtowr.com/">Citrix NetScaler CVE-2026-8452 分析与 PoC</a>
                     </div>
                     <div class="reference-item">
                         <span class="reference-source">SecurityOnline</span>
-                        <a href="https://securityonline.info/citrix-netscaler-pre-auth-rce-cve-2026-8452">Citrix 8452 watchTowr PoC 在野</a>
+                        <a href="https://securityonline.info/citrix-netscaler-pre-auth-rce-cve-2026-8452">NetScaler 8452 预认证 RCE</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">CISA AA26-231A</span>
-                        <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-231a">AI 脚本攻击 Siemens S7 PLC</a>
+                        <span class="reference-source">Sploitus</span>
+                        <a href="https://sploitus.com/exploit?id=966C6430-FD83-5FF2-AB6F-EE80A052F062">CVE-2026-8452 PoC 条目</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">Infosecurity Mag</span>
-                        <a href="https://www.infosecurity-magazine.com/news/ics-ai-attacks-siemens/">ICS AI 攻击 Siemens 解读</a>
+                        <span class="reference-source">Cyber Security News</span>
+                        <a href="https://cybersecuritynews.com/citrix-netscaler-heap-overflow/">NetScaler 堆溢出 root RCE</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">TechTimes</span>
-                        <a href="https://techtimes.com/articles/325080/20260820/feds-confirm-ai-writing-exploits-siemens-plcs-used-water-energy.htm">Feds 确认 AI 写 ICS 利用脚本</a>
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-14669">CVE-2026-14669（PostgreSQL）</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">Cypro</span>
-                        <a href="https://cypro.co.uk/insights/cyber-bulletins/patch-tuesday-august-2026-windows-cisco-fortinet-zero-days">Patch Tuesday Aug 2026（68820 Lazarus）</a>
+                        <span class="reference-source">PostgreSQL 官方</span>
+                        <a href="https://www.postgresql.org/support/security/CVE-2026-14669/">CVE-2026-14669 安全公告</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">CSO Online</span>
-                        <a href="https://www.csoonline.com/article/4208185/patch-tuesday-august-2026-a-zero-day-winsock-driver-hole-under-exploit-and-a-maximum-severity-sap-vulnerability.html">Patch Tuesday + SAP 10.0</a>
+                        <span class="reference-source">比利时 CCB</span>
+                        <a href="http://ccb.belgium.be/advisories/warning-vulnerability-postgresql-allows-remote-code-execution-proof-concept-available">PostgreSQL to_char 堆溢出预警</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">CrowdStrike</span>
-                        <a href="https://www.crowdstrike.com/en-us/blog/patch-tuesday-analysis-august-2026/">Patch Tuesday Analysis Aug 2026</a>
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/08/actively-exploited-oracle-weblogic-flaw.html">WebLogic 21962(10.0) 入 KEV 在野</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 总目录</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">已知被利用漏洞目录</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-60977">CVE-2026-60977（WebLogic RMI 9.8）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">F5 Labs</span>
+                        <a href="https://www.f5.com/labs/articles/weekly-threat-bulletin-august-26th-2026">Weekly Threat Bulletin 8/26（KEV四+AI自主）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA 警报</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/08/18/cisa-adds-four-known-exploited-vulnerabilities-catalog">8/18 新增四漏洞入 KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackWire</span>
+                        <a href="https://www.hackwire.news/news/researchers-disclose-ai-assisted-sharepoint-exploit-chain-reaching-unauthenticat">SharePoint AI 辅助 RCE 链</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">新加坡 CSA</span>
+                        <a href="https://www.csa.gov.sg/alerts-and-advisories/advisories/ad-2026-009">Shai-Hulud/ChainDrop npm 供应链（AD-2026-009）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Lineaje</span>
+                        <a href="https://www.lineaje.com/ai-threats-analysis-reports/the-trust-chain-breaks-inside-open-sources-supply-chain-collapse">开源供应链信任链断裂分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetSecOps</span>
+                        <a href="https://cyber.netsecops.io/articles/miasma-and-hades-worms-continue-assault-on-npm-pypi-repositories">Miasma/Hades npm+PyPI 双蠕虫</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/hundreds-of-leaked-aws-keys-give-full-control-over-corporate-accounts/">9300+ 暴露 AWS 密钥仍有效</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DBDigest</span>
+                        <a href="https://www.dbdigest.com/2026/">Week 34 2026 勒索受害统计</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Expel</span>
+                        <a href="https://expel.com/blog/synkloader-when-you-throw-in-everything-but-the-kitchen-sink/">SynkLoader via Teams 钓鱼</a>
                     </div>
                 </div>
             </div>
