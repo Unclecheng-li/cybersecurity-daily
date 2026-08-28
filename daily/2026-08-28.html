@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年8月28日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年8月28日 星期五</span>
+            <span class="edition-number">第 144 期 | 总第 144 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>UniFi 77537/77550/77554 三×10.0 · CISA 8/26六漏洞KEV · Gitea 60004大限 · GitLab 18252 AI · Storm1175
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Ubiquiti UniFi 公告067修22漏洞三×10.0 · CISA 8/26六漏洞入KEV · Gitea 60004在野(大限今日) · GitLab 18252 AI/CI · Storm1175 N-central供应链勒索——边界/IoT、KEV、开发者基建三线承压</h2>
+                <p class="sub-headline">CVE-2026-77537/77550/77554(UniFi 三×10.0,10万+暴露) · CVE-2026-8452(NetScaler 8.8/9.8,KEV) · CVE-2026-60004(Gitea 9.8,大限8/28) · CVE-2026-18252(GitLab 8.7,AI代理) · CVE-2026-18577(N-central,StormEncryptor)</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Ubiquiti UniFi 安全公告 067：22 漏洞一次性修复，三枚满分 10.0 无需认证即可接管设备（CVE-2026-77537/77550/77554）</h3>
+                    <div class="article-meta">
+                        <span>CVSS 10.0 × 3 / CWE-20,93</span>
+                        <span class="cvss-score">网络可达·无需权限·边界/IoT</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Ubiquiti 于 2026-08-26 发布 <strong>Security Advisory Bulletin 067</strong>，披露并修复 <strong>22 个漏洞（21 严重 + 1 高危）</strong>，覆盖 UniFi Protect（视频监控）、UniFi OS、Talk（VoIP）、Access（门禁）、Network、Connect 等几乎整条产品线。其中 <strong>三枚达到 CVSS 10.0 满分</strong>且均为网络可达、无需权限、无需交互：CVE-2026-77537（Protect 命令注入，修复 7.2.105）、CVE-2026-77550（UniFi OS CRLF 注入致<strong>完整认证绕过</strong>，修复 5.1.37）、CVE-2026-77554（Talk 命令注入，修复 5.3.2）。Ubiquiti 称超 <strong>10 万</strong> 个 UniFi OS 实例可从公网看见，目前未确认在野，但今年早些时候同系满分漏洞曾在披露数周内被利用。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>命令注入（CWE-20）+ CRLF 认证绕过（CWE-93）</li>
+                            <li><strong>攻击方式：</strong>向暴露的 UniFi OS/Protect/Talk 发特制请求，绕过登录或注入 OS 命令</li>
+                            <li><strong>影响范围：</strong>Cloud Key / NVR / Dream Machine / 网关等 UniFi OS 设备 + Protect/Talk 应用</li>
+                            <li><strong>后果：</strong>接管管理控制台，控制网络、摄像头与门禁，建立持久驻留桥头堡</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>UniFi 同时承载网络、视频与门禁，是"网络+物理安全"融合面，单点控制台沦陷即同时丢失多重控制权</li>
+                            <li>认证绕过（77550）+ 命令注入（77537/77554）可链式组合，把管理设备变成持久 foothold</li>
+                            <li>10 万+ 公网暴露 + 历史同类漏洞数周内被武器化，延迟修复即主动暴露；MSP 共享管理面放大跨客户影响</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">公网暴露UniFi OS</span>
+                        <span class="flow-step critical">CRLF绕过认证</span>
+                        <span class="flow-step critical">命令注入</span>
+                        <span class="flow-step critical">设备沦陷</span>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">CISA KEV 8/26 六漏洞批量入册：NetScaler 8452 与 SQL Server 2019-1068 为新晋，老漏洞长尾再被点名</h3>
+                    <div class="article-meta">
+                        <span>CVSS 8.8–9.8 / KEV 在野</span>
+                        <span class="cvss-score">联邦大限 9/9（四项）</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 于 2026-08-26 一次性将 <strong>六个已遭利用漏洞</strong>纳入 KEV，覆盖 Citrix NetScaler、Microsoft SQL Server、Linux 内核、Ajax.NET 与 Red Hat：<strong>CVE-2026-8452</strong>（NetScaler ADC/Gateway 预认证堆溢出→root RCE，CISA CVSSv4 8.8 / watchTowr 9.8，公开 PoC）、<strong>CVE-2019-1068</strong>（SQL Server 低权 RCE）、<strong>CVE-2022-0995</strong>（Linux watch_queue 越界写本地提权）、<strong>CVE-2021-23758</strong>（Ajax.NET 反序列化）、<strong>CVE-2015-3246</strong>（Red Hat libuser，可结合 2015-3245 提权）+ <strong>CVE-2015-5287</strong>（ABRT 符号链接提权）。其中 NetScaler 8452 与 SQL 2019-1068 为真正新增；四项老漏洞为既有覆盖的"材料变更"——新增 KEV 身份 + 联邦大限 <strong>2026-09-09</strong>。</p>
+                        <p><strong>值得关注：</strong>KEV 入册即"已在野"官方背书；NetScaler 是边界、SQL 仅需低权，暴露面最高须优先盘点；四项 2015/2021/2022 老漏洞被重新点名，说明老内核/老 Web 组件 + 补丁绕过仍是长期被实际利用的长尾。</p>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Gitea CVE-2026-60004（CVSS 9.8）在野且联邦大限即今日：diffpatch 代码注入致服务账户 RCE，已观测挖矿</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.8 / CWE-94</span>
+                        <span class="cvss-score">在野 · 大限 2026-08-28</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 于 2026-08-25 将 <strong>CVE-2026-60004</strong> 加入 KEV，<strong>联邦修复大限为今日 2026-08-28</strong>。该漏洞为 Gitea（自托管 Git 平台）代码注入：具备仓库<strong>写入权限</strong>者向 <code>diffpatch</code> API 提交恶意补丁，借仓库可控内容安装并执行恶意 Git hook，以 Gitea 服务账户运行任意 shell。影响 <strong>1.17–1.27.0</strong>，已在 <strong>1.27.1</strong> 修复（Shai Rod / NightRang3r 报告）。关键风险点是 <strong>默认开放注册</strong>——外部用户可自助注册、建仓拿到写权限，使攻击对未认证者同样可达。已有公开案例：某实例因开放注册被自动扫描器注册、建仓、RCE 容器内挖矿，宿主 CPU 长期 &gt;70%。</p>
+                        <p><strong>值得关注：</strong>开发者基础设施成挖矿与供应链攻击首选靶点；默认开放注册把"需写权限"降格为完全未认证远程利用；挖矿只是早期载荷，同等访问可转向供应链篡改、凭据窃取与长期后门。</p>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">GitLab CVE-2026-18252（CVSS 8.7）：Duo Claude AI 代理误信用户可控配置，开发者角色可在 CI 执行任意命令</h3>
+                    <div class="article-meta">
+                        <span>CVSS 8.7 / CWE-829</span>
+                        <span class="cvss-score">紧急补丁 8/26 · 未确认在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GitLab 于 2026-08-26 发布紧急安全更新修复 <strong>CVE-2026-18252</strong>（GitLab 记 8.7，NVD 7.3）。受影响为 GitLab EE <strong>18.9 至 19.1.6、19.2 至 19.2.4、19.3 之前</strong>：在部分条件下，具备 developer 角色权限的认证用户可因 <strong>Duo Claude AI 代理处理来自用户可控来源的配置</strong>（CWE-829 引入不可信控制域功能）而在 CI 上下文执行任意命令。修复版本 <strong>19.3.1 / 19.2.5 / 19.1.7</strong>（GitLab.com 与 Dedicated 已先行打补）。官方未确认在野，但 CI 处于软件供应链咽喉，自管理实例应立即升级。</p>
+                        <p><strong>值得关注：</strong>CI 是供应链 apex，CI 内命令执行等于可在构建产物投毒；AI 编码代理摄取用户可控配置是新型信任边界击穿，能驱动代理绕过代码审查；developer 角色即可触发，须收紧其对 CI 配置权限与隔离。</p>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">Storm-1175 借 N-central CVE-2026-18577 打供应链勒索：MSP"上帝模式"未认证接管，下游级联加密</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-18577 / RMM</span>
+                        <span class="cvss-score">StormEncryptor · 供应链勒索</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Microsoft 威胁情报预警：与中国有关联、逐利的 <strong>Storm-1175</strong> 自 2026-08-02 起部署新勒索变种 <strong>StormEncryptor</strong>，疑似利用 <strong>CVE-2026-18577</strong>——N-able <strong>N-central</strong>（数千家 MSP 集中管理客户终端的 RMM 控制台）的认证绕过，是 CVE-2026-18556 的不完整补丁续作，被称<strong>未认证"上帝模式"</strong>：无需凭据即取得服务器完全管理员控制权。因 MSP 经 N-central 管理几十到上百客户端点，<strong>单点控制台沦陷即级联到全部下游客户</strong>（Kaseya/ConnectWise 先例）。N-able 于 8/2、8/6 连发两次紧急热修；Huntress 统计仍有<strong>超半数</strong>可达 N-central 云实例未打补。</p>
+                        <p><strong>值得关注：</strong>RMM/供应链式勒索反复出现，一次 MSP 失守 = 数十至上百家下游同步被加密；Storm-1175 从初始访问到全盘加密 &lt; 24 小时且会早于披露用零日；漏洞多次被绕过补丁 + 半数云实例未修凸显"补丁≠修复"盲区。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. TeamPCP 两名成员澳洲被捕（供应链投毒 Trivy，1000+ 组织）</h4>
+                    <p>澳联邦警察 8/27 在珀斯逮捕两名疑似 TeamPCP 成员，指控涵盖入侵、洗钱等；该组织专攻开源/CI 相邻工具投毒（含漏洞扫描器 Trivy），窃超 50 万凭据，目标涉 Mercor、LiteLLM、GitHub、OpenAI 乃至欧委会云，FBI 估计影响 1000+ 组织。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. 美国查封中国背景 QTFY 僵尸网络域名（瞄准 NASA/参议院）</h4>
+                    <p>FBI 查封由中国背景组织 QTFY（南京新久维网络科技）运营的大型僵尸网络关键域名，该网络瞄准 NASA 与参议院等目标，C2 域名硬编码于恶意软件中，查封后网络与控制服务器瘫痪。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. PostgreSQL CVE-2026-14669 公开 PoC（普通账号 RCE）</h4>
+                    <p>to_char() 的 TZ/TZtz 路径堆溢出（CWE-122），普通登录权限者用超长 POSIX 时区缩写即可触发，配合 ROP 以 postgres 系统账户执行任意命令；官方已在 14.24/15.19/16.15/17.11/18.5 修复，奇安信/360/比利时 CCB 已公开 PoC。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. VMware vCenter CVE-2026-59310 在野延续（361 IP/47 国）</h4>
+                    <p>疑似中国背景 APT 借 vCenter 路径遍历（9.8）部署后门、反向 SSH 与 Babuk 衍生勒索，QUIRSO 评估其或为"清痕"而非目的；已攻陷 361 个独立 IP、横跨 47 国，互联网暴露的 vCenter 仍是高危面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Microsoft 8 月补丁 421 CVE + Entra ID 69836（10.0 云身份）</h4>
+                    <p>Microsoft 8 月 Patch Tuesday 修复 421 个 CVE（含 1 已利用零日 + 3 披露零日）；最大关注点为 Entra ID CVE-2026-69836（CVSS 10.0 云身份层 RCE，被标记利用后微软又撤回其"在野"标识）——身份基础设施仍是攻防焦点。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 勒索 Week 34：物流供应链承压（海关经纪 + BitLocker LOLBin）</h4>
+                    <p>BlackNevas 勒索加拿大海关经纪商致跨境物流中断；另一起墨西哥物流 SME 遭原生 BitLocker 加密（Living-off-the-Land，规避 EDR 签名）锁定 5–6 台核心服务器，前期潜伏约三个月窃取云令牌与管理员凭据。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "UniFi 77537": [0.15, 1.00]
+    "NetScaler 8452": [0.85, 0.98]
+    "Gitea 60004": [0.90, 0.98]
+    "GitLab 18252": [0.30, 0.87]
+    "N-central 18577": [0.80, 0.81]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "边界/IoT设备" : 25
+    "漏洞通报/KEV" : 20
+    "开发者基础设施" : 18
+    "供应链勒索" : 20
+    "云身份/补丁" : 12
+    "执法行动" : 8
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年8月第5周网安事件
+    8月24日 : WebLogic 21962(10.0)入KEV
+    8月25日 : Gitea 60004入KEV(大限8/28)
+           : PostgreSQL 14669 PoC公开
+    8月26日 : Ubiquiti UniFi 22漏洞(三×10.0)
+           : GitLab 18252紧急补丁
+    8月26日 : CISA KEV六漏洞批次
+    8月27日 : TeamPCP两成员澳洲被捕
+           : 美查封QTFY僵尸网络域名
+    8月28日 : Gitea 60004联邦大限
+           : 本期日报
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">BeyondMachines</span>
+                        <a href="https://beyondmachines.net/event_details/ubiquiti-patches-22-vulnerabilities-in-unifi-ecosystem-including-three-cvss-10-0-flaws-i-h-1-7-g">Ubiquiti 修复 22 个 UniFi 漏洞含三枚 10.0</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityOnline</span>
+                        <a href="https://securityonline.info/unifi-command-injection-vulnerabilities/">UniFi CVE-2026-77537 命令注入（22 产品）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Protect.Computer</span>
+                        <a href="https://protect.computer/news/2026-08-26-ubiquiti-unifi-max-severity-patches">Ubiquiti 修补三枚满分 UniFi 漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安恒威胁情报</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=16441">CISA 新增六漏洞入 KEV（含 NetScaler 8452）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The IT Guys</span>
+                        <a href="https://theitguysfix.com/2026/08/27/cisa-six-kev-netscaler-sql-server-linux-ajaxpro">CISA 六漏洞 KEV（NetScaler/SQL/Linux/AjaxPro）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 总目录</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">已知被利用漏洞目录</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-8452">CVE-2026-8452（Citrix NetScaler）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberWorldOps</span>
+                        <a href="https://cyberworldops.eu/en/gitea-under-attack-critical-rce-exploited-for-cryptojacking-cisa">Gitea 60004 在野挖矿（CISA 大限 8/28）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix</span>
+                        <a href="https://aviatrix.ai/threat-research-center/critical-gitea-rce-cve-2026-60004-cryptojacking-2026">Gitea RCE 60004 加密货币挖矿分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Vulnerability-Lookup</span>
+                        <a href="https://cvepremium.circl.lu/known-exploited-vulnerabilities-catalog/96eebf87-b02d-4cdd-9c7f-6c5d0c932c3e">CVE-2026-60004 KEV 条目</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Gitea 官方</span>
+                        <a href="https://github.com/go-gitea/gitea/security/advisories/GHSA-rcr6-4jqh-j84m">GHSA-rcr6-4jqh-j84m 安全公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安恒威胁情报</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=16408">GitLab 紧急更新修复 CVE-2026-18252（8.7）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tenable</span>
+                        <a href="https://www.tenable.com/cve/CVE-2026-18252">CVE-2026-18252</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitLab 官方</span>
+                        <a href="https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-3-1-released/">补丁发布说明 19.3.1/19.2.5/19.1.7</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Record</span>
+                        <a href="https://therecord.media/china-hackers-ransomware-microsoft">Storm-1175 借 N-central 打供应链勒索</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Kobaran</span>
+                        <a href="https://www.kobaran.com/china-linked-hacking-group-weaponizes-n-central-flaw-in-new-ransomware-wave">Storm-1175 武器化 N-central 漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-18577">CVE-2026-18577（N-able N-central）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberRecaps</span>
+                        <a href="https://cyberrecaps.com/news/cybersecurity-news-august-27-2026">8/27 每日网安（TeamPCP 被捕 + QTFY 查封）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">奇安信</span>
+                        <a href="https://www.cnetsec.com/article/43900.html">PostgreSQL CVE-2026-14669 堆溢出 RCE</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PostgreSQL 官方</span>
+                        <a href="https://www.postgresql.org/support/security/CVE-2026-14669/">CVE-2026-14669 安全公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackWire</span>
+                        <a href="https://www.hackwire.news/news/weekly-recap-vmware-exploits-windows-0-day-mcp-attacks-browser-hijacks-and-more">VMware/vCenter/Windows 0day 周回顾</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rootshell Velma</span>
+                        <a href="https://www.rootshellsecurity.net?p=24269/">2026 年 8 月 KEV 报告（Entra 69836 等）</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年8月28日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
