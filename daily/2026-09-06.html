@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月6日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月6日 星期日</span>
+            <span class="edition-number">第 152 期 | 总第 152 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Chromium 85046在野RCE · Starlette 48710认绕 · PaperCut 81578/82078链RCE · Gitea 60004 · 内核53362提权在野
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+                        <div class="headline-section">
+                <h2 class="main-headline">Google Chromium V8 类型混淆漏洞 CVE-2026-85046：沙箱内 RCE 已入 CISA KEV（9/4）</h2>
+                <p class="sub-headline">攻击者借构造 HTML 页面在 Chromium 沙箱内执行任意代码，波及 Chrome / Edge / Opera 等全部 Chromium 内核浏览器；CISA 已列入 KEV（9/4），立即更新至已修复版本</p>
+            </div>
+<!-- ===== 文章卡片网格 ===== -->
+                        <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Google Chromium V8 类型混淆 RCE（CVE-2026-85046）—— 全平台浏览器入口沦陷（KEV 9/4，在野）</h3>
+                    <div class="article-meta">
+                        <span>KEV 9/4 · CWE-843 类型混淆</span>
+                        <span class="cvss-score">在野利用 · 影响 Chrome/Edge/Opera</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Chromium V8 引擎存在 <strong>类型混淆漏洞（CVE-2026-85046）</strong>，远程攻击者通过<strong>构造的 HTML 页面</strong>即可在浏览器沙箱内部执行任意代码。由于 Google Chrome、Microsoft Edge、Opera 等主流浏览器均基于 Chromium 内核，该漏洞影响面覆盖几乎所有桌面浏览器用户。CISA 已于 <strong>2026-09-04</strong> 将其纳入已知被利用漏洞（KEV）目录。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>类型混淆（CWE-843），触发于 V8 引擎对对象类型的错误处理</li>
+                            <li><strong>攻击方式：</strong>用户访问恶意网页即触发，攻击者在沙箱内获得代码执行，无需任何交互外的条件</li>
+                            <li><strong>影响范围：</strong>所有使用 Chromium 内核的浏览器（Chrome / Edge / Opera 等）；面向公众的 Web 是首要攻击面</li>
+                            <li><strong>后果：</strong>会话接管、凭据窃取、后续载荷投递与横向移动</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>浏览器是绝大多数网络攻击的第一入口，沙箱逃逸类漏洞在野 = 用户无感知被控</li>
+                            <li>已入 CISA KEV，说明存在真实在野利用，拖延更新即持续暴露</li>
+                            <li>波及面极广（全平台 Chromium 系），企业终端与个人用户均需优先处置</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">恶意 HTML 页面</span>
+                        <span class="flow-step critical">CVE-2026-85046 类型混淆</span>
+                        <span class="flow-step">沙箱内执行代码</span>
+                        <span class="flow-step critical">逃逸/提权</span>
+                        <span class="flow-step critical">接管会话/投递载荷</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Starlette HTTP 请求/响应走私（CVE-2026-48710，KEV 9/2）—— 认证绕过</h3>
+                    <div class="article-meta">
+                        <span>KEV 9/2 · CWE-444</span>
+                        <span class="cvss-score">可链 CVE-2026-42271</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Starlette 存在 <strong>HTTP 请求/响应走私漏洞（CVE-2026-48710）</strong>，攻击者可向 host 部分注入路径并前置到真实路径之前，当认证依赖重建 URL 的路径时导致<strong>认证绕过</strong>；官方指出可与 <strong>CVE-2026-42271</strong> 链式利用。</p>
+                        <p>Starlette 是 FastAPI 等大量 Python Web 框架的底层依赖，走私 + 认证绕过意味着众多 API 服务在不知情下处于可绕过鉴权状态，需升级 Starlette 并复核反向代理配置。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">PaperCut NG/MF 链式 RCE（CVE-2026-81578 + CVE-2026-82078，KEV 8/31）—— 未授权 RCE</h3>
+                    <div class="article-meta">
+                        <span>KEV 8/31 · CWE-306/470</span>
+                        <span class="cvss-score">双漏洞链式利用</span>
+                    </div>
+                    <div class="article-body">
+                        <p>PaperCut NG/MF 同时存在<strong>关键功能缺失认证（CVE-2026-81578）</strong>与<strong>不安全反射（CVE-2026-82078）</strong>：未授权攻击者可修改系统配置，并操纵参数在 PaperCut 服务进程安全上下文下执行应用 classpath 上的任意 Java 字节码。两漏洞<strong>可组合实现未授权远程代码执行</strong>。</p>
+                        <p>打印管理服务器位于内网高信任区且常被忽视维护，未授权 RCE 即内网支点，已被 CISA 列入 KEV，需立即升级并排查异常配置改动。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Gitea 代码注入（CVE-2026-60004，KEV 8/25）—— 自托管代码平台沦陷</h3>
+                    <div class="article-meta">
+                        <span>KEV 8/25 · CWE-94</span>
+                        <span class="cvss-score">写权限即可触发</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Gitea 存在 <strong>代码注入漏洞（CVE-2026-60004）</strong>，拥有仓库写权限的攻击者可通过向 <strong>diffpatch API</strong> 端点发送恶意 patch，植入可执行的 Git hook，并以 Gitea 服务账户身份执行 shell 命令。</p>
+                        <p>自托管代码平台是供应链核心环节，一旦被控即可篡改源码、注入后门、窃取 CI/CD 凭据；写权限门槛低，建议升级并收紧仓库写权限与 Webhook 配置。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Linux 内核 IPv6 提权（CVE-2026-53362，KEV 8/27）—— 多发行版受影响</h3>
+                    <div class="article-meta">
+                        <span>KEV 8/27 · CWE-269</span>
+                        <span class="cvss-score">影响 Suse/Red Hat 等</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Linux 内核 <strong>IPv6 网络子系统存在权限提升漏洞（CVE-2026-53362）</strong>，可借以提权；影响 Suse、Red Hat 及众多使用 Linux 的下游产品。</p>
+                        <p>内核提权是容器逃逸与持久化的基础一步，波及面广（多发行版/云镜像），需及时跟进各发行版内核补丁，优先修复暴露面较大的主机。</p>
+                    </div>
+                </article>
+            </div>
+
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+                        <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Citrix NetScaler ADC/Gateway 越界（CVE-2026-8452，KEV 8/26）</h4>
+                    <p>内存边界操作不当可致拒绝服务，边界设备可用性受损，建议及时更新固件并收敛管理面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. ownCloud 不当认证（CVE-2023-49105，KEV 8/27）</h4>
+                    <p>已知受害者用户名且无签名密钥时，攻击者可未授权访问、修改或删除任意文件，云盘数据直接暴露。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Microsoft SQL Server RCE（CVE-2019-1068，KEV 8/26）</h4>
+                    <p>可在数据库引擎服务账户上下文执行代码，老旧实例风险尤高，建议评估并加固。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. JFrog Artifactory 路径限制不当（CVE-2026-66384，KEV 8/27）</h4>
+                    <p>认证用户可越界写入预期 Docker 缓存路径之外，存在供应链投毒隐患，需收紧仓库权限。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Red Hat libuser/ABRT 本地提权（CVE-2015-3246/5287，KEV 8/26）</h4>
+                    <p>借竞态/符号链接攻击提权，相关产品可能已 EoL/EoS，建议迁移至受支持版本。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Ajax.NET Professional 反序列化（CVE-2021-23758，KEV 8/26）</h4>
+                    <p>经任意 .NET 类反序列化可致 RCE，产品可能已停服，建议停用并迁移。</p>
+                </div>
+            </div>
+
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+                        <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Chromium V8 85046": [0.95, 0.95]
+    "Starlette 48710": [0.85, 0.88]
+    "PaperCut 81578/82078": [0.90, 0.95]
+    "Gitea 60004": [0.80, 0.92]
+    "Linux 53362": [0.75, 0.90]
+    "Citrix 8452": [0.60, 0.80]
+    "ownCloud 49105": [0.70, 0.85]
+    "MS SQL 1068": [0.75, 0.88]
+    "JFrog 66384": [0.65, 0.82]
+    "libuser/ABRT": [0.55, 0.78]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "浏览器/客户端RCE": 25
+    "Web框架/API": 20
+    "企业应用RCE链": 25
+    "代码平台/供应链": 15
+    "操作系统/内核": 15
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Chromium V8 攻击链（CVE-2026-85046）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[攻击者构造恶意 HTML 页面] --> B{CVE-2026-85046 类型混淆}
+    B --> C[在 Chromium 沙箱内执行任意代码]
+    C --> D[沙箱逃逸 / 提权]
+    D --> E[接管浏览器会话 / 窃取凭据]
+    E --> F[投递载荷 / 横向移动]
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+                        <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月第1周网安事件
+    9月1日 : Manifold GitSpawn 披露(8缺陷/7代理)
+           : Avast PrettyPrague 零日PoC释出
+    9月2日 : CISA KEV 新增7漏洞(SonicWall/Kestra/LiteLLM/Sangoma/JFrog/Starlette)
+           : SonicWall SMA1000 双零日链确认在野
+    9月3日 : IXON VPN Client CVE-2026-75925(9.6) CISA ICS
+           : All-in-One WP Migration CVE-2026-19949(8.8) 300万站告警
+    9月4日 : CISA KEV 再增 Chromium V8 85046 在野
+           : Ivanti 8850 双零日链在野(头条)
+    9月5日 : GitLab 7822 / Confluence 7990 RCE
+           : PyPI投毒簇 / TP-Link 0day / F5 6610
+    9月6日 : 本周 CISA KEV 复盘: Chromium 85046 头条
+           : Starlette 48710 / PaperCut 链 / Gitea 60004 / Linux 53362
+                </div>
+            </div>
+
+
+                        <!-- ===== 出处链接 ===== -->
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录（CVE-2026-85046 / 48710 / 81578 / 82078 / 60004 / 53362）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV Catalog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-85046 Chromium V8（CVE.org）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-85046">Chromium V8 Type Confusion</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-48710 Starlette（CVE.org）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-48710">Starlette Smuggling</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-81578 / 82078 PaperCut（CVE.org）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-81578">PaperCut NG/MF 链</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-60004 Gitea（CVE.org）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-60004">Gitea Code Injection</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-53362 Linux Kernel（CVE.org）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-53362">Linux IPv6 PrivEsc</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Google Chrome 安全更新</span>
+                        <a href="https://chromereleases.googleblog.com/">Chrome Release Channel</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Starlette 安全公告（GitHub）</span>
+                        <a href="https://github.com/encode/starlette/security/advisories">Starlette Advisories</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PaperCut 安全公告</span>
+                        <a href="https://www.papercut.com/support/security-advisories/">PaperCut Security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Gitea 安全公告</span>
+                        <a href="https://docs.gitea.com/category/security">Gitea Docs Security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft MSRC（CVE-2019-1068）</span>
+                        <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2019-1068">SQL Server RCE</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Citrix NetScaler 安全公告（CVE-2026-8452）</span>
+                        <a href="https://www.citrix.com/downloads/security-updates/">Citrix Security Updates</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ownCloud 安全公告（CVE-2023-49105）</span>
+                        <a href="https://owncloud.com/security-advisories/">ownCloud Advisories</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">JFrog 安全公告（CVE-2026-66384）</span>
+                        <a href="https://jfrog.com/security/">JFrog Security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Red Hat 安全更新（CVE-2015-3246 / 5287）</span>
+                        <a href="https://access.redhat.com/security/security-updates/">Red Hat Security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA 官方 KEV 总说明</span>
+                        <a href="https://www.cisa.gov/news-events/alerts">CISA Alerts</a>
+                    </div>
+                </div>
+            </div>
+
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、漏洞描述等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月6日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
