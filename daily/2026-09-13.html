@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月13日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head><body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月13日 星期日</span>
+            <span class="edition-number">第 158 期 | 总第 158 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+                <div class="keywords-banner">
+            <strong>今日关键词：</strong>BlueMoon 0day链APT31 · FortiGate 25249 · MikroTik67277/86060 KEV · ShieldCrash · GitLab85706×10</div>
+
+
+                <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">BlueMoon 利用套件：Chrome V8 + Windows ALPC 零日链被 4 个国家级 APT 一周内复用（CVE-2026-85046 / 87491 / 85880）</h2>
+                <p class="sub-headline">Proofpoint 9/11 披露 BlueMoon 套件串联 Chrome V8 类型混淆（CVE-2026-85046）+ V8 沙箱逃逸（CVE-2026-87491）+ Windows ALPC 提权（CVE-2026-85880）；前两个为「补丁间隙」零日，APT31/TA412 自 8/28 起钓鱼投递，12 天内至少 4 个国家级集群原样复用，疑似 AI 辅助开发。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">BlueMoon 利用套件 — Chrome + Windows 零日链（头条）：APT31 等 4 集群 12 天内复用</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-85046 / 87491 / 85880 · V8 类型混淆 + 沙箱逃逸 + ALPC 提权</span>
+                        <span class="cvss-score">KEV · 三个均已修复</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Proofpoint 将这套被至少 4 个国家级 APT 采用的浏览器+系统利用链命名为 <strong>BlueMoon</strong>。它把三个漏洞串成完整链路：<strong>CVE-2026-85046</strong>（Chromium V8 类型混淆，可越 V8 沙箱读写堆内存）、<strong>CVE-2026-87491</strong>（V8 沙箱逃逸，覆写 WebAssembly 元数据执行 shellcode）、<strong>CVE-2026-85880</strong>（Windows ALPC 堆溢出本地提权，逃逸渲染进程拿 SYSTEM）。前两个 V8 漏洞在被利用时是「补丁间隙（patch-gap）」零日：上游 Chromium 已公开修复，但稳定版 Chrome/Edge 尚未合入，攻击者直接逆向公开补丁造链。</p>
+                        <p>首个使用者是<strong>中国背景 APT31 / TA412（JungleBamboo，紫光台风）</strong>，8/28 起经钓鱼邮件投递，目标含美国 NGO、矿业与大宗商品交易商；随后 UNK_LateNight（对美航空航天投 ShadowPad）、UNK_DoubleCheck（越南制造）、UNK_QuietRacket（印尼/新加坡政府金融）在 12 天内几乎原样复用同一套代码。工具链里发现详尽调试日志、markdown 交接文档与「请把完整 log 发回」注释，高度疑似 <strong>AI 辅助开发</strong>。</p>
+                        <p><strong>值得关注的原因：</strong>这是 2026 年首次出现「公开补丁→快速武器化→多国 APT 同日复用」的浏览器零日扩散模式；三个漏洞现均已修复并进入 CISA KEV，但已中招主机仍可能残留载荷与持久化。默认载荷只是 <code>curl</code> 下载执行木马（高检出信号），说明开发者优先抢在 9/3、9/8 Chrome 补丁前铺开。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">钓鱼邮件诱导访问</span>
+                        <span class="flow-step critical">V8 85046 类型混淆</span>
+                        <span class="flow-step">V8 87491 沙箱逃逸</span>
+                        <span class="flow-step critical">ALPC 85880 提权 SYSTEM</span>
+                        <span class="flow-step critical">curl 落地 Loader</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">FortiGate CVE-2025-25249 在野：PivotC2 RAT 把边界防火墙变内网支点（CVSS 9.8）</h3>
+                    <div class="article-meta">
+                        <span>CVE-2025-25249 · FortiOS/FortiSwitchManager cw_acd</span>
+                        <span class="cvss-score">CVSS 9.8 · KEV · 截止 9/12</span>
+                    </div>
+                    <div class="article-body">
+                        <p>FortiOS / FortiSwitchManager <code>cw_acd</code> 守护进程存在堆溢出（CWE-122/787），攻击者可借发往 <strong>UDP/5246 CAPWAP 控制端口</strong> 的特制包实现未认证 RCE。2026 年 1 月已由 Fortinet 修复，但 SOCRadar 确认 <strong>至少自 2026 年 7 月起在野利用</strong>，通过 <code>fortirun.bin</code> + Bash/Python 自动化反复扫描，<strong>目标超 3 万个 FortiGate IP，确认 178 台被植入 PivotC2</strong>。</p>
+                        <p>PivotC2 是专为 FortiGate 后渗透定制的 Node.js RAT：外连 TLS C2、交互式 shell、SOCKS5/HTTP 代理隧道、CIDR 扫描，并能<strong>解密设备配置与凭据</strong>（SSL-VPN、LDAP、无线 PSK、IPsec）。其 <code>--auto</code> 模式可自动收割配置、解密凭据并横向扫描内网。归因指向俄语背景、逐利型团伙，已造成两起美国机构全网入侵与数据外泄。修复至 FortiOS 7.6.4/7.4.9/7.2.12/7.0.18+，并限制 CAPWAP 暴露、轮换所有相关凭据。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">MikroTik RouterOS 双漏洞入 KEV（CVE-2026-67277 + 86060，截止日即今日 9/13）</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-67277 / 86060 · MikroTrick 链</span>
+                        <span class="cvss-score">CVSS 8.8 / 9.2 · 截止 9/13</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CERT Polska 命名的 <strong>MikroTrick</strong> 链含三洞，其中两个于 9/10 入 KEV、修复截止日正是 <strong>2026-09-13</strong>：<strong>CVE-2026-67277</strong>（CWE-306 缺失认证，CVSS 8.8）<code>btest</code> 服务可被未授权连接拖入登录后状态，泄露内核内存或令路由重启；<strong>CVE-2026-86060</strong>（CWE-88 参数注入，CVSS 9.2）通过构造用户名篡改策略掩码提权至管理员；外加 <strong>CVE-2026-67276</strong>（CWE-347 签名校验缺陷，CVSS 9.2，未入 KEV）仅匹配 RSA 模数即可伪造密钥登录，与 86060 组成完整链（需 7.9+）。</p>
+                        <p>受影响 6.x &lt; 6.49.21、7.x &lt; 7.23.4/7.24.2 及 7.25 beta3 之前。加拿大网络安全中心（AL26-020）9/10 警告 SSH 公网暴露设备风险最高。6.x 仅 6.49.21 一个修复线，更老的 6.48 等已 EOL 无补丁。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">微软 Defender 第 11 个零日 ShieldCrash（Nightmare Eclipse，9/11 披露）</h3>
+                    <div class="article-meta">
+                        <span>ShieldCrash · 绕过 ShieldBreak CVE-2026-69414</span>
+                        <span class="cvss-score">无 CVE · 9/11 披露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>知名零日猎人 Nightmare Eclipse（又名 MSNightmare）9/11 再发 <strong>ShieldCrash</strong> 概念验证，据称可绕过 9 月刚修的 ShieldBreak（CVE-2026-69414）补丁，以 <strong>SYSTEM 权限读取任意文件</strong>（暂不支持任意写入或完整 SYSTEM shell），在已打 9 月补丁的 Windows 10/11/Server 上仍有效。它延续 RoguePlanet（CVE-2026-50656）→ ShieldBreak → ShieldCrash 的「补丁绕过」链路，是该研究员第 <strong>11 个</strong>微软零日。</p>
+                        <p>目标已从 Defender/BitLocker 扩展到 CrowdStrike Falcon（FalconFlank）、Avast（PrettyPrague）、NVIDIA（GreenSection）、Kaspersky（HardBreacher）。微软尚未回应修复时间。企业应将「安全 agent 派生异常 SYSTEM 进程/文件读取」纳入检测。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GitLab 路径遍历未授权读文件 CVE-2026-85706（CVSS 10.0，已入 KEV 在野）</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-85706 · GitLab CE/EE &lt; 19.1.8/19.2.6/19.3.2</span>
+                        <span class="cvss-score">CVSS 10.0 · KEV 在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GitLab CE/EE 在 18.7 至 19.1.8/19.2.6/19.3.2 之前，因 commits API 的<strong>路径限制缺失 + 认证强制缺失</strong>，未认证用户可读服务器任意文件。CISA 已确认在野并列入 KEV，多国 CERT 发布紧急通告；同批 GitLab EE 还修了 Duo Chat 凭据泄露（CVE-2026-87719，CVSS 9.9）。</p>
+                        <p>GitLab 常承载源码与 CI 密钥，未授权文件读取可直接外泄 <code>config/secrets</code>、CI 变量与私钥；公网暴露实例应立即升级并排查异常文件读取日志。</p>
+                    </div>
+                </article>
+            </div>
+
+<!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Citrix NetScaler CVE-2026-19490（CVSS 9.3 v4，KEV，截止 9/12）</h4>
+                    <p>Gateway/AAA vserver 认证绕过（CWE-288），无 workaround；Previdian 蜜罐自 9/3 起记录 56 次利用尝试、9/8 单日 36 次。升级至 14.1-73.32 / 13.1-63.21+。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Progress Chef Automate CVE-2026-80462（CVSS 10.0）</h4>
+                    <p>API 网关/身份校验绕过致未认证提权，管理大规模基础设施的实例风险极高，已有可用利用；Chef Automate 控全域配置，失陷即失整个机群管理权。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Plesk Backup Manager CVE-2026-68487（CVSS 9.9）+ CVE-2026-68488</h4>
+                    <p>认证客户可借路径遍历以 root 写任意文件，与 TOCTOU 提权（68488）叠加；共享主机环境下任意客户可升至 root，影响数百万托管站点。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. WordPress Everest Forms CVE-2026-62103（CVSS 9.8）</h4>
+                    <p>≤3.6.0 未认证 PHP 对象注入 → 任意代码执行，流行表单插件、利用门槛极低；WordPress 插件通常在披露数小时内被大规模利用。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. AI/ML 漏洞浪潮：OpenNLP 82617×10.0 + Mistral Vibe 87988×10.0</h4>
+                    <p>Apache OpenNLP 与 Mistral AI Mistral Vibe 同日披露 CVSS 10.0 漏洞，Mistral Vibe 已有公开利用；AI 编码/推理链路成为新攻击面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 勒索态势（Ransomware.live 9/12）：24 名受害者</h4>
+                    <p>krybit（12）、medusalocker（4）领先；制造业/专业技术服务持续承压，边缘设备漏洞（Citrix/Fortinet/MikroTik）仍是主要入口。</p>
+                </div>
+            </div>
+
+<!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-09-13 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "BlueMoon 85046/87491/85880": [0.92, 0.98]
+    "FortiGate 25249×9.8 PivotC2": [0.95, 0.96]
+    "MikroTik 67277/86060 KEV": [0.88, 0.93]
+    "GitLab 85706×10.0 在野": [0.90, 0.99]
+    "Citrix 19490×9.3 KEV": [0.85, 0.93]
+    "Chef 80462×10.0": [0.78, 0.95]
+    "Plesk 68487×9.9": [0.70, 0.94]
+    "Defender ShieldCrash 0day": [0.82, 0.90]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-09-13 安全事件类型分布
+    "浏览器/系统零日利用链 (BlueMoon)": 22
+    "边界设备/防火墙管理面 RCE": 22
+    "路由器/网络设备提权 (MikroTrick)": 14
+    "代码托管/CMS/企业应用 RCE": 18
+    "安全产品自身 0day 绕过": 12
+    "AI/ML 供应链漏洞": 12
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">BlueMoon 攻击链（Chrome + Windows 零日链）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[钓鱼邮件诱导访问攻击者网站] --> B{V8 类型混淆 CVE-2026-85046}
+    B --> C[V8 沙箱逃逸 CVE-2026-87491]
+    C --> D[指纹识别 Windows 主机]
+    D --> E{Windows ALPC 提权 CVE-2026-85880}
+    E --> F[渲染进程提权至 SYSTEM]
+    F --> G[注入父进程执行 curl 下载木马]
+    G --> H[GemStone/ShadowPad/Loader 落地]
+                    </div>
+                </div>
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月网安事件时间线
+    9月1日 : Manifold GitSpawn / Avast PrettyPrague 0day PoC
+    9月2日 : CISA KEV 增7漏洞 SonicWall/Kestra/LiteLLM/Starlette
+    9月3日 : FalconFlank 0day PoC 公开(EDR SYSTEM)
+    9月4日 : Chromium V8 85046 入 KEV / StyleSmuggler 首批利用
+    9月5日 : Ivanti 8850 双零日链在野 / AutoAgent+Cua 86124/86121 披露
+    9月6日 : N-central 86218×10.0 / Elementor 32475 在野 / MikroTik 6漏洞
+    9月7日 : Adobe CVE-2026-75650(10.0)热补丁 / knowns 簇4 CVE / YouTrack接管
+    9月8日 : Adobe AEM 19232×9.9 / SAP OVERPASS 44756×10.0 / Hub86480 / FreeIPA76578 / Ivanti ITSM 8漏洞簇 / ColdFusion 48273 / cPanel 67401
+    9月9日 : 微软9月补丁星期二 972+CVE·2在野零日·多枚9.8 RCE / Chrome 87491在野 / Google ADK 79696×10.0 / Adobe Campaign 82004×10.0 / Perforce 85978×10.0 / ScreenConnect 84869×9.9 / Cisco FMC 20079入KEV
+    9月10日 : F5 BIG-IP APM 内存webshell / ShieldCrash Defender绕过PoC / Forgejo 89094×9.9 / npm toml 63376披露 / CISA KEV 增 Citrix19490·Fortinet25249·MikroTik67277/86060(截止9/13)
+    9月11日 : 本期头条 BlueMoon套件(APT31等4集群复用Chrome+Win零日链) / GitLab 85706×10.0入KEV / Chef 80462×10.0 / Plesk 68487×9.9 / Everest 62103×9.8 / Defender ShieldCrash 0day
+    9月13日 : MikroTik67277/86060 KEV大限今日 · FortiGate25249 PivotC2(178台)·Citrix19490 KEV到期 · 本期汇总
+                </div>
+            </div>
+
+<!-- ===== 出处链接 ===== -->            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Proofpoint — Once in a BlueMoon: Multiple State-Aligned Threat Actors Rapidly Adopt Novel Exploit Chain</span>
+                        <a href="https://www.proofpoint.com/us/blog/threat-insight/once-bluemoon-multiple-state-aligned-threat-actors-rapidly-adopt-novel-exploit">https://www.proofpoint.com/us/blog/threat-insight/once-bluemoon-multiple-state-aligned-threat-actors-rapidly-adopt-novel-exploit</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Affairs — Four Nation-State Actors Used the Same Chrome Zero-Day Exploit Kit Within 12 Days</span>
+                        <a href="https://securityaffairs.com/198783/apt/four-nation-state-actors-used-the-same-chrome-zero-day-exploit-kit-within-12-days.html">https://securityaffairs.com/198783/apt/four-nation-state-actors-used-the-same-chrome-zero-day-exploit-kit-within-12-days.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV — Chrome V8 / Windows ALPC / Citrix / Fortinet / MikroTik 条目</span>
+                        <a href="https://www.cisa.gov/kev">https://www.cisa.gov/kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-85046（Chrome V8 类型混淆）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-85046">https://www.cve.org/CVERecord?id=CVE-2026-85046</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-87491（Chrome V8 沙箱逃逸）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-87491">https://www.cve.org/CVERecord?id=CVE-2026-87491</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-85880（Windows ALPC 提权）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-85880">https://www.cve.org/CVERecord?id=CVE-2026-85880</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SOCRadar — CVE-2025-25249 Exploitation Delivers PivotC2, a FortiGate Post-Exploitation RAT</span>
+                        <a href="https://socradar.io/blog/cve-2025-25249-pivotc2-fortigate-rat">https://socradar.io/blog/cve-2025-25249-pivotc2-fortigate-rat</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Fortinet PSIRT — FG-IR-25-084（CVE-2025-25249）</span>
+                        <a href="https://fortiguard.fortinet.com/psirt/FG-IR-25-084">https://fortiguard.fortinet.com/psirt/FG-IR-25-084</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">加拿大网络安全中心 — AL26-020 Vulnerabilities Impacting MikroTik RouterOS</span>
+                        <a href="https://cyber.gc.ca/en/alerts-advisories/al26-020-vulnerabilities-impacting-mikrotik-routeros-cve-2026-67276-cve-2026-67277-cve-2026-86060">https://cyber.gc.ca/en/alerts-advisories/al26-020-vulnerabilities-impacting-mikrotik-routeros-cve-2026-67276-cve-2026-67277-cve-2026-86060</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MikroTik 官方安全公告（September 2026 vulnerability）</span>
+                        <a href="https://mikrotik.com/supportsec/september-2026-vulnerability/">https://mikrotik.com/supportsec/september-2026-vulnerability/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安恒威胁情报中心 — 微软零日漏洞猎手再发 Defender 新漏洞 ShieldCrash（2026-09-11）</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=16547">https://ti.dbappsecurity.com.cn/security-info/bulletin?id=16547</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyderes Howler Cell — Nightmare-Eclipse Zero-Days（FalconFlank/GreenSection/PrettyPrague/HardBreacher）</span>
+                        <a href="https://www.cyderes.com/howler-cell/nightmare-eclipse-zero-days-crowdstrike-nvidia-avast-kaspersky">https://www.cyderes.com/howler-cell/nightmare-eclipse-zero-days-crowdstrike-nvidia-avast-kaspersky</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitLab — Patch Release（CVE-2026-85706 路径遍历，在野）</span>
+                        <a href="https://about.gitlab.com/releases/2026/09/10/patch-release/">https://about.gitlab.com/releases/2026/09/10/patch-release/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global Daily Threat Intelligence Digest（2026-09-12，含 Chef 80462 / Plesk 68487 / Everest 62103 / OpenNLP 82617 / Mistral Vibe 87988）</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-09-12">https://www.enigma-global.com/blog/daily-digest-2026-09-12</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Citrix CTX696939 — CVE-2026-19490 NetScaler ADC/Gateway 认证绕过</span>
+                        <a href="https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX696939">https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX696939</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE Brief（2026-09-12，WordPress/OpenNLP/Mistral 批量严重披露）</span>
+                        <a href="https://cvebrief.com/archive/2026/09/12">https://cvebrief.com/archive/2026/09/12</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ransomware.live — 2026-09-12 受害者态势（krybit / medusalocker 领先）</span>
+                        <a href="https://ransomware.live/">https://ransomware.live/</a>
+                    </div>
+                </div>
+            </div>
+        </div><footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、漏洞描述等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月13日
+            </p>
+        </footer>
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
