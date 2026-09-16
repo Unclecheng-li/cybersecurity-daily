@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月16日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head><body>
+                        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月16日 星期三</span>
+            <span class="edition-number">第 161 期 | 总第 161 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+                        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Apple261漏洞iOS27金门27·Angular88060+88056 SSRF·XSS·Chrome153批量CVE·Marimo39987 8秒RCE·WSO219515命令注入</div>
+
+
+
+                <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Apple iOS 27 / macOS Golden Gate 27 创纪录单次修复 261 个 CVE：史上最大补丁周期，10 个漏洞由 AI 直接发现（无在野标记）</h2>
+                <p class="sub-headline">Apple 于 9/14 一口气发布 8 条产品线更新，内核级修复密集；虽暂无在野利用，细节公开即打开攻击窗口。企业 fleet 需同日内 MDM 推送，否则攻击者同样在用 AI 复刻利用。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Apple iOS 27 / macOS Golden Gate 27 — 创纪录 261 CVE 批量修复（头条）</h3>
+                    <div class="article-meta">
+                        <span>Apple 9/14 八产品线更新 · 内核级密集</span>
+                        <span class="cvss-score">261+ CVE · 最高 7.5 · 无在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Apple <strong>2026-09-14</strong> 一次性发布 iOS 27、iPadOS 27、macOS Golden Gate 27 及配套 5 个版本，<strong>修复超过 261 个 CVE</strong>，为苹果史上最大单次补丁周期。iOS 27 约 <strong>126</strong> CVE（20 个内核），macOS 金门 27 达 <strong>210</strong> CVE（内核 33、CUPS 10、SMB 9、WebDAV 4），Tahoe 26.7 另有 153 CVE。</p>
+                        <p>关键漏洞：CoreMedia <strong>CVE-2026-64752</strong>（恶意图片即攻陷 iPhone，Apple 直接删代码）、CUPS <strong>CVE-2026-43692</strong>（远程 RCE）/ CVE-2026-64790（提权）、SMB <strong>CVE-2026-43690</strong>（内核内存读）。已核实最高 CVSS 仅 <strong>7.5</strong>，Apple 与 SANS ISC 均未标记在野。</p>
+                        <p><strong>值得关注：</strong>内核级修复密集，企业需<strong>同日内 MDM 推送</strong>（Jamf：这是内核版而非浏览器版）；本次 <strong>10</strong> 个漏洞由 AI（Claude/Anthropic、Nvidia AI Red Team）直接发现，<strong>AI 辅助漏洞狩猎进入主流</strong>。细节公开即打开攻击窗口。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">9/14 八产品线更新</span>
+                        <span class="flow-step critical">261+ CVE 内核密集</span>
+                        <span class="flow-step">CUPS/SMB 高危组件</span>
+                        <span class="flow-step critical">需同日 MDM 推送</span>
+                        <span class="flow-step critical">否则 AI 辅助利用</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Angular SSR 双高危 CVE-2026-88060（XSS）+ CVE-2026-88056（SSRF/凭据泄露）</h3>
+                    <div class="article-meta">
+                        <span>@angular/platform-server · CWE-79 / CWE-918</span>
+                        <span class="cvss-score">CVSS 8.6 · 修复 20.3.30/21.2.22/22.1.4</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Angular 服务端渲染（<strong>@angular/platform-server</strong>）两枚高危，CVSS 4.0 均 <strong>8.6</strong>，9/10 披露、修复版本 <strong>20.3.30 / 21.2.22 / 22.1.4</strong>。</p>
+                        <p><strong>CVE-2026-88060</strong>：SSR 序列化时 <code>noscript</code>/<code>iframe</code> 等 fallback raw-content 元素内未转义用户内容 → <strong>XSS</strong>；<strong>CVE-2026-88056</strong>：URL 解析对 Unicode 空白（U+00A0/U+FEFF）的 <code>trim()</code> 差异绕过同源校验 → <strong>SSRF 并泄露 Authorization 等后端凭据</strong>。Renderer2 命令式 DOM 构造无条件受影响。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Google Chrome 153.0.8010.47 批量修复约 42 个 CVE</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-91708 ~ 91749 · ServiceWorker / V8 / PDF</span>
+                        <span class="cvss-score">多 High · 含沙箱外 UAF</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Chrome 153.0.8010.47 一次性修复约 <strong>42</strong> 个 CVE（CVE-2026-91708~91749）。含 ServiceWorker 类型混淆 <strong>CVE-2026-91715</strong>（8.8）、V8 UAF <strong>CVE-2026-91745</strong>、PDF UAF <strong>CVE-2026-91737</strong>。</p>
+                        <p>尤为关键的是两个<strong>沙箱外</strong> UAF：DigitalCredentials <strong>CVE-2026-91729</strong> 与 Auth <strong>CVE-2026-91716</strong> 可在沙箱外执行代码。浏览器是首要客户端攻击面，Chrome / Edge / Opera 需同步升级。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Marimo CVE-2026-39987（9.8）预认证 RCE → 8 秒拿下 SSH 堡垒机</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-39987 · 终端 WebSocket 端点缺鉴权</span>
+                        <span class="cvss-score">CVSS 9.8 · CISA KEV（4月起）</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Marimo notebook 的<strong>终端 WebSocket 端点跳过鉴权</strong>（其他端点有），任意连接者即获 Marimo 进程用户的交互式 shell。Sysdig 观测到<strong>人类攻击者 8 秒</strong>从 RCE 跳到 SSH 堡垒机，从进程环境/Redis 拖走云凭据，并用 AWS Secrets Manager 私钥认证；自 <strong>2026-04</strong> 已在 <strong>CISA KEV</strong>。</p>
+                        <p>Marimo 常跑在 ML 训练管线、持云凭据；单点未授权 shell 直接变云账号沦陷。修复：升级 <strong>0.23.0</strong>，并对终端 WS 端点加鉴权或禁用。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中危</span>
+                    <h3 class="article-title">WSO2 Integrator MI VS Code 扩展 CVE-2026-19515（OS 命令注入）</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-19515 · CWE-78 · workspace trust</span>
+                        <span class="cvss-score">CVSS 7.0 · 开发者工具链</span>
+                    </div>
+                    <div class="article-body">
+                        <p>WSO2 Integrator MI 的 <strong>VS Code 扩展</strong>在处理不可信 Micro Integrator 项目时，单元测试执行流可注入任意 OS 命令（CWE-78）；需用户授予 <strong>workspace trust</strong> 后触发（CVSS 3.1 <strong>7.0</strong>）。</p>
+                        <p>开发者工具链是供应链入口，CI/开发工作站凭据暴露风险；升级扩展并谨慎授予 workspace trust。</p>
+                    </div>
+                </article>
+            </div>
+
+<!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. AWS TEAM 86830 + Kiro IDE 89332</h4>
+                    <p>AWS TEAM 样本方案 CVE-2026-86830（认证用户获取非预期临时提权）+ Kiro IDE CVE-2026-89332（恶意仓库重定向 Kiro Powers registry 请求、窃取工作区数据）；升级 TEAM &lt;1.5.1、Kiro IDE &lt;0.8.135。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. WordPress CVE-2026-65640 — Author+ RCE</h4>
+                    <p>经 Imagick + Ghostscript 恶意文件上传触发的作者级 RCE（需作者权限 + 图像处理路径），暴露站点应升级至当前维护版本。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. ShinyHunters 攻破 Odido，约 600 万客户数据泄露</h4>
+                    <p>典型大规模数据泄露事件，需关注凭据重置与钓鱼次生风险，受影响用户应警惕针对性社工。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. CISA KEV 9/16 截止双漏洞</h4>
+                    <p>BerriAI LiteLLM CVE-2026-59822（8.8，MCP 认证绕过）与 Kludex Starlette CVE-2026-48710（HTTP 走私）今日处置大限，联邦机构须完成修复。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. "漏洞潮"(vulnpocalypse) 趋势确立</h4>
+                    <p>Apple 本次 10 个漏洞由 AI（Claude/Anthropic 协同 Calif、Nvidia AI Red Team）直接发现，AI 辅助漏洞狩猎进入主流，攻击方同样在用 AI。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Chrome 153 Medium 批次</h4>
+                    <p>同步修复 Compositing 整数溢出 CVE-2026-91746、WebAppInstalls 竞态 UI 欺骗 CVE-2026-91723、Skia 未初始化 CVE-2026-91740 等中危项。</p>
+                </div>
+            </div>
+
+<!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-09-16 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Apple261 CVE iOS27/金门27": [0.80, 0.92]
+    "Angular88060/88056 SSRF·XSS": [0.70, 0.78]
+    "Chrome153批量CVE(含沙箱外UAF)": [0.78, 0.85]
+    "Marimo39987预认证RCE->堡垒机": [0.82, 0.92]
+    "WSO219515 VS Code命令注入": [0.55, 0.70]
+    "AWS TEAM86830/Kiro89332": [0.50, 0.65]
+    "WordPress65640 Author RCE": [0.60, 0.72]
+    "Odido 6M数据泄露": [0.45, 0.60]
+    "LiteLLM59822/Starlette48710 KEV大限": [0.72, 0.75]
+    "AI漏洞潮(10 AI发现)": [0.55, 0.68]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-09-16 安全事件类型分布
+    "OS/客户端批量补丁 (Apple 261 CVE)": 26
+    "Web框架 SSR XSS/SSRF (Angular)": 16
+    "浏览器批量CVE (Chrome 153)": 18
+    "AI/数据科学平台 RCE (Marimo)": 14
+    "开发者工具链注入 (WSO2 VS Code)": 12
+    "云/数据泄露与KEV大限 (AWS/Odido/LiteLLM)": 14
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Apple 261 CVE 批量修复风险链（披露 → 暴露）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[Apple 9/14 发布 iOS27/macOS金门27 等8条产品线] --> B[单次修复 261+ CVE, 内核级密集]
+    B --> C[高危组件: 内核33·CUPS10含RCE·SMB9·WebDAV4]
+    C --> D{企业设备暴露面}
+    D --> E[需同日内 MDM 推送补丁]
+    E --> F[否则攻击者 AI 辅助利用公开细节]
+    F --> G[内核级/云凭据/持久化风险]
+                    </div>
+                </div>
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月网安事件时间线
+    9月1日 : Manifold GitSpawn / Avast PrettyPrague 0day PoC
+    9月2日 : CISA KEV 增7漏洞 SonicWall/Kestra/LiteLLM/Starlette
+    9月3日 : FalconFlank 0day PoC 公开(EDR SYSTEM)
+    9月4日 : Chromium V8 85046 入 KEV / StyleSmuggler 首批利用
+    9月5日 : Ivanti 8850 双零日链在野 / AutoAgent+Cua 86124/86121 披露
+    9月6日 : N-central 86218×10.0 / Elementor 32475 在野 / MikroTik 6漏洞
+    9月7日 : Adobe CVE-2026-75650(10.0)热补丁 / knowns 簇4 CVE / YouTrack接管
+    9月8日 : Adobe AEM 19232×9.9 / SAP OVERPASS 44756×10.0 / Hub86480 / FreeIPA76578 / Ivanti ITSM 8漏洞簇 / ColdFusion 48273 / cPanel 67401
+    9月9日 : 微软9月补丁星期二 972+CVE·2在野零日·多枚9.8 RCE / Chrome 87491在野 / Google ADK 79696×10.0 / Adobe Campaign 82004×10.0 / Perforce 85978×10.0 / ScreenConnect 84869×9.9 / Cisco FMC 20079入KEV
+    9月10日 : F5 BIG-IP APM 内存webshell / ShieldCrash Defender绕过PoC / Forgejo 89094×9.9 / npm toml 63376披露 / CISA KEV 增 Citrix19490·Fortinet25249·MikroTik67277/86060(截止9/13)
+    9月11日 : BlueMoon套件(APT31等4集群复用Chrome+Win零日链) / GitLab 85706×10.0入KEV / Chef 80462×10.0 / Plesk 68487×9.9 / Everest 62103×9.8 / Defender ShieldCrash 0day
+    9月13日 : MikroTrik67277/86060 KEV大限 · FortiGate25249 PivotC2(178台)·Citrix19490 KEV到期
+    9月14日 : Exchange62911×22k曝露PoC · Rails66066×9.5在野(KindaRails2Shell) · Anthropic蒸馏APT29报告 · JFrog42016链后门 · EU CRA 9/11生效
+    9月15日 : Cisco76461×9.8 SEG KEV root RCE · Linux内核ZDI 22项 · Vite39364云凭据窃取 · 搜狗51990一键RCE · macOS Tahoe 153漏洞
+    9月16日 : Apple261 CVE创纪录(iOS27/金门27) · Angular88060/88056 SSRF·XSS · Chrome153批量CVE · Marimo39987 8秒RCE · WSO219515注入
+                </div>
+            </div>
+
+<!-- ===== 出处链接 ===== -->            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Yahoo Tech / SecurityWeek — Apple Patches Record 261 CVEs in iOS 27 and macOS Golden Gate 27</span>
+                        <a href="https://tech.yahoo.com/cybersecurity/articles/apple-patches-record-261-cves-191702220.html">https://tech.yahoo.com/cybersecurity/articles/apple-patches-record-261-cves-191702220.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Day News — The vulnpocalypse rains iBugs down on Apple (record patches, AI-found bugs)</span>
+                        <a href="https://www.zeroday.news/article/vulnpocalypse-rains-ibugs-down-apple-record-setting">https://www.zeroday.news/article/vulnpocalypse-rains-ibugs-down-apple-record-setting</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iThinkDifferent — iOS 27 and macOS Golden Gate 27 Patch 336 Security Vulnerabilities</span>
+                        <a href="https://www.ithinkdiff.com/ios-27-and-macos-golden-gate-27-patch-336-security-vulnerabilities/">https://www.ithinkdiff.com/ios-27-and-macos-golden-gate-27-patch-336-security-vulnerabilities/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-64752（CoreMedia）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-64752">https://www.cve.org/CVERecord?id=CVE-2026-64752</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory GHSA-v3p8-whq6-r5jg — Angular SSR XSS CVE-2026-88060</span>
+                        <a href="https://github.com/advisories/GHSA-v3p8-whq6-r5jg">https://github.com/advisories/GHSA-v3p8-whq6-r5jg</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory GHSA-f6mr-pjwc-34m4 — Angular SSRF / credential leak CVE-2026-88056</span>
+                        <a href="https://github.com/advisories/ghsa-f6mr-pjwc-34m4">https://github.com/advisories/ghsa-f6mr-pjwc-34m4</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Google Chrome Releases — Stable Channel Update for Desktop (153.0.8010.47)</span>
+                        <a href="https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0541751186.html">https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0541751186.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-91715（Chrome ServiceWorker 类型混淆）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-91715">https://www.cve.org/CVERecord?id=CVE-2026-91715</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberRecaps — Marimo CVE-2026-39987 pre-auth RCE, 8-second pivot to SSH bastion</span>
+                        <a href="https://cyberrecaps.com/news/cybersecurity-news-september-15-2026">https://cyberrecaps.com/news/cybersecurity-news-september-15-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-39987（Marimo）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-39987">https://www.cve.org/CVERecord?id=CVE-2026-39987</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WSO2 Security Advisory WSO2-2026-5854 — CVE-2026-19515 (Integrator MI VS Code extension)</span>
+                        <a href="https://security.docs.wso2.com/en/latest/security-announcements/security-advisories/2026/WSO2-2026-5854/">https://security.docs.wso2.com/en/latest/security-announcements/security-advisories/2026/WSO2-2026-5854/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zinbiel's Tech Blog — Daily Security & Vulnerability Brief 2026-09-15 (AWS TEAM 86830 / Kiro 89332 / WordPress 65640)</span>
+                        <a href="https://zinbiel.net/daily-security-vulnerability-brief-2026-09-15">https://zinbiel.net/daily-security-vulnerability-brief-2026-09-15</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV — Known Exploited Vulnerabilities Catalog（LiteLLM 59822 / Starlette 48710 截止 9/16）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HKCERT — Google Chrome Multiple Vulnerabilities (CVE-2026-91708~91749)</span>
+                        <a href="https://www.hkcert.org/security-bulletin/google-chrome-multiple-vulnerabilities_20260916">https://www.hkcert.org/security-bulletin/google-chrome-multiple-vulnerabilities_20260916</a>
+                    </div>
+                </div>
+            </div>
+        </div><footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、漏洞描述等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月16日
+            </p>
+        </footer>
+    </div>
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
