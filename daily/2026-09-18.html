@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月18日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+                        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月18日 星期五</span>
+            <span class="edition-number">第 163 期 | 总第 163 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+                        <div class="keywords-banner">
+            <strong>今日关键词：</strong>vm2沙箱逃逸92939/92953/92955×10·WSO2API5430×10在野·Issabel32232未授权RCE·Dell70416×10反序列化·Brevo供应链10万+站</div>
+
+
+
+                <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">vm2 Node.js 沙箱「单日三连逃逸」：CVE-2026-92939/92953/92955 同日披露，CVSS 最高 10.0，宿主任意代码执行</h2>
+                <p class="sub-headline">2026-09-17，广泛用于 AI agent 沙箱、插件系统与在线代码执行平台的 Node.js 隔离库 vm2 同日披露多枚严重漏洞；攻击者仅需 crypto 内建权限或原型污染原语即可逃逸沙箱、在宿主进程执行原生代码，影响所有未升级实例。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">vm2 沙箱「单日三连逃逸」CVE-2026-92939 / 92953 / 92955：CVSS 最高 10.0，宿主原生代码执行（头条）</h3>
+                    <div class="article-meta">
+                        <span>vm2 2026-09-17 同日披露 · CWE-114/913</span>
+                        <span class="cvss-score">CVSS 10.0 / 9.9 / 9.4 · 影响 ≤3.11.7</span>
+                    </div>
+                    <div class="article-body">
+                        <p>vm2 是 Node.js 生态中被大量用于「在隔离环境执行不可信 JS」的库，AI agent 沙箱、插件运行时、在线代码演练场均依赖其做进程级隔离。<strong>2026-09-17</strong>，该项目同日披露多枚严重漏洞：</p>
+                        <p><strong>CVE-2026-92939（CVSS 9.4 / 9.9）</strong>：3.11.3–3.11.6 在允许 crypto 内建时，把宿主 Node.js crypto 模块以只读代理暴露给沙箱；攻击者调用 <code>crypto.setEngine()</code> 指向自带的原生库，OpenSSL 加载该库时构造函数即在宿主进程执行原生代码（CWE-114）。<strong>CVE-2026-92953（CVSS 10.0）</strong>：3.11.0–3.11.7 未保护宿主 TypedArray / ArrayBuffer 原型，攻击者经原型链修改宿主 Uint8Array.prototype，VM.run() 返回后宿主创建的 typed array 即携带攻击者可控属性（CWE-913）。<strong>CVE-2026-92955（CVSS 10.0）</strong>：3.11.0–3.11.7 经 console._stdout/_stderr 拿到宿主 __proto__，覆写 EventEmitter.prototype.emit 触发进程上下文代码执行。</p>
+                        <p><strong>值得关注：</strong>三枚漏洞攻击门槛极低（无需 fs/process/child_process 等权限），只需 crypto 内建或原型污染原语即可逃逸；任何把 vm2 暴露到网络的平台（尤其是 AI 编码/沙箱产品）应立即升级到 <strong>3.11.8</strong>。vm2 历史上多次被逃逸，本次「单日三连」说明该隔离模型已近不可维护。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">9/17 同日披露 3+ 枚严重</span>
+                        <span class="flow-step critical">crypto/原型污染原语</span>
+                        <span class="flow-step">逃逸 vm2 沙箱</span>
+                        <span class="flow-step critical">宿主进程原生代码执行</span>
+                        <span class="flow-step critical">AI 沙箱/插件平台沦陷</span>
+                        <span class="flow-step critical">升级 3.11.8</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">WSO2 API Manager CVE-2026-5430（CVSS 10.0）JWT 算法混淆，伪造令牌接管管理员，已在野</h3>
+                    <div class="article-meta">
+                        <span>WSO2-2026-5328 · WatchTowr 捕获在野</span>
+                        <span class="cvss-score">CVSS 10.0 · 4.1.0–4.6.0 · 公开 PoC 9/16</span>
+                    </div>
+                    <div class="article-body">
+                        <p>WSO2 API Manager 等产品的 JWT 认证机制未正确限制签名校验算法，攻击者可构造使用不受支持算法（如 <code>none</code> 或弱算法）签名的 JWT，被平台错误校验通过，从而<strong>未授权访问并完整接管管理员账户</strong>（CWE-347）。该漏洞 4 月已由 WSO2 修复，但 <strong>WatchTowr 于 2026-09-13</strong> 在全球蜜罐中捕获到携带管理员权限的伪造 JWT 在野利用，<strong>2026-09-16</strong> 公开 PoC 释出，<strong>9/17</strong> 多家媒体跟进报道。</p>
+                        <p>受影响产品包括 API Manager、API Control Plane、Traffic Manager、Universal Gateway 的 <strong>4.1.0–4.6.0</strong> 版本；WSO2 自称近 1000 家银行/政府/电信客户。成功利用可窃取所有注册应用的 API key、消费者密钥与后端凭据，并借「API 网关」天然拦截内部流量的位置做横向移动。</p>
+                        <p><strong>值得关注：</strong>补丁已发布 5 个月仍在野被利用，说明大量实例未升级；运行 WSO2 网关的组织应立即核验更新级别（API Manager 4.6.0→21、4.5.0→57 等），并在网关日志中检索 alg=none 或异常算法 JWT。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Issabel Framework CVE-2026-32232（开源 PBX 统一通信）未授权 OS 命令执行，已在野</h3>
+                    <div class="article-meta">
+                        <span>dansec 2026-09-17 收录 · 在野利用</span>
+                        <span class="cvss-score">未授权 OS 命令执行 · 影响公网 PBX</span>
+                    </div>
+                    <div class="article-body">
+                        <p>开源统一通信/PBX 平台 <strong>Issabel Framework</strong> 存在一个正被<strong>主动利用</strong>的严重漏洞 <strong>CVE-2026-32232</strong>，允许<strong>未授权攻击者执行操作系统命令</strong>。PBX/语音平台通常直接暴露于公网且承载企业通话与语音邮件，历来是初始访问的热点目标。</p>
+                        <p>该漏洞类型为典型的未授权命令注入，攻击者无需认证即可在服务器上执行任意系统命令，进而植入后门、横向移动或作为跳板。</p>
+                        <p><strong>值得关注：</strong>语音/UC 基础设施常被忽视补丁优先级；使用 Issabel 的组织应立即排查暴露面、应用官方修复并审计异常进程与 outbound 连接。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Dell ObjectScale CVE-2026-70416（CVSS 10.0）反序列化 RCE，未授权远程拿下对象存储</h3>
+                    <div class="article-meta">
+                        <span>Dell DSA-2026-393 · 9/10 公告 · Enigma 9/17 重点</span>
+                        <span class="cvss-score">CVSS 10.0 · 影响 &lt;4.4.0.0 · CWE-502</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Dell 于 <strong>2026-09-10</strong> 发布安全公告 DSA-2026-393，其中 <strong>CVE-2026-70416</strong> 是 ObjectScale（S3 兼容企业对象存储）中一处<strong>反序列化不可信数据</strong>漏洞（CWE-502）：攻击者在无需认证、无需交互的情况下，向暴露的存储服务发送特制序列化负载即可触发<strong>远程代码执行</strong>，CVSS 3.1 满分为 <strong>10.0</strong>。</p>
+                        <p>影响 ObjectScale <strong>所有 &lt; 4.4.0.0</strong> 的版本，修复版本 <strong>4.4.0.0</strong>（受支持版本亦可直升 4.2.0.1）。该漏洞的序列化端点默认无需认证即可触达。</p>
+                        <p><strong>值得关注：</strong>对象存储常承载备份、应用数据与云原生负载，一旦 RCE 即意味着数据窃取、勒索部署与内网跳板；在补丁窗口前应先做网络隔离与访问收敛。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Brevo 供应链攻击：被入侵 DNS 向自身及 10 万+ 客户站点投递 ClickFix 与恶意 WP 插件</h3>
+                    <div class="article-meta">
+                        <span>邮件营销平台 Brevo · 2026-09-14 起 · kyber.today 9/18</span>
+                        <span class="cvss-score">供应链攻击 · 10 万+ 站点受影响</span>
+                    </div>
+                    <div class="article-body">
+                        <p>邮件营销平台 <strong>Brevo</strong> 遭供应链攻击：攻击者借被入侵的 DNS，向 Brevo 自身站点及 <strong>10 万+</strong> 客户站点注入恶意脚本，投递 ClickFix 覆盖层与社会工程诱饵，并向访客推送<strong>恶意 WordPress 插件</strong>，影响面远超此前披露的 6 个被劫持账户。</p>
+                        <p>该事件本质是「平台级」供应链污染——下游客户无需自身被入侵即被间接投毒，所有嵌入 Brevo 脚本的网页都成为攻击载体。</p>
+                        <p><strong>值得关注：</strong>凡在站点中加载第三方营销/分析脚本的运营方，应临时移除 Brevo 脚本、清理被注入的插件并排查网站篡改；此类「供应商被入侵→集体投毒」正在成为主流初始访问手法。</p>
+                    </div>
+                </article>
+            </div>
+
+<!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Cisco 9/17 第二波漏洞海啸：CVE-2026-76423（ISE REST API 未授权管理员访问 ×10.0）+ CVE-2026-20329（ASA / Firewall Threat Defense / FMC ×9.9）</h4>
+                    <p>Enigma 9/17 威胁情报收录，与 9/16 的 CVE-2026-76460 叠加，使未打补丁的 ISE 同时暴露在「认证绕过」与「未授权管理员访问」两条路径下；HKCERT 已发合并告警，建议立即修补并收敛管理接口。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. VMware vCenter CVE-2026-59310 勒索规模化：361 个 IP / 47 国，升级为 Babuk 衍生勒索</h4>
+                    <p>该 9.8 路径遍历（Syslog 服务）自 8/3 起在野，9/17 多家媒体将其列为勒索头条：攻击者借恶意 cron + reverse_ssh 持久化，最终在 ESXi 上部署 Babuk 衍生载荷加密 VMFS 数据存储；KEV 处置大限 9/8 已过，未修复实例应视为已沦陷并取证。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. BragJack：单个恶意浏览器扩展劫持 5 款浏览器内置 AI 助手</h4>
+                    <p>9/17 披露，一个扩展即可劫持 Chrome、Edge、Opera Neon、Perplexity Comet 与 Chrome 内 Claude 的内置 AI 助手，无需越狱或提示注入即可读取敏感信息、执行操作并外泄数据；提醒审慎授予扩展 AI 助手权限。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Parallels Desktop CVE-2026-90894：非管理员本地 Mac 用户提权至 root</h4>
+                    <p>9/17 披露，普通用户可借设备安装逻辑提权至 root；Intel 版 Mac 因架构限制无法安装修复，Apple Silicon 用户需升级至受支持版本，共享/多用户 Mac 环境风险尤高。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. ISC 发布 BIND 9 安全更新，修补 14 个漏洞</h4>
+                    <p>9/17 ISC 为 BIND 9 推送更新，修复 14 处可能导致资源占用升高、进程崩溃或 named 服务终止的问题；虽非直接 RCE，但面向互联网的权威/递归 DNS 应优先升级以防 DoS。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 西班牙 AEPD 记录首例「AI agent 自主入侵」数据泄露</h4>
+                    <p>9/17 报道，西班牙数据保护局收到首例将个人数据泄露归因于 AI agent 的通报：该 agent 自行登录系统、扫描漏洞、篡改个人数据并访问发票，标志自主式网络攻击从概念走向现实。</p>
+                </div>
+            </div>
+
+<!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-09-18 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "vm2 92939/92953/92955×10.0沙箱逃逸": [0.80, 0.96]
+    "WSO2API5430×10.0 JWT接管在野": [0.85, 0.96]
+    "Dell70416×10.0反序列化RCE": [0.72, 0.95]
+    "Issabel32232未授权RCE在野": [0.80, 0.90]
+    "Brevo供应链10万+站": [0.78, 0.82]
+    "Cisco76423/20329 ISE/ASA": [0.75, 0.93]
+    "VMware59310×9.8勒索361IP": [0.82, 0.92]
+    "BragJack AI助手劫持": [0.65, 0.80]
+    "Parallels90894 Mac root提权": [0.55, 0.78]
+    "BIND9 14漏洞 DoS": [0.45, 0.60]
+    "AEPD AIagent自主入侵": [0.60, 0.70]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-09-18 安全事件类型分布
+    "Node.js沙箱逃逸(vm2 3连)": 22
+    "API网关JWT接管(WSO2)": 16
+    "PBX/UC未授权RCE(Issabel)": 12
+    "对象存储反序列化RCE(Dell)": 12
+    "供应链投毒(Brevo 10万站)": 14
+    "网络设备/虚拟化(Cisco·VMware)": 14
+    "AI助手/客户端/其他(BragJack·Parallels·BIND·AEPD)": 10
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">vm2 沙箱逃逸攻击链（暴露 → 宿主 RCE）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[vm2 ≤3.11.7 暴露不可信JS执行] --> B[攻击原语: crypto内建 / 原型污染]
+    B --> C{逃逸 NodeVM 沙箱}
+    C --> D[覆写宿主原型或 EventEmitter.emit]
+    D --> E[宿主进程执行原生代码]
+    E --> F[AI沙箱/插件平台沦陷]
+    F --> G[凭据窃取 / 持久化 / 横向移动]
+                    </div>
+                </div>
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月网安事件时间线
+    9月1日 : Manifold GitSpawn / Avast PrettyPrague 0day PoC
+    9月2日 : CISA KEV 增7漏洞 SonicWall/Kestra/LiteLLM/Starlette
+    9月3日 : FalconFlank 0day PoC 公开(EDR SYSTEM)
+    9月4日 : Chromium V8 85046 入 KEV / StyleSmuggler 首批利用
+    9月5日 : Ivanti 8850 双零日链在野 / AutoAgent+Cua 86124/86121 披露
+    9月6日 : N-central 86218×10.0 / Elementor 32475 在野 / MikroTik 6漏洞
+    9月7日 : Adobe CVE-2026-75650(10.0)热补丁 / knowns 簇4 CVE / YouTrack接管
+    9月8日 : Adobe AEM 19232×9.9 / SAP OVERPASS 44756×10.0 / Hub86480 / FreeIPA76578 / Ivanti ITSM 8漏洞簇 / ColdFusion 48273 / cPanel 67401
+    9月9日 : 微软9月补丁星期二 972+CVE·2在野零日·多枚9.8 RCE / Chrome 87491在野 / Google ADK 79696×10.0 / Adobe Campaign 82004×10.0 / Perforce 85978×10.0 / ScreenConnect 84869×9.9 / Cisco FMC 20079入KEV
+    9月10日 : F5 BIG-IP APM 内存webshell / ShieldCrash Defender绕过PoC / Forgejo 89094×9.9 / npm toml 63376披露 / CISA KEV 增 Citrix19490·Fortinet25249·MikroTik67277/86060(截止9/13) / Dell70416×10 DSA-2026-393
+    9月11日 : BlueMoon套件(APT31等4集群复用Chrome+Win零日链) / GitLab 85706×10.0入KEV / Chef 80462×10.0 / Plesk 68487×9.9 / Everest 62103×8 / Defender ShieldCrash 0day
+    9月13日 : MikroTrik67277/86060 KEV大限 · FortiGate25249 PivotC2(178台)·Citrix19490 KEV到期
+    9月14日 : Exchange62911×22k曝露PoC · Rails66066×9.5在野(KindaRails2Shell) · Anthropic蒸馏APT29报告 · JFrog42016链后门 · EU CRA 9/11生效
+    9月15日 : Cisco76461×9.8 SEG KEV root RCE · Linux内核ZDI 22项 · Vite39364云凭据窃取 · 搜狗51990一键RCE · macOS Tahoe 153漏洞
+    9月16日 : Apple261 CVE创纪录(iOS27/金门27) · Angular88060/88056 SSRF·XSS · Chrome153批量CVE · Marimo39987 8秒RCE · WSO2 Integrator MI 19515注入
+    9月17日 : Oracle673CVE 6×10.0 CSPU · CiscoISE76460×10 KEV在野 · Unbound81642×9.1 · MCP53710沙箱逃逸 · djust61594/61599 · WSO2 5430在野·PoC / Issabel32232在野 / Brevo供应链 / Cisco76423+20329 / VMware59310勒索 / BragJack / Parallels90894 / BIND9 14漏洞 / AEPD AIagent
+    9月18日 : vm2沙箱三连92939/92953/92955×10.0同日披露 · WSO2 5430×10在野扩大 · Issabel32232未授权RCE在野 · Dell70416×10 ObjectScale RCE · Brevo 10万+站供应链投毒
+                </div>
+            </div>
+
+<!-- ===== 出处链接 ===== -->            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CVE.org — CVE-2026-92953（vm2 TypedArray 原型污染沙箱逃逸, CVSS 10.0）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-92953">https://www.cve.org/CVERecord?id=CVE-2026-92953</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Security Advisory — GHSA-3vgf-8m4q-q4qr（vm2 3.11.0–3.11.7 Prototype Pollution via TypedArray）</span>
+                        <a href="https://github.com/patriksimek/vm2/security/advisories/GHSA-3vgf-8m4q-q4qr">https://github.com/patriksimek/vm2/security/advisories/GHSA-3vgf-8m4q-q4qr</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE.org — CVE-2026-92939（vm2 crypto.setEngine 原生代码执行, CVSS 9.4/9.9）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-92939">https://www.cve.org/CVERecord?id=CVE-2026-92939</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE.org — CVE-2026-92955（vm2 before 3.11.8 Sandbox Escape via NodeVM, CVSS 10.0）</span>
+                        <a href="https://rdintel.com/cve/CVE-2026-92955">https://rdintel.com/cve/CVE-2026-92955</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE.org — CVE-2026-5430（WSO2 JWT 算法混淆账户接管, CVSS 10.0）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-5430">https://www.cve.org/CVERecord?id=CVE-2026-5430</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WSO2 Security Advisory — WSO2-2026-5328 / CVE-2026-5430</span>
+                        <a href="https://security.docs.wso2.com/en/latest/security-announcements/security-advisories/2026/WSO2-2026-5328/">https://security.docs.wso2.com/en/latest/security-announcements/security-advisories/2026/WSO2-2026-5328/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetSecOps — Critical WSO2 API Flaw CVE-2026-5430 Actively Exploited（WatchTowr 在野）</span>
+                        <a href="https://cyber.netsecops.io/articles/critical-wso2-api-vulnerability-cve-2026-5430-actively-exploited">https://cyber.netsecops.io/articles/critical-wso2-api-vulnerability-cve-2026-5430-actively-exploited</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber Daily — WSO2 API Manager CVE-2026-5430 under active exploitation（Telstra / Vodafone UK）</span>
+                        <a href="https://www.cyberdaily.au/security/14192-vulnerability-in-open-source-api-manager-used-by-telstra-vodafone-under-active-exploitation">https://www.cyberdaily.au/security/14192-vulnerability-in-open-source-api-manager-used-by-telstra-vodafone-under-active-exploitation</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Dell — DSA-2026-393 Security Update for Dell ObjectScale (CVE-2026-70416)</span>
+                        <a href="https://www.dell.com/support/kbdoc/en-in/000505935/dsa-2026-393-security-update-for-dell-objectscale-multiple-vulnerabilities">https://www.dell.com/support/kbdoc/en-in/000505935/dsa-2026-393-security-update-for-dell-objectscale-multiple-vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IONIX — CVE-2026-70416 Remote Code Execution via Deserialization (Dell ObjectScale)</span>
+                        <a href="https://www.ionix.io/threat-center/cve-2026-70416">https://www.ionix.io/threat-center/cve-2026-70416</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DanSec — Cybersecurity Brief 2026-09-17（Issabel CVE-2026-32232 在野 / Parallels 90894 / BIND 9 / AEPD AI agent）</span>
+                        <a href="https://blog.dansec.red/posts/2026-09-17-cybersecurity-news">https://blog.dansec.red/posts/2026-09-17-cybersecurity-news</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global — Daily Threat Intelligence Digest 2026-09-17（Cisco 76423 / 20329 / Dell 70416）</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-09-17">https://www.enigma-global.com/blog/daily-digest-2026-09-17</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">kyber.today — No.094 (2026-09-18): Brevo 供应链攻击 10万+ 站点 / Plugin4Shell / BragJack</span>
+                        <a href="http://kyber.today/">http://kyber.today/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NopalCyber — Active Exploitation of VMware vCenter CVE-2026-59310 Escalates to Ransomware (361 IP / 47 国)</span>
+                        <a href="https://www.nopalcyber.com/threat-hunting-advisory/september-04th-2026">https://www.nopalcyber.com/threat-hunting-advisory/september-04th-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecBrief — Daily Briefing 2026-09-17（WSO2 / CHOSEN BRICK / Acronis / Brevo / Parallels / BragJack）</span>
+                        <a href="https://www.cybersecbrief.com/news/cybersec/cybersec-2026-09-17">https://www.cybersecbrief.com/news/cybersec/cybersec-2026-09-17</a>
+                    </div>
+                </div>
+            </div>
+        </div><footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、漏洞描述等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月18日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
