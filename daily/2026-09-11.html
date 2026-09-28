@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月11日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head><body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月11日 星期五</span>
+            <span class="edition-number">第 157 期 | 总第 157 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Cisco FMC 20079×10.0在野·Forgejo 89094×9.9·ColdFusion 48273×9.9·AutoAgent 86124×9.8·cPanel 67401</div>
+
+                <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Cisco Secure FMC 认证绕过致未授权 root RCE：CVE-2026-20079（CVSS 10.0）已在野，KEV 9/12 大限临近</h2>
+                <p class="sub-headline">Cisco Secure Firewall Management Center（FMC）/ Security Cloud Control（SCC）防火墙管理组件存在认证绕过（CWE-288），未认证远程攻击者借构造 HTTP 请求绕过认证并执脚本文件，夺取设备 root。9/9 入 CISA KEV，修复截止 9/12；Talos 确认已被勒索软件与国家背景集群实际利用，且 Cisco 称无官方 workaround。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Cisco Secure FMC 认证绕过未授权 root RCE（头条）：CVE-2026-20079 满分 10.0，已在野</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-20079 · CWE-288 · FMC 7.0–10.0 / SCC</span>
+                        <span class="cvss-score">CVSS 10.0 · KEV 9/9 · 截止 9/12</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Cisco Secure Firewall Management Center（FMC）与 Security Cloud Control（SCC）防火墙管理组件存在<strong>认证绕过（CWE-288：Alternate Path/Channel）</strong>：因启动期创建的非法系统进程，未认证远程攻击者可发送构造 HTTP 请求绕过认证，在受影响设备上<strong>执行脚本文件并获取底层操作系统 root 权限</strong>。CVSS 3.1 <strong>10.0</strong>（AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H）。</p>
+                        <p>该漏洞由 Cisco 于 2026 年 3 月披露，<strong>9 月 9 日被 CISA 列入 KEV</strong>，联邦修复截止日为 <strong>9 月 12 日（明日）</strong>。Cisco Talos 确认其已被实际利用：至少三个攻击集群（含勒索软件与疑似国家背景组织）借该漏洞部署 webshell、JAR 命令执行器与凭据窃取组件，部分集群将其与 CVE-2026-20316（静态凭据）组合部署反弹 shell 与 Cyclops Blink 变种。</p>
+                        <p><strong>值得关注的原因：</strong>FMC 是防火墙管理中枢，一旦被 root 接管，攻击者可篡改防火墙策略、清除痕迹并以此为跳板横向移动；公开利用代码已于 8 月出现（两份独立 PoC），且无官方缓解措施，<strong>必须升级固件</strong>。公网暴露实例应立即升级并排查异常 root 会话与 webshell。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">公网可达 FMC/SCC 管理接口</span>
+                        <span class="flow-step critical">认证绕过 20079 CWE-288</span>
+                        <span class="flow-step">未授权执行脚本</span>
+                        <span class="flow-step critical">夺取 root</span>
+                        <span class="flow-step critical">webshell/策略篡改/横向</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Forgejo 模板引擎注入 RCE CVE-2026-89094（CVSS 9.9）—— 9/10 新披露</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-89094 · CWE-1336 · Forgejo &lt; 16.0.4</span>
+                        <span class="cvss-score">CVSS 9.9 · 9/10 披露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Forgejo（自托管代码托管平台，Codeberg 底层）在 <strong>16.0.4 之前</strong>版本中，对 <code>.forgejo/template</code> 目录下的模板文件扩展处理不当，存在<strong>模板引擎注入（CWE-1336）</strong>：攻击者通过构造的模板仓库即可触发远程代码执行。影响 16.0.0–16.0.4 与 0–15.0.8，官方已发布 16.0.4 / 15.0.8 修复。</p>
+                        <p>Forgejo 是大量开源项目与企业的代码托管底座，模板仓库 RCE 可借 CI/构建流程实现供应链投毒。该 CVE 尚不在 KEV，但 CVSS 9.9 且公网 Forgejo 实例众多，应优先升级。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Adobe ColdFusion eval 注入 RCE CVE-2026-48273（CVSS 9.9）—— APSB26-119</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-48273 · CWE-95 · CF 2025≤12 / 2023≤23</span>
+                        <span class="cvss-score">CVSS 9.9 · 9/8 披露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>ColdFusion 存在<strong>动态代码 eval 注入（CWE-95）</strong>：低权限攻击者无需用户交互即可将指令注入动态求值代码，在 ColdFusion 服务账户上下文执行任意代码。影响 ColdFusion 2025 ≤ Update 12、2023 ≤ Update 23；修复于 <strong>2025 Update 13 / 2023 Update 24</strong>（APSB26-119）。</p>
+                        <p>ColdFusion 常承载企业门户/API/认证服务，历史漏洞从披露到武器化极快，应与 8 月同批 CVE-2026-48362（CVSS 10.0 未认证 OS 命令注入）一并纳入最高优先级。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">AutoAgent 沙箱 TCP 服务未认证 root RCE CVE-2026-86124（CVSS 9.8）</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-86124 · CWE-306 · HKUDS AutoAgent</span>
+                        <span class="cvss-score">CVSS 9.8/9.3 · 9/5 披露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>HKUDS 开源 AI Agent 框架 AutoAgent 的沙箱 TCP 命令服务（<code>tcp_server.py</code>）绑定 <code>0.0.0.0</code> 且<strong>完全不校验身份（CWE-306）</strong>，任何能连上端口的客户端发送的命令都以 root 在容器内执行，并可借 bind-mount 的宿主机工作目录越出容器。CVSS 3.1 9.8 / 4.0 9.3，9 月 5 日由 VulnCheck 披露，<strong>尚无官方修复版本</strong>。</p>
+                        <p>这是 2026 年第四波「AI Agent 基础设施默认可达」事件，同批还有 Cua computer-server、excel-mcp-server、TEN Framework 出现同类「认证检查仅在环境变量被设置时才运行」缺陷。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">cPanel EmailTrack SQL 注入致 root RCE CVE-2026-67401</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-67401 · cPanel/WHM EmailTrack</span>
+                        <span class="cvss-score">9/8 披露 · 全版本受影响</span>
+                    </div>
+                    <div class="article-body">
+                        <p>cPanel/WHM 的 EmailTrack 功能存在 SQL 注入，拥有邮件权限的<strong>已认证 cPanel 账户</strong>可借此在服务器创建任意文件，进而以 root 身份执行代码、完全控制服务器。9 月 8 日披露，影响所有受支持版本，修复于 11.110.0.143 / 11.134.0.55 / 11.136.0.39 / 11.138.0.4（WP2 11.138.1.9）。</p>
+                        <p>cPanel 支撑全球数百万网站，单账户→root 的链式利用对虚拟主机服务商、多租户服务器风险极高；凭据泄露/钓鱼即触发，应升级并核查异常邮件权限账户。</p>
+                    </div>
+                </article>
+            </div>
+<!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. npm toml 原型污染 + DoS（CVE-2026-63376 / 77465）</h4>
+                    <p>toml.parse() 在 4.1.2 之前因路径去同步（逗号拼接跟踪路径 vs 点拼接遍历路径）将攻击者键写入 Object.prototype（CWE-1321，CVSS 8.2）；同包 CVE-2026-77465 为深层嵌套 payload 引发的不可捕获 RangeError（约 5–6KB 即令 Worker 崩溃）。toml 在 npm 月下载约 4700 万，大量 Next.js 构建链与 Node 服务间接依赖——凡解析不可信 TOML 输入者需固定至 4.1.2 并加深度/大小护栏。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Microsoft Entra ID 缺失授权提权 CVE-2026-83941（CVSS 9.9）</h4>
+                    <p>Entra ID（原 Azure AD）授权检查缺失（CWE-862），低权限已认证用户可跨租户范围提权，影响机密性/完整性。微软已于 9 月补丁中服务端修复，无需客户侧操作；应审计 Entra 审计日志与 PIM 告警排查异常角色分配。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Cua computer-server 未认证 RCE CVE-2026-86121（CVSS 9.8）</h4>
+                    <p>trycua/cua 的 computer-server 在 CONTAINER_NAME 环境变量未设置时静默跳过认证，且默认绑定 0.0.0.0（TCP/8000），未认证攻击者可直接 run_command / 读写任意文件 / 拿交互式 PTY。修复于 0.3.42（改默认绑定 127.0.0.1）。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. AI Agent 无认证集群第二波（CVE-2026-85661 / 85688，均 9.8）</h4>
+                    <p>excel-mcp-server 在 EXCEL_FILES_PATH 留空时可读写任意文件；TEN Framework 的 TMAN Designer API 直接接受未认证文件读写请求。与 AutoAgent、Cua 同属「认证检查非 fail-safe」模式，AI 开发/自动化基础设施成为新攻击面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. WordPress 插件在野利用浪潮升级（Fruition 9/11）</h4>
+                    <p>Wordfence 观测 Elementor Pro（~600 万安装）、All-in-One WP Migration（~500 万）持续在野；新增 Gravity Forms（~100 万）未认证文件上传/SQLi 向量导致 RCE。运行大规模 WordPress 者应本周内完成插件盘点与升级。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Drupal contrib 16 项安全公告潮</h4>
+                    <p>Drupal 一次性发布 16 项咨询，含 Jsonapi Role Access 与 OTP Verification 模块的严重越权访问绕过，使用相关 contrib 模块站点需核对并更新，避免权限提升与账户接管。</p>
+                </div>
+            </div>
+<!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-09-11 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Cisco FMC 20079×10.0": [0.95, 0.99]
+    "Forgejo 89094×9.9": [0.85, 0.93]
+    "ColdFusion 48273×9.9": [0.82, 0.93]
+    "AutoAgent 86124×9.8": [0.90, 0.92]
+    "cPanel 67401 root": [0.80, 0.92]
+    "Entra 83941×9.9": [0.75, 0.93]
+    "Cua 86121×9.8": [0.88, 0.92]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-09-11 安全事件类型分布
+    "网络设备/防火墙管理面 RCE": 26
+    "AI Agent/自动化工具无认证": 20
+    "代码托管/CMS/企业应用 RCE": 18
+    "云身份/目录提权": 14
+    "供应链/依赖解析": 14
+    "WordPress 插件在野": 8
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Cisco FMC：认证绕过 → root 接管（攻击链）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[公网可达的 Cisco FMC/SCC 管理接口] --> B{认证绕过 CVE-2026-20079 CWE-288}
+    B --> C[未授权执行脚本文件]
+    C --> D[获取设备 root 权限]
+    D --> E[部署 webshell / JAR 命令执行器]
+    E --> F[凭据窃取 + 防火墙策略篡改]
+    F --> G[横向移动 / 持久化 / 隐藏痕迹]
+                    </div>
+                </div>
+            </div>
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月网安事件时间线
+    9月1日 : Manifold GitSpawn / Avast PrettyPrague 0day PoC
+    9月2日 : CISA KEV 增7漏洞 SonicWall/Kestra/LiteLLM/Starlette
+    9月3日 : FalconFlank 0day PoC 公开(EDR SYSTEM)
+    9月4日 : Chromium V8 85046 入 KEV / StyleSmuggler 首批利用
+    9月5日 : Ivanti 8850 双零日链在野 / AutoAgent+Cua 86124/86121 披露
+    9月6日 : N-central 86218×10.0 / Elementor 32475 在野 / MikroTik 6漏洞
+    9月7日 : Adobe CVE-2026-75650(10.0)热补丁 / knowns 簇4 CVE / YouTrack接管
+    9月8日 : Adobe AEM 19232×9.9 / SAP OVERPASS 44756×10.0 / Hub86480 / FreeIPA76578 / Ivanti ITSM 8漏洞簇 / ColdFusion 48273 / cPanel 67401
+    9月9日 : 微软9月补丁星期二 972+CVE·2在野零日·多枚9.8 RCE / Chrome 87491在野 / Google ADK 79696×10.0 / Adobe Campaign 82004×10.0 / Perforce 85978×10.0 / ScreenConnect 84869×9.9 / Cisco FMC 20079入KEV
+    9月10日 : F5 BIG-IP APM 内存webshell / ShieldCrash Defender绕过PoC / Forgejo 89094×9.9 / npm toml 63376披露 / Enigma digest
+    9月11日 : 本期头条 Cisco FMC 20079×10.0在野(9/12 KEV大限)·Forgejo 89094·ColdFusion 48273·AutoAgent 86124·cPanel 67401·Entra 83941·AI Agent无认证集群
+                </div>
+            </div>
+<!-- ===== 出处链接 ===== -->            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV — Cisco Secure Firewall Management Center Authentication Bypass（CVE-2026-20079）</span>
+                        <a href="https://www.cisa.gov/kev">https://www.cisa.gov/kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cisco 官方安全公告 cisco-sa-onprem-fmc-authbypass-5JPp45V2</span>
+                        <a href="https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-onprem-fmc-authbypass-5JPp45V2">https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-onprem-fmc-authbypass-5JPp45V2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-20079</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-20079">https://www.cve.org/CVERecord?id=CVE-2026-20079</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer — Cisco FMC flaws exploited by ransomware gang, state-sponsored hackers（2026-09-10）</span>
+                        <a href="https://www.bleepingcomputer.com/">https://www.bleepingcomputer.com/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-89094（Forgejo）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-89094">https://www.cve.org/CVERecord?id=CVE-2026-89094</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tenable — CVE-2026-89094</span>
+                        <a href="https://www.tenable.com/cve/CVE-2026-89094">https://www.tenable.com/cve/CVE-2026-89094</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Codeberg Forgejo milestone 139655（修复 16.0.4）</span>
+                        <a href="https://codeberg.org/forgejo/forgejo/milestone/139655">https://codeberg.org/forgejo/forgejo/milestone/139655</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-48273（Adobe ColdFusion）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-48273">https://www.cve.org/CVERecord?id=CVE-2026-48273</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Adobe APSB26-119（ColdFusion 修复公告）</span>
+                        <a href="https://helpx.adobe.com/security/products/coldfusion/apsb26-119.html">https://helpx.adobe.com/security/products/coldfusion/apsb26-119.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-86124（AutoAgent）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-86124">https://www.cve.org/CVERecord?id=CVE-2026-86124</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — AutoAgent Unauthenticated RCE via Sandbox TCP Command Server</span>
+                        <a href="https://www.vulncheck.com/advisories/autoagent-unauthenticated-remote-code-execution-via-the-sandbox-tcp-command-server">https://www.vulncheck.com/advisories/autoagent-unauthenticated-remote-code-execution-via-the-sandbox-tcp-command-server</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">cPanel 官方安全公告 — CVE-2026-67401（EmailTrack SQL Injection）</span>
+                        <a href="https://support.cpanel.net/hc/en-us/articles/43187903921559-Security-CVE-2026-67401-SQL-Injection-Vulnerability-in-cPanel-s-EmailTrack-Functionality-September-8-2026">https://support.cpanel.net/hc/en-us/articles/43187903921559</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — New cPanel Flaw Lets a Hosting Account Run Code as Root（2026-09-09）</span>
+                        <a href="https://thehackernews.com/">https://thehackernews.com/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-63376（npm toml 原型污染）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-63376">https://www.cve.org/CVERecord?id=CVE-2026-63376</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory GHSA-v5mp-jgw5-2x6j（toml-node Prototype Pollution）</span>
+                        <a href="https://github.com/BinaryMuse/toml-node/security/advisories/GHSA-v5mp-jgw5-2x6j">https://github.com/BinaryMuse/toml-node/security/advisories/GHSA-v5mp-jgw5-2x6j</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MSRC — CVE-2026-83941（Microsoft Entra ID Elevation of Privilege）</span>
+                        <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83941">https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83941</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-86121（Cua computer-server）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-86121">https://www.cve.org/CVERecord?id=CVE-2026-86121</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — Cua Computer-Server Unauthenticated RCE via Desktop Control</span>
+                        <a href="https://www.vulncheck.com/advisories/cua-computer-server-before-0.3.42-unauthenticated-rce-via-desktop-control">https://www.vulncheck.com/advisories/cua-computer-server-before-0.3.42-unauthenticated-rce-via-desktop-control</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetFoundry Reachability Watch（2026-09-11，AI 工具无认证集群 + 906 新 CVE）</span>
+                        <a href="https://netfoundry.io/ai/reachability-watch-cve-kev-tracker-2026-09-11">https://netfoundry.io/ai/reachability-watch-cve-kev-tracker-2026-09-11</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Fruition The Perimeter（2026-09-11，WordPress 插件在野 + npm toml + Drupal contrib）</span>
+                        <a href="https://www.fruition.net/perimeter">https://www.fruition.net/perimeter</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global Daily Threat Intelligence Digest（2026-09-10）</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-09-10">https://www.enigma-global.com/blog/daily-digest-2026-09-10</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IONIX — CVE-2026-86121 Threat Center（Cua computer-server）</span>
+                        <a href="https://www.ionix.io/threat-center/cve-2026-86121">https://www.ionix.io/threat-center/cve-2026-86121</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、漏洞描述等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月11日
+            </p>
+        </footer>
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

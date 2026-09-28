@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月19日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月19日 星期日</span>
+            <span class="edition-number">第 63 期 | 总第 63 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>WordPress wp2shell 预认证RCE链PoC公开 · Kyverno 9.6集群提权PoC · ViteVenom npm区块链C2溯源朝鲜 · Inc勒索利用SonicWall零日 · FortiSandbox/SharePoint KEV今日大限
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">WordPress 核心 "wp2shell" 预认证 RCE 漏洞链 PoC 公开，全球数千万站点面临无门槛接管</h2>
+                <p class="sub-headline">CVE-2026-63030（批量端点路由混淆 7.5）+ CVE-2026-60137（WP_Query SQL 注入 9.1）链式成未认证 RCE，已现在野探测；Kyverno CVE-2026-54523（9.6）集群提权 PoC 公开；ViteVenom 七个 npm 包用区块链四层 C2 投递 RAT 溯源朝鲜 PolinRider；FortiSandbox 与 SharePoint CVE-2026-58644 的 CISA KEV 整改大限均于今日 7/19 到期</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+                        <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">WordPress wp2shell 预认证 RCE 漏洞链：两枚"缝隙"组合成匿名接管</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-63030 + CVE-2026-60137</span>
+                        <span class="cvss-score">PoC 公开 · 现在野探测</span>
+                    </div>
+                    <div class="article-body">
+                        <p>7/17 WordPress 紧急发布 6.8.6/6.9.5/7.0.2/7.1-beta2 并启动强制自动更新，修复由 Searchlight Cyber（Assetnote）Adam Kues 披露、代号 wp2shell 的两枚漏洞。二者单看都"可控"，链式组合即成未认证远程代码执行：无需登录、无需插件、无需用户交互，默认安装即可被打。截至 7/19 完整机理与可用 PoC 已在 GitHub 流通，PatchStack 报告 7/17 晚已观测到在野活动。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>CVE-2026-60137 为 WP_Query 的 author__not_in 参数 SQL 注入（9.1，回溯至 6.8）；CVE-2026-63030 为 REST /batch/v1 路由混淆（7.5，6.9 起引入）。</li>
+                            <li><strong>攻击方式：</strong>批量端点用两个并行数组跟踪子请求，某子请求 wp_parse_url() 解析失败时数组错位一格致"串岗"，嵌套后绕过方法白名单，把攻击者输入喂入 author__not_in（传字符串跳过数组校验）触发匿名盲注。</li>
+                            <li><strong>影响范围：</strong>6.8.0-6.8.5 仅 SQLi（修 6.8.6）；6.9.0-6.9.4 与 7.0.0-7.0.1 为完整 RCE 链。WP 承载全球超 5 亿站点，公网仍测得数千万实例。</li>
+                            <li><strong>后果：</strong>拖库读取管理员哈希 → 离线爆破 → 登录上传恶意插件/WebShell → 站点完全接管。</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>"评分陷阱"教科书案例：单 CVE 按 CVSS triage 会把 7.5 排低、把 9.1 当"需插件先决条件"，两条都判错——风险恰在缝隙里。</li>
+                            <li>补丁即武器：修复 commit 公开后全球同步逆向，PoC 已出，大规模利用高度可期。</li>
+                            <li>强制更新≠已修复：自动更新可能失败或回滚，须服务端版本+checksum 实测；WAF 需同时拦 /wp-json/batch/v1 与 ?rest_route=/batch/v1。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">匿名攻击者</span>
+                        <span class="flow-step">/batch/v1 路由混淆</span>
+                        <span class="flow-step">匿名 SQL 注入</span>
+                        <span class="flow-step critical">拖库爆破管理员</span>
+                        <span class="flow-step critical">RCE 站点接管</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Kyverno CVE-2026-54523（CVSS 9.6）集群权限提升 PoC 公开</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.6 · 跨命名空间提权</span>
+                        <span class="cvss-score">PoC 公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Kubernetes 原生策略引擎 Kyverno 曝严重漏洞，命名空间租户可提权为任意命名空间（含 kube-system）管理员。根因：NamespacedGeneratingPolicy 的 CEL 生成器 apply() 接受目标命名空间参数，但未校验其是否与策略自身命名空间一致；后台控制器默认持集群级权限，恶意租户构造策略令其在目标命名空间创建 RoleBinding 即完成提权。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>Kyverno ≤ 1.18.1</td><td class="risk-high">严重 · 集群管理员提权</td></tr>
+                            <tr><td>NamespacedGeneratingPolicy 创建者</td><td class="risk-high">高危 · 需审查撤权</td></tr>
+                            <tr><td>Kyverno 1.18.2</td><td class="risk-medium">已修复 · 建议升级</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">ViteVenom：7 个 npm 包用区块链四层 C2 投递 RAT，溯源朝鲜</h3>
+                    <div class="article-meta">
+                        <span>npm 供应链 · SuccessKey/PolinRider</span>
+                        <span class="cvss-score">导入时执行</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Checkmarx 7/17 披露 ViteVenom：7 个仿冒 @vitejs 作用域的 npm 包（6/29-7/3 发布，合计 2,400+ 下载）在导入时（非安装时）执行，投递具反弹 shell、凭据窃取、文件外泄、持久化后门的 RAT。C2 为四层区块链（Tron/Aptos/BSC）+ HTTP 回落（198.105.127[.]210），指针存公链不可被查封删除。</p>
+                        <p><strong>溯源：</strong>Checkmarx 归因 SuccessKey（与 ChainVeil 共享 Tier-2 钱包/XOR 密钥）；opensourcemalware 进一步比对 TRON 钱包、Aptos 地址、XOR 密钥与朝鲜 Lazarus 的 PolinRider 逐字节一致，累计归因 4,295 恶意资产。防御要点为依赖清单盘点+导入路径审计+凭据轮换。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">严重</span>
+                    <h3 class="article-title">Inc 勒索利用 SonicWall SMA1000 零日 — CVE-2026-15409/15410</h3>
+                    <div class="article-meta">
+                        <span>SSRF + 代码注入链</span>
+                        <span class="cvss-score">在野勒索 · KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Inc 勒索团伙正积极利用 SonicWall SMA1000 两枚零日：CVE-2026-15409（未认证 SSRF 探测内网）+ CVE-2026-15410（需认证代码注入取 root），链式控制后窃凭据、建持久化、向域控横移。两枚均在 CISA KEV，联邦大限 7/17 已过，SonicWall 已发热修补丁。</p>
+                        <p><strong>值得关注：</strong>打补丁≠清除威胁——已入侵设备须完整取证、重装镜像、重置凭据；边界 VPN/远程接入设备"披露即武器化+勒索接管"态势延续，未修补 SMA1000 应默认视为已沦陷。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">FortiSandbox / SharePoint KEV 大限今日到期，在野确认</h3>
+                    <div class="article-meta">
+                        <span>39808/25089 9.1 · 58644 9.8</span>
+                        <span class="cvss-score">KEV 大限 7/19</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 7/16 将 FortiSandbox CVE-2026-39808/25089（均 9.1 未认证命令注入）与 SharePoint CVE-2026-58644（9.8 反序列化 RCE 零日）纳入 KEV，整改大限均为今日 7/19。同簇 FortiSandbox CVE-2026-39813 本周亦遭利用。</p>
+                        <p><strong>值得关注：</strong>FortiSandbox 补丁 4/6 月即发却直到 KEV 才被重视，"已发补丁≠已缓解"；SharePoint 攻击链伴随窃取 IIS machine key 可"补丁后仍持久化"，须补丁+轮换密钥+清痕迹+启用 AMSI。安全基础设施自身失守反成入侵入口。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+                        <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. SharePoint CVE-2026-58644（9.8）反序列化 RCE 零日</h4>
+                    <p>微软 7/14 补丁后修订公告确认在野；SE/2019/2016 全线本地版，KEV 大限今日 7/19，须补丁+轮换机器密钥+排查痕迹。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. IBM Cognos Analytics CVE-2026-15995（CVSS 5.4）</h4>
+                    <p>CWE-23 路径遍历，德国 BSI/CERT-Bund CSAF 通报，企业 BI 平台受影响，按厂商建议升级。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. WordPress "自动更新陷阱"须双验证</h4>
+                    <p>强制推送可能因只读镜像/托管管控/节点不一致失败或回滚；须服务端版本+checksum，WAF 同拦 /batch/v1 与 ?rest_route=/batch/v1。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. ChainVeil/ViteVenom = 朝鲜 PolinRider（Lazarus）</h4>
+                    <p>共享 TRON 钱包/Aptos 地址/XOR 密钥逐字节一致；3 月以来增长 6.5×，横跨 GitHub/Go/Packagist/npm/PyPI，4,295 恶意资产。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. FortiSandbox CVE-2026-39813 路径遍历认证绕过遭利用</h4>
+                    <p>与 39808/25089 同簇，蜜罐捕获针对 /jsonrpc/ 的畸形请求；暴露管理接口即"扫描即被打"。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. BOD 26-04 驱动 KEV 批量到期</h4>
+                    <p>FortiSandbox + SharePoint 双双 7/19 到期，提醒按"暴露面+KEV+利用自动化+技术影响"而非单纯 CVSS 排序处置。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "WordPress wp2shell CVE-2026-63030": [0.85, 0.92]
+    "SharePoint CVE-2026-58644": [0.9, 0.95]
+    "FortiSandbox CVE-2026-39808": [0.92, 0.9]
+    "Kyverno CVE-2026-54523": [0.6, 0.88]
+    "SonicWall SMA1000 CVE-2026-15410": [0.95, 0.9]
+    "IBM Cognos CVE-2026-15995": [0.3, 0.45]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                                    <div class="mermaid">
+pie title 安全事件类型分布（今日 11 条）
+    "Web/CMS 漏洞" : 24
+    "云原生/平台漏洞" : 18
+    "供应链/npm 投毒" : 20
+    "边界/安全设备" : 23
+    "APT/勒索事件" : 15
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                                <div class="mermaid">
+timeline
+    title 2026年7月第3周网安事件
+    7月15日 : F5 披露 NGINX 三枚高危漏洞
+           : Chromium CVE-2026-15773 修复
+    7月16日 : CISA 将 FortiSandbox 双漏洞 + SharePoint CVE-2026-58644 入 KEV
+    7月17日 : WordPress 发 6.9.5/7.0.2 修 wp2shell
+           : Checkmarx 披露 ViteVenom npm 区块链 C2
+    7月18日 : FortiSandbox 在野利用警报扩散
+           : Inc 勒索利用 SonicWall SMA1000 零日
+    7月19日 : wp2shell PoC 公开 + 现在野探测
+           : FortiSandbox/SharePoint KEV 大限到期 · Kyverno 9.6 PoC
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                                <div class="references-grid">                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/07/new-wp2shell-wordpress-core-flaw-lets.html">wp2shell 预认证 RCE 全机理</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck</span>
+                        <a href="https://www.vulncheck.com/blog/wp2shell">WP2Shell CVE-2026-60137/63030 分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cytidel Blog</span>
+                        <a href="https://blog.cytidel.com/wp2shell-the-pre-auth-rce-hiding-in-the-gap-between-two-wordpress-cves">wp2shell 评分陷阱与链式机理</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯云安全通告</span>
+                        <a href="https://cloud.tencent.com/announce/detail/2374">wp2shell 风险通告(中文)</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Penligent</span>
+                        <a href="https://www.penligent.ai/hackinglabs/cve-2026-63030-wp2shell">CVE-2026-63030 补丁验证与陷阱</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安恒威胁情报</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=15608">WordPress CVE-2026-63030 PoC 公开</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安恒威胁情报</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=15592">Kyverno CVE-2026-54523 集群提权</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Cyber Signal</span>
+                        <a href="https://www.thecybersignal.com/vitevenom-vite-npm-blockchain-c2-2026">ViteVenom 七包区块链 C2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global</span>
+                        <a href="https://www.enigma-global.com/preview/report/vitevenom-seven-malicious-npm-packages-use-four-tier-blockchain-c2-mrq29anl-jfnv">ViteVenom 四层 C2 技术报告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">opensourcemalware</span>
+                        <a href="https://opensourcemalware.com/blog/chainveil-and-vitevenom-dprk-polinrider-campaign">ChainVeil/ViteVenom = 朝鲜 PolinRider</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯每日安全 Next</span>
+                        <a href="https://sectoday.tencent.com/event/a2OCl54B5M25NX6PQ5qP">Inc 勒索利用 SonicWall SMA1000</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://thehackernews.com/2026/07/cisa-adds-exploited-sharepoint-rce-zero.html">CISA 将 SharePoint 58644 入 KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cloud Security Alliance</span>
+                        <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-sharepoint-cve-2026-58644-kev-20260717-csa">SharePoint 58644 KEV 3 日大限研判</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安恒威胁情报</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=15594">FortiSandbox 双零日 CISA 限期</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">已知被利用漏洞目录</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">scoobylabs (BSI CSAF)</span>
+                        <a href="https://scoobylabs.net/cve/CVE-2026-15995">IBM Cognos CVE-2026-15995</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月19日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

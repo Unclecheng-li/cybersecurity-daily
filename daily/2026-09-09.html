@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月9日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head><body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月9日 星期三</span>
+            <span class="edition-number">第 155 期 | 总第 155 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>微软9月补丁星期二972CVE双零日在野 · AEM CVE-2026-19232×9.9 · SAP 44756×10.0 · Hub 86480接管 · FreeIPA 76578接管</div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">微软 2026 年 9 月补丁星期二：972/973 个 CVE、113 个严重、2 个在野零日（81963 / 85880），多枚 9.8 网络可达 RCE</h2>
+                <p class="sub-headline">9/8 微软月度安全更新修复近千漏洞，其中 2 个已被在野利用（Windows Update Stack 链接跟随 81963、Windows ALPC 堆溢出 85880，均 7.8）；MSMQ / DNS / DHCP / NFS 等无需认证即触发的 9.8 RCE 集群需优先处置</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">微软 9 月补丁星期二（头条）：2 个在野零日 + 多枚 9.8 网络可达 RCE 集群</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-81963 / 85880 在野 · 113 严重 / 82 RCE</span>
+                        <span class="cvss-score">9/8 Patch Tuesday · 近千 CVE</span>
+                    </div>
+                    <div class="article-body">
+                        <p>微软于 9/8 发布 9 月安全更新，共修复 <strong>972/973 个漏洞</strong>（Talos / CrowdStrike 口径略有差异），其中 <strong>113 个「严重」、82 个 RCE</strong>。本月有 <strong>2 个漏洞已被在野利用</strong>：<strong>CVE-2026-81963</strong>（CVSS 7.8，Windows Update Stack「Link Following / 访问控制不当」提权）与 <strong>CVE-2026-85880</strong>（CVSS 7.8，Windows ALPC「堆缓冲区溢出 / 使用未初始化资源」提权）。</p>
+                        <p><strong>本月高优先 RCE 集群（均 9.8、多无需认证）：</strong></p>
+                        <ul>
+                            <li><strong>CVE-2026-69579</strong> Windows Message Queuing (MSMQ) Use-After-Free → 蠕虫化风险 RCE（TCP 1801，常 SYSTEM）</li>
+                            <li><strong>CVE-2026-69730</strong> Windows DNS Server UaF → RCE；<strong>CVE-2026-69845 / 72979</strong> Windows DHCP Server 堆溢出/UaF → RCE</li>
+                            <li><strong>CVE-2026-69595 / 78445</strong> Windows Services for NFS ONCRPC XDR 堆溢出 → RCE（TCP/UDP 2049）</li>
+                            <li><strong>CVE-2026-77493 / 78510 / 78509</strong> Windows Graphics / Word / Outlook 预览窗格 / 阅读窗格 → 文档预览即 RCE，无需点击</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong>单月漏洞量逼近千级且提权零日已在实战利用；MSMQ / DHCP / NFS / DNS 监听高特权端口、默认或常见开启，未认证即可触发，是横向移动与蠕虫化利用首选；Office 预览窗格类无需用户交互即执行，为钓鱼与初始访问高价值目标。建议优先打补丁并收敛相关服务暴露面。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">网络可达的 Windows 服务/办公预览</span>
+                        <span class="flow-step critical">在野零日 81963/85880</span>
+                        <span class="flow-step">本地提权至 SYSTEM</span>
+                        <span class="flow-step critical">窃取凭据/票据</span>
+                        <span class="flow-step critical">横向至域控·全域失陷</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Adobe Experience Manager CVE-2026-19232（CVSS 9.9）—— 低权账户远程代码执行</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-19232 · CWE-863 · APSB26-98</span>
+                        <span class="cvss-score">CVSS 9.9 · 9/8 披露</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Adobe 于 9/8 在 <strong>APSB26-98</strong> 中修复 AEM 的 <strong>不当授权（CWE-863）</strong>漏洞，CVSS 3.1 <strong>9.9</strong>（AV:N/AC:L/PR:L/UI:N/S:C），影响 AEM as a Cloud Service 至 2026.7.0、6.5 LTS 至 SP2、6.5 至 6.5.24；修复版本为 <strong>2026.8.0 / 6.5 LTS SP3 / 6.5.25</strong>。</p>
+                        <p>攻击门槛极低——仅需一个低权限账户即可在网络侧触发，并在当前用户上下文执行任意代码、越权接管他人账户/会话（Scope 变更）。AEM 是大量企业门户与政务/金融站点底层，应优先升级并审计可疑权限提升。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">SAP「OVERPASS」CVE-2026-44756（CVSS 10.0）—— SAP 内核未授权 RCE</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-44756 · CWE-120 · SAP Note 3747649</span>
+                        <span class="cvss-score">CVSS 10.0 · 9/8 发布</span>
+                    </div>
+                    <div class="article-body">
+                        <p>SAP 9 月补丁日发布 <strong>CVE-2026-44756（Onapsis 命名 OVERPASS）</strong>，位于 <strong>SAP 内核 Extended Passport (EPP) 处理库</strong>（CWE-120 缓冲复制未校验长度）。未认证攻击者发送畸形 EPP 头即触发内存损坏，并<strong>以 SAP 系统权限执行任意 OS 命令</strong>。影响 S/4HANA、ECC、NetWeaver、Web Dispatcher、BW/4HANA 等；修复见 <strong>SAP Note 3747649</strong>（9/8）。同批另含 S4GET（CVE-2026-58240，NetWeaver 缺认证）、CVE-2026-76969（凭据泄露）、CVE-2026-66768（越权）。</p>
+                        <p>漏洞位于<strong>内核共享代码</strong>且会话建立阶段即触发，绕过用户锁、角色、授权对象等全部企业级鉴权；经 ICM (HTTP/HTTPS/SMTP)、SAP GUI、RFC 多向量可达，约 1 万+ 互联网暴露 SAP 系统可能触达该组件。CVSS 10.0 + 补丁一出即进入「补丁比对」武器化窗口，须立即打内核补丁。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">JetBrains Hub CVE-2026-86480（CVSS 9.8）—— 未授权注册可信服务夺取超级管理员</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-86480 · CWE-306</span>
+                        <span class="cvss-score">CVSS 9.8 · 公开 PoC</span>
+                    </div>
+                    <div class="article-body">
+                        <p>JetBrains Hub <strong>2026.2.52442 之前</strong>版本存在 <strong>CWE-306 缺失认证</strong>，未授权攻击者可在 Hub 注册一个「可信服务」并直接获得 <strong>superuser 全权</strong>（CVSS 9.8，AV:N/AC:L/PR:N/UI:N）。公开 PoC 已出现。</p>
+                        <p>Hub 是 YouTrack、TeamCity 等 JetBrains 全家桶的统一身份/授权枢纽。拿下 Hub 即等于接管所有依赖它的 JetBrains 服务与用户账号；结合此前 JetBrains Cadence 遭 TeamCity 攻破 AWS 凭据的真实案例，公网暴露的 Hub 应立即升级并排查异常「可信服务」与新建超级用户。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">FreeIPA CVE-2026-76578（CVSS 9.8）—— 匿名 LDAP 直取管理员凭据</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-76578 · CWE-306 · 4.13.4</span>
+                        <span class="cvss-score">CVSS 9.8 · 链 389-ds 76560</span>
+                    </div>
+                    <div class="article-body">
+                        <p>FreeIPA 的 <strong>self-managed OTP token ACI 不要求认证、且不限制可附加属性</strong>，匿名 LDAP 客户端可借此 + 底层 389 Directory Server 的 SELFDN ACI 缺陷（另报 <strong>CVE-2026-76560</strong>，7.5），创建一个攻击者控制的 Kerberos 主体并加入 <strong>administrators 组</strong>，实现<strong>远程未授权获取真实管理员组成员身份</strong>。修复于 <strong>FreeIPA 4.13.4</strong>。同批还修 CVE-2026-79678（8.1，idp-add 鉴权前 eval 可泄露环境变量）。</p>
+                        <p>FreeIPA / Red Hat IdM 管理整个 Linux 域身份与访问，拿下管理员等于「整域前门失守」；默认安装即受影响，SID 启用部署还可进一步获取带授权数据的 Kerberos 票据、签发证书。临时缓解：限制 LDAP 389/636 至可信主机、关闭匿名绑定；仅打目录服务器补丁不足以清除已植入身份，需审计管理员组。</p>
+                    </div>
+                </article>
+            </div>
+<!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. CISA KEV 9/8 再添 4 项在野漏洞</h4>
+                    <p>新增 CVE-2026-75650（Adobe Commerce/Magento，承接 9/7 头条）、CVE-2026-81963 与 CVE-2026-85880（微软双零日，本日头条）、CVE-2026-86218（N-able N-central，9/4 已报）。BOD 26-04 下 FCEB 机构须加速修复。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Tanium Enforce CVE-2026-87088（7.0）9/9 披露</h4>
+                    <p>OS 命令注入（CWE-78），影响 Enforce 2.9/2.10/3.0 多版本，Tanium 以 TAN-2026-022 修复。本地攻击向量，需物理/低权限前置。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Adobe 9 月安全更新批量发布</h4>
+                    <p>除 AEM CVE-2026-19232 外，APSB26-98 等还修 ColdFusion eval 注入（CVE-2026-48273/76190）、Acrobat Reader 多枚 UaF/越界写、Commerce 一批 XSS 与越权，整体体量庞大。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. SAP 同批另 3 个严重漏洞</h4>
+                    <p>S4GET（CVE-2026-58240，NetWeaver 缺认证，未授权注册组件）、CVE-2026-76969（多租户 CAP 凭据泄露）、CVE-2026-66768（NetWeaver 越权）。均无在野证据但 CVSS 高。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. MikroTik MikroTrick 链在野（SK-CERT 警告）</h4>
+                    <p>攻击者链化 CVE-2026-67276 与 CVE-2026-86060，在开启特定服务时无需认证即可完全控制 RouterOS 设备；ISP/中小企业广部署，需升级固件、收敛管理面、审计异常账号。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. FreeIPA 链底层与伴随缺陷</h4>
+                    <p>CVE-2026-76560（389-ds SELFDN ACI，7.5）是 76578 的目录服务端根因；CVE-2026-79678（8.1）idp-add eval 虽无代码执行但可逐条读环境变量、耗尽内存，容器镜像需核查首启口令是否残留于进程环境。</p>
+                </div>
+            </div>
+<!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-09-09 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "SAP 44756×10.0": [0.92, 0.99]
+    "MS PT双零日 81963/85880": [0.85, 0.92]
+    "MSMQ/DNS/DHCP/NFS 9.8": [0.88, 0.94]
+    "AEM 19232×9.9": [0.80, 0.95]
+    "JetBrains Hub 86480": [0.90, 0.93]
+    "FreeIPA 76578": [0.88, 0.93]
+    "Tanium 87088×7.0": [0.60, 0.70]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-09-09 安全事件类型分布
+    "操作系统/内核/域控 RCE 集群": 30
+    "SAP/企业级应用 RCE": 18
+    "身份/目录服务接管": 18
+    "CMS/电商/文档 RCE": 14
+    "AI/开发工具链": 12
+    "网络设备/路由器在野": 8
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">微软 9 月补丁星期二：在野零日 → 提权 → 域横向（攻击链）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[网络可达的 Windows 服务 / 办公预览] --> B{在野零日 CVE-2026-81963 / 85880}
+    B --> C[本地提权至 SYSTEM]
+    C --> D[窃取凭据 / 票据]
+    D --> E[横向移动至域控 / 其他主机]
+    E --> F[全域失陷 / 持久化]
+                    </div>
+                </div>
+            </div>
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月网安事件时间线
+    9月1日 : Manifold GitSpawn / Avast PrettyPrague 0day PoC
+    9月2日 : CISA KEV 增7漏洞 SonicWall/Kestra/LiteLLM/Starlette
+    9月3日 : FalconFlank 0day PoC 公开(EDR SYSTEM)
+    9月4日 : Chromium V8 85046 入 KEV / StyleSmuggler 首批利用
+    9月5日 : Ivanti 8850 双零日链在野 / JetBrains Cadence 遭攻破
+    9月6日 : N-central 86218×10.0 / Elementor 32475 在野 / MikroTik 6漏洞
+    9月7日 : Adobe CVE-2026-75650(10.0)热补丁 / knowns 簇4 CVE / YouTrack接管
+    9月8日 : Adobe AEM 19232×9.9 / SAP OVERPASS 44756×10.0 / Hub86480 / FreeIPA76578 / CISA再添4项KEV
+    9月9日 : 微软9月补丁星期二 972+CVE·2在野零日·多枚9.8 RCE / Tanium 87088
+                </div>
+            </div>
+<!-- ===== 出处链接 ===== -->            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Talos — Microsoft Sept 2026 Patch Tuesday</span>
+                        <a href="https://blog.talosintelligence.com/microsoft-patch-tuesday-for-september-2026/">https://blog.talosintelligence.com/microsoft-patch-tuesday-for-september-2026/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CrowdStrike — Patch Tuesday Analysis Sept 2026</span>
+                        <a href="https://www.crowdstrike.com/en-us/blog/patch-tuesday-analysis-september-2026/">https://www.crowdstrike.com/en-us/blog/patch-tuesday-analysis-september-2026/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 9/8 新增 4 项在野漏洞</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/09/08/cisa-adds-four-known-exploited-vulnerabilities-catalog">https://www.cisa.gov/news-events/alerts/2026/09/08/cisa-adds-four-known-exploited-vulnerabilities-catalog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Adobe APSB26-98（CVE-2026-19232）</span>
+                        <a href="https://helpx.adobe.com/security/products/experience-manager/apsb26-98.html">https://helpx.adobe.com/security/products/experience-manager/apsb26-98.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-19232（Adobe AEM）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-19232">https://nvd.nist.gov/vuln/detail/CVE-2026-19232</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SAP Note 3747649（OVERPASS CVE-2026-44756）</span>
+                        <a href="https://me.sap.com/notes/3747649">https://me.sap.com/notes/3747649</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity Help — SB2026090832（CVE-2026-44756）</span>
+                        <a href="https://www.cybersecurity-help.cz/vdb/SB2026090832">https://www.cybersecurity-help.cz/vdb/SB2026090832</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GajShield — CVE-2026-44756 OVERPASS 分析</span>
+                        <a href="https://kb.gajshield.com/a/1383/cve-2026-44756-overpass-maximum-severity-sap-kernel-flaw-enables-remote-administrative-code-execution">https://kb.gajshield.com/a/1383/cve-2026-44756-overpass-maximum-severity-sap-kernel-flaw-enables-remote-administrative-code-execution</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-86480（JetBrains Hub）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-86480">https://www.cve.org/CVERecord?id=CVE-2026-86480</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IONIX — CVE-2026-86480 威胁条目</span>
+                        <a href="https://www.ionix.io/threat-center/cve-2026-86480">https://www.ionix.io/threat-center/cve-2026-86480</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-76578（FreeIPA）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-76578">https://www.cve.org/CVERecord?id=CVE-2026-76578</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FreeIPA 4.13.4 发布说明（含 76578/79678）</span>
+                        <a href="https://www.freeipa.org/release-notes/4-13-4.html">https://www.freeipa.org/release-notes/4-13-4.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Red Hat — CVE-2026-76578</span>
+                        <a href="https://access.redhat.com/security/cve/CVE-2026-76578">https://access.redhat.com/security/cve/CVE-2026-76578</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-87088（Tanium Enforce）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-87088">https://www.cve.org/CVERecord?id=CVE-2026-87088</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma 每日威胁情报 9/8（MikroTrick 等）</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-09-08">https://www.enigma-global.com/blog/daily-digest-2026-09-08</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 总目录</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、漏洞描述等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月9日
+            </p>
+        </footer>
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年7月14日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年7月14日 星期二</span>
+            <span class="edition-number">第 37 期 | 总第 37 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Patch Tuesday SPNEGO蠕虫9.8 · NightmareEclipse 7·14 D-Day · CrashStealer macOS窃密器 · Gitea Runner容器逃逸9.9 · Lidl供应链泄露
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Microsoft 7 月 Patch Tuesday：SPNEGO NEGOEX CVE-2025-47981 CVSS 9.8 蠕虫级 RCE，Kerberos RC4 永久退役，三重风暴交汇 7 月 14 日</h2>
+                <p class="sub-headline">127 个 CVE 修复、SPNEGO 蠕虫无需凭据无需交互、NightmareEclipse 7·14 D-Day 同日到来——Windows 运维团队面临全年最紧张的一天。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">CVE-2025-47981 — SPNEGO NEGOEX 堆缓冲区溢出 CVSS 9.8 蠕虫级 RCE，所有 Windows 默认受影响</h3>
+                    <div class="article-meta">
+                        <span>Microsoft MSRC / Sophos / Rapid7 / ZDI 7/14 发布</span>
+                        <span class="cvss-score">CVSS 9.8 蠕虫级</span>
+                    </div>
+                    <div class="article-body">
+                        <p>微软 7 月 Patch Tuesday 共修复 <strong>127 个 CVE</strong>（9 个 Critical、118 个 Important），其中 34 个 CVSS 8.0+。最严重的是 <strong>CVE-2025-47981</strong>——SPNEGO Extended Negotiation（NEGOEX）安全机制中的堆缓冲区溢出（CWE-122）。SPNEGO 位于 Kerberos 和 NTLM 之下，是认证协商的底层协议，<strong>默认启用于所有 Windows 10 1607+ 和 Windows Server 2008R2+</strong>。</p>
+                        <p><strong>技术参数：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>属性</th><th>值</th></tr>
+                            <tr><td>CVSS v3.1</td><td class="risk-high">9.8 (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H)</td></tr>
+                            <tr><td>攻击向量</td><td class="risk-high">网络 — 无需凭据、无需用户交互</td></tr>
+                            <tr><td>蠕虫传播</td><td class="risk-high">✅ 可自动扫描并感染内网其他主机</td></tr>
+                            <tr><td>Microsoft 评估</td><td class="risk-high">30 天内极可能被利用</td></tr>
+                        </table>
+                        <p><strong>Rapid7：</strong>预认证漏洞，攻击者可借此获取特殊权限，微软评估短时间内即出现野外利用。<strong>ZDI：</strong>利用无需用户交互，具备蠕虫特质——在 Patch Tuesday 历史中极为罕见。</p>
+                        <p><strong>⚠️ Kerberos RC4 永久退役：</strong>7 月 14 日累积更新同时永久移除 RC4 回滚机制。任何仍使用 RC4 的服务账户打补丁后认证失败——<strong>先审计再打补丁</strong>。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者发送恶意 NEGOEX 消息</span>
+                        <span class="flow-step">堆缓冲区溢出触发</span>
+                        <span class="flow-step critical">SYSTEM 权限 RCE</span>
+                        <span class="flow-step critical">蠕虫自动传播内网</span>
+                        <span class="flow-step">域控制器沦陷</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">NightmareEclipse 7·14 D-Day 到来 — 7 个 Windows 零日后的"粉碎骨头"威胁日与 Patch Tuesday 交汇</h3>
+                    <div class="article-meta">
+                        <span>byteiota / TechTimes / The CyberSignal 7/14</span>
+                        <span class="cvss-score">3 个在野利用 3 个未修复</span>
+                    </div>
+                    <div class="article-body">
+                        <p>自 4 月起连续披露 7 个 Windows 零日的 NightmareEclipse（Chaotic Eclipse），其<strong>5 月 28 日威胁的"bone-shattering"发布日——7 月 14 日——正式到来</strong>。目前 BlueHammer、RedSun、UnDefend、RoguePlanet 已修复；YellowKey（60 秒绕过 BitLocker）、GreenPlasma、MiniPlasma 仍无补丁。</p>
+                        <p><strong>三重风暴交汇：</strong>Patch Tuesday 127 CVE + Kerberos RC4 强制退役 + NightmareEclipse D-Day。Windows 团队面临全年最高压运维窗口。</p>
+                        <p>研究员因 RoguePlanet 消耗精力"部分收回"威胁，但<strong>未正式取消</strong>。社区正密切关注其自托管代码平台动向。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Jamf 披露 CrashStealer — 原生 C++ macOS 窃密器，绕过 Gatekeeper 针对 80 个加密钱包 + 14 款密码管理器</h3>
+                    <div class="article-meta">
+                        <span>Jamf Threat Labs 7/14 报告 / AppleInsider</span>
+                        <span class="cvss-score">在野利用 AES-256-GCM</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Jamf 7 月 14 日正式发布 CrashStealer 完整分析报告——全 C++ 编写的 macOS 窃密器，<strong>通过合法 Apple 公证+Developer ID 签名的 Werkbit 磁盘镜像分发，可完全绕过 Gatekeeper</strong>。</p>
+                        <p><strong>目标覆盖：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>类别</th><th>目标数</th></tr>
+                            <tr><td>加密钱包扩展</td><td class="risk-high">~80 个</td></tr>
+                            <tr><td>密码管理器</td><td class="risk-high">14 款</td></tr>
+                            <tr><td>浏览器</td><td>6 款</td></tr>
+                            <tr><td>系统数据</td><td>钥匙串+文件</td></tr>
+                        </table>
+                        <p>采用控制流平坦化+反调试+AES-256-GCM 加密+LaunchAgent 持久化——<strong>macOS 恶意软件的专业化里程碑</strong>。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Gitea act_runner CVE-2026-58053 — CVSS 9.9 容器逃逸，PoC 公开，全球 11.3 万风险资产</h3>
+                    <div class="article-meta">
+                        <span>exploitarium / VulnCheck / 奇安信 CERT</span>
+                        <span class="cvss-score">CVSS 9.9 官方无补丁</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Gitea act_runner Docker 后端（act ≤0.262.0）在配置 <code>privileged: false</code> 时仅关闭 Privileged 标志，但 <code>container.options</code> 中的 <code>--pid=host</code>、<code>--cap-add=SYS_ADMIN</code> 等危险选项<strong>原样合并</strong>到 Docker HostConfig。</p>
+                        <p><strong>全球影响力：</strong>奇安信测绘 113,706 个风险资产，40,732 个关联 IP。<strong>官方暂无补丁</strong>，临时缓解：限 workflow 权限 + 外部 PR 手动审批 + Runner 网络隔离。</p>
+                        <p>攻击者只需提交恶意 workflow 即可逃逸至宿主机 root——<strong>一旦 Runner 沦陷，所有仓库密钥全部暴露</strong>。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Lidl 欧洲三国供应链数据泄露 + 巨騰國際暗网客户数据曝光</h3>
+                    <div class="article-meta">
+                        <span>网易 / AASTOCKS / Lidl 官方声明 7/14</span>
+                        <span class="cvss-score">供应链攻击</span>
+                    </div>
+                    <div class="article-body">
+                        <p>两起供应链数据泄露同日曝光：<strong>Lidl</strong> 第三方 IT 服务商遭攻击，荷兰/比利时/德国在线商城顾客全名+电话+邮箱+出生日期被盗，公司罕见直白警告用户防范钓鱼；<strong>巨騰國際</strong>（港股 03336）暗网发现客户/供应商数据被出售，已紧急聘请网络安全顾问。</p>
+                        <p>两起事件共同指向：<strong>"企业自身安全≠供应链安全"</strong>——第三方服务商正成为最薄弱环节。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Adobe 宣布 Patch Tuesday 翻倍至每月两次 — AI 加速漏洞发现推动补丁节奏变革</h4>
+                    <p>Adobe 从 7 月起安全公告增至每月两次（第二和第四个周二），直接原因是攻击者利用 AI 加速漏洞发现。InfoSec Industry:"利用窗口以小时计，月度补丁周期在数学上不再成立。"</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. DuneSlide Cursor AI IDE 双零点击 RCE（CVE-2026-50548/50549）CVSS 9.8</h4>
+                    <p>Cato AI Labs 发现 Cursor IDE 中两个 CVSS 9.8 零点击 RCE。攻击者通过 Prompt 注入操纵 AI 代理的工作目录参数或符号链接规范化绕过，实现完全沙箱逃逸。Tata Communications 7/14 列为本周首要威胁。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. js-yaml CVE-2026-59870 — PoC 公开，O(n²) DoS 可自动化利用，月下载超 1 亿次</h4>
+                    <p>js-yaml 5.0.0-5.2.0 YAML11_SCHEMA !!omap 标签 O(n²) CPU 消耗导致 DoS。CISA ADP 标记"exploitation: poc"+"automatable: yes"。月下载量超 1 亿次，影响面极广。立即升级至 5.2.1。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. EU/UK 联合制裁俄罗斯 FSB Center 16 — 12 国联合公告确认全球政府路由器扫描</h4>
+                    <p>EU/UK 7/13 制裁 24+ 名俄罗斯 FSB Center 16 成员，正式归因 2025 年 12 月波兰电网攻击。12 国联盟公告确认 FSB 正全球扫描政府路由器弱 SNMP（CVE-2018-0171）。APT28 同步生成 4 个新恶意样本。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Google Chrome CVE-2026-15114 — Codecs 越界读写，补丁已发布</h4>
+                    <p>Chrome 150.0.7871.115 修复 Codecs 组件越界读写漏洞（CVE-2026-15114），攻击者可通过特制视频文件触发堆损坏 RCE。Chromium 安全等级：High。立即更新 Chrome。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026年7月14日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用/PoC公开"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "SPNEGO CVE-2025-47981 蠕虫9.8": [0.65, 0.98]
+    "RoguePlanet CVE-2026-50656 在野": [0.95, 0.92]
+    "YellowKey CVE-2026-45585 PoC公开 未修复": [0.88, 0.90]
+    "Gitea Runner CVE-2026-58053 9.9 PoC公开": [0.82, 0.95]
+    "CrashStealer macOS在野": [0.90, 0.88]
+    "SharePoint CVE-2026-45659 KEV": [0.92, 0.85]
+    "Chrome CVE-2026-15114 已修复": [0.30, 0.82]
+    "js-yaml CVE-2026-59870 PoC公开": [0.78, 0.55]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 7/14 安全事件类型分布
+    "Microsoft Patch Tuesday (SPNEGO/Kerberos/Defender)" : 28
+    "零日冲突与研究规范 (NightmareEclipse/Adobe)" : 22
+    "macOS/iOS 恶意软件 (CrashStealer)" : 18
+    "DevOps/容器供应链 (Gitea/js-yaml)" : 17
+    "数据泄露与地缘 (Lidl/巨騰/FSB制裁)" : 15
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月8日-7月14日网安事件
+    7月8日 : GhostLock Linux内核15年UAF PoC
+           : CISA KEV新增4漏洞
+           : Ubiquiti UniFi OS 11个CVE
+           : Writer AI WriteOut跨租户泄露
+           : RedWing Android银行木马MaaS
+           : APT-C-20 Fancy Bear PNG隐写
+           : PromptSpy调用Gemini Android恶意软件
+    7月9日 : Chrome 150修27漏洞含2个UAF RCE
+           : GhostApproval AI代理符号链接绕过
+           : PAN-OS CVE-2026-0288 TSA 9.2
+           : Defender RoguePlanet CVE-2026-50656 0day修复
+           : GoodPersonRAT假LetsVPN RAT
+           : Injective Labs SDK供应链投毒
+    7月10日 : HPLIP CVE-2026-14544 CVSS 9.8 RCE
+           : RoundCube 1.7 6漏洞含0-click XSS
+           : O-UNC-066 vishing+Entra Passkey劫持
+           : GodDamn勒索PoisonX驱动
+           : CISA KEV新增iCagenda+Balbooa Joomla
+    7月11日 : XRING阿里XQUIC一行错误4年无补丁
+           : WP-SHELLSTORM 1.4M名单25K沦陷
+           : 银狐MODBEACON Rust gRPC
+           : PrestaShop CVSS 10.0 RCE
+           : jscrambler npm供应链投毒
+           : Zimbra Classic严重XSS无CVE
+           : Datadog揭露GitHub休眠账户侦察网
+    7月12日 : vuln.today 19 PHP/WordPress HIGH(3零补丁)
+           : Nezha Monitoring API凭证泄露
+           : xAI Grok-4.5 Pliny越狱
+           : 暗网20起泄露含Ubisoft
+    7月13日 : mySites.guru证实iCagenda零日自6/15
+           : RSFiles Joomla第五个CVSS 10.0
+           : Flowise硬编码JWT 9.3
+           : UniFi OS SAB-066 10.0+6Critical
+           : Defender RoguePlanet补丁回归Bug
+           : RabbitMQ 11CVE max 9.2
+           : Ghostcommit PNG隐写Prompt注入
+           : 俄罗斯入侵北约IP摄像头
+           : Operation Muck and Load Go模块投毒
+           : D1R勒索半导体供应链
+           : EU/UK正式制裁FSB Center 16
+    7月14日 : Patch Tuesday 127CVE SPNEGO蠕虫9.8
+           : Kerberos RC4永久退役
+           : NightmareEclipse 7·14 D-Day
+           : CrashStealer macOS窃密器完整披露
+           : Gitea act_runner CVE-2026-58053 9.9
+           : Lidl三国供应链数据泄露
+           : 巨騰國際暗网客户数据曝光
+           : Adobe宣布Patch Tuesday翻倍
+           : js-yaml CVE-2026-59870 PoC自动化DoS
+           : Chrome CVE-2026-15114 Codecs堆损坏
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft MSRC — July 2026 Security Updates</span>
+                        <a href="https://msrc.microsoft.com/update-guide/releaseNote/2026-Jul">MSRC July Update Guide</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Sophos — July Patch Tuesday offers 127 fixes</span>
+                        <a href="https://www.sophos.com/blog/july-patch-tuesday-offers-127-fixes">Sophos July PT Analysis</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">byteiota — Microsoft Patch Tuesday July 2026</span>
+                        <a href="https://byteiota.com/patch-tuesday-july-2026-cve-tracking">byteiota PT Guide</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechTimes — Kerberos RC4 Rollback Killed</span>
+                        <a href="https://www.techtimes.com/articles/320150/20260711/july-patch-rogueplanet-tuesday-kills-windows-kerberos-rc4-rollback-service-accounts-face.htm">Kerberos RC4 End</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2025-47981 SPNEGO NEGOEX</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-47981">SPNEGO 9.8</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The CyberSignal — Chaotic Eclipse July 14 Drop</span>
+                        <a href="https://www.thecybersignal.com/chaotic-eclipse-microsoft-law-enforcement-july-14-bone-shattering-drop-2026">NightmareEclipse D-Day</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CSDN/网易 — NightmareEclipse 六连零日危机</span>
+                        <a href="https://cailiangfei.blog.csdn.net/article/details/161558718">7·14倒计时</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Jamf Threat Labs — CrashStealer Technical Report</span>
+                        <a href="https://www.jamf.com/blog/crashstealer-macos-malware/">CrashStealer Report</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AppleInsider — CrashStealer Analysis</span>
+                        <a href="https://appleinsider.com/articles/26/07/13/crashstealer-malware-poses-as-an-apple-tool-to-steal-passwords-mac-data">CrashStealer AppleInsider</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT之家 — CrashStealer攻击披露</span>
+                        <a href="https://www.163.com/dy/article/L1PIJ20C0511B8LM.html">CrashStealer 中文</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberNexora — CrashStealer macOS Malware</span>
+                        <a href="https://blog.cybernexora.com/crashstealer-macos-malware">CyberNexora Analysis</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">exploitarium — Gitea Runner PoC</span>
+                        <a href="https://github.com/bikini/exploitarium/tree/main/gitea-act-runner-container-options-poc">Runner Container Escape PoC</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — Gitea runner Hardening Bypass</span>
+                        <a href="https://www.vulncheck.com/advisories/gitea-act-runner-container-hardening-bypass-via-workflow-container-options">VulnCheck Advisory</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">奇安信 CERT — Gitea runner 容器逃逸通告</span>
+                        <a href="https://www.secrss.com/articles/91750">奇安信安全通告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯云安全 — Gitea runner 风险通告</span>
+                        <a href="https://cloud.tencent.com/announce/detail/2357">腾讯云通告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">网易 — Lidl 连锁店遭网络攻击</span>
+                        <a href="https://www.163.com/dy/article/L1P62IDK05561FZJ.html">Lidl 数据泄露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AASTOCKS — 巨騰國際客戶資料疑外洩</span>
+                        <a href="https://www.aastocks.com/tc/stocks/news/aafn-con/now.1496594/industry-news/hk6">巨騰國際暗网</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfoSec Industry — Week In Review</span>
+                        <a href="https://infosecindustry.com/2026/07/13/infosec-week-in-review-dhs-gets-breached-ai-ransomware-goes-autonomous-and-adobe-doubles-down-on-patch-tuesday">Weekly Roundup</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Anomali — Russian Intel Scanning Gov Networks</span>
+                        <a href="https://www.anomali.com/blog/russian-intelligence-services-actively-scanning-government-networks-pubsec">FSB Center 16</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory — js-yaml CVE-2026-59870</span>
+                        <a href="https://github.com/nodeca/js-yaml/security/advisories/GHSA-724g-mxrg-4qvm">js-yaml DoS</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Chrome Releases — CVE-2026-15114</span>
+                        <a href="https://chromereleases.googleblog.com/2026/07/stable-channel-update-for-desktop_01162222768.html">Chrome 15114</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tata Communications — AI Coding Agent Threat Advisory</span>
+                        <a href="https://www.tatacommunications.com/resourcehub/threat-advisory">Zero-Click AI Injection</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年7月14日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月14日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head><body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月14日 星期一</span>
+            <span class="edition-number">第 159 期 | 总第 159 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+                        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Exchange62911×22k曝露PoC · Rails66066×9.5在野 · Anthropic蒸馏APT29报告 · JFrog42016链后门 · EU CRA 9/11生效</div>
+
+
+
+                <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">Microsoft Exchange 认证绕过 CVE-2026-62911：约 2.2 万台服务器暴露、公开 PoC 流通（CVSS 8.0）</h2>
+                <p class="sub-headline">Exchange MRSProxy 的 HTTP.sys 端点跳过 EPA 通道绑定校验，成为 NTLM 中继靶；攻击者借 PetitPotam 式 RPC 强制机器账户出站认证，中继后以 SYSTEM 写入 ASPX webshell。Orange Tsai 在 Pwn2Own Berlin 2026 演示，Shadowserver 8/31 扫描到 21,899 台暴露实例，荷兰 NCSC 已确认公开 exploit 代码在流通。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Microsoft Exchange CVE-2026-62911 — 认证绕过 + NTLM 中继链至 SYSTEM（头条）</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-62911 · CWE-294 capture-replay · MRSProxy HTTP.sys</span>
+                        <span class="cvss-score">CVSS 8.0 · 21,899 暴露 · 公开 PoC</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Exchange 的 <strong>Mailbox Replication Proxy Service</strong> 存在认证绕过（CWE-294）：IIS 路径 <code>/EWS/MRSProxy.svc</code> 强制 EPA（通道绑定），但 Windows <strong>HTTP.sys</strong> 直连的 <code>/Microsoft.Exchange.MailboxReplicationService.ProxyService</code> 路径完全跳过通道绑定校验，成为天然 NTLM 中继目标。攻击链为：PetitPotam 式 MS-EFSR RPC 强制 Exchange 机器账户出站认证 → 中继到未保护端点 → 借机器账户默认的 <code>ms-Exch-EPI-Token-Serialization</code> 特权调用 <code>IMailbox_Config6()</code>，以 <strong>SYSTEM 写入 ASPX webshell</strong>，进而接管整台邮件服务器。</p>
+                        <p>漏洞由 DEVCORE <strong>Orange Tsai</strong> 在 <strong>Pwn2Own Berlin 2026（5/15）</strong> 演示，三漏洞链拿下 SYSTEM RCE、奖金 20 万美元——ProxyLogon 之后他对 Exchange 的第三次重大贡献。微软于 <strong>2026-08-11（8 月补丁星期二）</strong> 修复（版本 15.1.2507.72 / 15.2.1544.44 / 15.2.1748.49 / 15.2.2562.46），影响 Exchange 2016 / 2019 / Subscription Edition。</p>
+                        <p><strong>值得关注的原因：</strong>Shadowserver 8/31 扫描到 <strong>21,899 台暴露实例</strong>（美国约 6,200、德国约 5,100），补丁发布三周后仍有约 2.2 万台未修；<strong>荷兰 NCSC 已确认公开 exploit 代码在流通</strong>，GitHub 可获取。Exchange 2016/2019 的 ESU 计划 2026 年 10 月到期，届时再无补丁路径。缓解：立即打 8 月补丁、全角色启用 EPA、限制 MRSProxy 公网暴露、轮换邮件与域凭据、审计异常 NTLM 中继与邮箱访问。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">MS-EFSR 强制机器账户认证</span>
+                        <span class="flow-step critical">中继至 HTTP.sys MRSProxy</span>
+                        <span class="flow-step">借 EPI-Token 特权</span>
+                        <span class="flow-step critical">SYSTEM 写 ASPX webshell</span>
+                        <span class="flow-step critical">接管邮箱/窃取凭据</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Rails「KindaRails2Shell」CVE-2026-66066（CVSS 9.5）：解析混淆致未授权 RCE，补丁仍留 RCE 后门</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-66066 · Active Storage + libvips/HDF5</span>
+                        <span class="cvss-score">CVSS 9.5 · VulnCheck 确认在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Ruby on Rails 的 Active Storage 用 libvips 作图片后端（Rails 7.0+ 默认）且接受不可信图片上传时，存在解析器歧义：Rails 信任客户端声明的 content-type，libvips 按魔数判断真实类型。攻击者上传伪装 <strong>MATLAB Level 5</strong> 的文件 → libvips 调 libmatio → 触发 <strong>HDF5 External File List</strong>，使服务器把任意文件（<code>/proc/self/environ</code>、<code>config/master.key</code>）内容当作图像像素返回——<strong>未认证任意文件读</strong>。</p>
+                        <p>窃取 <code>secret_key_base</code> 后，攻击者签名含恶意指令的 variation key，经 Vips 管线 <code>public_send</code> 调用 <code>Kernel#spawn/eval</code> 实现 <strong>RCE</strong>。VulnCheck 确认蜜罐（英国/以色列/新加坡）活跃利用，检测数单日 50→360，8 月初已识别 <strong>7,000+ 暴露实例</strong>。补丁 7.2.3.2/8.0.5.1/8.1.3.1。<strong>关键陷阱：</strong>VulnCheck 实测 8.1.3.1 上 variation-key 的 Marshal 反序列化路径仍可 RCE。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Anthropic 154 页威胁报告（9/10）：AI 实战入侵 + 七家中国实验室工业级蒸馏 Claude</h3>
+                    <div class="article-meta">
+                        <span>GTG-20006(APT29) · 蒸馏攻击 · NSA/CISA/FBI 联合 advisory</span>
+                        <span class="cvss-score">安全事件 · 国家级间谍新类别</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Anthropic 披露两类高信号滥用：<strong>GTG-20006</strong>（对齐 Midnight Blizzard/APT29/SVR）用 Claude 构建 AI 工作流——监控 EDR 检测后<strong>自动重建并重投恶意软件规避安全产品</strong>，目标覆盖乌克兰/欧洲/中东/亚洲政府国防外交，涉 20+ 组织、窃取数百 GB。另七家中国实验室工业级非法蒸馏 Claude：<strong>Alibaba</strong>（1.51 亿次交换、3,500+ 欺诈账户，为 Qwen）、Moonshot（转发近 30 万客户请求、暴露用户对话）、DeepSeek、Z.ai/智谱、MiniMax、SenseTime、Xiaomi，自 2 月起共 6 起。</p>
+                        <p>美国 <strong>NSA/CISA/FBI 本周联合 advisory</strong> 将 AI 模型蒸馏列为国家级间谍新类别。报告标志「AI 把国家级攻击能力下放到个人/小团体」成现实：归因信号改变，检测响应时间窗被 AI 压缩。防御须把「AI 代理化编排/agent swarm」视为普遍可用工具。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">JFrog Artifactory CVE-2026-42016 + 42018 — CI/CD 构建管道链式后门</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-42016 / 42018 · 不正确授权链</span>
+                        <span class="cvss-score">供应链 · Wiz 记录 8/15–9/8</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Wiz 记录 <strong>2026-08-15 至 09-08</strong> 期间，攻击者将 JFrog Artifactory 两枚缺陷链式利用，在软件<strong>构建管道植入后门</strong>：CVE-2026-42016 为不正确授权（仅校验 token 的 signature/issuer，<strong>未校验 scope</strong>）导致权限提升；与 CVE-2026-42018 组合后可控整个制品信任链。</p>
+                        <p>Artifactory 承载喂给 CI/CD 的容器镜像、软件包与构建产物，<strong>管理访问即可篡改组织信任并交付的制品</strong>——比单台主机失陷更上游的供应链支点。处置：审计自 8/27 起的 admin 账户/令牌，轮换所有 CI/CD 与制品库凭据，排查异常 artifact 变更。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中危</span>
+                    <h3 class="article-title">EU Cyber Resilience Act（CRA）生效（9/11）：漏洞与事件强制上报时代开启</h3>
+                    <div class="article-meta">
+                        <span>CRA 激活 · ENISA 单一报告平台</span>
+                        <span class="cvss-score">监管拐点 · 9/11 生效</span>
+                    </div>
+                    <div class="article-body">
+                        <p>欧盟《网络韧性法案》于 <strong>2026-09-11</strong> 激活，要求「带数字元素的产品」制造商上报<strong>主动利用的漏洞与严重事件</strong>；ENISA 同步上线 CRA 单一报告平台并扩展其在 CVE 项目中的角色。产品安全从自愿最佳实践转为欧盟单一市场的<strong>强制性报告义务</strong>。</p>
+                        <p>这是本报告期最显著的监管拐点，与美国的 CISA BOD 26-04 形成<strong>欧美双侧强制修复 SLA</strong> 格局，将直接改变全球厂商的漏洞披露节奏与补丁优先级逻辑。对出海与面向欧盟市场的软硬件厂商，合规不再是可选项。</p>
+                    </div>
+                </article>
+            </div>
+
+<!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. OpenAI Astra 模型越过关键网络能力阈值</h4>
+                    <p>测试中独立识别并利用 0day 漏洞、并逃逸浏览器沙箱——OpenAI 定义的「关键网络能力」门槛被自主模型跨过，引发 AI 安全边界讨论。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Mirage 2FA 扩展至 4,000+ 美国组织</h4>
+                    <p>基于 AiTM 的会话窃取即服务，攻击者不必击败 MFA，只需窃取认证后创建的会话——「上了 MFA 就安全」彻底破产。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. BGP 路由劫持推送恶意 Virtualizor 更新</h4>
+                    <p>攻击者劫持 BGP 路由，向用户投递被篡改的 Virtualizor 更新包，属典型的更新通道供应链投毒。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. HexStrike AI CVE-2026-90619 命令注入（公开 PoC）</h4>
+                    <p>AI 渗透测试工具 HexStrike AI 的执行端点存在 OS 命令注入（CWE-77/78，CVSS 7.3），exploit 已公开；安全工具自身成攻击面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. FedML CVE-2026-90614 反序列化</h4>
+                    <p>AI/ML 框架 FedML 的 MQTT+S3 通信后端 S3Storage.read_model 存在不安全反序列化（CWE-502），可远程触发；项目暂未回应。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Fire Ant（中国关联）侵入 Cisco IOS XR + TACACS</h4>
+                    <p>该团伙渗透 Cisco IOS XR 路由器与 TACACS 认证基础设施，patch 系统库过滤日志、隐藏隧道配置，常见于路由器级长期驻留。</p>
+                </div>
+            </div>
+
+<!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-09-14 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Exchange 62911×8.0 22k PoC": [0.80, 0.85]
+    "Rails 66066×9.5 在野": [0.90, 0.95]
+    "JFrog 42016链后门": [0.75, 0.90]
+    "HexStrike 90619 PoC": [0.70, 0.73]
+    "FedML 90614 反序列化": [0.62, 0.63]
+    "Anthropic蒸馏APT29 事件": [0.78, 0.82]
+    "OpenAI Astra 越阈": [0.60, 0.80]
+    "Mirage 2FA 4k组织": [0.72, 0.78]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-09-14 安全事件类型分布
+    "邮件/协作基础设施认证绕过 (Exchange)": 22
+    "Web框架/应用 RCE (Rails)": 18
+    "AI模型滥用与蒸馏攻击": 20
+    "CI/CD 供应链后门 (JFrog)": 14
+    "监管拐点与AI能力阈值": 14
+    "2FA绕过/供应链投毒/工具漏洞": 12
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Exchange CVE-2026-62911 攻击链（NTLM 中继 → SYSTEM）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[PetitPotam式 MS-EFSR RPC 强制Exchange机器账户出站认证] --> B{HTTP.sys MRSProxy 端点跳过EPA通道绑定}
+    B --> C[中继NTLM至未保护 ProxyService 端点]
+    C --> D[借 ms-Exch-EPI-Token-Serialization 调 IMailbox_Config6]
+    D --> E[以 SYSTEM 写入 ASPX webshell]
+    E --> F[接管邮箱/读发邮件/下载附件]
+    F --> G[窃取LSASS凭据与AD高权组成员]
+                    </div>
+                </div>
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月网安事件时间线
+    9月1日 : Manifold GitSpawn / Avast PrettyPrague 0day PoC
+    9月2日 : CISA KEV 增7漏洞 SonicWall/Kestra/LiteLLM/Starlette
+    9月3日 : FalconFlank 0day PoC 公开(EDR SYSTEM)
+    9月4日 : Chromium V8 85046 入 KEV / StyleSmuggler 首批利用
+    9月5日 : Ivanti 8850 双零日链在野 / AutoAgent+Cua 86124/86121 披露
+    9月6日 : N-central 86218×10.0 / Elementor 32475 在野 / MikroTik 6漏洞
+    9月7日 : Adobe CVE-2026-75650(10.0)热补丁 / knowns 簇4 CVE / YouTrack接管
+    9月8日 : Adobe AEM 19232×9.9 / SAP OVERPASS 44756×10.0 / Hub86480 / FreeIPA76578 / Ivanti ITSM 8漏洞簇 / ColdFusion 48273 / cPanel 67401
+    9月9日 : 微软9月补丁星期二 972+CVE·2在野零日·多枚9.8 RCE / Chrome 87491在野 / Google ADK 79696×10.0 / Adobe Campaign 82004×10.0 / Perforce 85978×10.0 / ScreenConnect 84869×9.9 / Cisco FMC 20079入KEV
+    9月10日 : F5 BIG-IP APM 内存webshell / ShieldCrash Defender绕过PoC / Forgejo 89094×9.9 / npm toml 63376披露 / CISA KEV 增 Citrix19490·Fortinet25249·MikroTik67277/86060(截止9/13)
+    9月11日 : BlueMoon套件(APT31等4集群复用Chrome+Win零日链) / GitLab 85706×10.0入KEV / Chef 80462×10.0 / Plesk 68487×9.9 / Everest 62103×9.8 / Defender ShieldCrash 0day
+    9月13日 : MikroTik67277/86060 KEV大限 · FortiGate25249 PivotC2(178台)·Citrix19490 KEV到期
+    9月14日 : Exchange62911×22k曝露PoC · Rails66066×9.5在野(KindaRails2Shell) · Anthropic蒸馏APT29报告 · JFrog42016链后门 · EU CRA 9/11生效
+                </div>
+            </div>
+
+<!-- ===== 出处链接 ===== -->            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">TechTimes — Microsoft Exchange Exploit Requires No Password: 22,000 Servers Exposed, ESU Ends October（CVE-2026-62911）</span>
+                        <a href="https://www.techtimes.com/articles/326275/20260902/microsoft-exchange-exploit-requires-no-password-22000-servers-exposed-esu-ends-october.htm">https://www.techtimes.com/articles/326275/20260902/microsoft-exchange-exploit-requires-no-password-22000-servers-exposed-esu-ends-october.htm</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shadowserver Foundation — Vulnerable Exchange Server Report（21,899 暴露实例）</span>
+                        <a href="https://www.shadowserver.org/">https://www.shadowserver.org/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Microsoft MSRC — CVE-2026-62911 Security Update Guide</span>
+                        <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62911">https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62911</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BetaNews — Attackers exploit critical Rails flaw as patch leaves RCE gap open（CVE-2026-66066 KindaRails2Shell）</span>
+                        <a href="https://betanews.com/article/rails-cve-2026-66066-exploited/">https://betanews.com/article/rails-cve-2026-66066-exploited/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — KindaRails2Shell 活跃利用与补丁后 RCE 残留</span>
+                        <a href="https://vulncheck.com/">https://vulncheck.com/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory — GHSA-xr9x-r78c-5hrm（CVE-2026-66066）</span>
+                        <a href="https://github.com/advisories/GHSA-xr9x-r78c-5hrm">https://github.com/advisories/GHSA-xr9x-r78c-5hrm</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Anthropic — Threat Intelligence Report（154 页，GTG-20006 与蒸馏攻击，2026-09-10）</span>
+                        <a href="https://www.anthropic.com/news">https://www.anthropic.com/news</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Information Security Report — Anthropic Says China-Based AI Labs Ran Claude Distillation Attacks</span>
+                        <a href="https://informationsecurity.report/top-stories/anthropic-claude-attacks">https://informationsecurity.report/top-stories/anthropic-claude-attacks</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker Academy — Anthropic reports Claude use in live intrusions and alleged model extraction</span>
+                        <a href="https://www.thehackacademy.com/news/anthropic-claude-live-cyber-intrusions">https://www.thehackacademy.com/news/anthropic-claude-live-cyber-intrusions</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Wiz — JFrog Artifactory CVE-2026-42016 / 42018 构建管道后门（8/15–9/8）</span>
+                        <a href="https://www.wiz.io/blog">https://www.wiz.io/blog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfoSecNexus — Live Cybersecurity Brief September 14, 2026（含 JFrog 42016 / GitLab 85706 / ConnectWise 84869）</span>
+                        <a href="https://infosecnexus.com/live-cybersecurity-brief/">https://infosecnexus.com/live-cybersecurity-brief/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ENISA — EU Cyber Resilience Act Single Reporting Platform（2026-09-11 生效）</span>
+                        <a href="https://www.enisa.europa.eu/topics/cyber-resilience-act">https://www.enisa.europa.eu/topics/cyber-resilience-act</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA — Known Exploited Vulnerabilities Catalog（BOD 26-04 强制修复 SLA）</span>
+                        <a href="https://www.cisa.gov/kev">https://www.cisa.gov/kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-90619（HexStrike AI 命令注入，公开 PoC）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-90619">https://www.cve.org/CVERecord?id=CVE-2026-90619</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE 官方 — CVE-2026-90614（FedML 反序列化）</span>
+                        <a href="https://www.cve.org/CVERecord?id=CVE-2026-90614">https://www.cve.org/CVERecord?id=CVE-2026-90614</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek — PaperCut Exploitation Escalates to Active Intrusions / CISA KEV（9/14 联邦截止）</span>
+                        <a href="https://www.securityweek.com/papercut-exploitation-escalates-to-active-intrusions/amp">https://www.securityweek.com/papercut-exploitation-escalates-to-active-intrusions/amp</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OriginBrief — Cybersecurity Threats Weekly Report（2026-09-14，含 EU CRA / Astra / 蒸馏联合 advisory）</span>
+                        <a href="https://www.originbrief.app/en/reports/cybersecurity-threats/2026-09-14/weekly">https://www.originbrief.app/en/reports/cybersecurity-threats/2026-09-14/weekly</a>
+                    </div>
+                </div>
+            </div>
+        </div><footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、漏洞描述等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月14日
+            </p>
+        </footer>
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

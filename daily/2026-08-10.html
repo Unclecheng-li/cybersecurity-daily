@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年8月10日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Aged paper effect */
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Masthead */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+
+        .edition-date {
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+
+        .edition-number {
+            font-style: italic;
+        }
+
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+
+        .keywords-banner strong {
+            margin-right: 10px;
+        }
+
+        /* Main content */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Headlines */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* Article grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+
+        .article-card.featured {
+            grid-column: span 2;
+            
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+
+        .article-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .severity-critical {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .severity-high {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .severity-medium {
+            background: var(--accent-gold);
+            color: var(--ink-black);
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+
+        .article-body p {
+            margin-bottom: 12px;
+            text-indent: 2em;
+        }
+
+        .article-body ul {
+            margin: 10px 0;
+            padding-left: 2em;
+        }
+
+        .article-body li {
+            margin-bottom: 5px;
+        }
+
+        /* Section headers */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header::before {
+            content: '§';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* Quick news */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+
+        .quick-item h4 {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: var(--ink-black);
+        }
+
+        .quick-item p {
+            font-size: 0.9em;
+            color: var(--ink-dark);
+        }
+
+        /* Charts section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            margin-bottom: 40px;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-date {
+            min-width: 100px;
+            font-weight: 700;
+            color: var(--accent-red);
+            font-size: 1.1em;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-left: 30px;
+            border-left: 3px solid var(--accent-gold);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 8px;
+            width: 13px;
+            height: 13px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+        }
+
+        .timeline-event {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        /* References */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .reference-item a:hover {
+            text-decoration: underline;
+        }
+
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Attack flow diagram */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .flow-step.critical {
+            background: var(--accent-red);
+        }
+
+        /* Affected systems table */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .affected-table tr:hover {
+            background: rgba(232,93,4,0.05);
+        }
+
+        .risk-high {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .risk-medium {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .article-card.featured {
+                grid-column: span 2;
+                
+            }
+        }
+
+        @media (max-width: 768px) {
+            .newspaper-title {
+                font-size: 2em;
+                letter-spacing: 4px;
+            }
+            .main-headline {
+                font-size: 1.8em;
+            }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .article-card.featured {
+                grid-column: span 1;
+            }
+            .quick-news {
+                grid-template-columns: 1fr;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .references-grid {
+                grid-template-columns: 1fr;
+            }
+            .edition-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .newspaper {
+                box-shadow: none;
+                border: none;
+            }
+            .article-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年8月10日 星期一</span>
+            <span class="edition-number">第 127 期 | 总第 127 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>LoadMaster 8037 KEV大限 · WP 64638 9.8 RCE · Flowise 69259 AI RCE · Redis 66373绕过PoC · Apple 65400屏共认绕
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">LoadMaster 预认证 RCE 整改大限今日到期：边界负载均衡器沦陷即全网失守</h2>
+                <p class="sub-headline">CVE-2026-8037 CVSS 9.6/9.8，escape_quotes() 缺失空终止符致未认证 root 命令执行；watchTowr PoC 已公开、eSentire 自 6/29 起监测到利用尝试</p>
+            </div>
+
+            <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Progress LoadMaster 预认证 RCE CVE-2026-8037 KEV 整改大限今日到期</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.6 / 9.8</span>
+                        <span class="cvss-score">在野利用</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 于 8/7 将 CVE-2026-8037 加入 KEV，联邦整改大限正是今日（8/10）。该漏洞位于 LoadMaster 管理 API 的 <code>escape_quotes()</code> 函数：旧版本用未初始化的 <code>malloc</code> 分配堆缓冲且未补空终止符，<code>sprintf</code> 越界读入相邻堆空间，攻击者在 <code>/accessv2</code> 请求的 JSON 键值对中植入命令注入载荷即可触发。</p>
+                        <p><strong>漏洞机制：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>CWE-77 OS 命令注入（未认证）</li>
+                            <li><strong>攻击面：</strong>启用 API 的 LoadMaster GA ≤ 7.2.63.1 / LTSF ≤ 7.2.54.17（及 ECS/ObjectScale Connection Manager）</li>
+                            <li><strong>后果：</strong>以 root 在边界设备上任意命令执行</li>
+                            <li><strong>修复：</strong>GA 7.2.63.2 / LTSF 7.2.54.18（calloc 零填充 + 补空终止符）</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>watchTowr Labs 6/29 公开可用 PoC；eSentire 自 6/29 起捕获真实利用尝试（IOCs 192.42.116.58/105、146.70.139.154）</li>
+                            <li>负载均衡器坐镇网络最外层，未认证 root 即绕过下游所有安全控制</li>
+                            <li>今日为 KEV 整改大限，"补丁未打=已沦陷"，须立即升版本或仅放行可信管理网段</li>
+                        </ul>
+                    </div>
+
+                    <!-- Attack Flow -->
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">/accessv2 API</span>
+                        <span class="flow-step">escape_quotes OOB读</span>
+                        <span class="flow-step">命令注入</span>
+                        <span class="flow-step critical">root RCE</span>
+                        <span class="flow-step critical">全网失守</span>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">WordPress XSS2Shell CVE-2026-64638：登录页预认证 XSS 升级 PHP RCE</h3>
+                    <div class="article-meta">
+                        <span>CVSS 8.9 / 9.8</span>
+                        <span class="cvss-score">PoC 公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>pwn.ai 于 8/7 披露 XSS2Shell：WordPress 核心登录页 <code>wp_strip_all_tags()</code>（PHP <code>strip_tags</code>）与自带 KSES 净化器对同一畸形标签解析不一致——在左尖括号与标签名间插入空格（<code>&lt; area</code>）即可绕过前者、却被后者当作合法 HTML 注入，无需认证即可在登录页执行脚本。</p>
+                        <p><strong>升级路径：</strong>利用 SOME（Same Origin Method Execution）技巧劫持 <code>user-profile.js</code> 的 AJAX 目标；若诱导已登录管理员点击一次恶意页面，脚本即可代其 mint Application Password、发布页面并最终上传含 PHP WebShell 的插件 ZIP，全程走合法 API 调用。</p>
+                        <p><strong>值得关注：</strong>影响 WordPress 4.7 至今几乎所有在维护实例（全球 43%+ 站点、约 5 亿），8/6 紧急发 7.0.3 并向 4.7 分支回移植；GitHub 已有公开 PoC，CVSS 因需社工交互定为 8.9。</p>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Flowise CVE-2026-69259：AI 低代码平台 SQLite 节点 RCE（CVSS 9.4）</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.4</span>
+                        <span class="cvss-score">PoC 公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GHSA-x3hf-7cj6-3r4m（8/4 发布）：Flowise &lt; 3.1.3 的 SQLite Record Manager 节点把用户可控的 <code>additionalConfig</code> 展开到数据库设置之后，使 <code>additionalConfig.database</code> 覆盖 SQLite 路径。以 root 运行的官方 Docker 镜像可借此将数据库写到 <code>/etc/chromium/exploit.conf</code>，借助表名/命名空间注入 shell 语法，待 Puppeteer 启动 Chromium 加载该 conf 时触发反向 Shell（uid=0）。</p>
+                        <p><strong>值得关注：</strong>继 Langflow / Orkes / bank-vaults 之后，AI 编排/低代码平台再成 RCE 重灾区；CISA SSVC 已标记 <code>exploitation: poc</code>，官方 Advisory 内含完整利用 JSON。修复 3.1.3，并建议容器降权至非 root。</p>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Redis CVE-2026-66373：双重释放"补丁绕过"RCE，PoC 公开</h3>
+                    <div class="article-meta">
+                        <span>CVSS 7.5</span>
+                        <span class="cvss-score">影响 &lt; 8.8.0</span>
+                    </div>
+                    <div class="article-body">
+                        <p>MITRE 7/25 披露：Redis 流（Streams）功能在多个消费者共享同一未处理消息（NACK）时，<code>XGROUP DELCONSUMER</code> 删除消费者会二次释放本应只释放一次的内存，导致双重释放与条件性任意代码执行。根因是 CVE-2026-25243 的修复不完整——共享 NACK 手法绕过了既有对策，8/3 日文媒体披露 PoC 在多个版本全部验证成功。</p>
+                        <p><strong>值得关注：</strong>"补丁后绕过"已成 RCE 复现常态（接 Redis QVD-2026-44936 / 7/23 的 8.8 绕过变体）；影响 8.8.0 以下全版本，认证用户+RESOURCE/XGROUP 权限即可触发，须升级 8.8.0 并收敛账号权限。</p>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">Apple macOS 屏幕共享认证绕过 CVE-2026-65400：同网无需密码控 Mac</h3>
+                    <div class="article-meta">
+                        <span>状态：紧急 OOB 补丁</span>
+                    </div>
+                    <div class="article-body">
+                        <p>苹果 8/9 发布带外紧急更新（Tahoe 26.6.1 / Sequoia 15.7.9 / Sonoma 14.8.9），修复"屏幕共享"认证绕过：同网络内攻击者无需有效凭据即可直连已开启屏幕共享的 Mac，查看并控制桌面、文件与应用，甚至远程重启。</p>
+                        <p><strong>值得关注：</strong>仅手动开启屏幕共享且同网才可利用，互联网直接攻击面低；但苹果破例 OOB 单漏洞更新引发研究员警觉（Phil Stokes 等），疑似实际风险高于表面，建议尽快升级、临时关闭屏幕共享。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Quick News Section -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Plesk CVE-2026-64637：XML-RPC 提权至 root 管理员（9.9）</h4>
+                    <p>认证经销商账号经 XML-RPC API 提权获取 root 管理员会话；Plesk 托管海量站点，共享主机经销商凭据常流通，升级 18.0.80。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. MSI Radix AXE6600 路由器 CVE-2026-71984：命令注入（9.8）</h4>
+                    <p>urlfilter/accesscontrol/dmz/telnetSSH 等多函数命令注入，公开 exp 可直接 root；家庭/小企路由器暴露面广，立即升级固件。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Apache Fory C++ CVE-2026-71558：反序列化堆类型混淆（9.8）</h4>
+                    <p>多态智能指针反序列化绕过类型兼容检查，无认证即可 RCE；exp 已公开，处理不可信序列化数据服务立即升级 1.5.0。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Snowflake 数据泄露主谋认罪：165 机构、$2.5M 二次勒索</h4>
+                    <p>加拿大籍黑客 Moucka 8/7 认罪，利用窃凭据入侵 165 家 Snowflake 客户、泄露数十亿记录；"付赎金后再勒索"暴露二次勒索新趋势。</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "LoadMaster CVE-2026-8037": [0.95, 0.95]
+    "WordPress XSS2Shell": [0.6, 0.85]
+    "Flowise CVE-2026-69259": [0.6, 0.9]
+    "Redis CVE-2026-66373": [0.6, 0.7]
+    "Apple屏共 CVE-2026-65400": [0.3, 0.65]
+    "Plesk CVE-2026-64637": [0.4, 0.95]
+    "MSI Radix 71984": [0.7, 0.9]
+    "Apache Fory 71558": [0.6, 0.9]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日安全事件类型分布
+    "Web应用/CMS漏洞" : 30
+    "AI/LLM平台漏洞" : 20
+    "边界网络设备" : 20
+    "操作系统/端点" : 15
+    "数据库" : 10
+    "其他(法务/供应链)" : 5
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年8月第2周网安事件
+    8月4日 : CISA KEV三新增(Langflow/Tomcat/N-able)
+           : Flowise CVE-2026-69259 公开
+           : MariaDB QVD-48306 认证RCE
+    8月5日 : NGINX 42533 RCE PoC
+           : OVSwrap 提权
+           : KEV 三新增
+    8月6日 : WordPress 7.0.3 紧急补丁(XSS2Shell)
+           : N-able KEV大限
+           : BTCPay Server 紧急补丁
+    8月7日 : CISA KEV加 LoadMaster 8037(大限8/10)
+           : WordPress XSS2Shell 细节公开
+           : UNC6671 语音钓华尔街
+           : Snowflake主谋认罪
+    8月8日 : BTCPay Server Lightning节点资金抽干
+           : Enigma日情(Plesk/MSI/Fory)
+    8月9日 : Apple macOS屏共 CVE-2026-65400 紧急OOB
+           : Plesk 64637(9.9)/MSI 71984(9.8)/Fory 71558(9.8)
+    8月10日 : LoadMaster 8037 KEV整改大限今日到期
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-8037">LoadMaster CVE-2026-8037 KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE.org</span>
+                        <a href="https://www.cve.org/cverecord?id=CVE-2026-8037">CVE-2026-8037 记录</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">watchTowr Labs</span>
+                        <a href="https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/">LoadMaster 预认证RCE 分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">eSentire</span>
+                        <a href="https://www.esentire.com/security-advisories/progress-kemp-loadmaster-vulnerability-targeted-cve-2026-8037">LoadMaster 利用监测</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News</span>
+                        <a href="https://www.anonymousmedia.org/2026/08/07/new-wordpress-pre-auth-xss-could-lead-to-php-code-execution">WordPress XSS2Shell 报道</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FreeBuf</span>
+                        <a href="https://www.freebuf.com/articles/web/494115.html">XSS2Shell 漏洞技术分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">dev.to</span>
+                        <a href="https://dev.to/xpert4cyber/xss2shell-chaining-a-single-space-character-into-wordpress-rce-cve-2026-64638-3a2h">XSS2Shell CVE-2026-64638</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory</span>
+                        <a href="https://github.com/advisories/GHSA-x3hf-7cj6-3r4m">Flowise CVE-2026-69259</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/cve-2026-69259">CVE-2026-69259 详情</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ITmedia</span>
+                        <a href="https://atmarkit.itmedia.co.jp/ait/spv/2608/03/news047.html">Redis CVE-2026-66373 双重释放PoC</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-66373">Redis CVE-2026-66373 记录</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">网易/Apple</span>
+                        <a href="https://www.163.com/dy/article/L3TEM9PC05561FZK.html">macOS 屏共 CVE-2026-65400</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-08-09">日情 8/9(Plesk/MSI/Fory)</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV Tracker</span>
+                        <a href="https://cvetodo.com/cisa-kev">CISA KEV 目录追踪</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安恒威胁情报</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=15925">Snowflake 主谋认罪</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年8月10日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

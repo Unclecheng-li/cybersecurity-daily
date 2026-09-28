@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年8月4日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Aged paper effect */
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Masthead */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+
+        .edition-date {
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+
+        .edition-number {
+            font-style: italic;
+        }
+
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+
+        .keywords-banner strong {
+            margin-right: 10px;
+        }
+
+        /* Main content */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Headlines */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* Article grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+
+        .article-card.featured {
+            grid-column: span 2;
+            
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+
+        .article-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .severity-critical {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .severity-high {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .severity-medium {
+            background: var(--accent-gold);
+            color: var(--ink-black);
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+
+        .article-body p {
+            margin-bottom: 12px;
+            text-indent: 2em;
+        }
+
+        .article-body ul {
+            margin: 10px 0;
+            padding-left: 2em;
+        }
+
+        .article-body li {
+            margin-bottom: 5px;
+        }
+
+        /* Section headers */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header::before {
+            content: '§';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* Quick news */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+
+        .quick-item h4 {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: var(--ink-black);
+        }
+
+        .quick-item p {
+            font-size: 0.9em;
+            color: var(--ink-dark);
+        }
+
+        /* Charts section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            margin-bottom: 40px;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-date {
+            min-width: 100px;
+            font-weight: 700;
+            color: var(--accent-red);
+            font-size: 1.1em;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-left: 30px;
+            border-left: 3px solid var(--accent-gold);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 8px;
+            width: 13px;
+            height: 13px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+        }
+
+        .timeline-event {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        /* References */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .reference-item a:hover {
+            text-decoration: underline;
+        }
+
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Attack flow diagram */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .flow-step.critical {
+            background: var(--accent-red);
+        }
+
+        /* Affected systems table */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .affected-table tr:hover {
+            background: rgba(232,93,4,0.05);
+        }
+
+        .risk-high {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .risk-medium {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .article-card.featured {
+                grid-column: span 2;
+                
+            }
+        }
+
+        @media (max-width: 768px) {
+            .newspaper-title {
+                font-size: 2em;
+                letter-spacing: 4px;
+            }
+            .main-headline {
+                font-size: 1.8em;
+            }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .article-card.featured {
+                grid-column: span 1;
+            }
+            .quick-news {
+                grid-template-columns: 1fr;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .references-grid {
+                grid-template-columns: 1fr;
+            }
+            .edition-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .newspaper {
+                box-shadow: none;
+                border: none;
+            }
+            .article-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- Edition Info -->
+        <div class="edition-info">
+            <span class="edition-date">2026年8月4日 星期二</span>
+            <span class="edition-number">第 122 期 | 总第 122 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- Keywords Banner -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Rails 66066 9.5 pre-auth RCE · N-able 18577 KEV认绕 · macOS CUPS 39875提权PoC · LiteLLM 42203 SSTI泄密钥 · 安进云泄
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Main Headline -->
+            <div class="headline-section">
+                <h2 class="main-headline">Magento RCE零日漏洞被CISA收录KEV：单个Cookie即可接管电商服务器</h2>
+                <p class="sub-headline">CVE-2026-45247 CVSS 9.8，Mirasvit Cache Warmer插件PHP反序列化缺陷，一周内从披露到收录创纪录</p>
+            </div>
+
+                        <!-- Featured Articles -->
+            <div class="articles-grid">
+                <!-- Featured Article 1 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Rails Active Storage CVE-2026-66066 预认证 RCE</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.5</span>
+                        <span class="cvss-score">Pre-auth RCE</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Ruby on Rails 内置文件上传组件 Active Storage 被曝严重漏洞 CVE-2026-66066（CVSS 9.5，攻击链代号「KindaRails2Shell」）。当应用以 libvips（自 Rails 7.0 起默认图像处理器）处理用户上传图像、且允许未信任用户上传时，攻击者上传特制文件即可触发 libvips 中标记为「未模糊/不可信」的操作，读取 Rails 进程可访问的任意文件。</p>
+                        <p><strong>漏洞机制：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>libvips 不安全操作 + 任意文件读取</li>
+                            <li><strong>攻击方式：</strong>未认证上传特制图像，窃取进程环境变量</li>
+                            <li><strong>核心战利品：</strong>secret_key_base、数据库与云存储凭据</li>
+                            <li><strong>后果：</strong>伪造会话/全局ID → ImageProcessing 变体 RCE，完全接管服务器</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>预认证 + 默认处理器 = 海量 Rails 应用暴露面</li>
+                            <li>公开 PoC 与 Metasploit 模块已可用，无需 Marshal 反序列化</li>
+                            <li>补丁后必须轮换 secret_key_base 等密钥，否则凭据持续可利用</li>
+                        </ul>
+                        <div class="attack-flow">
+                            <span class="flow-step">特制图像</span>
+                            <span class="flow-step">libvips危险操作</span>
+                            <span class="flow-step">读取密钥</span>
+                            <span class="flow-step critical">伪造会话</span>
+                            <span class="flow-step critical">RCE执行</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">N-able N-central CVE-2026-18577 认证绕过入 KEV</h3>
+                    <div class="article-meta">
+                        <span>KEV 8/3 · 大限 8/6</span>
+                        <span class="cvss-score">MSP级联</span>
+                    </div>
+                    <div class="article-body">
+                        <p>N-able N-central（RMM/监控平台）存在认证绕过漏洞 CVE-2026-18577（CWE-288），可未认证接管账户。该漏洞是 CVE-2026-18556 修复<strong>不完整</strong>的结果——此前补丁未封堵全部替代路径。CISA 于 8/3 加入 KEV，联邦整改大限仅 3 天（8/6）。</p>
+                        <p><strong>值得关注：</strong></p>
+                        <ul>
+                            <li>「补丁后绕过」再现（接 Redis 双重释放、Cisco SD-WAN）</li>
+                            <li>MSP 平台沦陷 = 下游成百上千客户网络级联失守</li>
+                            <li>认证绕过可绕过账号级 MFA，须依赖网络层控制</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">macOS CUPS cupsd CVE-2026-39875 本地提权</h3>
+                    <div class="article-meta">
+                        <span>CVSS 7.8</span>
+                        <span class="cvss-score">PoC公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Apple 于 7 月底安全更新修复 macOS 打印子系统 cupsd 特权守护进程中的本地提权漏洞 CVE-2026-39875（CVSS 7.8）。研究员 Dallas Dubs 已公开完整细节与可用 PoC。</p>
+                        <p><strong>攻击链：</strong></p>
+                        <ul>
+                            <li>未特权用户注册指向可控监听器的打印机</li>
+                            <li>cupsd 错误泄露受信任认证令牌给该监听器</li>
+                            <li>重放令牌定位任意路径，以 root 写入可控内容</li>
+                            <li>全程无需用户交互</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">LiteLLM Proxy CVE-2026-42203 SSTI 泄密钥</h3>
+                    <div class="article-meta">
+                        <span>CVSS 8.6</span>
+                        <span class="cvss-score">GHSA-xqmj</span>
+                    </div>
+                    <div class="article-body">
+                        <p>热门 LLM 网关 LiteLLM Proxy 在 1.80.5–1.83.6 存在服务端模板注入（SSTI）RCE CVE-2026-42203（CVSS 8.6）。持有合法代理 API Key 的已认证用户向 <code>POST /prompts/test</code> 提交恶意模板即可读出提供商 API Key、数据库凭据，并在特定部署下于宿主执行命令。修复版本 1.83.7。</p>
+                        <p>AI 中间件网关集中托管所有模型厂商密钥，「一处失守 = 全线密钥泄露」，接 Flowise/Orkes/bank-vaults 同类趋势。</p>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">事件</span>
+                    <h3 class="article-title">安进（Amgen）第三方云存储泄露 PHI</h3>
+                    <div class="article-meta">
+                        <span>PHI泄露 · 7/31披露</span>
+                        <span class="cvss-score">重大事件</span>
+                    </div>
+                    <div class="article-body">
+                        <p>生物制药巨头安进（Amgen）于 7/31 披露重大数据安全事件：由第三方服务商运营的云存储系统遭入侵，大量企业内部资料与<strong>患者健康信息（PHI）</strong>被盗。公司 7/29 完成综合评估，已启动隔离管控并聘独立取证团队溯源。</p>
+                        <p>暴露面落在第三方云存储，延续供应链/外包信任边界失守主线；医疗健康行业已成攻击重灾区（雅培、CloverHealth、诺和诺德等接连中招）。</p>
+                    </div>
+                </article>
+            </div>
+            <!-- Quick News Section -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Radia Inc. 遭 CHAOS 勒索（655GB）</h4>
+                    <p>华盛顿州大型医师自有放射科集团 Radia 被 CHAOS 团伙宣称窃取 655GB 数据，含患者 PHI（姓名/SSN/病历/影像/账单）、企业财务与 HR 记录；截至 8/1 尚未见监管报备。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Linux 内核 Copy Fail CVE-2026-31431 PoC</h4>
+                    <p>加密子系统 algif_aead 自 2017 年潜伏的 9 年提权缺陷，732 字节脚本篡改页缓存中 /usr/bin/su 映像直取 root；影响 Ubuntu 24.04、Amazon Linux 2023、RHEL 10.1、SUSE 16。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Cisco FMC CVE-2026-20316 KEV 大限（8/1）已过</h4>
+                    <p>Cisco Secure Firewall Management Center 含硬编码密码（CWE-259），未认证远程以低权账户登录读敏感数据；联邦整改大限 8/1 到期，未修设备即视为已沦陷。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. FreeRDP CVE-2026-44421/67289 客户端 RCE</h4>
+                    <p>恶意/被控 RDP 服务器经通道数据流或 HTTP 代理 TargetNetAddress CRLF 注入，在连接方客户端执行代码；远程桌面客户端成反向执行入口，影响 3.x 系列。</p>
+                </div>
+            </div>
+<!-- Charts Section -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">今日漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Rails CVE-2026-66066(9.5 Pre-auth RCE)": [0.5, 0.95]
+    "N-able CVE-2026-18577(KEV认绕)": [0.6, 0.9]
+    "macOS CVE-2026-39875(7.8提权PoC)": [0.7, 0.78]
+    "LiteLLM CVE-2026-42203(8.6 SSTI)": [0.55, 0.86]
+    "Amgen 云存储PHI泄露(事件)": [0.5, 0.7]
+    "Radia CHAOS 655GB(事件)": [0.5, 0.65]
+    "Cisco FMC CVE-2026-20316(硬编码密码)": [0.5, 0.9]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日安全事件类型分布
+    "Web框架/应用RCE" : 22
+    "MSP/边界设备认证绕过" : 20
+    "端点/OS提权" : 18
+    "AI代理/LLM密钥窃取" : 18
+    "数据泄露事件" : 22
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月末至8月初网安事件
+    7月28日 : NetScaler CVE-2026-8865 9.8 CitrixBleed五代
+           : Ollama AI服务RCE
+    7月29日 : OPNsense 9.9 RCE PoC公开
+           : MCP无状态规范发布
+    7月30日 : VMware VMSA 9.8双严重vCenter认绕
+           : Arista VCO 10.0 KEV大限
+    7月31日 : Broadcom VMware新虚拟化漏洞
+           : 安进云存储泄露披露
+    8月1日 : Gitea CVE-2026-60004 9.8 RCE PoC
+           : ArcadeDB 9.8无认证RCE簇
+           : Wazuh CVE-2026-67308 10.0 CI注入
+           : Adobe Campaign 10.0零点击RCE
+    8月2日 : Win CVE-2026-42980提权PoC
+           : FreeRDP CVE-2026-44421客户端RCE
+           : 泰国证券存管20万投资者泄露
+    8月3日 : K8s vault-webhook 9.6泄令牌PoC
+           : WooCommerce 9.8 Apple JWT认绕
+           : N-able 18577入KEV大限8/6
+    8月4日 : Rails 66066 9.5 Pre-auth RCE PoC公开
+           : macOS CUPS 39875提权PoC
+           : LiteLLM 42203 SSTI泄密钥
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                            <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Rails 安全公告</span>
+                        <a href="https://discuss.rubyonrails.org/t/security-advisory-cve-2026-66066/">CVE-2026-66066 Active Storage</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Heise</span>
+                        <a href="https://www.heise.de/en/news/Key-theft-in-Ruby-on-Rails-Critical-vulnerability-with-prepared-images-11394423.html">KindaRails2Shell 报道</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rapid7</span>
+                        <a href="https://www.rapid7.com/blog/post/etr-kindarails2shell-cve-2026-66066-critical-arbitrary-file-read-and-possible-remote-code-execution-in-ruby-on-rails">KindaRails2Shell ETR</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Akamai</span>
+                        <a href="https://www.akamai.com/blog/security-research/rails-active-storage-rce-cve-2026-66066">CVE-2026-66066 防御</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/rails-patches-critical-active-storage-flaw-with-rce-potential/">Rails 补丁报道</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 警报</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/08/03/cisa-adds-one-known-exploited-vulnerability-catalog">CVE-2026-18577 N-able</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">N-able 安全中心</span>
+                        <a href="https://status.n-able.com/2026/08/02/n-central-2026-3-hotfix-1-mitigation-for-cve-2026-18577/">N-central 2026.3 HF1</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cosmic Bytez Labs</span>
+                        <a href="https://labs.cosmicbytez.ca/security/cve-2026-18577-n-able-n-central-authentication-bypass-using-an-alternate-path-or">CVE-2026-18577 分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">微步在线</span>
+                        <a href="https://ti.dbappsecurity.com.cn/security-info/bulletin?id=15832">macOS CVE-2026-39875 提权</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">LiteLLM GHSA</span>
+                        <a href="https://github.com/BerriAI/litellm/security/advisories/GHSA-xqmj-j6mv-4862">CVE-2026-42203 SSTI</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42203">LiteLLM CVE-2026-42203</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">路透社 / 微博</span>
+                        <a href="https://weibo.com/5510110713/5327813554737249">安进云存储泄露披露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Claim Depot</span>
+                        <a href="https://www.claimdepot.com/data-breach/radia-2026">Radia CHAOS 655GB</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CSDN</span>
+                        <a href="https://blog.csdn.net/OPHKVPS/article/details/160778035">Linux Copy Fail CVE-2026-31431</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20316">Cisco FMC CVE-2026-20316</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年8月4日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

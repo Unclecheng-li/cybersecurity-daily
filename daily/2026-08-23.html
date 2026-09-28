@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年8月23日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年8月23日 星期日</span>
+            <span class="edition-number">第 140 期 | 总第 140 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Entra 69836 10.0云身份层 · Cisco 9漏洞5×10.0 · GitLab 19478 9.4在野 · Rust 245M/npm 14投毒 · BTR.sys 武器化
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">微软 Entra ID 满分 RCE 披露（云身份层被击穿后服务端缓解）；Cisco 9 漏洞含 5 个满分、GitLab 48h 在野、Rust/npm 供应链双袭、Defender 自带驱动被武器化同日发酵</h2>
+                <p class="sub-headline">CVE-2026-69836（Entra ID 反序列化，CVSS 10.0，服务端已缓解）· Cisco Crosswork/Secure Workload 5×10.0 · CVE-2026-19478（GitLab 9.4，48h 在野，可伪造合并）· Rust arrayref(2.45亿)/14 npm→RedC2 · BTR.sys「BTR Reforged」武器化</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Microsoft Entra ID 满分 RCE 披露（CVE-2026-69836，CVSS 10.0）：云身份层被击穿后由服务端秒级缓解</h3>
+                    <div class="article-meta">
+                        <span>CVSS 10.0 / CWE-502</span>
+                        <span class="cvss-score">服务端已缓解 / 未入 KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>微软修复了 Entra ID（原 Azure AD）中的一个反序列化远程代码执行漏洞，CVSS 满分 10.0，攻击向量为网络、无需认证、无需用户交互。该漏洞由微软首席安全工程师 Robert Fitzpatrick 发现，微软称<strong>已在服务端完全缓解、无需客户侧操作</strong>，且<strong>未确认在野利用</strong>，因此未进入 CISA KEV。先放出"在野利用"标记后又更正，使云身份层的满分漏洞进入"披露即敏感"区间。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>不可信数据反序列化（CWE-502）</li>
+                            <li><strong>攻击方式：</strong>未认证攻击者经网络发送特制序列化负载，在 Entra ID 服务端触发 RCE</li>
+                            <li><strong>影响范围：</strong>使用 Entra ID 的所有租户（修复前）</li>
+                            <li><strong>后果：</strong>服务端级代码执行可篡改认证/授权；微软已服务端兜底</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>Entra ID 是企业登录与访问控制的"信任锚"，未认证网络 RCE 的爆炸半径等于整个云身份底座</li>
+                            <li>首次把"核心云身份平台出现 CWE-502 经典反序列化"摆上台面，自研/第三方 IDaaS 须同等强度审计</li>
+                            <li>即便本次由服务端兜底，也证明满分漏洞的披露节奏已被放到显微镜下，透明度即压力</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">未认证攻击者</span>
+                        <span class="flow-step">特制序列化负载</span>
+                        <span class="flow-step">CWE-502 反序列化</span>
+                        <span class="flow-step critical">服务端 RCE</span>
+                        <span class="flow-step critical">身份底座失守</span>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Cisco 安全加固：Crosswork / Secure Workload 9 个漏洞分组，5 个满分（CVSS 10.0）</h3>
+                    <div class="article-meta">
+                        <span>9 分组 / 5×10.0</span>
+                        <span class="cvss-score">内部发现 / 无变通方案</span>
+                    </div>
+                    <div class="article-body">
+                        <p>思科 8/19 发布、8/21 定稿的"安全加固"公告修复 <strong>Crosswork 与 Secure Workload 共 9 个 CVE 分组</strong>，其中 <strong>5 个达 CVSS 10.0 满分</strong>。漏洞来自内部安全评审（含 AI 模型辅助），目前<strong>无在野利用证据、无变通方案</strong>。评分 10.0 代表该类目最严重潜在影响，实际可利用性需逐产品核对。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>Cisco Crosswork（≤7.2.1，含 Workflow Manager）</td><td class="risk-high">严重 · 3 个 10.0（20030/20357/20358）+ 20359(9.9)</td></tr>
+                            <tr><td>Cisco Secure Workload（3.10 / 4.0）</td><td class="risk-medium">高危 · 2 个 10.0（20315/20317）+ 20231(9.9)/20318(9.6)/20319(7.5)</td></tr>
+                        </table>
+                        <p><strong>修复：</strong>Crosswork 升 7.2.1-SP；Secure Workload 升 3.10.9.1 / 4.0.4.16。无变通方案，必须升级。</p>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GitLab CVE-2026-19478（CVSS 9.4）披露 48 小时即在野，可伪造合并记录</h3>
+                    <div class="article-meta">
+                        <span>CVSS 9.4 / CWE-94</span>
+                        <span class="cvss-score">在野 / 供应链信任层</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GitLab CE/EE 的 GraphQL 接口存在未认证代码注入（CWE-94），攻击者可借特制指令远程修改/删除公开项目与用户数据。8/17 披露并修复（19.2.4/19.1.6/19.0.8/18.11.11），watchTowr 8/18 仅据公告+补丁 diff <strong>数分钟复现</strong>，8/20 蜜罐即捕获<strong>首批在野利用</strong>。最危险的是可<strong>伪造 merge 记录</strong>——恶意提交看似已审查通过，CI/CD 照常构建下发，比删库更难察觉。</p>
+                        <p><strong>值得关注：</strong>排查指标 <code>@gl_introduced</code> 与未认证对 <code>/api/graphql</code> 的高频 POST；该 CVE 尚未入 KEV，不能等 KEV 才动。暴露实例须立即升修复版并审计公开项目的合并/封禁记录。</p>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">软件供应链双袭：Rust crate（2.45 亿下载）+ 14 个 npm 包投递后门</h3>
+                    <div class="article-meta">
+                        <span>Rust / npm</span>
+                        <span class="cvss-score">在野 / 朝鲜+AI</span>
+                    </div>
+                    <div class="article-body">
+                        <p>8/20–8/22 两条供应链攻击同窗爆发：攻击者攻陷 crates.io 维护者账号，向 <strong>arrayref（约 2.45 亿次下载）</strong>等高下载量包注入恶意依赖 <code>proc-macro1</code>，构建期投递负载，运营仅约 <strong>86 分钟</strong>即被发现，归因指向<strong>朝鲜</strong>；同期 Trend AI 识别 <strong>14 个伪装成日历/打卡工具的恶意 npm 包</strong>，导入即触发、绕过 <code>--ignore-scripts</code>，投递 <strong>RedShell</strong>——AI 驱动 RedC2 4.0 框架的 Linux 后门。</p>
+                        <p><strong>值得关注：</strong>两线分别打 Rust 构建期与 npm 导入期，传统 install-hook 防护失效；"国家级 + AI 自动化"组合标志供应链攻击进入新阶段，须把依赖来源可信度列为最高优先级。</p>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Windows Defender 自带驱动 BTR.sys 被武器化："BTR Reforged"（无 CVE）</h3>
+                    <div class="article-meta">
+                        <span>Win7–25H2</span>
+                        <span class="cvss-score">PoC 公开 / 无补丁</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Check Point 的 Jiří Vinopal 在 Black Hat USA 2026 / DEF CON 34 披露 <strong>BTR.sys</strong>（Defender 的 Boot Time Removal Tool，微软签名驱动）可被改造为内核级任意文件/注册表操作原语，并发布 PoC <strong>BTR_CLI</strong>。该驱动自 Win7 至 Win11 25H2 均内置、<strong>不利用任何缺陷、不导入外部驱动</strong>，可在 Defender 用户态启动前约 <strong>34 秒"黄金窗口"</strong>删除/篡改安全软件。MSRC 认定属"设计内特权边界"，<strong>无 CVE、无补丁计划</strong>。</p>
+                        <p><strong>值得关注：</strong>这是 BYOVD 的进化形态——直接用系统自带受信驱动关掉 EDR，哈希/发布者黑名单默认放行；缓解抓手是收紧 <code>SeLoadDriverPrivilege</code> 持有者，检测靠 Sysmon Event 15 的 <code>.sys:changelist</code> 等行为信号。</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Citrix NetScaler 双漏洞（CVE-2026-19489 / 19490）</h4>
+                    <p>8/22 披露：前者为启用 SIP ALG 的大规格 NAT 下内存溢出致 DoS，后者为 Gateway/AAA 虚拟服务器认证绕过，已发布修复版本。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. miniOrange SAML 2.0 WP 两绕过（61979 / 15981）</h4>
+                    <p>签名算法混淆 + 误读 OpenSSL 错误码为有效，可伪造断言登录任意用户（含管理员）；6 个付费版本线未纳入公开漏洞库。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. 7 州水务系统遭协同入侵 + Siemens S7 AI 攻击</h4>
+                    <p>8/21 美多机构预警：OT/水厂运营技术环境被攻，叠加 Siemens S7 PLC 遭 AI 辅助攻击的紧急警示，关键基础设施成明确靶面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Mailgun for WordPress SSRF（CVE-2026-78003，9.8）</h4>
+                    <p>路径遍历致未认证 SSRF，可拦截密码重置邮件实现管理员接管，影响 ≤2.2.0，8/22 公布。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. DJI 无人机 BLE 泄露 Wi-Fi 凭据（CVE-2026-77812，9.4）</h4>
+                    <p>DUML 经 BLE 明文传输 Wi-Fi PSK/SSID，被动嗅探即可加入内网并重放信任 UUID，影响 Neo/Flip/Air 3/Mini 等多款，需固件升级。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. CareCloud 数据泄露（375 万人）</h4>
+                    <p>未经授权访问 AWS 致医疗记录与社保号外泄，再次凸显云配置与凭证治理缺口。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Entra ID 69836": [0.40, 1.00]
+    "Cisco 20030/20357/20358": [0.30, 1.00]
+    "GitLab 19478": [0.95, 0.94]
+    "BTR.sys 武器化": [0.85, 0.80]
+    "Rust arrayref/npm": [0.90, 0.85]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "云身份/基础设施漏洞" : 22
+    "网络设备/控制器" : 20
+    "DevOps/CI-CD" : 18
+    "软件供应链" : 22
+    "端点/EDR绕过" : 10
+    "关键基础设施" : 8
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年8月第4周网安事件
+    8月19日 : Cisco 披露 Crosswork/Secure Workload 9 漏洞（5×10.0）
+    8月20日 : Check Point 发布 BTR.sys 武器化 PoC（BTR_CLI）
+           : GitLab 19478 蜜罐确认在野利用
+           : Rust crate arrayref（2.45亿下载）遭投毒
+    8月21日 : 美多机构预警：7 州水务系统沦陷 + Siemens S7 AI 攻击
+           : 14 个 npm 包投递 RedC2 4.0 后门
+    8月22日 : 微软披露 Entra ID 满分 RCE CVE-2026-69836
+           : Citrix NetScaler 两漏洞 / miniOrange SAML / Mailgun 9.8 SSRF
+    8月23日 : 本周收口：云身份·网络设备·供应链三线齐发
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecBrief</span>
+                        <a href="https://www.cybersecbrief.com/news/cybersec/cybersec-2026-08-22">8/22 日报：Entra ID/Citrix/npm/CareCloud/miniOrange/DJI</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-69836">CVE-2026-69836（Entra ID）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Help Net Security</span>
+                        <a href="https://www.helpnetsecurity.com/2026/08/22/microsoft-patches-critical-entra-id-rce/">Entra ID 满分 RCE 披露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cisco</span>
+                        <a href="https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-crosswork-UzDTU9Vh">Crosswork 加固公告（9 分组）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cisco PSIRT</span>
+                        <a href="https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-notice-LDquvx5d">8/19 安全公告总览</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ZeroDay.news</span>
+                        <a href="https://www.zeroday.news/article/six-maximum-severity-flaws-found-in-cisco-products-c4e4254c">Cisco 六个满分漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TheCyberSignal</span>
+                        <a href="https://www.thecybersignal.com/gitlab-cve-2026-19478-watchtowr-active-exploitation-2026">GitLab 19478 在野确认</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackWire</span>
+                        <a href="https://www.hackwire.news/news/critical-gitlab-flaw-exploited-shortly-after-disclosure">GitLab 48 小时武器化</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek</span>
+                        <a href="https://www.securityweek.com/critical-gitlab-flaw-exploited-shortly-after-disclosure/">GitLab 关键漏洞披露即在野</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-19478">CVE-2026-19478（GitLab）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TheCyberSignal</span>
+                        <a href="https://www.thecybersignal.com/check-point-microsoft-defender-btr-sys-signed-driver-weaponized-2026">Defender BTR.sys 武器化（BTR Reforged）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PyramidLedger</span>
+                        <a href="https://pyramidledger.com/blog/defender-s-own-boot-driver-can-be-turned-into-an-edr-killing-primitive">BTR.sys 变 EDR 杀伤原语</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-08-22">8/22 情报：Rust 投毒/水务/Siemens S7</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Trend AI Research</span>
+                        <a href="https://www.trendmicro.com/en_us/research/26/h/trojanized-npm-packages-redc2-linux-backdoor.html">14 个 npm 包投递 RedC2 4.0</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Patchstack</span>
+                        <a href="https://patchstack.com/articles/critical-auth-bypass-in-miniorange-saml-sso/">miniOrange SAML 2.0 两绕过</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-78003">CVE-2026-78003（Mailgun SSRF）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-77812">CVE-2026-77812（DJI BLE）</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA 已知被利用漏洞目录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年8月23日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
