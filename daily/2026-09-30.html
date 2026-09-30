@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年9月25日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+                                                        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年9月30日 星期三</span>
+            <span class="edition-number">第 172 期 | 总第 172 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+                        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Netcore101072×10路由RCE·Ziroom102793×9.1·Adobe71362 KEV·DMDC300万泄露·Supabase1.6万·TimesCar·FSB间谍软件</div>
+
+
+                <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <div class="headline-section">
+                <h2 class="main-headline">Netcore NR289-GE 路由器曝 4 漏洞簇：3 枚 CVSS 10.0 未认证 RCE，暴露公网即沦陷</h2>
+                <p class="sub-headline">2026-09-29 披露的 Netcore NR289-GE 入门级路由器固件 1.4.5102 曝出 4 个漏洞，其中 CVE-2026-101072 / 101075 / 101076 均为 CVSS 10.0 的未认证 OS 命令注入（分别经 ip / mac / ntp_ip 参数），CVE-2026-101077 为未认证文件写入。攻击者无需凭据即可在设备上以 root 执行任意命令，是典型"暴露即沦陷"的边缘设备高危场景。</p>
+            </div>
+
+            <div class="articles-grid">
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">头条事件</span>
+                    <h3 class="article-title">Netcore NR289-GE 路由器 4 漏洞簇：3×CVSS 10.0 未认证 RCE，暴露公网即 root（头条）</h3>
+                    <div class="article-meta">
+                        <span>Netcore NR289-GE 固件 1.4.5102 · CWE-78 · 影响 SOHO / 入门级网关</span>
+                        <span class="cvss-score">CVE-2026-101072/101075/101076 ×10.0 · 101077 文件写入 · 未认证 RCE</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-09-29，安全研究披露 Netcore NR289-GE 路由器（固件 1.4.5102）存在 4 个漏洞，其中 3 枚为 <strong>CVSS 10.0</strong> 的未认证 OS 命令注入：<code>CVE-2026-101072</code>（<code>/ap_ip.cgi</code> 的 <code>ip</code> 参数）、<code>CVE-2026-101075</code>（<code>/location_time.cgi</code> 的 <code>mac</code> 参数）、<code>CVE-2026-101076</code>（<code>/set_ntp_server_ip.cgi</code> 的 <code>ntp_ip</code> 参数）；第 4 枚 <code>CVE-2026-101077</code> 为 <code>boa_temp</code> 处理器的未认证文件写入。所有漏洞均可由未认证远程攻击者触发。</p>
+<p><strong>漏洞机制/攻击方式：</strong></p>
+<ul>
+    <li><strong>类型：</strong>命令注入（CWE-78）/ 文件写入（CWE-434 类）</li>
+    <li><strong>攻击方式：</strong>向暴露的管理 CGI 接口发送特制参数即可注入系统命令，无需登录；设备以 root 运行，攻击者直接取得完全控制权</li>
+    <li><strong>影响范围：</strong>Netcore NR289-GE（固件 1.4.5102）；该类 SOHO/入门网关常直接暴露公网且长期不更新</li>
+    <li><strong>后果：</strong>路由器沦陷 → 内网跳板、DNS 劫持、流量监听、持久化后门</li>
+</ul>
+<p><strong>值得关注的原因：</strong></p>
+<ul>
+    <li>"暴露即 root"的边缘设备漏洞，自动化蠕虫式扫描利用风险极高（参考近年 MikroTik / D-Link 在野链）</li>
+    <li>SOHO/分支网关是勒索与 APT 进入企业内网的经典入口，应第一时间下线公网管理面、升级固件并替换无法修复的 EOL 设备</li>
+</ul>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">公开 PoC</span>
+                    <h3 class="article-title">Ziroom ZHOME A0101 智能家居 CVE-2026-102793 / 102794（×9.1）命令注入，PoC 已公开</h3>
+                    <div class="article-meta">
+                        <span>Ziroom ZHOME A0101 1.0.1.0 · NIST NVD 2026-09-30 收录 · 厂商未回应</span>
+                        <span class="cvss-score">CVE-2026-102793 / 102794 CVSS 9.1 · 命令注入 · 公开 PoC</span>
+                    </div>
+                    <div class="article-body">
+<p>NIST NVD 于 2026-09-30 收录自如（Ziroom）智能家居网关 <code>ZHOME A0101 1.0.1.0</code> 的两枚高危命令注入漏洞：<code>CVE-2026-102793</code> 位于 <code>/api/ZRFirmware/set_time_zone</code> 的 <code>hostname</code>/<code>zonename</code> 参数，<code>CVE-2026-102794</code> 位于 <code>/api/ZRnetwork/ping</code> 的 <code>url</code> 参数。两枚均可被远程触发命令注入，且<strong>利用代码已公开</strong>；厂商在产品披露后未作出回应。</p>
+<p><strong>值得关注：</strong>IoT/智能家居网关常处于家庭或企业内网入口，一旦被攻陷即成为内网跳板；PoC 公开意味着大规模自动化利用随时到来，无法升级的设备应做网络隔离并关闭不必要的公网 API。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">KEV 在野</span>
+                    <h3 class="article-title">Adobe Commerce / Magento CVE-2026-71362（×9.1）入 CISA KEV：不正确的授权 → 会话劫持</h3>
+                    <div class="article-meta">
+                        <span>Adobe Commerce / Magento · CWE-863 · CISA KEV 9/30 周报确认在野</span>
+                        <span class="cvss-score">CVE-2026-71362 CVSS 9.1 · 会话劫持 / 客户数据泄露</span>
+                    </div>
+                    <div class="article-body">
+<p>CISA 在最新周报中将 <code>CVE-2026-71362</code>（CVSS 9.1，CWE-863 不正确的授权）与 WSO2 <code>CVE-2026-5430</code> 一并加入 KEV 目录，确认在野利用。该漏洞影响 Adobe Commerce 与 Magento，攻击者可在<strong>无需用户交互</strong>的情况下劫持客户会话、访问私有客户数据。利用尝试曾在 2026-08 被拦截，并于 9/10 在蜜罐中检测到来自澳大利亚 IP 的活动；联邦整改截止日为 9/27。</p>
+<p><strong>值得关注：</strong>电商会话劫持直接影响交易与隐私，且"无需交互"降低了利用门槛；同时印证 Adobe Commerce 仍是攻击者持续压注的高价值目标（此前 StyleSmuggler 0day 已多次在野）。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">数据泄露</span>
+                    <h3 class="article-title">美国国防部人力数据中心（DMDC）确认长期入侵，约 300 万人 PII 暴露 9 个月</h3>
+                    <div class="article-meta">
+                        <span>Defense Manpower Data Center · 通知信日期 2026-09-18 · 漏洞 2026-07-16 修复</span>
+                        <span class="cvss-score">未加密 PII 暴露 · 约 300 万个人 · 入侵窗口 2025-10 至 2026-07</span>
+                    </div>
+                    <div class="article-body">
+<p>据 Cybersecurity Beat（2026-09-30）报道，美国国防部人力数据中心（DMDC，掌管现役/退役军人、文职、合同工及家属等人事记录，FY2024 存量超 6000 万条）开始通知约 <strong>300 万人</strong>其个人信息已在一次入侵中暴露。通知信显示：系统漏洞于 2026-07-16 被发现并当日修复，但分析确认在 <strong>2025-10 至发现日</strong>之间，少量未授权用户访问了一台存放<strong>未加密 PII</strong>的文件共享服务器，入侵持续约 9 个月。受影响产品与漏洞细节未披露，尚无已知犯罪组织认领。</p>
+<p><strong>值得关注：</strong>长期、未加密、大规模人事数据暴露，且发现滞后近一年；再次凸显"加密 + 最小暴露 + 持续检测"对高价值政府数据的基础性意义。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">云配置</span>
+                    <h3 class="article-title">超 16,000 个 Supabase 实例误配置，可读表暴露密码与令牌</h3>
+                    <div class="article-meta">
+                        <span>Supabase 云数据库 · BleepingComputer 转引研究 · 2026-09-29</span>
+                        <span class="cvss-score">配置/密钥管理事件 · 1.6 万+ 实例 · 敏感数据可读</span>
+                    </div>
+                    <div class="article-body">
+<p>研究人员报告超过 <strong>16,000</strong> 个 Supabase 数据库因误配置而暴露可读表，内容包括个人身份信息、明文密码或身份认证令牌。这本质上是一桩<strong>云配置与密钥管理</strong>事故，而非 Supabase 本身的产品漏洞——错误的行级安全（RLS）策略、公开的 anon key 权限过宽等都会导致此类暴露。</p>
+<p><strong>值得关注：</strong>云原生默认安全 posture 缺失会直接把数据库变成公开资产；开发团队应在 CI 中强制检查 RLS 策略、密钥最小权限与公网可达性，并将密钥泄露纳入事件响应范围。</p>
+                    </div>
+                </article>
+
+            </div>
+<h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. Times Car 确认数据泄露，约 660 万用户账户受影响</h4>
+                    <p>日本租车服务商 Times Car 于 2026-09-29 确认一起影响约 <code>660 万</code> 用户账户的数据泄露事件；处理客户身份的企业应复核认证遥测、密码复用风险与告知义务。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>7. 前美军士兵 kiberphant0m 因电信黑客案被判 70 个月</h4>
+                    <p>Cameron Wagenius（化名 <code>kiberphant0m</code>）因 2023-04 至 2024-12 期间黑客入侵并勒索电信公司、窃取通话/短信记录（关联 2024 Snowflake 数据失窃中的 AT&amp;T 记录），被判处 70 个月监禁并赔偿近 29.5 万美元。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>8. CISA 今日（9/30）Citrix NetScaler 双零日联邦整改大限</h4>
+                    <p>CVE-2026-88771 / 88772（详见 9/28 期）的 FCEB 整改截止日即为今日；Palo Alto Unit 42 称全球超 <code>5 万</code> 暴露实例，watchTowr 指出 9/24 已观察到针对 NetScaler Gateway 的利用尝试——仍未打补丁的机构应立即隔离并排查 webshell。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>9. FSB 称高级俄官员手机发现复杂外国间谍软件</h4>
+                    <p>俄罗斯联邦安全局（FSB）2026-09-30 通报，在多名高级官员手机上发现"复杂外国间谍软件"，引发对外交/军政通信被监听的担忧；具体载荷与归属未公开。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>10. 微软将 Daemon Tools 供应链投毒与 NeedyMantis（Storm-3069）关联</h4>
+                    <p>微软披露的后渗透恶意软件 NeedyMantis 通过 Poedit / TightVNC 等合法软件目录进行 DLL 劫持；该供应链投毒手法与 Storm-3069 的长期驻留活动直接关联。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>11. Keio 铁路集团勒索事件持续，销售系统受影响</h4>
+                    <p>Keio 集团自 2026-09-26 确认勒索软件攻击扰乱集团系统、部分子公司销售系统受影响，已断网处置并向警方报案；列车运营未受影响，目前尚无确认数据外泄。</p>
+                </div>
+
+            </div>
+<h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-09-30 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "Netcore101072×10路由RCE": [0.55, 1.00]
+    "Ziroom102793×9.1 IoT": [0.55, 0.91]
+    "Adobe71362×9.1 KEV": [0.50, 0.91]
+    "DMDC300万泄露": [0.45, 0.80]
+    "Supabase1.6万暴露": [0.45, 0.82]
+    "TimesCar6.6M泄露": [0.45, 0.80]
+    "kiberphant0m判刑": [0.45, 0.78]
+    "Citrix88771/88772大限": [0.50, 0.95]
+    "FSB官员间谍软件": [0.45, 0.78]
+    "Keio铁路勒索": [0.45, 0.80]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-09-30 安全事件类型分布
+    "Netcore/Ziroom 路由器IoT RCE": 30
+    "Adobe Commerce KEV 在野": 14
+    "DMDC/Supabase/TimesCar 数据泄露": 28
+    "Citrix NetScaler 整改大限": 14
+    "间谍软件/勒索/其他": 14
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Netcore CVE-2026-101072 利用链（暴露 → 沦陷）</div>
+                    <div class="mermaid">
+flowchart TD
+    A[Netcore NR289-GE 暴露公网 默认配置] --> B[CVE-2026-101072/101075/101076 未认证OS命令注入 ×10.0]
+    B --> C[攻击者 root RCE 完全控制路由器]
+    C --> D[内网跳板/DNS劫持/流量监听 或 类DMDC式数据泄露]
+    D --> E[隔离设备+固件升级+收敛管理面+替换EOL]
+                    </div>
+                </div>
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月网安事件时间线
+    9月25日 : CISA加 SharePoint65660+MikroTik67279·网安日报第168期
+    9月26日 : Kiteworks疑零日关停·Bitget 3.51亿·Linux内核97527×5·Chrome154·MiniShaiHulud
+    9月27日 : CISA就Citrix NetScaler发紧急告警·Keio遭勒索·GestSup/AcyMailing PoC
+    9月28日 : ShinyHunters攻陷FBI求职门户·荷兰逮捕Shiny成员·Daemon Tools供应链·YellowKey
+    9月29日 : 网安日报第171期：Apple86950·Roller82384·SailPoint·Logsign·mcp-remote
+    9月30日 : 网安日报第172期：Netcore路由×10·Ziroom·Adobe71362 KEV·DMDC泄露·Supabase
+                </div>
+            </div>
+
+<!-- ===== 出处链接 ===== -->                        <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">East Bay Cyber — Threat Digest: Apple Zero-Day & Cloud Attacks (2026-09-29)：Netcore NR289-GE CVE-2026-101072/101075/101076/101077</span>
+                        <a href="https://eastbaycyber.com/content/2026-09-29-digest-apple-zero-day-cloud-attacks">https://eastbaycyber.com/content/2026-09-29-digest-apple-zero-day-cloud-attacks</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfoSecNexus — Live Cybersecurity Brief for September 30, 2026：Ziroom ZHOME CVE-2026-102793 / 102794</span>
+                        <a href="https://infosecnexus.com/?p=1169">https://infosecnexus.com/?p=1169</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-102793 (Ziroom ZHOME A0101 command injection)</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-102793">https://nvd.nist.gov/vuln/detail/CVE-2026-102793</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">F5 Labs — Weekly Threat Bulletin – September 30th, 2026：CISA KEV 加 CVE-2026-71362 (Adobe Commerce) / CVE-2026-5430 (WSO2)</span>
+                        <a href="https://www.f5.com/labs/articles/weekly-threat-bulletin-september-30th-2026">https://www.f5.com/labs/articles/weekly-threat-bulletin-september-30th-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA — Known Exploited Vulnerabilities Catalog（CVE-2026-71362 / CVE-2026-5430）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity Beat — Pentagon records office admits a nine-month intruder access (DMDC, 2026-09-30)</span>
+                        <a href="https://cybersecuritybeat.com/2026/09/30/pentagon-records-office-admits-a-nine-month-intruder-access">https://cybersecuritybeat.com/2026/09/30/pentagon-records-office-admits-a-nine-month-intruder-access</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（经 East Bay Cyber 转引）— 16,000+ misconfigured Supabase databases exposed</span>
+                        <a href="https://eastbaycyber.com/content/2026-09-29-digest-apple-zero-day-cloud-attacks">https://eastbaycyber.com/content/2026-09-29-digest-apple-zero-day-cloud-attacks</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecBrief — Daily Cybersecurity Briefing (29 September 2026)：Times Car 6.6M / kiberphant0m 70 个月 / Keio 勒索</span>
+                        <a href="https://www.cybersecbrief.com/news/cybersec/cybersec-2026-09-29">https://www.cybersecbrief.com/news/cybersec/cybersec-2026-09-29</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ankura CTIX FLASH Update – September 29, 2026：Citrix NetScaler CVE-2026-88771 / 88772 在野与缓解</span>
+                        <a href="https://ankura.com/insights/ankura-ctix-flash-update-september-29-2026">https://ankura.com/insights/ankura-ctix-flash-update-september-29-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Palo Alto Unit 42 — Threat Brief: NetScaler Zero Days CVE-2026-88771 / 88772（50,000+ 暴露实例）</span>
+                        <a href="https://unit42.paloaltonetworks.com/">https://unit42.paloaltonetworks.com/</a>
+                    </div>
+                </div>
+            </div></div><footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年9月30日
+            </p>
+        </footer>
+    </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
