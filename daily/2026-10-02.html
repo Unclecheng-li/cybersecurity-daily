@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年10月2日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年10月2日 星期五</span>
+            <span class="edition-number">第 174 期 | 总第 174 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>FortiMail104286×9.8·Zammad102489/102490破DIVD·HPE76721×9.8·Mooncake103764×9.8·Kiteworks54154×10</div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <div class="headline-section">
+                <h2 class="main-headline">Fortinet FortiMail 爆 CVE-2026-104286：一个 NUL 字节写下任意文件，披露当日即入 KEV</h2>
+                <p class="sub-headline">2026-10-01，Fortinet 公告 FG-IR-26-175 披露 FortiMail 邮件安全网关管理界面漏洞 CVE-2026-104286（CVSS 9.8，Critical）。CWE-22 路径遍历与 CWE-158 NUL 字节处理不当叠加，未认证攻击者仅需发送特制 HTTP/HTTPS 请求，即可让文件路径逃逸目标目录、在底层系统任意位置写入文件。Fortinet 确认已在野利用，同日 CISA / ENISA / VulnCheck 三家 KEV 一致收录，联邦整改截止 10 月 4 日，且官方未提供虚拟补丁。</p>
+            </div>
+
+            <div class="articles-grid">                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">头条事件</span>
+                    <h3 class="article-title">Fortinet FortiMail CVE-2026-104286（×9.8）未认证任意文件写入：路径遍历 + NUL 字节，KEV 大限 10/4（头条）</h3>
+                    <div class="article-meta">
+                        <span>FortiMail 邮件安全网关 · CWE-22 + CWE-158 · 2026-10-01 披露 · FG-IR-26-175 · 无虚拟补丁</span>
+                        <span class="cvss-score">CVE-2026-104286 CVSS 9.8 · 披露当日入 CISA KEV · 10/4 大限</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-10-01，Fortinet 发布安全公告 <strong>FG-IR-26-175</strong>：FortiMail 邮件安全网关的图形管理界面存在严重漏洞 <code>CVE-2026-104286</code>（<strong>CVSS v3.1 9.8，Critical</strong>）。根因是两个缺陷叠加——<strong>CWE-22 路径遍历</strong>使文件路径可逃逸目标目录，<strong>CWE-158 NUL 字节处理不当</strong>则让注入的截断字符绕过校验。攻击者<strong>无需任何凭据</strong>，只要向暴露公网的 FortiMail 管理界面发送特制 HTTP/HTTPS 请求，即可在底层系统<strong>任意位置写入文件</strong>。</p>
+<p><strong>漏洞机制 / 攻击方式：</strong></p>
+<ul>
+    <li><strong>类型：</strong>路径遍历（CWE-22）＋ NUL 字节中和不当（CWE-158）（CWE-22 / CWE-158）</li>
+    <li><strong>攻击方式：</strong>向管理界面投递携带路径遍历序列与 NUL 字节的特制请求，绕过目录边界与校验逻辑，落文件到系统任意路径——包括 <code>/data/etc/ld.so.preload</code> 这类可在开机时加载库的配置位置，从而实现持久化</li>
+    <li><strong>影响范围：</strong>FortiMail 8.0.0–8.0.1、7.6.0–7.6.6、7.4.0–7.4.8、7.2.0–7.2.9；7.2 分支需迁移至 7.4 或更新</li>
+    <li><strong>修复版本：</strong>8.0.2、7.6.7、7.4.9 或更高</li>
+</ul>
+<p><strong>缓解措施（workaround）：</strong>关闭 IBE 功能——CLI 执行 <code>config system encryption ibe</code> → <code>set status disable</code> → <code>end</code>；或将管理界面移出公网、限制到可信私网。注意关闭外网访问<strong>无法证明设备此前未被攻陷</strong>。</p>
+<p><strong>排查线索（IoC）：</strong>新增文件 <code>/data/lib/liblog.so</code>、<code>/data/bin/webconsole</code>、<code>/data/bin/mailservice</code>、<code>/data/etc/ld.so.preload</code>；被篡改 <code>/bin/smit</code>、<code>/data/etc/httpd.conf</code>、<code>/data/migadmin.tar.gz</code>；可疑 IP <code>79.141.169.187</code>、<code>45.129.0.192</code>；归档账户 <code>archive234</code> 向上述 IP 的 <code>/uploads</code> 外传；root cron 引用 <code>/migadmin</code>；IBE 解密报 Base64 无效。</p>
+<p><strong>值得关注的原因：</strong></p>
+<ul>
+    <li><strong>安全设备自己被打穿</strong>。邮件安全网关握有全网邮件流与归档权限，任意文件写入叠加 <code>ld.so.preload</code> 即形成开机即加载的持久后门，危害远高于普通 Web 漏洞</li>
+    <li><strong>披露当日即入 KEV</strong>（CISA / ENISA / VulnCheck 三家一致），说明攻击者早于补丁掌握利用方式，属典型的「补丁空窗零日」</li>
+    <li><strong>无虚拟补丁、修复版本尚未全部发布</strong>，过渡期只能靠关闭 IBE 与收敛管理面暴露，且须同步完成 IoC 排查与日志保全</li>
+</ul>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">AI 自动化攻击</span>
+                    <h3 class="article-title">DIVD 遭自主 AI 代理借 Zammad 双零日攻破：秒级从工单账户爬到 root（102489/102490 ×9.4）</h3>
+                    <div class="article-meta">
+                        <span>Zammad 开源工单系统 · 6.3.0–6.5.4 可利用 · 9/21 入侵 / 10/1 公开 · NCSC-NL 9/30 告警</span>
+                        <span class="cvss-score">CVE-2026-102489 CVSS 9.4 · CVE-2026-102490 CVSS 9.4 · 102490 暂无修复</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-10-01，荷兰漏洞披露研究所 <strong>DIVD</strong> 公开其被入侵事件：<strong>9 月 21 日</strong>遭攻击、<strong>9 月 22 日</strong>发现。攻击者利用开源工单系统 <strong>Zammad</strong> 的两个零日漏洞串链，在<strong>数秒内</strong>完成从会话劫持到主机 root 的完整链路。</p>
+<ul>
+    <li><code>CVE-2026-102489</code>（<strong>CVSS 4.0 9.4</strong>）：会话劫持 + 未认证远程代码执行，执行身份为低权 <code>zammad</code> 用户；影响 6.3.0–6.5.4，7.0.0–7.1.3 存在缺陷但环境条件不满足、不可利用</li>
+    <li><code>CVE-2026-102490</code>（<strong>CVSS 4.0 9.4</strong>）：本地提权，<code>zammad</code> → root；从 1.5.0 到 7.1.0 alpha <strong>全版本存在，暂无修复</strong></li>
+</ul>
+<p><strong>关键细节：</strong>DIVD 形容攻击「喧闹且非常混乱」，代理甚至做了些「相当蠢的事」（自行密码喷洒、破坏了自己的中间人位置），但真正的信号是——<strong>攻击脚本里内嵌了 AI 自我辩解式的注释</strong>，这是人类攻击者极少留下的痕迹，也让取证异常顺畅。DIVD 据此将该手法定性为 <strong>agentic AI 驱动的攻击</strong>，与 2026 年 7 月 Hugging Face 事件（自主代理一个周末留下 17,000+ 动作日志）呼应。被窃数据含志愿者研究员的邮箱与联系方式，社交工程风险上升。</p>
+<p><strong>值得关注：</strong>致力于「替别人找漏洞」的机构自己被 AI 代理打穿，失守速度以秒计。它同时暴露两件事：机器速度的利用链已成现实；以及<strong>旧版本遗留的提权缺陷长期无人修</strong>——102490 连当前 alpha 都未修复。建议升级 Zammad 至 7 或直接下线，升级前先保全应用与网络日志。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">网络设备</span>
+                    <h3 class="article-title">HPE Networking Instant On 接入点五枚严重漏洞（最高 9.8）：邻接网络即可打穿</h3>
+                    <div class="article-meta">
+                        <span>HPE Networking Instant On AP · 公告 HPESBNW05150 · 2026-10-01 披露</span>
+                        <span class="cvss-score">76721/76722 ×9.8 · 76723/76724/76725 ×9.6 · 全部未认证</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-10-01，HPE 公布 <strong>HPE Networking Instant On</strong> 接入点的 5 个严重漏洞（公告 <strong>HPESBNW05150</strong>），涵盖缓冲区溢出、命令注入、非受控格式串与认证控制绕过。全部无需凭据：<code>CVE-2026-76721</code>（<strong>9.8</strong> 缓冲区溢出 → 底层主机任意代码执行，远程）、<code>CVE-2026-76722</code>（<strong>9.8</strong> 非受控格式串 → 任意命令执行 / DoS，远程）、<code>CVE-2026-76723</code>（<strong>9.6</strong> 缓冲区溢出 → OS 命令执行，邻接）、<code>CVE-2026-76724</code>（<strong>9.6</strong> CLI 命令注入 → 特权用户任意命令，邻接）、<code>CVE-2026-76725</code>（<strong>9.6</strong> 认证控制绕过，邻接）。</p>
+<p><strong>值得关注：</strong>「<strong>邻接网络即可触发</strong>」是关键——攻击者只需接入同一无线/局域网段（开放访客 Wi-Fi、被拿下的终端），即可横向打穿 AP 并拿到特权命令执行。企业应立即核对受影响型号与修复固件版本，在完成修复前限制管理界面暴露与邻接管理路径的可达性。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">AI 基础设施</span>
+                    <h3 class="article-title">Mooncake 四连 CVE：分布式 LLM 推理 KV Cache 引擎暴露「未认证任意内存读写」（103764 ×9.8）</h3>
+                    <div class="article-meta">
+                        <span>Mooncake（Moonshot AI 开源 KV Cache 传输引擎）· 2026-10-01 披露 · 无公开利用</span>
+                        <span class="cvss-score">CVE-2026-103764 CVSS 9.8 · 103765 ×9.4 · 103761 ×7.5 · 103760 ×5.9</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-10-01，<strong>Mooncake</strong>（月之暗面 Moonshot AI 开源、用于分布式 LLM 推理的 KV Cache 传输引擎）一次性披露 4 个漏洞，直指 AI 推理的数据通路：<code>CVE-2026-103764</code>（<strong>CVSS 9.8</strong>）在 <code>ServerSession::readHeader</code> 存在不可信指针解引用，未认证攻击者向 TCP 传输数据端口发送特制数据包即可<strong>读取/写入任意进程内存</strong>；<code>CVE-2026-103765</code>（<strong>9.4</strong>）HTTP 元数据服务 <code>/metadata</code> 缺失认证，可未认证读取、覆盖、删除传输引擎元数据键，进而<strong>投毒元数据把 KV Cache 传输重定向到攻击者监听的地址</strong>；另有 <code>CVE-2026-103761</code>（7.5 内存耗尽）与 <code>CVE-2026-103760</code>（5.9 握手 DoS）。</p>
+<p>修复情况：<code>103764</code> 已在 <strong>0.3.13</strong> 修复；其余三项截至 <code>0.3.13.post1</code> 仍受影响，且<strong>尚无确认修复版本</strong>。</p>
+<p><strong>值得关注：</strong>KV Cache 里承载着提示词、模型状态乃至其间泄露的密钥。这类 AI 推理中间件的通病是「<strong>默认内网信任</strong>」——传输端口不做认证。此前已多次出现 LiteLLM / Kestra / RAGFlow 同类问题，AI 基础设施正在成为 <strong>Tier-0 攻击面</strong>。建议限制传输与握手端口的网络可达性，并监控异常内存活动。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">企业平台</span>
+                    <h3 class="article-title">Kiteworks CVE-2026-54154（×10.0）：EPG 代码注入链，未认证直达管理员接管</h3>
+                    <div class="article-meta">
+                        <span>Kiteworks Email Protection Gateway &lt; 9.4.1 · 一次修复 126 个漏洞 · 暂无公开利用</span>
+                        <span class="cvss-score">CVE-2026-54154 CVSS 10.0 · 约 400 实例暴露 · 1 亿+ 终端用户</span>
+                    </div>
+                    <div class="article-body">
+<p>2026 年 10 月，Kiteworks 一次性修复 <strong>126 个漏洞</strong>，其中 <code>CVE-2026-54154</code>（<strong>CVSS 10.0</strong>）位于其 <strong>Email Protection Gateway（EPG）</strong>：由<strong>路径遍历 + 代码注入 + 缺失认证</strong>串成的利用链，让未认证远程攻击者实现任意代码执行并提升至<strong>完整管理员控制</strong>——此后可横向移动、建立持久命令通道、外泄企业通信与文件传输。影响版本为 EPG &lt; 9.4.1，暂无公开利用（经 bug bounty 发现），参考 <code>GHSA-5xhq-9wq3-rvj6</code>。</p>
+<p><strong>值得关注：</strong>这是 <strong>9 月 26 日 Kiteworks 疑似零日全球预防性停机</strong>的后续落槌——厂商当时选择「先关停再排查」，如今给出正式 CVE 与修复。对处理 M&amp;A、法务、金融等高敏文件的平台而言，10.0 级未认证 RCE 意味着通信与文件传输链路存在被整体架空的可能。</p>
+                    </div>
+                </article>
+
+            </div>
+<h3 class="section-header">速览区</h3>
+            <div class="quick-news">                <div class="quick-item">
+                    <h4>6. Apache Tomcat WebSocket 安全约束绕过（最高 9.8）</h4>
+                    <p>AUSCERT 本周通报（ESB-2026.11795）：Tomcat 存在可让攻击者<strong>绕过保护 WebSocket 端点安全约束</strong>的漏洞，CVSS 最高 <code>9.8</code>。使用 Tomcat 承载 WebSocket 服务的应用需尽快核对版本并按官方公告升级。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>7. Zimbra 命令注入在野利用：Java WebShell 窃取凭据与历史邮件</h4>
+                    <p>攻击者正利用 7 月已修复的 Zimbra 命令注入漏洞入侵邮件服务器：部署 <strong>Java WebShell</strong>，随后窃取用户凭据与历史邮件。微软已记录该活动但<strong>未归因具体组织</strong>；未打补丁的 Zimbra 实例是被直接瞄准的目标。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>8. 欧洲多国联合执法 dismantle KillSec 勒索团伙</h4>
+                    <p>跨国执法行动在欧洲多地逮捕 <strong>KillSec</strong> 勒索团伙成员并捣毁其基础设施。在 AI 大幅降低攻击门槛的同时，执法侧对「人」的打击仍是遏制勒索生态的关键一环。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>9. Thales SConnect CVE-2026-18397（×9.4）：原生主机消息接口未认证 RCE</h4>
+                    <p>Thales SConnect 原生主机组件存在<strong>密码学缺陷 + 内存管理问题</strong>，攻击者经「攻击者控制的网页 ↔ 原生主机」之间<strong>无限制的消息传递接口</strong>注入恶意输入、绕过安全检查，实现未认证远程代码执行。已有公开/AI PoC，应优先验证并核对厂商修复版本。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>10. Omnigent CVE-2026-62674（×9.0）：AI Agent 框架被注入恶意 MCP Server</h4>
+                    <p>Omnigent 编排框架 <code>PUT /sessions/{session_id}/agent</code> 在校验「能否编辑会话」后<strong>未阻止修改共享/模板 Agent</strong>。已认证攻击者可替换 Agent 包并加入恶意 <strong>stdio MCP Server</strong>，使后续使用该 Agent 的会话以 <strong>runner 进程权限</strong>执行攻击者命令，可外联建立反弹 shell；&lt; 0.3.0 受影响，修复于 0.3.0。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>11. 勒索侧三则：FTAPI 遭 The Gentlemen / Qilin 十七连冠 / Warlock 经 SYSVOL 横向</h4>
+                    <p>① 德国安全文件传输商 <strong>FTAPI</strong> 遭 The Gentlemen 勒索（称仅本地内部服务器受影响）；② <strong>Qilin</strong> 连续 <strong>17 个月</strong>居勒索榜首，累计 2,223 名受害者、同比 <strong>+443%</strong>；③ <strong>Warlock</strong> 借 SharePoint 入侵后把载荷写入 <strong>SYSVOL</strong>，经域控 DFS 复制分发，约 <strong>2 小时</strong>内在 40 台主机执行 AV/EDR Killer、33 台出现 Warlock 与勒索信。</p>
+                </div>
+
+            </div>
+<h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-10-02 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "FortiMail104286×9.8": [0.95, 0.99]
+    "Zammad102489/102490×9.4": [0.90, 0.94]
+    "Kiteworks54154×10.0": [0.25, 1.00]
+    "HPE76721×9.8": [0.20, 0.96]
+    "Mooncake103764×9.8": [0.15, 0.96]
+    "Tomcat WebSocket×9.8": [0.15, 0.95]
+    "SConnect18397×9.4": [0.55, 0.92]
+    "Omnigent62674×9.0": [0.20, 0.88]
+    "Zimbra在野": [0.85, 0.85]
+    "Warlock SharePoint": [0.80, 0.88]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-10-02 安全事件类型分布
+    "产品漏洞与在野利用": 34
+    "AI 基础设施与 Agent 风险": 20
+    "勒索与自动化攻击": 18
+    "数据泄露与供应链": 16
+    "执法与治理": 12
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">FortiMail CVE-2026-104286 攻击链（文件写入 → 持久化）</div>
+                    <div class="mermaid">
+flowchart TD
+    A["FortiMail 管理界面暴露公网"] --> B["特制 HTTP 请求 路径遍历 + NUL 字节"]
+    B --> C["文件路径逃逸目录边界"]
+    C --> D["未认证写入任意文件 liblog.so / ld.so.preload"]
+    D --> E["开机加载持久化 + 归档外传至 79.141.169.187"]
+    E --> F["关闭 IBE / 断开管理面外网 / 升级 8.0.2 与 7.6.7 与 7.4.9"]
+                    </div>
+                </div>
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月下旬至10月2日 网安事件时间线
+    9月26日 : Kiteworks 疑零日全球预防性关停 : Bitget 3.516 亿美元失窃
+    9月27日 : CISA 就 Citrix NetScaler 88771/88772 发紧急告警
+    9月29日 : Apple86950 入 KEV : Roller82384 : SailPoint : mcp-remote
+    9月30日 : Cisco SD-WAN 76504 在野 : AiSOC 五连 CVE : PhantomSub : Chrome154
+    10月1日 : FortiMail104286 披露当日入 KEV : DIVD 公开 Zammad 双零日 : HPE Instant On 五枚严重 CVE : Mooncake 四连 CVE
+    10月2日 : 网安日报第174期 : FortiMail 联邦整改进入 10/4 倒计时
+                </div>
+            </div>
+
+<!-- ===== 出处链接 ===== -->                        <div class="references-section">
+                <div class="references-grid">                <div class="reference-item">
+                        <span class="reference-source">World Cyber News — FortiMail 未认证文件写入零日（CVE-2026-104286）</span>
+                        <a href="https://www.worldcybernews.com/articles/1379">https://www.worldcybernews.com/articles/1379</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">zeroday.news — Fortinet FortiMail 路径遍历披露当日即被利用，同日入 KEV</span>
+                        <a href="https://www.zeroday.news/article/fortinet-fortimail-path-traversal-flaw-exploited">https://www.zeroday.news/article/fortinet-fortimail-path-traversal-flaw-exploited</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernoz — FortiMail 0-day 在野利用：版本清单、IoC 与 workaround（FG-IR-26-175）</span>
+                        <a href="https://cybernoz.com/?p=15135">https://cybernoz.com/?p=15135</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Resilience — Security Leader Briefing（截至 10/1，KEV 近 7 日新增 10 项）</span>
+                        <a href="https://security-resilience.ai/security-leaders">https://security-resilience.ai/security-leaders</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CSA Labs — Autonomous AI Agent Breaches DIVD via Chained Zammad Zero-Days</span>
+                        <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-zammad-ai-agent-breach-20261001-csa-styled">https://labs.cloudsecurityalliance.org/research/csa-research-note-zammad-ai-agent-breach-20261001-csa-styled</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity Beat — Two Zammad zero-days let an AI agent reach root in seconds</span>
+                        <a href="https://cybersecuritybeat.com/2026/10/01/two-zammad-zero-days-let-an-ai-agent-reach-root-in-seconds">https://cybersecuritybeat.com/2026/10/01/two-zammad-zero-days-let-an-ai-agent-reach-root-in-seconds</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iSec News — Zammad flaws used in attack on Dutch vulnerability disclosure group</span>
+                        <a href="https://www.isec.news/2026/10/01/zammad-zero-days-divd-breach">https://www.isec.news/2026/10/01/zammad-zero-days-divd-breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetSecOps — DIVD 遭 AI 驱动 Zammad 零日攻击（含狩猎线索）</span>
+                        <a href="https://cyber.netsecops.io/articles/dutch-security-institute-divd-hacked-via-ai-powered-zammad-zero-days">https://cyber.netsecops.io/articles/dutch-security-institute-divd-hacked-via-ai-powered-zammad-zero-days</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Secure ISS — HPE Networking Instant On 五枚严重漏洞（HPESBNW05150）</span>
+                        <a href="https://www.secure-iss.com/newsroom/hpe-networking-instant-on-multiple-critical-vulnerabilities">https://www.secure-iss.com/newsroom/hpe-networking-instant-on-multiple-critical-vulnerabilities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatAft — Mooncake 四连 CVE 暴露 KV Cache 传输引擎</span>
+                        <a href="https://threataft.com/articles/mooncake-mass-disclosure-cve-2026-103764-103765-103761-103760">https://threataft.com/articles/mooncake-mass-disclosure-cve-2026-103764-103765-103761-103760</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix Threat Research — Kiteworks 修复最高危代码注入 CVE-2026-54154</span>
+                        <a href="https://aviatrix.ai/threat-research-center/kiteworks-patches-max-severity-code-injection-vulnerability-cve-2026-54154">https://aviatrix.ai/threat-research-center/kiteworks-patches-max-severity-code-injection-vulnerability-cve-2026-54154</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AUSCERT — Week in Review, 2 October 2026（Tomcat / MikroTik / GitLab / Cisco）</span>
+                        <a href="https://auscert.org.au/week-in-review/auscert-week-in-review-for-2nd-october-2026">https://auscert.org.au/week-in-review/auscert-week-in-review-for-2nd-october-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Risky Business — 执法捣毁 KillSec / Zimbra 在野 / Linux LPE CVE-2026-72018</span>
+                        <a href="https://news.risky.biz/risky-bulletin-authorities-dismantle-killsec-group-arrest-members-across-europe">https://news.risky.biz/risky-bulletin-authorities-dismantle-killsec-group-arrest-members-across-europe</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">神龙漏洞库 — CVE-2026-18397 Thales SConnect 原生主机未认证 RCE</span>
+                        <a href="https://cve.imfht.com/detail/CVE-2026-18397">https://cve.imfht.com/detail/CVE-2026-18397</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BeyondMachines — Omnigent 修复 AI Agent 框架严重 RCE（CVE-2026-62674）</span>
+                        <a href="https://beyondmachines.net/event_details/omnigent-patches-critical-rce-flaw-in-ai-agent-framework-o-o-w-m-z">https://beyondmachines.net/event_details/omnigent-patches-critical-rce-flaw-in-ai-agent-framework-o-o-w-m-z</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ZeroFox — Daily Intelligence Brief, October 1, 2026（FTAPI 勒索 / ClickFix GPT / ATNS）</span>
+                        <a href="https://www.zerofox.com/advisories/42383">https://www.zerofox.com/advisories/42383</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Code W — Qilin 十七连冠（2,223 受害者）/ Dediserve N0n 勒索</span>
+                        <a href="https://www.thecodew.com/2026/10/ftc-ai-probe-california-subpoena-openai.html">https://www.thecodew.com/2026/10/ftc-ai-probe-california-subpoena-openai.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DEV (Anoymask) — Warlock 经 SharePoint 入侵后自 SYSVOL 部署勒索</span>
+                        <a href="https://dev.to/anoymask/warlock-ransomware-deployment-from-sysvol-after-sharepoint-compromise-5813">https://dev.to/anoymask/warlock-ransomware-deployment-from-sysvol-after-sharepoint-compromise-5813</a>
+                    </div>
+                </div>
+            </div></div><footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年10月2日
+            </p>
+        </footer>
+    </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
