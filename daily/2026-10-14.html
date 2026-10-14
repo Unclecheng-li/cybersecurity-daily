@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年10月14日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <div class="edition-info">
+            <span class="edition-date">2026年10月14日 星期三</span>
+            <span class="edition-number">第 186 期 | 总第 186 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>微软补丁星期二1407个CVE·96951 MotW在野零日·GitLab97229×10RCE·Ivanti104935在野·法国超市冷库被加热到50度·Adobe ColdFusion
+        </div>
+
+        <div class="content-wrapper">
+
+            <div class="headline-section">
+                <h2 class="main-headline">补丁多到管不过来、冷柜连上网却没人管：一次创纪录的补丁星期二，与一夜之间被加热到 50℃ 的法国超市冷库</h2>
+                <p class="sub-headline">微软在 <strong>10-13</strong> 交出<strong>公司历史上最大的一次补丁星期二</strong>：一次修掉 <strong>1,400 多个 CVE</strong>，里面夹着一枚<strong>正在被利用的 Windows Shell 零日</strong>——攻击者靠它把"这是从网上下载的文件"的警告整个抹掉。同一夜，法国数百家超市的<strong>联网冷柜被远程加热到 50℃</strong>，黑客没碰收银机，却让生鲜整夜报废、损失数百万欧元。同日，GitLab、Ivanti 与 Adobe 各有满分或高危漏洞落地或在野。</p>
+            </div>
+
+            <div class="articles-grid">
+
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">头条事件</span>
+                    <h3 class="article-title">微软十月补丁星期二创纪录：1,400+ 个 CVE，含一枚正在被利用的 Windows Shell 零日（CVE-2026-96951）（头条）</h3>
+                    <div class="article-meta">
+                        <span>微软 10-13 发布 · 史上规模最大 · Tenable 计 1,407 / BleepingComputer 计 1,411 / CrowdStrike 计 1,413 · 约 176 个更新包 · 70 个严重（57 个 RCE）</span>
+                        <span class="cvss-score">96951 Windows Shell 绕过 MotW，CVSS 8.8，已在野，CISA 10-13 入 KEV · 108398 .NET WDAC 绕过（公开披露）· 92707 MessagePack-CSharp DoS · 新增 15 个"风险队列"</span>
+                    </div>
+                    <div class="article-body">
+<p>微软在 <strong>10 月 13 日</strong>发布了<strong>公司历史上规模最大的一次补丁星期二</strong>：一次性修复 <strong>1,400 多个漏洞</strong>，打破 2020 年 1,261 个的旧纪录。不同机构统计口径略有差异——<strong>Tenable 计 1,407 个、BleepingComputer 计 1,411 个、CrowdStrike 计 1,413 个、约 176 个独立更新包</strong>——但结论一致：<strong>这是一次"创纪录量级"的发布</strong>，官方原定的下午 1 点（美东）发布时间也被推迟了数小时，把管理员们等得有点上火。</p>
+<ul>
+    <li><strong>规模与结构：</strong>其中 <strong>70 个为严重（Critical）</strong>，57 个是远程代码执行；按类别看，<strong>权限提升（EoP）约 677 个、占比约 47.9%</strong>，远程代码执行约 317 个；涉及<strong>约 301 个产品与组件</strong>。占比最大的产品群是 Office Excel（69）、DNS 服务器（52）、Windows 内核（46）、Windows Installer（38）与 Office SharePoint（34）</li>
+    <li><strong>一枚在野零日——<code>CVE-2026-96951</code>（Windows Shell 安全特性绕过，CVSS v3.1 = 8.8）：</strong>这是本次<strong>最该优先处理</strong>的一枚。它是一个 <strong>Windows Shell 的命令注入</strong>问题，攻击者可用它<strong>绕过 Mark of the Web（MotW）</strong>——也就是 Windows 给"从互联网下载的文件"打的那个"不可信"标记。MotW 正是 <strong>SmartScreen 警告、Office 受保护视图</strong>等一大堆下游防护的触发开关；一旦被绕过，"下载来的文件"会像本地文件一样被放行。微软确认它<strong>已在野被利用</strong>，攻击者通过邮件或消息等社工方式诱导目标打开恶意文件；<strong>CISA 已于 10-13 当天把它列入 KEV 目录</strong></li>
+    <li><strong>为什么这枚格外刺眼：</strong>Tenable 指出，这已经是 <strong>2026 年第三枚被在野利用的 Windows Shell 漏洞</strong>（前两枚是 2 月的 <code>CVE-2026-21510</code> 与 4 月的 <code>CVE-2026-32202</code>）——<strong>2026 年至今已修了 26 个 Windows Shell 漏洞</strong>，而 2025 全年只有 3 个</li>
+    <li><strong>另两枚"零日"（披露时尚无补丁）：</strong><strong><code>CVE-2026-108398</code>（.NET Framework 安全特性绕过，8.8）</strong>由 <strong>Google Project Zero 的 James Forshaw</strong> 发现，可让<strong>已认证攻击者在无用户交互下绕过 Windows Defender Application Control（WDAC）</strong>、把恶意 .NET 程序集加载进受保护进程（<strong>用 WDAC 做应用白名单的环境要重点看</strong>）；<strong><code>CVE-2026-92707</code>（MessagePack-CSharp 拒绝服务）</strong>——<strong>光打 Windows 更新补不掉</strong>，需要<strong>捆绑该库的应用同步升级依赖</strong></li>
+    <li><strong>管理侧的新变化：</strong>为应对如此庞大的量，微软本月首次引入<strong>"风险队列（risk cohorts）"</strong>——把"回答同一个环境问题"的 CVE 归成 <strong>15 组</strong>（如"Windows 文件系统、存储与备份"136 个、"Office 文档与邮件客户端"135 个、"Windows 核心与内核权限边界"109 个、"远程访问与 RDP 部署"65 个等）。<strong>它的用途是帮你组织排查顺序，而不是替你判断风险</strong>——微软明确说队列不改变补丁指引、也不替代逐条核对利用状态</li>
+    <li><strong>同批值得顺带留意的严重项与期限：</strong><strong><code>CVE-2026-70229</code>（Active Directory 域服务 RCE）</strong>、<strong><code>CVE-2026-70571</code>（Exchange Server RCE）</strong>，以及 <strong><code>CVE-2026-70279</code>（Exchange 欺骗，CVSS 9.3，"更可能被利用"）</strong>。微软同时提醒：<strong>本月是 Windows 11 24H2 家用版/专业版与 Windows 10 LTSB 2016 的最后一次安全更新</strong>，Windows Server 2012 / 2012 R2 的最后一期扩展支持（ESU）也在 10-13 画上句号</li>
+</ul>
+<p><strong>为何值得关注：</strong>这期最值得记住的不是某一条 CVE，而是<strong>"补丁这件事的性质变了"</strong>——当一次发布就是 1,400 条，"逐条读完再决定"已经不可能，防御者真正需要的是一套<strong>按"是否在野、是否公网可达、是否承载身份/邮件/备份/域服务"排序的暴露面管理流程</strong>。而在这份长长的清单里，<strong><code>CVE-2026-96951</code> 应该被单独放进"当天就补"的队列</strong>：因为 MotW 是很多其它防护的共同上游，它被绕过之后，靠"文件来自互联网"这条判断撑起来的防线会<strong>成片失效</strong>。对 Windows 环境来说，<strong>先补它，再补两枚零日，然后才轮到量最大但优先级最低的那部分</strong>。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">物理损失</span>
+                    <h3 class="article-title">法国数百家超市的冷柜被远程加热到 50℃：一次把"网络攻击"打成"物理损失"的工控事件</h3>
+                    <div class="article-meta">
+                        <span>10-11 夜至 10-12 凌晨 · 目标为超市联网制冷控制系统 · 涉事设备为丹麦厂商丹佛斯（Danfoss）产品 · ANSSI 已确认软件漏洞 · 巴黎检方立案</span>
+                        <span class="cvss-score">强制持续除霜 + 设定 50℃ · 冷柜原维持 -18℃ 至 4℃ · Intermarché 约 300 家 / 家乐福约 80 家 / Monoprix 约 5% · 损失或达数千万欧元 · 部分门店起火</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>10 月 11 日夜至 12 日凌晨</strong>，法国数百家超市的<strong>联网制冷控制系统遭到网络攻击</strong>。黑客没有去碰收银系统或客户数据，而是<strong>直接打进超市用来远程管理冷柜的制冷控制器</strong>，把设备<strong>强制切换到持续除霜模式、并把设定温度拉到 50 摄氏度</strong>——让原本维持在 <strong>-18℃ 至 4℃</strong> 的冷柜<strong>连续数小时被加热</strong>，大量生鲜与冷冻食品在一夜之间报废。</p>
+<ul>
+    <li><strong>受影响范围（据多家连锁与法新社/路透社）：</strong><strong>Intermarché 及其 Netto 品牌约 300 家门店</strong>（其所属集团称约 150 家门店冰柜被加热至 50℃、持续约 6 小时）、<strong>Coopérative U 上百家（另有口径称不足 100 家）门店</strong>、<strong>家乐福约 80 家门店</strong>、<strong>Monoprix 约 5%（约 30 家）门店</strong>；部分独立商户、尤其是肉店也可能受影响。<strong>E.Leclerc</strong> 确认其<strong>一家制冷设备供应商</strong>遭攻击，影响了数家门店的制冷系统</li>
+    <li><strong>被攻击的是什么：</strong>涉事超市配备的是<strong>丹麦制造商丹佛斯（Danfoss）的制冷控制系统</strong>。这类设备<strong>配有自动除霜功能，并允许总部或技术人员通过网络远程调节温度与除霜周期</strong>——正是这个"为运维方便而开放的公网可达接口"成了入口</li>
+    <li><strong>损失与后果：</strong>门店被迫<strong>清空货架、销毁全部受影响商品</strong>；Intermarché 的 CEO 在 BFM 电视台称损失<strong>可能达数千万欧元</strong>。部分门店还<strong>发生火情</strong>。<strong>巴黎检察官办公室已立案调查</strong>，调查中纳入"食品损失与火灾爆发"。<strong>法国国家信息系统安全局（ANSSI）确认丹佛斯相关软件存在漏洞</strong>，已联系开发商，并与欧洲同行协调排查其它可能受影响的企业</li>
+    <li><strong>厂商回应：</strong><strong>丹佛斯</strong>称已知晓法国境内<strong>数量有限的制冷系统</strong>受影响，受波及设备<strong>"运行的是过时的固件"</strong>，并表示"长期以来一直建议客户把受支持的系统保持在最新状态"。<strong>法国商业及零售业联合会</strong>则呼吁丹佛斯就事件<strong>保持"完全透明"</strong>。另据今年 8 月的安全研究，丹佛斯曾发布更新，修复"可能允许攻击者绕过身份验证控制、在受影响设备上执行代码"的问题——<strong>这类漏洞并非毫无预警</strong></li>
+</ul>
+<p><strong>为何值得关注：</strong>这是一起<strong>教科书级的"网络攻击造成物理后果"案例</strong>：攻击者的<strong>目标不是数据，而是温度</strong>，代价是<strong>真金白银的食物和人身上的火情</strong>。它把三个老问题一次性摆了出来：<strong>第一，工业与楼宇物联网设备"为了好运维"被接到公网，却常年没有像样的身份认证与访问控制</strong>；<strong>第二，被攻破的往往不是最新设备，而是"生命周期结束、固件没更新"的老型号</strong>——Danfoss 的说法恰好印证了这一点；<strong>第三，冷库这类"冷链"设施连着食品、药品与疫苗供应，一旦成为攻击面，影响会溢出到公共安全</strong>。行动项很明确：<strong>盘点所有"能远程改参数"的控制器</strong>、把管理接口从公网收回到受控网段或 VPN、淘汰无补丁的 EOL 设备，并把"温度设定点"这类<strong>能造成物理损害的写操作</strong>当成高价值权限去管。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">满分 10.0</span>
+                    <h3 class="article-title">GitLab 的 CI/CD 正则编译器被整数溢出打穿：CVE-2026-97229（CVSS 10.0），未认证即可远程执行代码</h3>
+                    <div class="article-meta">
+                        <span>GitLab CE / EE 自管实例 · 修复版本 19.4.2 / 19.3.5 / 19.2.8 · 10-12 发布 · CERT-EU 公告 2026-016 建议优先升级公网可达实例</span>
+                        <span class="cvss-score">97229 整数溢出 → 未认证任意代码执行 · Rapid7 在未打补丁的 19.4.1 镜像上复现 · 同一版本另修存储型 XSS、受保护分支越权与缓存投毒 · 暂无在野确认</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>GitLab</strong> 在 <strong>10 月 12 日</strong>发布补丁版本 <strong>19.4.2 / 19.3.5 / 19.2.8</strong>（Community 与 Enterprise 版同源），其中包含一枚<strong>满分（CVSS 10.0）</strong>漏洞 <strong><code>CVE-2026-97229</code></strong>。</p>
+<ul>
+    <li><strong>漏洞成因：</strong>它位于 <strong>CI/CD 的"正则表达式编译器"</strong>。由于<strong>对正则的校验不充分</strong>，在特定条件下会触发<strong>整数溢出</strong>，攻击者可用一条<strong>特制的正则表达式（写在 CI/CD 配置里）</strong>在 <strong>GitLab 服务器上执行任意代码</strong>。GitLab 给出的评分向量是"<strong>远程、低复杂度、无需权限、无需用户交互</strong>"</li>
+    <li><strong>谁能打、怎么打：</strong><strong>Rapid7 在 10-13 复现了任意代码执行</strong>——在一台<strong>未打补丁的官方 GitLab CE 镜像（19.4.1）</strong>上成功，而在<strong>已修补的 19.4.2</strong> 上同样的输入不再生效。不过 Rapid7 也指出一条<strong>现实前提</strong>：攻击者<strong>需要先能把一个恶意的 <code>.gitlab-ci.yml</code>（且仓库路径含 UTF-8 字符）提交到某个分支上的公开项目</strong>；在<strong>允许用户自建公开项目的自管实例</strong>上，<strong>一个普通账号就够满足这个条件</strong>——这也是"10.0 评分"与"无需认证"看似矛盾的原因：<strong>它是"低门槛"，不是"零前提"</strong></li>
+    <li><strong>影响与修复：</strong><strong>19.2 至 19.2.8 之前、19.3 至 19.3.5 之前、19.4 至 19.4.2 之前</strong>的<strong>所有自管（self-managed）实例</strong>受影响。<strong>GitLab.com 已在服务端修复</strong>，<strong>GitLab Dedicated 客户无需操作</strong>。（另注意：CERT-EU 初版公告写的修复版是 19.3.4，GitLab 官方已改为 <strong>19.3.5</strong>，因为 19.3.4 在合并请求页面与 Ona 集成上引出另一个问题，<strong>请以官方发布说明为准</strong>）</li>
+    <li><strong>同一版本还修了一批问题：</strong>包括一枚<strong>存储型 XSS</strong>（可用特制仓库在他人浏览器里执行 JS）、一枚<strong>受保护分支的流水线授权缺陷</strong>，以及一枚<strong>缓存投毒</strong>问题（<strong>可能泄露受保护的 CI/CD 变量</strong>）</li>
+    <li><strong>状态：</strong>漏洞由研究员 <strong>joaxcar（Johan Carlsson）</strong> 通过 HackerOne 报告；<strong>截至 10-13 尚无已确认的在野利用</strong>，但<strong>网络上已出现声称的 PoC，需谨慎对待</strong></li>
+</ul>
+<p><strong>为何值得关注：</strong>CI/CD 服务器在企业里的位置，决定了这类漏洞的<strong>"杀伤半径"远大于它自己</strong>——它常年握着<strong>仓库、构建产物、部署凭据与集成 token</strong>，这也是安全工程师把它称作"<strong>把软件供应链的关键一环推到风险里</strong>"的原因：<strong>一次未认证的代码执行，可能等于把这家公司的交付通道交出去</strong>。处置优先级很清楚：<strong>自管实例立刻升到 19.2.8 / 19.3.5 / 19.4.2 或更高（跳出常规补丁周期）</strong>；容器与 Helm 部署要<strong>逐一核对实际运行的版本</strong>（旧镜像、测试实例最容易漏）；升级之后，<strong>翻一遍 CI/CD 配置的异常改动、异常进程、新出现的 token 或部署、以及反常的外连</strong>，必要时<strong>轮换凭据</strong>。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">在野 · 已入 KEV</span>
+                    <h3 class="article-title">Ivanti Connect Secure CVE-2026-104935：伪造身份即过关的认证绕过，厂商确认在野利用，CISA 当天入 KEV</h3>
+                    <div class="article-meta">
+                        <span>Ivanti Connect Secure（远程接入设备）· 10-13 披露 · Ivanti 确认"有限范围"在野利用 · 致谢 Volexity 协助 · CISA 10-13 入 KEV，联邦大限 10-16</span>
+                        <span class="cvss-score">104935 认证绕过（CWE-290）CVSS 8.6 → 未认证任意命令执行 · 修复 25.1.1.2 / 25.1.3.0·25.1.3.1 / 22.8R2.5 · 22.7R2.14 及更早不受影响 · 22.7/22.8 将于 2027-01-31 EOL</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>Ivanti</strong> 在 <strong>10 月 13 日</strong>披露其远程接入设备 <strong>Connect Secure</strong> 存在一枚<strong>认证绕过</strong>漏洞 <strong><code>CVE-2026-104935</code>（CVSS 8.6）</strong>：<strong>远程、未认证攻击者可绕过认证并在设备上执行任意命令</strong>。Ivanti 明确表示<strong>已经知晓该漏洞被"有限范围地"在野利用</strong>（攻击当时影响少数客户），并<strong>致谢 Volexity 的协助</strong>。</p>
+<ul>
+    <li><strong>漏洞类型（CWE-290，伪造绕过认证）：</strong>设备<strong>被诱骗相信一个未认证请求携带了它从未验证过的身份</strong>，从而放行本应待在登录之后的功能，进而按 CISA 的概括<strong>升级为任意命令执行</strong></li>
+    <li><strong>影响与修复（按分支）：</strong><strong>25.1.1.1 及更早 → 修复于 25.1.1.2</strong>；<strong>25.1.2.2 及更早 → 修复于 25.1.3.0 或 25.1.3.1</strong>；<strong>22.8R2.4 及更早 → 修复于 22.8R2.5</strong>；<strong>22.7R2.14 及更早不受影响</strong>（这点很关键，别一刀切）</li>
+    <li><strong>时限信号：</strong><strong>CISA 于 10-13 当天把它列入 KEV 目录，并给出联邦机构 10-16 的修复大限</strong>（BOD 26-04），并按<strong>"需取证排查"</strong>归类。同日 Ivanti 的十月安全更新还包括<strong>同一条利用链上的一枚权限提升漏洞</strong>（修复"将在未来几周内"发布）</li>
+    <li><strong>要留意的期限：</strong><strong>22.7 与 22.8 两条分支都将在 2027-01-31 到期（EOL）</strong>——如果你现在跑在这两条线上，<strong>这次修复版只是"桥"，不是"目的地"</strong></li>
+</ul>
+<p><strong>为何值得关注：</strong>Connect Secure 这个位置很特殊：<strong>它正是"远程接入的终点站"，设备本身看得见穿过它的每一个会话</strong>。对攻击者来说，把它拿下等于<strong>拿到一个天然的、可信的落脚点</strong>。Ivanti 用"披露时利用有限"来描述现状，但业内对这句话的解读相当谨慎——<strong>过去两年 Ivanti Connect Secure 一直是"最常被利用的边缘设备"之一，很多攻击都是从"少量利用"开始的</strong>。行动项很干脆：<strong>按分支升到修复版本（25.1.1.2 / 25.1.3.0 / 25.1.3.1 / 22.8R2.5）</strong>；<strong>升级后按"可能已失陷"去查日志</strong>（认证绕过类漏洞的可怕之处在于，<strong>补丁只能堵住"之后"，堵不住"之前"进去的</strong>）；并<strong>把 22.7/22.8 的迁移计划提前</strong>。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">未认证 RCE</span>
+                    <h3 class="article-title">Adobe 十月更新：ColdFusion 与 Commerce 各带一枚满分未认证 RCE，共修 170+ 个 CVE</h3>
+                    <div class="article-meta">
+                        <span>Adobe 10 月补丁周期 · 11 份公告、174 个 CVE（ZDI 统计）· ColdFusion APSB26-144 / Commerce APSB26-153 被列为 Priority 2 · Adobe 称未发现利用</span>
+                        <span class="cvss-score">ColdFusion 105899×10.0 / 106622×10.0 / 106624×9.8 未认证网络可达 · Commerce 103849×10.0 / 92909×9.8 未认证 · 修 ColdFusion 2025.0.14 / 2023.0.26</span>
+                    </div>
+                    <div class="article-body">
+<p>Adobe 在本月补丁周期发布了 <strong>11 份安全公告、覆盖 174 个 CVE</strong>（ZDI 统计；Adobe 部分公告口径略有出入）。虽然官方总评为"中危"，但<strong>真正该先动的是两个产品</strong>——它们各自揣着<strong>满分漏洞</strong>。</p>
+<ul>
+    <li><strong>ColdFusion（APSB26-144，共 32 个 CVE，10 个严重）：</strong>含<strong>三枚未认证、网络可达、评分 9.8 以上</strong>的漏洞——<strong><code>CVE-2026-105899</code>（10.0）、<code>CVE-2026-106622</code>（10.0）、<code>CVE-2026-106624</code>（9.8）</strong>。ZDI 特别提醒：这 10 个严重漏洞里还包含<strong>不受限文件上传（CWE-434）、代码注入（CWE-94）、SSRF 与授权不当</strong>，构成<strong>互联网面向前置认证 RCE 的典型画像</strong>。<strong>升级到 ColdFusion 2025.0.14 或 2023.0.26</strong></li>
+    <li><strong>Commerce（APSB26-153，共 11 个 CVE，5 个严重）：</strong>含 <strong><code>CVE-2026-103849</code>（10.0）与 <code>CVE-2026-92909</code>（9.8）</strong>，<strong>均为未认证</strong>。Commerce 是<strong>上月（9 月）那枚已被在野利用的 <code>CVE-2026-75650</code> 的同一高分目标</strong>，官方要求<strong>同时打上 9 月 7 日 APSB26-146 中针对 <code>CVE-2026-75650</code> 的热修复</strong></li>
+    <li><strong>Experience Manager（APSB26-152，33 个 CVE，Critical 10.0）：</strong>是本月<strong>面最广</strong>的一份，除大量 XSS 外，还含<strong>操作系统命令注入、SQL 注入、XXE、XML 注入与路径穿越</strong>，可致代码执行、提权与安全特性绕过</li>
+    <li><strong>其余为第三优先级（Priority 3）：</strong>Photoshop（18）、Content Credentials SDK（30）、Substance 3D Stager（16）、FrameMaker（10）、Substance 3D Designer（9）、Dimension（7）、Bridge（4）、Substance 3D Sampler（4）</li>
+    <li><strong>利用状态：</strong><strong>Adobe 表示对上述漏洞均"未发现已被利用"</strong></li>
+</ul>
+<p><strong>为何值得关注：</strong>这一条的核心不是"Adobe 又修了很多"，而是<strong>"ColdFusion 和 Commerce 这两个老牌互联网面向前置认证 RCE 的常客，又同时出现了满分未认证漏洞"</strong>。它们一个常年挂在企业内网与公网边界、一个承载电商与支付链路，<strong>都属于"一旦被打穿就直接触及业务系统"的位置</strong>。而 Adobe 把整体评成"中危"、把这两个放在 Priority 2，很容易被"按总评办事"的团队降级处理——<strong>这正是要提醒的地方：总评是均值，风险看极值</strong>。只要你在跑 ColdFusion 或 Adobe Commerce，<strong>这两份公告就该按"紧急"去排</strong>。</p>
+                    </div>
+                </article>
+
+            </div>
+<h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+
+                <div class="quick-item">
+                    <h4>6. "跟我念一遍"就绕过 6 大 AI Agent 框架：ToFu 还在 118 个 MCP 服务器里挖出 253 个漏洞</h4>
+                    <p><strong>宾州州立大学、蒙彼利埃大学与达特茅斯学院</strong>的研究者（arXiv 论文，10-09 上传，10-12 经 CSO Online 报道）展示了一种叫<strong>"Repeat-After-Me（跟我念）"</strong>的攻击：<strong>只要让底层模型把"调用某工具及其参数"的那段文本复述一遍，编排层就可能把它当成一次真实的工具调用去执行</strong>。受影响的是 <strong>LangChain 的 LangGraph、微软 Agent Framework 与 AutoGen、谷歌 Agent Development Kit 2.0、AWS Strands Agents 与 CrewAI</strong> 六个主流框架。论文里记录得很直白：模型<strong>嘴上拒绝了，却仍把调用打印了出来</strong>，随后 <strong>LangGraph 照单执行了它</strong>——"<strong>系统提示词塑造的是模型说什么，而不是编排器做什么</strong>"。同一篇论文的配套模糊测试工具 <strong>ToFu</strong>，在<strong>能跑起来的 273 个开源 MCP 服务器中，于 118 个里确认了 253 个真实漏洞</strong>（覆盖 343 个工具），其中 <strong>64 个路径穿越、7 个 SSRF、5 个数据外泄、3 个 OS 命令注入</strong>最严重。<strong>论文尚未同行评审，也未报告在野利用。</strong> <strong>为何值得关注：</strong>它戳中的是一个<strong>架构级的信任假设</strong>——<strong>"模型输出了符合 schema 的调用"不等于"这次调用被授权了"</strong>。给智能体的建议很务实：<strong>把"请求动作"和"授权执行"彻底分开</strong>，每个敏感工具调用都走<strong>独立授权检查</strong>，并用受限的文件/网络权限与隔离环境跑 Agent。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>7. Siemens SIMATIC S7-1500 的"追踪文件"三连：三枚 CVSS 9.6，导入一个文件即可越权操作 PLC</h4>
+                    <p><strong>西门子</strong>通过公告 <strong>SSA-591731</strong> 披露了<strong>三枚严重漏洞 <code>CVE-2026-63350</code>、<code>CVE-2026-63353</code>、<code>CVE-2026-63354</code></strong>（由西门子 ProductCERT 作为 CNA 打分为 <strong>CVSS 3.1 = 9.6、CVSS 4.0 = 9.4</strong>，发布于 10-13）。它们都在<strong>"导入追踪文件（trace file）"</strong>这一环：<strong><code>63350</code></strong> 是未能限制导入文件中的可执行内容（CWE-95）；<strong><code>63353</code>/<code>63354</code></strong> 则是<strong>未对注释字段（或 CSV 中的可视化标记数据）做净化</strong>导致的 XSS（CWE-79）。<strong>影响面很广</strong>：<strong>SIMATIC S7-1500 CPU 系列、ET 200SP CPU 与 Open Controller、SIMATIC Drive Controller（CPU 1504D TF / 1507D TF）、S7-1500 软件控制器、S7-PLCSIM Advanced 以及 SIPLUS 变体</strong>。利用需要<strong>社工</strong>：<strong>诱使一个拥有"读取诊断（Read diagnostics）"权限的用户导入特制的追踪文件</strong>，随后攻击者控制的 JavaScript 会在其浏览器会话里执行，<strong>并在该用户授权范围内通过 Web 服务器对 PLC 下发操作</strong>。<strong>暂无在野确认。</strong> <strong>为何值得关注：</strong>它把 ICS 世界里一个<strong>"看起来无害的诊断功能"</strong>变成了<strong>进攻面</strong>——<strong>只要有人"导入一个文件"，攻击者就能借他的权限去动 PLC</strong>。这再次说明：<strong>工控系统的风险不只在协议与网络，也在"人类操作"这条通道上</strong>；对该权限做最小化、对导入文件做来源管控，比事后审计更有用。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>8. 荷兰零售巨头 Ahold Delhaize 遭网络安全事件，主动下线部分系统</h4>
+                    <p><strong>Ahold Delhaize</strong> 在 <strong>10-12</strong> 确认其<strong>网络内存在安全事件</strong>，并<strong>主动下线了部分系统</strong>作为保护措施。客户侧的问题从 <strong>10-11 晚</strong>开始：<strong>Albert Heijn（阿尔贝特·海恩）的网站与 App、客服系统不可用，线上配送暂停，且 10-12 17:20 的更新确认"已下单的线上订单全部取消，另行通知"</strong>；同属该集团的 <strong>Etos、Gall &amp; Gall</strong> 也出现网站/App/客服不可用。美国侧，<strong>Food Lion、The Giant Co.、Giant Food、Hannaford、Stop &amp; Shop</strong> 五个品牌的网站被报道同时不可用。<strong>门店与收银仍正常，荷兰境内自建配送中心据报停运</strong>，电子价签一度显示上周促销价、会员积分暂不可用。<strong>公司按欧盟市场滥用条例把声明标为"内幕信息"</strong>（说明其可能具有价格敏感性）。<strong>截至 10-12，尚无任何一方说明起因，也未确认是否发生勒索加密或数据被盗。</strong> <strong>为何值得关注：</strong>这是 <strong>Ahold Delhaize 两年内的第二起重大事件</strong>（2024 年 11 月 INC Ransom 曾窃取逾 220 万人的数据）。"<strong>主动下线系统</strong>"是<strong>入侵取证期间的常见遏制动</strong>，但它<strong>既不能证明发生了勒索加密，也不能证明数据被盗</strong>——在没有定论之前，最该做的是<strong>按最坏情况准备</strong>：确认关键系统的隔离与恢复能力、排查横向移动痕迹。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>9. 日本外卖品牌 Gin no Sara 运营商：勒索攻击后最多 650 万条记录或个人信息可能暴露</h4>
+                    <p><strong>Ride On Express Holdings</strong>（运营 <strong>Gin no Sara、Kamatora、Sushi Joto</strong> 三个外卖品牌）在 <strong>10-13</strong> 披露：因<strong>外部服务器遭勒索攻击</strong>，<strong>最多约 650 万条</strong>在三个品牌官网与 App 注册的个人信息<strong>可能已被暴露</strong>，包含<strong>姓名、地址、电话、邮箱、性别、出生日期、口令哈希、订单历史与积分 ID</strong>；若用户填写过家人或收件人信息，也会一并波及（信用卡信息除外，公司称不持有）。公司强调<strong>尚未确认信息真的被窃、也未确认泄露范围</strong>，650 万是<strong>"潜在受影响记录的最大值"</strong>，不是已确认的窃取量；这是在 <strong>10-08 首次通告、10-13 第三次通告</strong>中逐步扩大的。<strong>三个品牌的官网与 App 下单自 10-07 起暂停，重开时间未定。</strong> 叠加此前数周，<strong>日本已确认的个人信息泄露累计涉及约 5,700 万人</strong>，日本前数字大臣此前已用<strong>"网络空间紧急状态"</strong>形容当前局面。 <strong>为何值得关注：</strong>它延续了日本这一轮<strong>"外包/外部服务器单点失守、牵连一串品牌"</strong>的模式——<strong>攻击入口越来越集中在"你信任的第三方替你保管数据"的地方</strong>。对企业来说，<strong>第三方服务器的安全能力，就是你自己数据的实际安全水位</strong>。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>10. 印度 AI 公司遗留了一个无密码数据库：1,370 万条"历史泄露数据"被集中二次暴露</h4>
+                    <p>安全研究员 <strong>Jeremiah Fowler</strong> 发现一个<strong>无加密、无口令保护的数据库</strong>，其中<strong>集中存放了 1,370 万条</strong>敏感记录——<strong>邮箱、用户名、口令、电话与银行账户信息</strong>。这些数据<strong>大多来自以往的重大泄露</strong>：<strong>AT&amp;T（790 万条）、赌博类组合（224 万条）、Casio.ru（171 万条）、Amazon / Walmart / PayPal 组合（121 万 / 42 万 / 1.8 万条），以及 FBI 员工名录（4,000 条）与 Interpol 数据（929 条）</strong>。数据库的 IP 被指向<strong>印度一家 IT 服务与 AI 软件开发公司 Vibetech</strong>，但<strong>其与这些数据的关联尚不清晰</strong>。研究员上报后，<strong>数据库已被限制访问</strong>，但<strong>暴露时长、是否被攻击者访问过仍未知</strong>。 <strong>为何值得关注：</strong>它说明了一个被忽视的风险：<strong>"把历史泄露数据集中起来做威胁情报/风控"，如果自己不设防，等于亲手造了一个更大的泄露源</strong>。而对普通人来说，<strong>旧的密码并不会因为"旧"就失去价值</strong>——它们仍是撞库与钓鱼的燃料，<strong>该轮换的凭据，一个都别拖</strong>。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>11. Firefox 158 与两个 ESR 通道修掉 79 个 CVE：含多枚沙箱逃逸</h4>
+                    <p><strong>Mozilla</strong> 随 <strong>Firefox 158、ESR 153.5 与 ESR 115.43</strong> 修复了 <strong>79 个独立 CVE</strong>，其中 <strong>30 个为高危</strong>。<strong>有多枚可直接导致沙箱逃逸</strong>，包括 <strong><code>CVE-2026-109705</code>、<code>CVE-2026-109707</code>、<code>CVE-2026-109708</code> 与 <code>CVE-2026-109712</code></strong>。公告显示<strong>未发现已被利用</strong>。需要注意的是，<strong>Mozilla 现已改为"一个 bug 一个 CVE"</strong>，因此<strong>数量比过去几个月看起来更多，不代表风险同比上升</strong>。 <strong>为何值得关注：</strong>浏览器是<strong>每天都在跑不可信内容</strong>的软件，<strong>沙箱逃逸意味着"从网页到系统"的那道墙被拆</strong>。这类漏洞单看每一条都不起眼，但它们<strong>恰恰是漏洞利用链的关键一环</strong>——<strong>攻击者通常用一条链里最廉价的漏洞去"破沙箱"</strong>。所以浏览器补丁的价值从来不在"这 79 条里哪条最严重"，而在<strong>"及时把整墙补完"</strong>：把它纳入<strong>自动更新 + 定期核对版本</strong>的常规动作，比逐条研判划算得多。</p>
+                </div>
+
+            </div>
+<h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-10-14 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "微软 96951 MotW 在野": [0.95, 0.90]
+    "法国超市冷库攻击": [0.88, 0.86]
+    "GitLab 97229×10": [0.32, 1.00]
+    "Ivanti 104935 在野": [0.90, 0.88]
+    "Adobe ColdFusion×10": [0.20, 1.00]
+    "Siemens 63353×9.6": [0.25, 0.96]
+    "ToFu MCP 253 缺陷": [0.36, 0.80]
+    "Ahold Delhaize 事件": [0.72, 0.74]
+    "日本 Ride On 650 万": [0.70, 0.70]
+    "Vibetech 1370 万": [0.60, 0.62]
+    "Firefox 158 沙箱逃逸": [0.22, 0.72]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-10-14 安全事件类型分布
+    "产品漏洞与严重 CVE": 30
+    "AI 与智能体安全": 22
+    "在野利用与初始访问": 20
+    "OT 与工业控制系统": 14
+    "数据泄露与隐私事件": 14
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">法国超市冷库攻击链（远程控温 → 物理损失）</div>
+                    <div class="mermaid">
+flowchart TD
+    A["攻击者 远程访问暴露在公网的制冷控制器"] --> B["目标 丹佛斯制冷控制系统 具备远程调温与自动除霜功能"]
+    B --> C["利用软件漏洞 绕过身份验证控制执行代码"]
+    C --> D["强制启动持续除霜 并将设定温度拉至 50 摄氏度"]
+    D --> E["冷柜原本维持 -18 至 4 摄氏度 数小时内被加热"]
+    E --> F["生鲜与冷冻食品全部变质 门店清空货架紧急补货"]
+    F --> G["Intermarche 约 300 家 家乐福约 80 家 等数百门店受影响"]
+    E --> H["部分门店发生火情"]
+    G --> I["损失或达数千万欧元 巴黎检方立案调查"]
+    H --> I
+    C --> J["受影响设备多为生命周期结束的老型号 固件未更新"]
+    J --> K["ANSSI 确认软件漏洞 与欧洲同行协调排查"]
+                    </div>
+                </div>
+
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+
+                <div class="mermaid">
+timeline
+    title 2026年10月8日至10月14日 网安事件时间线
+    10月8日 : 微软发布十月早期安全更新 含 Bookings 9.9 与 Partner Center 10.0
+    10月9日 : ToFu 论文上传 arXiv 展示 Repeat-After-Me 与 118 个 MCP 服务器 253 个缺陷
+    10月11日 : 法国数百家超市冷库夜间被远程加热至 50 摄氏度 : Ahold Delhaize 旗下门店数字服务开始故障
+    10月12日 : GitLab 发布 19.4.2 与 19.3.5 与 19.2.8 修复 CVE-2026-97229 : Ahold Delhaize 确认安全事件并下线部分系统 : ToFu 研究经 CSO Online 报道
+    10月13日 : 微软发布史上最大补丁星期二含在野零日 CVE-2026-96951 : Ivanti 披露 Connect Secure CVE-2026-104935 并确认在野 CISA 当日入 KEV : 法国 ANSSI 确认丹佛斯软件漏洞 巴黎检方立案 : Rapid7 复现 GitLab 97229 任意代码执行
+    10月14日 : 日本 Ride On Express 披露最多 650 万条记录或暴露
+                </div>
+
+            </div>
+
+<!-- ===== 出处链接 ===== -->
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Tenable — Microsoft's October 2026 Patch Tuesday addresses 1407 CVEs（CVE-2026-96951）</span>
+                        <a href="https://zh-tw.tenable.com/blog/microsofts-october-2026-patch-tuesday-addresses-1407-cves-cve-2026-96951">https://zh-tw.tenable.com/blog/microsofts-october-2026-patch-tuesday-addresses-1407-cves-cve-2026-96951</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AceFortis — October 2026 Patch Tuesday: What to Patch First（含风险队列与三枚零日）</span>
+                        <a href="https://acefortis.com/2026/10/13/october-2026-patch-tuesday-priorities">https://acefortis.com/2026/10/13/october-2026-patch-tuesday-priorities</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">National CERT Uganda — Largest Patch Tuesday on Record Includes One Actively Exploited Windows Shell Zero-Day</span>
+                        <a href="https://cert.ug/index.php/microsofts-largest-patch-tuesday-record-includes-one-actively-exploited-windows-shell-zero-day-cve">https://cert.ug/index.php/microsofts-largest-patch-tuesday-record-includes-one-actively-exploited-windows-shell-zero-day-cve</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NT Compatible — Largest Release Ever Ships Live Windows Shell Zero-Day</span>
+                        <a href="https://www.ntcompatible.com/story/microsoft-october-2026-patch-tuesday-largest-release-ever-ships-live-windows-shell-zeroday">https://www.ntcompatible.com/story/microsoft-october-2026-patch-tuesday-largest-release-ever-ships-live-windows-shell-zeroday</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CIS / MS-ISAC — Critical Patches Issued for Microsoft Products, October 13, 2026</span>
+                        <a href="https://www.cisecurity.org/advisory/critical-patches-issued-for-microsoft-products-october-13-2026_2026-114">https://www.cisecurity.org/advisory/critical-patches-issued-for-microsoft-products-october-13-2026_2026-114</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">新华网（新华社）— 法国数百家超市制冷系统遭网络攻击</span>
+                        <a href="https://www.news.cn/world/20261013/41ca848b7a5848ab8332f39850137d75/c.html">https://www.news.cn/world/20261013/41ca848b7a5848ab8332f39850137d75/c.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">环球时报（网易转载）— 冷藏设备升至50℃，损失或达数百万欧元</span>
+                        <a href="https://www.163.com/dy/article/L96C4FAK0514R9OJ.html">https://www.163.com/dy/article/L96C4FAK0514R9OJ.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">扬子晚报 — 法国数百家超市冰箱遭黑客入侵：温度被调至50℃</span>
+                        <a href="https://www.yzwb.net/news/txs/202610/t20261013_402091.html">https://www.yzwb.net/news/txs/202610/t20261013_402091.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">光明网 — 法国超市遭黑客攻击，冰箱升温至50度，大量生鲜被销毁</span>
+                        <a href="https://m.gmw.cn/2026-10/13/content_1304574898.htm">https://m.gmw.cn/2026-10/13/content_1304574898.htm</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Help Net Security — GitLab admins urged to patch critical RCE flaw（CVE-2026-97229）</span>
+                        <a href="https://www.helpnetsecurity.com/2026/10/13/gitlab-ci-cd-regular-expression-compiler-vulnerability-cve-2026-97229/">https://www.helpnetsecurity.com/2026/10/13/gitlab-ci-cd-regular-expression-compiler-vulnerability-cve-2026-97229/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CERT-EU — Critical Vulnerability in GitLab CE and EE（Security Advisory 2026-016）</span>
+                        <a href="https://www.cert.europa.eu/publications/security-advisories/2026-016">https://www.cert.europa.eu/publications/security-advisories/2026-016</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber Insider — GitLab fixes critical unauthenticated code execution flaw in CI/CD compiler</span>
+                        <a href="https://cyberinsider.co.uk/gitlab-fixes-critical-unauthenticated-code-execution-flaw-in-ci-cd-compiler">https://cyberinsider.co.uk/gitlab-fixes-critical-unauthenticated-code-execution-flaw-in-ci-cd-compiler</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity Beat — GitLab patches maximum-severity CI/CD regex bug under CVE-2026-97229</span>
+                        <a href="https://cybersecuritybeat.com/2026/10/13/gitlab-patches-maximum-severity-ci-cd-regex-bug-under-cve-2026-97229">https://cybersecuritybeat.com/2026/10/13/gitlab-patches-maximum-severity-ci-cd-regex-bug-under-cve-2026-97229</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Hunt — Ivanti Connect Secure CVE-2026-104935: exploited auth bypass, patch now</span>
+                        <a href="https://zerohunt.ai/blog/ivanti-connect-secure-cve-2026-104935-auth-bypass">https://zerohunt.ai/blog/ivanti-connect-secure-cve-2026-104935-auth-bypass</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ivanti — October 2026 Patch Tuesday（含 Connect Secure 与 Adobe / Mozilla 概览）</span>
+                        <a href="https://www.ivanti.com/blog/october-2026-patch-tuesday">https://www.ivanti.com/blog/october-2026-patch-tuesday</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Day Initiative (ZDI) — The October 2026 Security Update Review（Adobe 与微软）</span>
+                        <a href="https://www.thezdi.com/blog/2026/10/13/the-october-2026-security-update-review">https://www.thezdi.com/blog/2026/10/13/the-october-2026-security-update-review</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Adobe（ColdFusion Blog）— NOW LIVE: ColdFusion 2025 and 2023 October 2026 Security Updates</span>
+                        <a href="https://coldfusion.adobe.com/?p=41384">https://coldfusion.adobe.com/?p=41384</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HKCERT — Adobe Monthly Security Update (October 2026)</span>
+                        <a href="https://www.hkcert.org/security-bulletin/adobe-monthly-security-update-october-2026">https://www.hkcert.org/security-bulletin/adobe-monthly-security-update-october-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Pivot News — 'Repeat-After-Me' prompt tricked six AI agent frameworks</span>
+                        <a href="https://pivotnews.ai/security/repeat-after-me-prompt-tricked-six-ai-agent-frameworks">https://pivotnews.ai/security/repeat-after-me-prompt-tricked-six-ai-agent-frameworks</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AL-ICE — Repeat After Me: ToFu Turns Six Agent Frameworks Into Confused Deputies（arXiv:2610.13651）</span>
+                        <a href="https://al-ice.ai/posts/2026/10/tofu-arxiv-2610-13651-repeat-after-me-253-mcp-tool-bugs">https://al-ice.ai/posts/2026/10/tofu-arxiv-2610-13651-repeat-after-me-253-mcp-tool-bugs</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Circuitry — Siemens discloses three critical trace-file flaws across SIMATIC S7-1500 controllers</span>
+                        <a href="https://thecircuitry.to/article/siemens-discloses-three-critical-flaws-in-simatic-drive-controller-mv6j8l87">https://thecircuitry.to/article/siemens-discloses-three-critical-flaws-in-simatic-drive-controller-mv6j8l87</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Hacker Feeds — CVE-2026-63353（Siemens PLC Trace XSS，CVSS 9.6）</span>
+                        <a href="https://hackerfeeds.com/cve/CVE-2026-63353">https://hackerfeeds.com/cve/CVE-2026-63353</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyPro — Ahold Delhaize Incident Update（incident disrupts online orders）</span>
+                        <a href="https://cypro.co.uk/insights/cyber-bulletins/ahold-delhaize-incident-disrupts-online-orders">https://cypro.co.uk/insights/cyber-bulletins/ahold-delhaize-incident-disrupts-online-orders</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TSNMedia — Ahold Delhaize Takes Systems Offline After Security Issue</span>
+                        <a href="https://tsnmedia.org/ahold-delhaize-security-issue-albert-heijn-etos-online-orders-offline">https://tsnmedia.org/ahold-delhaize-security-issue-albert-heijn-etos-online-orders-offline</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Asia Daily — Gin no Sara Operator Warns Up to 6.5 Million Records May Be Exposed</span>
+                        <a href="https://asiadaily.org/news/15226">https://asiadaily.org/news/15226</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Magazine — 14M Credentials Re-Exposed by AI Development Company（Vibetech）</span>
+                        <a href="http://www.securitymagazine.com/articles/102600">http://www.securitymagazine.com/articles/102600</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rankiteo — FBI, AT&amp;T, Walmart, PayPal, Amazon, Interpol &amp; Vibetech: 13.7 million breached records</span>
+                        <a href="https://d48.ggn.io/vibattamapayfbiintwalcas1791910145-fbi-att-walmart-paypal-amazon-interpol-vibetech-casioru-breach-october-2026">https://d48.ggn.io/vibattamapayfbiintwalcas1791910145-fbi-att-walmart-paypal-amazon-interpol-vibetech-casioru-breach-october-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AboutDFIR — InfoSec News Nuggets 10/13/2026（Ahold Delhaize 与日本泄露汇总）</span>
+                        <a href="https://aboutdfir.com/infosec-news-nuggets-10-13-2026">https://aboutdfir.com/infosec-news-nuggets-10-13-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FreeBuf — 早报：GitLab 严重 RCE 与 AI Agent 框架绕过研究等</span>
+                        <a href="https://www.freebuf.com/news/506160.html">https://www.freebuf.com/news/506160.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">新浪财经 / 日经中文网 — 9月来全球3亿人信息泄露（日本累计约 5,700 万）</span>
+                        <a href="https://finance.sina.com.cn/roll/2026-10-13/doc-iniuzzhf4978013.shtml">https://finance.sina.com.cn/roll/2026-10-13/doc-iniuzzhf4978013.shtml</a>
+                    </div>
+                </div>
+            </div></div><!-- content-wrapper -->
+
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。部分攻击团伙主张、损失金额与受影响规模为第三方测算或单方声明，尚未被官方证实；本报告不采用涉华政治敏感归因。不同机构对补丁数量的统计口径存在差异，请以厂商官方公告为准。
+                <br>
+                每日精选 · 值得关注 | 2026年10月14日
+            </p>
+        </footer>
+    </div>
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
