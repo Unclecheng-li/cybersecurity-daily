@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年10月15日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年10月15日 星期四</span>
+            <span class="edition-number">第 187 期 | 总第 187 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>TeamCity106218×10 RCE · Ivanti104935 KEV在野 · Windows96951命令注入KEV · Ahold9400店中断 · 朝鲜IT工人187笔记本
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">JetBrains TeamCity 曝满分漏洞：Kotlin DSL 沙箱逃逸致未认证 RCE（CVSS 10.0）</h2>
+                <p class="sub-headline">CI/CD 平台单点失陷即可污染整条软件供应链交付环节；同期 CISA KEV 双零日 10-16 修复期限临近。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">JetBrains TeamCity CVE-2026-106218 — Kotlin DSL 沙箱逃逸，未认证 RCE</h3>
+                    <div class="article-meta">
+                        <span>CVSS 10.0</span>
+                        <span class="cvss-score">未入KEV · 已修复 2026.1.3</span>
+                    </div>
+                    <div class="article-body">
+                        <p>JetBrains 在 2026.1.3 与 2025.11.7 修复了 TeamCity 的 Kotlin DSL 沙箱逃逸漏洞。攻击者可通过构造恶意的 Kotlin DSL 构建配置绕过沙箱限制，在 TeamCity 服务器上执行任意命令。NVD 与多家 CTI 平台标注其为 CRITICAL 10.0，无需认证、无需用户交互、网络可达即可触发（AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H）。</p>
+                        <p><strong>漏洞机制/攻击方式：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>沙箱逃逸 / 不完整禁用输入清单（CWE-184）</li>
+                            <li><strong>攻击方式：</strong>通过版本化设置的 Kotlin DSL 提交绕过沙箱，触发服务器端命令执行</li>
+                            <li><strong>影响范围：</strong>所有公网可达或内网未隔离的 TeamCity 服务器（CI/CD 基础设施）</li>
+                            <li><strong>后果：</strong>源码泄露、构建产物被植入后门、生产凭据与密钥失窃，构成典型供应链攻击面</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>CI/CD 服务器属 Tier-0 资产，单一漏洞即可污染下游所有发布物</li>
+                            <li>无需认证即可触发，极适合自动化蠕虫式扫描与利用</li>
+                            <li>修复版本已发布，但大量老旧实例可能仍在运行受影响版本</li>
+                        </ul>
+                    </div>
+                    <!-- 攻击流程图 -->
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者</span>
+                        <span class="flow-step">提交恶意Kotlin DSL</span>
+                        <span class="flow-step">绕过沙箱</span>
+                        <span class="flow-step critical">服务器RCE</span>
+                        <span class="flow-step critical">供应链沦陷</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">CISA KEV 双零日修复期限将至：Ivanti + 微软 Windows</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-104935 / CVE-2026-96951</span>
+                        <span class="cvss-score">在野 · 10-16 截止</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 于 2026-10-13 将两枚在野零日加入 KEV 目录，修复期限定为 2026-10-16。CVE-2026-104935 为 Ivanti Connect Secure 认证绕过（冒名），确认在野、可未认证 RCE，属一个三零日链的一环且目前仅部分有补丁；CVE-2026-96951 为微软 Windows Shell 命令注入，可从网络侧绕过安全特性执行任意命令，与去除 Mark of the Web（MotW）的利用链相关。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>Ivanti Connect Secure VPN</td><td class="risk-high">严重 · 在野 · 部分链无补丁</td></tr>
+                            <tr><td>Microsoft Windows（Shell）</td><td class="risk-medium">严重 · 在野 · 10-16 前须缓解</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Ahold Delhaize 跨国零售遭网络攻击：9400+ 门店数字服务中断</h3>
+                    <div class="article-meta">
+                        <span>2026-10-12 披露</span>
+                        <span class="cvss-score">数字生态中断</span>
+                    </div>
+                    <div class="article-body">
+                        <p>荷兰食品零售巨头 Ahold Delhaize（运营 Albert Heijn、Delhaize、Stop &amp; Shop、Food Lion 等，全球 9400+ 门店、近 40 万员工）于 2026-10-12 披露内部网络存在安全问题，为防扩散主动切断部分系统。事件波及荷兰、比利时、美国三地的网站、App、客户服务平台与线上杂货配送，门店虽正常营业但电子价签、个性化折扣与配送暂停。公司称暂无数据泄露证据，荷兰国家网络安全中心确认与同期法国超市制冷系统被篡改事件无关联。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">朝鲜 IT 工人渗透计划遭美方打击：逮捕 2 人、缴获 187 台笔记本</h3>
+                    <div class="article-meta">
+                        <span>2026-10-14 披露</span>
+                        <span class="cvss-score">执法行动</span>
+                    </div>
+                    <div class="article-body">
+                        <p>FBI 警告朝鲜 IT 工人正付费诱使美国人协助其使用被盗身份获取美国公司的远程岗位，朝鲜政府拿走 85–90% 收入用于武器计划。美司法部逮捕 2 名美国籍嫌疑人、突袭德州 40 处据点、缴获约 187 台笔记本（笔记本农场），波及 70+ 美国雇主、涉案约 300 万美元。部分工人被解雇后威胁前主管暴力与数据泄露，甚至瞄准需安全许可的岗位。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中高危</span>
+                    <h3 class="article-title">WordPress 插件连击：未认证文件删除（10.0）与任意文件读取（8.8）</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-107594 / CVE-2026-91136</span>
+                        <span class="cvss-score">未认证</span>
+                    </div>
+                    <div class="article-body">
+                        <p>"File Upload to Order" 插件（&lt; 1.1.4）未校验来自会话数据的文件路径，删除动作可由未认证用户触达（CVE-2026-107594，CVSS 10.0）；"Divi Plus" 插件（&lt;= 2.4.0）通过 svg-animator 接口的 svg_image 参数存在未认证任意文件读取（CVE-2026-91136，CVSS 8.8）。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>风险</th></tr>
+                            <tr><td>File Upload to Order &lt; 1.1.4</td><td class="risk-high">严重 · 未认证任意文件删除</td></tr>
+                            <tr><td>Divi Plus &lt;= 2.4.0</td><td class="risk-medium">中高危 · 未认证任意文件读取</td></tr>
+                        </table>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>6. @enmaso/node-convert（npm）命令注入 — CVE-2026-107703（8.6）</h4>
+                    <p>convert.js 未对 filepath 与 convertTo 参数做净化，攻击者可借此执行 shell 命令；影响 &lt;= 1.0.0，属 npm 供应链风险。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Tuleap Enterprise OS 命令注入 — CVE-2026-105407（9.3）</h4>
+                    <p>Tuleap 企业版 17.0–17.5 的时间/区域管理子系统存在 OS 命令注入，可在服务器上执行任意命令。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Edimax BR-6208AC 路由器缓冲区溢出 — CVE-2026-108915（9.9）</h4>
+                    <p>/goform/formWlanMP 的 ateBW 参数可触发缓冲区溢出，厂商已停止维护、未回应披露；攻击者可远程执行，公开 PoC 已现。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 微软 Windows 补丁致 RDP 故障</h4>
+                    <p>近期 Windows 更新在启用 Administrator protection 时会导致非管理员用户远程桌面连接失败，影响 Win11 与 Server 2025；修复仍在调查中。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野利用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "TeamCity 106218": [0.30, 0.97]
+    "Ivanti 104935": [0.92, 0.92]
+    "Windows 96951": [0.90, 0.90]
+    "WP 107594": [0.62, 0.97]
+    "Tuleap 105407": [0.42, 0.85]
+    "Edimax 108915": [0.55, 0.95]
+    "node-convert 107703": [0.35, 0.78]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 安全事件类型分布
+    "Web应用/插件漏洞" : 30
+    "CI/CD与开发平台" : 18
+    "在野利用/KEV" : 18
+    "勒索与数据泄露" : 16
+    "执法行动" : 10
+    "供应链npm" : 8
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">本周事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月第3周网安事件
+    10月13日 : CISA KEV 加入 Ivanti / Windows 双零日
+           : 修复期限定 10月16日
+    10月14日 : Ahold Delhaize 9400+门店中断
+           : 法国超市冷库被加热到50度
+           : 微软补丁星期二 1407 个 CVE
+    10月15日 : TeamCity 10.0 RCE 警示
+           : 朝鲜IT工人抓捕 187 笔记本
+           : WordPress 插件连击
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">JetBrains TeamCity 安全修复页</span>
+                        <a href="https://www.jetbrains.com/privacy-security/issues-fixed?product=TeamCity">https://www.jetbrains.com/privacy-security/issues-fixed?product=TeamCity</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-106218</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-106218">https://nvd.nist.gov/vuln/detail/CVE-2026-106218</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CTIWatch — CVE-2026-106218</span>
+                        <a href="https://ctiwatch.com/vulnerabilities/CVE-2026-106218">https://ctiwatch.com/vulnerabilities/CVE-2026-106218</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安全内参 — Ahold Delhaize</span>
+                        <a href="https://www.secrss.com/articles/94696">https://www.secrss.com/articles/94696</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix — Ahold 攻击路径</span>
+                        <a href="https://aviatrix.ai/threat-research-center/ahold-delhaize-cyberattack-2026-retail-systems-offline">https://aviatrix.ai/threat-research-center/ahold-delhaize-cyberattack-2026-retail-systems-offline</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberMaterial — 2026.10.14 简报</span>
+                        <a href="https://www.cybermaterial.com/p/cyber-briefing-20261014">https://www.cybermaterial.com/p/cyber-briefing-20261014</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber-Defence — This week in CVEs</span>
+                        <a href="https://www.cyber-defence.io/tools/cve/this-week">https://www.cyber-defence.io/tools/cve/this-week</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CTIWatch — CVE-2026-108915</span>
+                        <a href="https://ctiwatch.com/vulnerabilities/CVE-2026-108915">https://ctiwatch.com/vulnerabilities/CVE-2026-108915</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global — 2026-10-14 威胁情报</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-10-14">https://www.enigma-global.com/blog/daily-digest-2026-10-14</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE Brief — 2026-10-14 归档</span>
+                        <a href="https://cvebrief.com/archive/2026/10/14">https://cvebrief.com/archive/2026/10/14</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年10月15日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
