@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年10月31日（第203期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年10月31日 星期六</span>
+            <span class="edition-number">第 203 期 | 总第 203 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>官方扩展ID下多出六十六行 · 打满补丁的VPN网关照样出事 · 被控的那台机器反过来打控制端 · 镜像升了但运行时装的那层没升 · 签名真而旁边的DLL是假的 · 压缩把思考原样吐成明文
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">签名是真的，包是假的</h2>
+                <p class="sub-headline">一个官方扩展标识符底下多出 66 行加载器，5,000 台开发机在 11 个小时里装到了带后门的"官方更新"；一台打着完全补丁旗号的 Ivanti 网关，被人拿走 LAPS 密码与 BitLocker 密钥，全程没留一个 webshell；一个升到了最新版 GitLab 的镜像，里面那层 Ruby 没人动，Alpine Linux 最后把自己的服务器整个推倒重建；一个远程桌面软件，被控制的那一端反过来打控制端；一个用 OpenAI 与 Anthropic 真实签名安装包当外壳的挖矿木马；一个服务端自己跑的压缩步骤，能把模型的隐藏推理原样吐成明文。六件事，没有一件是"洞太深"，全是"我以为这一层替我挡住了"。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Claude Code 扩展被投毒：官方 ID、官方市场、六十六行加载器</h3>
+                    <div class="article-meta">
+                        <span>10-29 分发约 11 小时 · 10-30 公开 · Cursor 市场临时下线</span>
+                        <span class="cvss-score">影响上限 5,000 台开发机 · 修复版 2.1.314 · 卸载扩展不清后门</span>
+                    </div>
+                    <div class="article-body">
+                        <p>先说这件事最反常识的一点：被投毒的不是一个仿冒扩展，<strong>是 <code>anthropic.claude-code</code> 这个官方扩展标识符下的官方版本号</strong>。它没有被改名成 claude-code-pro 或者 anthropic-ai-claude，它就顶着 Anthropic 自己的 ID，作为一次正常更新被推给了开发者。</p>
+                        <p><strong>发生了什么。</strong>10 月 29 日，Claude Code 的 VS Code 扩展出现了一个恶意构建版本 <strong>2.1.313</strong>，通过 Cursor 的扩展市场分发。Cursor 自己在事后说明里给了时间窗：<strong>太平洋时间 10 月 29 日凌晨 2:27 到下午 1:35</strong>，约 11 小时，受影响用户<strong>最多 5,000 人</strong>。发现这件事的是安全研究者 <strong>Kevin Beaumont</strong> 与 <strong>Phorion</strong> 的研究人员，Cursor 随后把整个市场<strong>临时下线</strong>以清除这个包。10 月 30 日，恶意版本已被移除，Anthropic 向 Open VSX 与微软官方 VS Code 市场发布了<strong>修复版 2.1.314</strong>。</p>
+                        <p><strong>分发渠道这件事，两个口径必须分开看。</strong>Cursor 与 The Hacker News 的说法是：恶意更新<strong>只经由 Cursor 市场</strong>分发，没有证据表明它进过 Open VSX 或微软官方市场。而 Morphisec 在 10 月 30 日发出的安全公告写的是"通过 Open VSX registry 与 Cursor 扩展市场分发约 11 小时"。<strong>这两句话不能同时为真</strong>，差别在于有没有第二拨人从另一个市场装到。使用者该做的判断很简单：<strong>如果你在 10-29 这个时间窗里通过任一渠道装过或自动更新过 Claude Code，就按已中招处理</strong>，因为两边的处置动作完全一样，而判断渠道归属需要等 Cursor 与 Open VSX 各自的日志。</p>
+                        <p><strong>载荷做了什么。</strong>按 OpenSourceMalware 联合创始人 Jenn Gile 的说法，这个包的<strong>主 JavaScript bundle 在正常扩展代码之前被插入了 66 行加载器</strong>。它会在 VS Code 启动之后、以及扩展的 webview 打开时激活，然后依次做四件事：</p>
+                        <table class="affected-table">
+                            <tr><th>步骤</th><th>动作</th><th>落地痕迹</th></tr>
+                            <tr><td>一</td><td>往 <code>~/.ssh/authorized_keys</code> 追加一把攻击者公钥</td><td>键名伪装成 <code>svc-telemetry</code></td></tr>
+                            <tr><td>二</td><td>尝试在 Windows、Linux、macOS 上开启本地 SSH 服务</td><td>需要管理员权限，多数主机静默失败</td></tr>
+                            <tr><td>三</td><td class="risk-high">向 <code>134.209.82[.]225</code> 建反向 SSH 隧道</td><td class="risk-high">攻击者由此进入受害机器</td></tr>
+                            <tr><td>四</td><td class="risk-high">装持久化：Windows 计划任务、crontab、LaunchAgent</td><td class="risk-high">卸载扩展也不会被清掉</td></tr>
+                        </table>
+                        <p>同时它还会往 <code>134.209.82[.]225:8099/beacon</code> 发一次<strong>明文 HTTP</strong> 的侦察上报，内容包括：通过 <code>api.ipify.org</code> 取到的公网 IP、主机名与本地用户名、操作系统与 CPU 架构、家目录与当前工作目录、<code>git config --global user.email</code> 里的全局邮箱，以及<strong>最多 40 个环境变量的名字</strong>，匹配 KEY、TOKEN、SECRET、PASS、AWS、GCP 这些关键词的变量名。</p>
+                        <p><strong>这里有个细节值得单独说：变量的值没有被直接传走，只传了名字。</strong>研究者 Paul McCarty 的解释是，名字本身就足够判断这台机器上配了哪家云、哪套 CI、哪种凭据类型，可以用来给后续手工入侵排优先级；而一旦 SSH 隧道真的通了，攻击者可以直接把这个账号的环境变量全读一遍。<strong>所以"只传了变量名"不是减轻情节，是分了两步走。</strong></p>
+                        <p><strong>Cursor 的回应有一句话说错了重点。</strong>它的公告写"这个恶意版本不是 Anthropic 开发的"。这句话技术上没错，但它答的不是真问题：攻击者没有另起一个假扩展，而是<strong>在 Anthropic 的扩展 ID 下发布了 2.1.313</strong>。对安装者来说，看到的更新来源、发布者名字、扩展 ID 全都是真的。至于恶意版本是怎么进到发布通道里的，<strong>公开来源里没有任何一方给出结论</strong>，Cursor 也没有说明。</p>
+                        <p><strong>为什么这件事比一般的供应链投毒更难防。</strong>因为被利用的不是代码漏洞，是<strong>市场这一层的信任聚合</strong>。开发者装扩展时信的是三样东西：注册表的审核、发布者账号的安全、构建管道的完整性。这次断的是其中一环，而这一环在客户端完全没有可校验的凭据，扩展不像二进制那样有签名可查，自动更新也不给"这次更新来自哪"的第二信源。</p>
+                        <p><strong>处置要点，顺序不能错：</strong>升到 2.1.314，但<strong>升级不会删掉已经装上的后门</strong>，它只保证不再继续装；检查 <code>~/.ssh/authorized_keys</code>，删掉标着 svc-telemetry 的那一行；清持久化，Windows 计划任务、crontab、macOS LaunchAgent 三处都要看；<strong>从另一台干净机器上轮换凭据</strong>，这台机器上能碰到的仓库令牌、云密钥、签名证书一律按已泄露处理；在出口上封 <code>134.209.82.225</code>，同时回查历史连接记录。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"官方"这三个字在扩展生态里已经没有验证力</strong>。扩展的自动更新默认开着，开发者不会每次去看 diff，也没有工具能在装之前告诉你"这个 build 的发布链路有没有被动过"。</p>
+                        <p>第二，<strong>攻击目标选得非常准</strong>。开发机不是普通终端，它握着源码、CI 凭据、云控制台权限和内网通路。5,000 台开发机，等于 5,000 个能直接进生产环境的后门。</p>
+                        <p>第三，<strong>这是一周内的第二起同类事件</strong>。The Hacker News 提到，就在十天前，有人通过一个 2026 年 3 月就被接管的合法贡献者 GitHub 账号，替换了 OVHcloud 官方 CLI 五个已发布版本的二进制。同一条路，换了两个入口。</p>
+                        <div class="attack-flow">
+                            <div class="flow-step">2.1.313 进入市场<br/>顶着官方扩展 ID</div>
+                            <div class="flow-step critical">主 bundle 前插入<br/>66 行加载器</div>
+                            <div class="flow-step critical">写入 svc-telemetry<br/>开启 SSH 建反连</div>
+                            <div class="flow-step critical">三平台持久化<br/>卸载也清不掉</div>
+                            <div class="flow-step">上报主机画像<br/>只传变量名不传值</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Ivanti Connect Secure：三洞串成一条链，被打的是"完全打好补丁"的那台</h3>
+                    <div class="article-meta">
+                        <span>10-03 起被利用 · 10-29 发补丁 · 10-30 进 KEV</span>
+                        <span class="cvss-score">22.8R2.4 Build 19097 · 修复 25.1.1.3 与 22.8R2.6 · 期限 11-02 与 11-13</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条最刺人的一句话在 Volexity 的报告里：被攻陷的那台设备，<strong>当时是完全打好补丁的</strong>，版本 <strong>22.8R2.4，Build 19097</strong>。</p>
+                        <p><strong>三个洞，各管一段。</strong>Volexity 把发动者编号为 <strong>UTA0576</strong>，利用时间从 <strong>2026 年 10 月 3 日</strong>开始。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>评分</th><th>类型（CWE）</th><th>在这条链里的位置</th></tr>
+                            <tr><td>2026-104935</td><td>8.6</td><td>认证绕过到命令执行</td><td>进门，10-13 已被列入 KEV</td></tr>
+                            <tr><td>2026-111357</td><td class="risk-high">8.8 与 7.0 两说</td><td>CWE-306、862、345，关键功能缺少认证</td><td class="risk-high">提权到 root</td></tr>
+                            <tr><td>2026-118527</td><td>4.3</td><td>CWE-340，可预测的编号或标识符</td><td>定时上传文件到已知路径</td></tr>
+                        </table>
+                        <p><strong>评分这里有个必须写明的分歧。</strong><code>CVE-2026-111357</code> 在不同来源上出现了 <strong>8.8</strong> 与 <strong>7.0</strong> 两个分数，公开材料里没有统一口径；<code>CVE-2026-118527</code> 的 4.3 来自同一批二手汇总。NVD 与厂商公告的分值应以各自页面为准，<strong>这三个数不要混着用</strong>。</p>
+                        <p><strong>进去之后做了什么。</strong>Volexity 的描述是：拿到 root 之后，攻击者窃取了设备凭据与 Active Directory 凭据，其中包括 <strong>Windows LAPS 密码</strong>与 <strong>BitLocker 密钥</strong>，并查询了目录里的其他属性。<strong>整个过程没有部署 webshell。</strong>命令是通过<strong>反复的 HTTPS 请求</strong>带进去的，不落盘、不留常驻进程。</p>
+                        <p><strong>这直接解释了为什么完整性检查没发现。</strong>Ivanti 自带的 Integrity Checker 校验的是磁盘上的文件，而<strong>纯内存的改动它看不到</strong>。调查结论是：<strong>没有发现持久化后门</strong>，也就是说，防守方拿到的是一台"看起来没被动过"的设备，和一堆"已经外流"的凭据。</p>
+                        <p><strong>厂商与监管的动作。</strong>Ivanti 在 <strong>10 月 29 日</strong>发布了修复版本 <strong>25.1.1.3</strong> 与 <strong>22.8R2.6</strong>，口径是"披露时<strong>有限数量的客户</strong>遭到利用"，没有给出具体数字，也没有说明这个数字是否覆盖后两个 CVE。10 月 30 日，CISA 把 <code>CVE-2026-111357</code> 与 <code>CVE-2026-118527</code> 加入 KEV，联邦修复期限分别是 11 月 2 日与 11 月 13 日；两条都标勒索软件使用情况未知，其中前者标了需要先取证再打补丁。</p>
+                        <p><strong>这里有一处口径冲突，必须原样摆出来。</strong>CISA 的两条目录条目都把前置条件写成<strong>已认证</strong>（本地已认证用户提权、已认证远程用户上传文件），而 Volexity 与厂商的利用描述是<strong>串起来之后拿到未认证 root</strong>。两种说法不一定矛盾，单看每个 CVE 是已认证，串成一条链之后入口那一枚是无认证的，但把它们并列摆着，读者才知道该按哪个假设去查日志。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"打满补丁"这个状态本身就是攻击面</strong>。22.8R2.4 是当时的最新版，攻击者打的不是"你忘了升级"，而是"厂商还没有这个补丁"。这类情况下任何基于版本比对的合规检查都会给绿灯。</p>
+                        <p>第二，<strong>不留文件的入侵，让取证的时间窗变成了负的</strong>。内存里的东西一重启就没，而重启又是厂商与运维最常做的第一步。Volexity 的建议很直接：先抓内存镜像和磁盘镜像，不要只依赖完整性检查。</p>
+                        <p>第三，<strong>真正需要善后的是 AD</strong>。LAPS 密码和 BitLocker 密钥一旦出去，等于拿到了内网横向与磁盘解密两把钥匙。补网关是关门，轮换 LAPS 密码、重置 BitLocker 保护器、排查被查询过的目录属性才是清人。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">TeamViewer：被控制的那台机器，反过来打控制端</h3>
+                    <div class="article-meta">
+                        <span>8-14 报送 · 10-22 确认 · 10-27 发 15.83 · 10-29 公开细节</span>
+                        <span class="cvss-score">CVE-2026-111585 · 8.8 · 15.82 仍在影响范围 · 无 workaround</span>
+                    </div>
+                    <div class="article-body">
+                        <p>远程控制软件的安全模型，默认是"控制方掌握主动权"。这次修的洞把这个方向倒过来了：<strong>你连过去帮它修电脑的那台机器，可以反过来打你。</strong></p>
+                        <p><strong>编号与影响面。</strong><code>CVE-2026-111585</code>，评分 <strong>8.8</strong>，修复版本 <strong>15.83</strong>。受影响的是 <strong>Windows、Linux、macOS 上的完整客户端、Windows 便携版、以及 Android 远程控制应用</strong>，<strong>所有低于 15.83 的版本</strong>都在内，包括 9 月刚发的安全更新 <strong>15.82</strong>。TeamViewer 在同一份公告里明确：这个 CVE 不涉及 Host 组件，但 15.83 顺带修了另外两个影响 Host 的漏洞，所以只装 Host 的也要升。</p>
+                        <p><strong>触发路径只有一步算术。</strong>会话建立时，host 会告诉 viewer 自己的屏幕图像有多大，viewer 按这个尺寸预留内存。问题出在<strong>尺寸计算用的是 32 位运算</strong>，数字溢出之后，预留的空间比需要的小，随后到达的屏幕数据就被写到这块空间的边界之外。研究者 Omri Dar（Remedio）在 10 月 29 日的技术分析里写得很直白：<strong>"攻击者是 host，受害者是 viewer。"</strong></p>
+                        <p><strong>攻击者还多一个控制杆。</strong>按 Remedio 的描述，host 可以<strong>拒绝正常的视频编解码器</strong>，把 viewer 逼到那条脆弱的处理路径上。这一条让"我这边配置得好好的"失去意义，路径的选择权在对方手里。</p>
+                        <p><strong>后果分两档。</strong>低档是 viewer 端的 TeamViewer 会话崩溃，<strong>而且 host 想什么时候再触发就什么时候再触发</strong>。高档是在 Windows 上，Remedio 称他们绕过了操作系统的 <strong>Control Flow Guard 与 DEP</strong>，在 viewer 进程里跑了自己选的代码。</p>
+                        <p><strong>这个演示有一个限定条件，Remedio 自己写明了：</strong>其中"提前布置内存"这一步，是用 host 端的一个 hook 完成的，<strong>不是完全通过网络送过去的</strong>。也就是说，它还不是一条纯远程的完整利用链；而且代码执行只在 Windows 上验证过，macOS、Linux、Android 是否同样可行，技术分析里没有覆盖。TeamViewer 的措辞是"视平台而定"可能代码执行。<strong>不需要密码，不需要额外点击，默认配置就成立</strong>，只要用户主动向那台 host 发起远程控制会话。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>评分</th><th>组件与平台</th><th>问题</th></tr>
+                            <tr><td>2026-111585</td><td>8.8</td><td>完整客户端 与 便携版 与 Android</td><td class="risk-high">屏幕尺寸整数溢出，host 打 viewer</td></tr>
+                            <tr><td>2026-92372</td><td>8.8</td><td>完整客户端，Linux 与 macOS</td><td>屏幕图像解码器越界写，可经会话或 .tvs 录像触发，需交互</td></tr>
+                            <tr><td>2026-92374</td><td>7.8</td><td>完整客户端 与 Host，macOS</td><td>特权 helper 竞态，本地低权限可绕过安装包校验拿 root</td></tr>
+                        </table>
+                        <p>另有同日发布的一份独立公告 <strong>TV-2026-1012</strong>，修 TeamViewer Remote Management 附加组件里的<strong>六个本地提权</strong>，最高 7.8，需要已登录的本地攻击者，这些组件走自动更新。</p>
+                        <p><strong>时间线值得留意：</strong>Remedio <strong>8 月 14 日</strong>报送，TeamViewer <strong>10 月 22 日</strong>确认，<strong>10 月 27 日</strong>随 15.83 修复，<strong>10 月 29 日</strong>细节公开。从报送到处补丁，<strong>74 天</strong>。厂商称发布时不知道有在野利用，截至 10 月 29 日的 KEV 清单里也没有它，Remedio 没有发布利用代码。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这是一类"信任方向"错误，不止 TeamViewer 一家有</strong>。任何远程会话协议里，只要 host 发来的数据在 viewer 侧被当成可信输入处理，方向就是反的。</p>
+                        <p>第二，<strong>最该慌的是做应急响应的人</strong>。SOC 分析员和 IR 工程师每天要连的，恰恰是已经被入侵的机器。这个洞的意思是：你去查它的那一刻，它也在查你。处理疑似失陷终端时应改用带外手段，或者先确认所有 viewer 端都升到 15.83。</p>
+                        <p>第三，<strong>升级动作要全覆盖</strong>。MSP 和 IT 支持团队手里的 viewer 往往不止一台，便携版最容易漏，因为它不在软件分发体系里。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GitLab 那个满分洞：Alpine Linux 把自己的服务器推倒重建了</h3>
+                    <div class="article-meta">
+                        <span>10-28 Alpine 事件说明 · 10-29 进 KEV · 联邦死线 11-01</span>
+                        <span class="cvss-score">CVSS 10.0 · 修 19.2.8 与 19.3.5 与 19.4.2 · 根因在 Ruby 的 Onigmo</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>前情说明：</strong><code>CVE-2026-97229</code> 这个漏洞本身本刊在 10 月 14 日与 10 月 22 日已两次写过。这一节只写 10-28 之后的<strong>新事实</strong>：一次真实的攻击尝试、一次推倒重建、以及一个"升了应用没升运行时"的教训。</p>
+                        <p><strong>发生了什么。</strong>Alpine Linux 在 <strong>10 月 28 日</strong>发布了事件说明：有人反复尝试利用这个洞打它自己的 GitLab 实例。维护者的原话很有分量：<strong>"攻击差一点就成功了。我们没有找到它成功过的证据，但也没法排除，所以按已被入侵处理，从头重建了这台实例。"</strong></p>
+                        <table class="affected-table">
+                            <tr><th>日期</th><th>发生了什么</th></tr>
+                            <tr><td>10-13</td><td>升到 GitLab 19.3.4，<strong>本意是升 19.3.5</strong></td></tr>
+                            <tr><td>10-20</td><td>一个新注册的账号开始探测服务器</td></tr>
+                            <tr><td>10-21</td><td class="risk-high">主攻：8 次 worker 崩溃，其中 4 次推进到利用链的下一步；出现 502 与 CI 任务失败</td></tr>
+                            <tr><td>10-21 前后</td><td>攻击者下载了 Alpine 自己的 GitLab 容器镜像，明显是为对着这个确切构建调 exploit</td></tr>
+                            <tr><td>10-22</td><td class="risk-high">升到 19.3.6，但镜像里用的是系统 Ruby 包，洞还在</td></tr>
+                            <tr><td>10-23</td><td>封掉那个账号</td></tr>
+                            <tr><td>10-25 至 10-26</td><td>攻击者两次返回，两次被挡</td></tr>
+                            <tr><td>10-26</td><td class="risk-high">Alpine 发现服务器仍然脆弱</td></tr>
+                            <tr><td>10-27</td><td>把 GitLab 下线</td></tr>
+                            <tr><td>10-28</td><td>全部密码重置、密钥替换完毕</td></tr>
+                            <tr><td>10-29</td><td>以 19.3.7 重新开放；同一天 CISA 把它加进 KEV</td></tr>
+                        </table>
+                        <p><strong>根因不在 GitLab，在 Ruby 里的正则引擎。</strong>这个洞是 <strong>Onigmo</strong>（Ruby 内置的正则引擎）里的整数溢出。一段精心构造的正则，在 GitLab CI/CD 的 rules 条件里被编译时，会生成一个引擎无法安全跟踪大小的程序，进而走到未认证的远程代码执行。GitLab 在 <strong>10 月 12 日</strong>修的时候，做法是<strong>更新它官方包与镜像里带的 Ruby</strong>；Ruby 上游随后在 <strong>10 月 23 日</strong>发布 <strong>3.3.13、3.4.12、4.0.9</strong> 补上引擎本身的缺陷。</p>
+                        <p><strong>所以第二层才是关键：</strong>如果你跑的是系统 Ruby，而不是 GitLab 自带那份，<strong>只升 GitLab 没用</strong>。Alpine 就是踩在这上面，它 10-22 升到了 19.3.6，版本号看着对，底下的引擎还是旧的。</p>
+                        <p><strong>还有两件必须纠正的事。</strong>第一，<code>Regexp.timeout</code> 挡不住这个洞，因为内存在<strong>编译阶段</strong>就被破坏了，那时匹配还没开始。第二，<strong>限制正则长度也不可靠</strong>，因为溢出并不需要一个特别长的模式，重复次数与嵌套层级就够。Ruby 的安全公告把这两条明确点出来，正因为它们是大家最先想到的两招。</p>
+                        <p><strong>九天后又来一枚。</strong><code>CVE-2026-110264</code>（10 月 21 日修）是同一类引擎缺陷的另一种走法，也是 <strong>10.0、未认证</strong>，但它<strong>往回覆盖到 GitLab 7.0</strong>，大约 <strong>12 年</strong>的版本，GitLab 为此打了 7 个分支；它需要最新的 <strong>Ruby 4.0.9</strong>，而不是关掉前两个的 4.0.8。<strong>十四天里同一个组件出了两个未认证 10.0</strong>，这不是两次独立事件，是同一个设计问题被数了两遍。</p>
+                        <p><strong>无法证明"没被执行"。</strong>Alpine 说得很诚实：相关日志已经不可用，服务器也没有出向流量日志，所以没法证明代码从没跑过。如果真跑成了，可能暴露的东西包括：用户邮箱、姓名、IP，密码哈希与 2FA 密钥，CI/CD 变量与 runner 令牌，webhook 与镜像同步凭据，个人访问令牌哈希，以及私有仓库。</p>
+                        <p><strong>但用户侧的东西查干净了。</strong>aports 仓库、软件包、以及 10 月 21 日发布的 <strong>3.21.9、3.22.7、3.23.7、3.24.3</strong> 全部核对过，未发现篡改；<strong>包签名密钥从来没有存在这台 GitLab 服务器上</strong>。这个隔离动作把它从"发行版供应链事件"降级成了"一台开发服务器的安全事件"。之后 Alpine 还观察到有人拿别处泄露的密码来撞库，这在任何一次高关注度曝光之后都是标配。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这是"两层版本号"问题的教科书案例</strong>。容器镜像与发行版里，语言运行时和应用是两件独立维护、独立发版的东西，GitLab 的 release notes 不会强迫两者同步。所以真正要问的不是"我 GitLab 是哪个版本"，而是"<strong>编译我 CI lint 正则的是哪个 Ruby</strong>"。</p>
+                        <p>第二，<strong>worker 崩溃是可用的检测信号</strong>。Alpine 看到的就是"CI 配置处理时反复崩溃"。如果你在打补丁之前见过这个模式，按可能已入侵处理，别当服务不稳定。</p>
+                        <p>第三，<strong>死线就在明天</strong>。CISA 给的联邦期限是 11 月 1 日，这是本周最短的一个窗口。任何对外可达、开了自助注册的自管 GitLab 实例，今天该做的是同一天内升级，开着公开注册就等于把"能不能植入 CI 配置"这个前提条件直接送出去。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">Yoba：签名是真的，安装包旁边的那个 DLL 不是</h3>
+                    <div class="article-meta">
+                        <span>Check Point 10-28 发布 · 3 个恶意包 8-30 至 9-04 上传</span>
+                        <span class="cvss-score">GPT-5.6 Sol 与 GPT-6 Astra 与 Claude Opus 均为假项目名 · 最终载荷 XMRig 6.26.0</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条把"数字签名"这四个字拆开给你看：<strong>签名证明的是谁编译了这个 exe，不证明这个 zip 里其他东西是干净的。</strong></p>
+                        <p><strong>假项目，真安装包。</strong>Check Point 把这次活动命名为 <strong>Yoba</strong>。它用三个并不存在的产品名做诱饵：<strong>GPT-5.6 Sol</strong>、<strong>GPT-6 Astra</strong>、<strong>Claude Opus</strong>，都是假项目名，不是 OpenAI 或 Anthropic 的产品。做法是建 GitHub 仓库与 GitHub Pages 页面，把恶意 ZIP 挂在 GitHub Releases 上，再靠<strong>搜索引擎优化投毒</strong>让它们排到搜索结果前面。三个包的上传时间是 <strong>8 月 30 日、8 月 31 日、9 月 4 日</strong>。</p>
+                        <p><strong>关键点在这里：每个 ZIP 里都有一个真的、带 OpenAI 或 Anthropic 签名的 Setup.exe。</strong>所以下载下来看属性，签名是有效的、发布者是对的。旁边放着一个恶意的 <strong>winmm.dll</strong>，用户运行那个真的 Setup.exe 时，Windows 的 DLL 搜索顺序会先加载同目录下的这个假 DLL，这就是 <strong>DLL 侧加载</strong>。Check Point 特别强调了一句：ChatGPT、Claude、OpenAI、Anthropic 本身都没有被入侵，攻击者用的是合法签名二进制加上品牌可信度。</p>
+                        <p><strong>第一层载荷（YobaDropper）有四个防分析设计：</strong>校验启动者，如果不是被名为 Setup.exe 的进程启动，就<strong>延迟 12 天</strong>再干活；查键盘布局，遇到俄语、白俄罗斯语、哈萨克语等独联体地区语言环境直接跳过；要管理员权限，拿不到就不往下走；借壳常驻，把 Windows 自带的 <strong>WMPDMC.exe</strong> 从 System32 复制到 <code>ProgramData\WMProcess\</code>，在旁边放第二个恶意 DLL <strong>wmpdui.dll</strong>，再建一个计划任务，<strong>作者字段伪造成 Microsoft Corporation</strong>，以 <strong>Local System</strong> 权限在<strong>开机三分钟后</strong>运行。用一个微软自己的、有签名的程序去侧加载自己的 DLL，等于把"可疑进程"这一条检测线索也抹掉了。</p>
+                        <p><strong>第二层（YobaLoader）的 C2 全走正规服务：</strong>用某个 <strong>Telegram 频道头像的最后 50 字节</strong>当种子生成域名，向 <strong>Google 的 DNS-over-HTTPS</strong> 查 <strong>TXT 记录</strong>取加密指令，再从 <strong>Catbox</strong> 文件托管取加密载荷。整条链上没有一台"一看就像 C2"的服务器，单看每一条连接都像正常流量。</p>
+                        <p><strong>最终载荷是 XMRig 6.26.0</strong>，配置成走 Tor、并在<strong>用户有操作时暂停</strong>挖矿。但 Check Point 的研究主管 Eli Smadja 提醒：别把它只当挖矿木马看，YobaLoader 是个通用加载器，能投递别的 Windows 可执行文件或 PowerShell 脚本，<strong>同一条感染链可以换成别的目的</strong>。</p>
+                        <p><strong>这里要区分一件事，免得混成一起：</strong>7 月 27 日 Zip Security 报过另一起 Claude 主题的假安装包，那批页面挂在 <code>claude.ai</code> 域名下的用户自建内容里，靠付费搜索广告推广。<strong>那和 Yoba 是两回事</strong>，但共同点是同一句提醒：域名熟悉，不等于上面托管的内容可信。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>签名从"可信证明"退化成了"心理安慰"</strong>。这个手法本身不新，新的是它现在专门挂在 AI 工具上，因为大家正在疯狂找"某个还没发布的模型"的客户端。</p>
+                        <p>第二，<strong>企业该改的不是禁用 AI 工具，是别让人自己去搜</strong>。Smadja 的建议是反过来：把合法的 AI 工具审批流程做快，快过员工自己去搜的速度；同时把应用控制从"只校验 exe 签名"扩展到<strong>监控 DLL 加载行为</strong>，因为这次签名恰恰是对的。</p>
+                        <p>第三，<strong>最该看的是开发机</strong>。这类机器有源码、API key、云凭据和内网通路，而且开发者有长期本地管理员权限，这正好满足载荷"要管理员"的前提。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-medium">中</span>
+                    <h3 class="article-title">压缩走私：让模型把自己的隐藏推理吐成明文</h3>
+                    <div class="article-meta">
+                        <span>10-23 服务端修复 · 10-26 公开 · 赏金 6,000 美元</span>
+                        <span class="cvss-score">Xint 研究 · 只测 gpt-5.6-sol · 非跨用户攻击 · 未验证逐字一致</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条不是漏洞利用，是一次<strong>能力边界的演示</strong>：服务端有一个步骤会读模型的明文推理，而它又听用户的指令，两者叠在一起，就等于给了用户一个读推理的出口。</p>
+                        <p><strong>机制讲清楚只要三步。</strong>OpenAI 的推理模型在给答案之前会先想一遍，但返回给调用方的<strong>只有一段用户读不了的加密推理项</strong>。与此同时，API 有个 <strong>compaction（压缩）</strong>功能，把长会话压成一个更小的加密对象带上下文往下走。研究机构 <strong>Xint</strong> 做的三件事是：用一道数学或算法题让 <code>gpt-5.6-sol</code> 正常推理并<strong>留下那段加密推理项</strong>；在<strong>同一个模型</strong>上触发压缩，指令是"把上面那段推理逐字复制进压缩项"，并<strong>把每一个空格换成制表符</strong>用来绕开使用策略过滤；压缩项可以<strong>跨模型</strong>搬，于是把它喂给更便宜的 <code>gpt-4.1</code> 与 <code>gpt-4o</code>，要求"原样复述输入"。两个模型都照做了，<strong>隐藏推理就以明文出来了</strong>。</p>
+                        <p><strong>为什么 8 月那道防线没拦住。</strong>8 月有一篇叫 <strong>Stolen Thoughts</strong> 的论文证明：强模型的加密推理可以被重放进同厂商的弱模型，弱模型会把它念出来。OpenAI 随后堵了这条<strong>跨模型重放</strong>。Xint 的绕法是：<strong>压缩这一步跑在生成推理的同一个模型上</strong>，跨模型检查根本没被触发。同一个洞，换了个不查的门口。</p>
+                        <p><strong>边界必须写清楚，否则容易被误读成"能偷别人的推理"：</strong>这不是跨用户攻击，被提取的是 Xint 自己发起的请求产生的推理，研究方没有声称能碰到别人的；<strong>无法验证是否逐字一致</strong>，原始明文从来不存在，所以只能证明"模型复述了一段自洽的推理"，不能证明"这就是它当时想的原文"；<strong>只测了 gpt-5.6-sol</strong>，OpenAI 更新的 GPT-6 Astra 是否受影响没有评估；有没有人先用过，未知。</p>
+                        <p><strong>修复与赏金。</strong>OpenAI 确认了问题，<strong>10 月 23 日</strong>做了服务端修复，开发者不需要改任何东西；Xint 拿了 <strong>6,000 美元</strong>，方法代码已放到 GitHub。</p>
+                        <p><strong>这件事真正的价值，是它指出的那个结构性判断。</strong>Xint 的说法是：修这一条路可能不够，因为<strong>任何"服务端读解密后的推理、然后按用户指令行动"的步骤，都可能漏</strong>。前作 <strong>GhostCompact</strong> 已经证明压缩这一步可以被诱导去执行攻击者指定的任务，这次是同一个位置的第二种用法。</p>
+                        <p><strong>为什么 OpenAI 要把推理藏起来。</strong>公开的理由是防蒸馏：<strong>推理轨迹比最终答案更适合当训练数据</strong>，因为它暴露了模型怎么试错、怎么回头。对做模型的人来说，这是最值钱的那部分输出。Xint 的判断是，这个洞的真实风险就是<strong>大规模蒸馏</strong>，把前沿模型的思考过程批量抽出来，去训一个更小的模型。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这是"功能本身就是攻击面"的又一例</strong>。压缩是为了省上下文，它的设计前提是"这段东西只是给下游模型看的"，一旦它可被跨模型搬、又可被指令改写内容，它就变成了通道。</p>
+                        <p>第二，<strong>修复在服务端，但风险模式在产品侧</strong>。任何做 AI 应用的团队都该问自己一句：我有没有让模型把"它读到的敏感内容"按用户指令复述出去的路径？日志摘要、会话压缩、上下文转存，全在这个范围内。</p>
+                        <p>第三，<strong>这也是攻防节奏的一个样本</strong>。8 月堵一条、10 月补另一条、九天后再出一条同源的 10.0，同一个根因被反复数成新 CVE，这个模式今年在好几个产品上都出现过。</p>
+                        <div class="attack-flow">
+                            <div class="flow-step">送一道数学题<br/>拿到加密推理项</div>
+                            <div class="flow-step critical">同模型触发压缩<br/>指令逐字复制</div>
+                            <div class="flow-step">空格换成制表符<br/>绕过策略过滤</div>
+                            <div class="flow-step critical">压缩项跨模型搬<br/>弱模型原样复述</div>
+                            <div class="flow-step critical">隐藏推理<br/>以明文输出</div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-section">
+                <div class="quick-item">
+                    <h4>7. Chainalysis：被"攻击性智能体技术"打进来，泄露的是联系人级别的数据</h4>
+                    <p>10 月 30 日，这家区块链分析公司在自己博客上确认遭到入侵。措辞值得抄下来：外部行为者使用 <strong>offensive agentic techniques</strong> 未授权访问了<strong>内部系统与内部工具</strong>。已确认被访问的是<strong>用户 ID、全名、邮箱、以及客户组织内的角色标签</strong>；公司称<strong>没有证据</strong>表明调查内容（图谱、笔记、案件）、明文密码、MFA 密钥、会话令牌、交易或查询结果被访问。处置上它请了外部团队，并用<strong>大语言模型辅助做平台全量安全复审</strong>。它同时明确：这件事与币安那起盗窃无关。要留意的不是泄露了什么，而是<strong>第一次有厂商把"攻击性 agentic 技术"写成入侵手法</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. OWASP 的 LLM 攻击生成指南 2.0：智能体会找门，但不会自己破门</h4>
+                    <p>10 月 27 日发布。它把"人引导模型"与"自主智能体"放在一起比：智能体确实能<strong>找到 staging 站点、指纹识别软件版本、把版本对到已知漏洞上</strong>，但它也会<strong>重复跑失败的扫描、在权限或主机名不对的时候卡住</strong>，最后仍然要人来收尾。OWASP 的结论是 <strong>AI 是放大器，不是替代品</strong>，受益最多的是本来就有经验的人。它给了一条可用的检测信号：<strong>针对同一个目标的高频重复工具调用、且没有实质进展</strong>，这是自动化在撞墙的样子，适合拿去配告警。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 10 月 30 日单日的勒索声称</h4>
+                    <p>aurora 把美国工业设备制造商 <strong>CP Manufacturing</strong> 挂上泄漏站，声称拿到 ERP 财务数据、约 340 份含姓名与出生日期的身份信息、银行账户与路由号、277 GB 以上的工程图纸与 3D 扫描数据；qilin 挂了一家墨西哥药房连锁。<strong>这些是攻击者的单方面声称，未经独立验证</strong>，列入只为观察节奏，不当作已确认的事实。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. 韩国 GS 建设：公寓社区预约系统被外部访问，住户信息外泄</h4>
+                    <p>公司 10 月 30 日确认，<strong>10 月 28 日 23 时 29 分前后</strong>检测到该系统存在账号异常访问，<strong>最早的未授权访问可追溯到当天上午 10 时 15 分左右</strong>；发现后立即切断外部访问，并逐个客户排查泄露范围。疑似涉及的字段是姓名、性别、出生日期、手机号、邮箱、居住地址，以及<strong>预约系统本身的密码</strong>；公司说明居民登记号、账户信息、信用卡号本来就没有采集。它特别提醒用户修改在其他平台复用的同一密码。这一条目前<strong>只有单一来源</strong>（韩国媒体的中文转述），细节以该公司正式通知为准。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 影子 AI 中转：工具是真的，沙箱被人改成了全权限</h4>
+                    <p>Symantec 的观察是，一类未授权的中转服务在给企业提供 Codex 与 Claude Code 的访问，做法是把<strong>沙箱配置改成全权限模式</strong>，中转方因此<strong>能读到经手的每一条 prompt、每一个文件与每一份密钥，也能改写返回内容</strong>；观测期内操作者<strong>至少轮换了 8 个域名</strong>。对企业的含义很直接：<strong>影子 AI 的风险不在"用了没批准的模型"，在"跑它的那个环境由别人控制"</strong>。这条同样只有单一来源，具体域名与样本未公开。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Claude Code 扩展投毒": [0.96, 0.93]
+    "Ivanti 三洞链 root": [0.94, 0.95]
+    "GitLab 97229 与 Alpine 重建": [0.90, 0.88]
+    "Chainalysis 被智能体打入": [0.86, 0.62]
+    "Yoba 假 AI 客户端": [0.78, 0.72]
+    "影子 AI 中转到全权限": [0.55, 0.58]
+    "TeamViewer 反打控制端": [0.20, 0.80]
+    "压缩走私 提取推理": [0.14, 0.50]
+    "OWASP 智能体指南": [0.30, 0.42]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "供应链与分发通道": 28
+    "边界设备与远程接入": 24
+    "数据泄露与通知": 16
+    "AI 能力边界与模型安全": 14
+    "犯罪软件与加载器": 12
+    "生态治理与指南": 6
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月27日至10月31日
+    10月27日 : TeamViewer 发布 15.83
+             : OWASP 发布 LLM 攻击生成指南 2.0
+    10月28日 : Alpine Linux 公布 GitLab 事件说明
+             : Check Point 发布 Yoba 分析
+             : 韩国 GS 建设发现预约系统异常访问
+    10月29日 : Claude Code 扩展 2.1.313 分发约十一小时
+             : Ivanti 发布 25.1.1.3 与 22.8R2.6
+             : CISA 把 GitLab 97229 与思科 76418 列入 KEV
+             : Alpine 以 19.3.7 重开 GitLab
+    10月30日 : CISA 把 Ivanti 两枚列入 KEV
+             : Cursor 确认事件 恶意版本已移除
+             : Chainalysis 公布安全事件说明
+    10月31日 : 联邦对 GitLab 97229 的死线进入倒数一天
+             : 各厂商开始发 Ivanti 处置指引
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News（10-30）— 66 行加载器、svc-telemetry、134.209.82.225 与 8099 端口、侦察字段清单、5,000 用户与 2:27 至 13:35 PT 时间窗、Cursor 市场临时下线、2.1.314、只经 Cursor 市场分发的口径</span>
+                        <a href="https://thehackernews.com/2026/10/official-claude-code-vs-code-extension.html">TNH · claude code</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Morphisec 安全公告（10-30）— 四项载荷动作、SSH 服务因权限失败但密钥与持久化仍落地、排查指标、Open VSX 与 Cursor 两边分发的另一口径</span>
+                        <a href="https://www.einpresswire.com/article/953417868/morphisec-issues-critical-advisory-on-trojanized-claude-code-extension-targeting-developer-endpoints">morphisec · advisory</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Grid The Grey（10-30）— 执行链拆解、三平台持久化位置、beacon 字段与环境变量名匹配模式、ATLAS 与 OWASP LLM 映射</span>
+                        <a href="https://gridthegrey.com/posts/claude-code-vs-code-extension-trojanized-with-ssh-backdoor">gridthegrey · 分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">RedSide Security（10-30）— 供应链视角：市场信任聚合、为何选 SSH 后门、开发者终端处置与轮换顺序</span>
+                        <a href="https://blog.redsidesecurity.com/post/claude-code-extension-on-open-vsx-weaponized-to-deploy-persistent-ssh-backdoor">redside · 供应链</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">zerohour.day（10-30，合并多家）— Ivanti 三洞链、22.8R2.4 Build 19097、UTA0576 自 10-03、LAPS 与 BitLocker、无 webshell、Integrity Checker 漏内存改动、修复版本与两枚 KEV 期限</span>
+                        <a href="https://zerohour.day/item/e98a82bc0f5c7d2f311b4f68c0713e8ea9c9e058">zerohour · ivanti</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">pk-sharma 简报（10-30）— CISA 两条 KEV 条目字段原文、Ivanti 版本表、"有限数量客户"的边界、CISA 写已认证与利用报告写未认证 root 的口径对照</span>
+                        <a href="https://www.pk-sharma.com/briefing/cisa-kev-ivanti-connect-secure-cve-2026-118527-and-cve-2026-111357-added-30-october-what-the-listing-says">pk-sharma · KEV 字段</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shield53（10-30）— 两枚组合等于会话伪造的推理、处置五步、以及为何这类 KEV 条目要按高速度处理</span>
+                        <a href="https://news.shield53.com/ivanti-connect-secure-back-in-the-kev-spotlight-two-exploited-flaws-demand-immediate-action">shield53 · ivanti</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Intel Hub（10-30）— CISA 条目摘要、三枚 CVE 的串联关系、11-02 期限</span>
+                        <a href="https://securityintelhub.com/article/cisa-kev-cve-2026-111357-ivanti-connect-secure">intelhub · 111357</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TSNMedia（10-30）— TV-2026-1011 公告原文、32 位算术导致预留过小、host 可拒绝编解码器、同批 92372 与 92374、TV-2026-1012 六个附加组件提权</span>
+                        <a href="https://tsnmedia.org/teamviewer-vulnerability">tsnmedia · teamviewer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">LavX News（10-30）— 8-14 报送与 10-22 确认与 10-27 修复的时间线、无 workaround、代码执行演示的限定条件</span>
+                        <a href="https://news.lavx.hu/article/teamviewer-flaw-lets-controlled-machines-attack-their-controllers">lavx · teamviewer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shield53（10-30）— 方向性分析：为何 IR 与 SOC 是最高风险人群、Host 不在此 CVE 范围但同批仍须升级</span>
+                        <a href="https://news.shield53.com/teamviewers-inverted-attack-surface-when-the-controller-becomes-the-victim">shield53 · teamviewer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BreachNews（10-30）— Alpine 重建全过程：19.3.4 到 19.3.6 的版本错位、8 次崩溃其中 4 次推进、下载自有镜像调 exploit、日志缺失、可能暴露的数据、三份 release 未篡改、签名密钥不在该服务器</span>
+                        <a href="https://breachnews.com/cyber-attacks/alpine-linux-rebuilds-gitlab-after-attacks-on-cve-2026-97229">breachnews · alpine</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OrcaRouter（10-30）— 四枚同源 GitLab CVE 的对应关系、Regexp.timeout 与长度限制为何无效、两层版本号的供应链形状</span>
+                        <a href="https://www.orcarouter.ai/blog/cve-2026-97229-gitlab-ruby-regex-rce">orcarouter · 97229</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News（10-29）— CISA 同日加入 KEV 的 GitLab 10.0 与思科 8.6、联邦 11-01 期限、Alpine 维护者原话</span>
+                        <a href="https://thehackernews.com/2026/10/cisa-adds-actively-exploited-gitlab-rce.html">TNH · KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rama Digital（10-30）— 修复版本矩阵、Ruby 3.3.13 与 3.4.12 与 4.0.9、Rapid7 复现代码执行、需要能植入 CI/CD 配置这个前提</span>
+                        <a href="https://ramadigital.id/en/blog/gitlab-cve-2026-97229-cve-2026-110264">rama · gitlab</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberMaterial（10-30）— Yoba 的活动结构：三个假项目名与上传日期、YobaDropper 的四项检查、WMPDMC 借壳与计划任务、DGA 与 DoH 与 Catbox 链路、XMRig 的 Tor 与暂停行为</span>
+                        <a href="https://www.cybermaterial.com/p/yoba-campaign-spreads-malware-via?r=5g6r2y">cybermaterial · yoba</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NeoTeo（10-30）— 报告日期与三个 ZIP 日期、签名只覆盖 exe 不覆盖相邻 DLL 的解释、与 Zip Security 7-27 那起 claude.ai 用户内容事件的区分</span>
+                        <a href="https://www.neoteo.com/en/fake-chatgpt-and-claude-downloads-delivered-yoba-malware">neoteo · yoba</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT Pro（10-30）— Eli Smadja 两句原话、攻击围绕 AI 的信任而不必攻击 AI 本身、YobaLoader 是通用加载器的判断</span>
+                        <a href="https://www.itpro.com/security/malware/hackers-are-using-github-to-push-fake-chatgpt-and-claude-apps">itpro · yoba</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">secnews.in（10-30）— 压缩走私完整叙述：三步流程、制表符替换、8 月跨模型拦截为何失效、只测 gpt-5.6-sol、6,000 美元赏金、10-23 修复、与 GhostCompact 的继承</span>
+                        <a href="https://secnews.in/article/?slug=article-openai-compaction-reasoning-extraction-xint">secnews · compaction</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Chainalysis 官方博客（10-30）— 事件说明与致客户邮件全文、offensive agentic techniques、被访问的四类字段、未被访问的清单、LLM 辅助复审、与币安无关的声明</span>
+                        <a href="https://www.chainalysis.com/blog/security-incident-october-30/">chainalysis · 事件说明</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">深潮 TechFlow（10-31）— Chainalysis 事件的中文转述与泄露字段范围</span>
+                        <a href="https://www.techflowpost.com/en-US/newsletter/142183">techflow · chainalysis</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberMaterial 简报（10-29）— OWASP LLM Exploit Generation Guide 2.0 的结论与那条检测信号</span>
+                        <a href="https://www.cybermaterial.com/p/cyber-briefing-october-29-2026">cybermaterial · OWASP</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackerFeeds（10-30）— aurora 对 CP Manufacturing 的声称内容清单（攻击者单方面声称，未经验证）</span>
+                        <a href="https://hackerfeeds.com/ransomware/cp-manufacturing-inc-by-aurora-1pay3">hackerfeeds · 声称</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻 与 IT时代网（10-31）— 韩国 GS 建设公寓社区预约系统事件的检测时间、最早访问时间与字段范围（单一来源）</span>
+                        <a href="https://news.qq.com/rain/a/20261031A01S6V00">腾讯新闻 · GS 建设</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVETodo 每日威胁报告（10-31）— 本周 KEV 节奏汇总与各条联邦期限的横向对照，用于校准哪一件最急</span>
+                        <a href="https://cvetodo.com/threat-report/uk">cvetodo · 10-31</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注两边口径；勒索团伙声称与厂商对受害数量的自述均未经独立验证。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年10月31日
+            </p>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
