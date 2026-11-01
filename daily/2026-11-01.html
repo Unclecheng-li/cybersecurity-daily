@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月1日（第204期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月1日 星期日</span>
+            <span class="edition-number">第 204 期 | 总第 204 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>沙箱没破是隔壁的监听器没验来源 · 撤销列表加载了但检查从没打开 · 两分七的那个洞进了在野清单 · 赃物打包发给大模型排一下价 · 签名是真的但那台机器早被控 · 补丁发了可只发给新系统
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">每一道防护都装了，每一道都没生效</h2>
+                <p class="sub-headline">一条普通的 ChatGPT 分享链接，能在你已经登录的会话里跑攻击者代码，而沙箱从头到尾是好的；一个跑在数亿台设备里的嵌入式 Web 服务器，启动时把证书吊销列表读进来了，却从没打开吊销检查，被撤销的设备证书照样能登录；一个 CVSS 只有 2.7 的漏洞进了在野清单，因为它专治"让别人看不见"；一个信息窃取器把赃物打包发给大模型问"这人值多少钱"，杀软一条都没报，因为那是合法的 API 调用；两台扑克辅助软件的更新是真的、签名是真的，可签名那台机器早就被人控着；一个安卓短信洞的补丁确实发了，只发给 Android 14 到 17。六件事，共同点不是"洞有多深"，是"这道防护在，所以我不用管"这句话本身失效了。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">一条分享链接，就能在你登录着的 ChatGPT 会话里跑代码</h3>
+                    <div class="article-meta">
+                        <span>10-18 报送 · 10-26 修复 · 10-28 公开</span>
+                        <span class="cvss-score">评级 P1 · 赏金 5,000 美元 · 无在野使用 · 点开链接约 4.5 秒触发</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条最反直觉的地方是：<strong>沙箱从头到尾没有问题</strong>。ChatGPT 把聊天里的 HTML 块渲染成一个小页面（Preview），确实把它关在一个独立域名的锁定 frame 里，读不到主页面。攻击者没有砸开它，是从旁边一个"为了好用而开的功能"走过去的。</p>
+                        <p><strong>能做什么。</strong>安全公司 Parameter 的验证里，攻击者的代码在受害者的登录会话里、以 chatgpt.com 的同等权限运行。它<strong>直接调用了 ChatGPT 自己的已登录 API</strong>，而不是去抄屏幕上有什么：<code>GET /backend-api/conversations</code> 列出受害者最近的会话，再按会话 ID 打开一个<strong>从来没有被分享过</strong>的私聊，把其中一小段发到研究者自己的服务器。研究者的原话是"本质上，我们可以代表受害者的 ChatGPT 账号执行任何操作"。</p>
+                        <p><strong>受害者的动作，比想象的少。</strong>不用装任何东西，不用加入工作区，不用在攻击者的页面上登录。最可靠的版本是打开链接、点一次 Preview 按钮；后来的版本被设成自动预览，<strong>点开链接就够了，实测约 4.5 秒后触发</strong>。</p>
+                        <p><strong>越界链条分三步，每一步单独看都不像漏洞：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>步骤</th><th>发生了什么</th><th>为什么能成立</th></tr>
+                            <tr><td>一</td><td>同会话的交互图表把数学排版库 MathLive 加载进主页面</td><td class="risk-high">它的屏幕键盘监听器不校验消息来自哪个 frame，且允许键盘布局数据携带原始 HTML</td></tr>
+                            <tr><td>二</td><td>Preview 通过两条 postMessage 把攻击者 HTML 递进主页面 innerHTML</td><td class="risk-high">配套的 <code>createHTML</code> 辅助函数本该做消毒，实际只是把字符串标记成可信</td></tr>
+                            <tr><td>三</td><td>innerHTML 里的 script 不执行，但里面那个 srcdoc iframe 没有 sandbox 属性</td><td class="risk-high">frame 由主页面创建，浏览器因此把 chatgpt.com 的源给了它</td></tr>
+                        </table>
+                        <p><strong>最后一步绕的是内容安全策略。</strong>CSP 正确拦住了内联脚本，但放行了 YouTube 域。YouTube 的 oEmbed 端点在校验回调参数失败时，会<strong>先把回调内容拼进响应再返回错误</strong>；这段以 <code>// API callback</code> 开头的响应被浏览器当成脚本执行，攻击代码就此落在主站上下文里。</p>
+                        <p><strong>时间线很清楚：</strong>10 月 18 日报送，8 天后修复；OpenAI 复现了代码执行与私聊读取两项，把评级从 P2 提到 P1（最高档）；<strong>10 月 26 日，两个前端版本都开始拒绝这条链依赖的消息</strong>；10 月 28 日研究者公开细节；总共支付 <strong>5,000 美元</strong>。</p>
+                        <p><strong>边界必须写清楚，否则容易被读成"能偷别人账号"。</strong>这不是在野攻击：Parameter 明确说没有发现任何真实使用；私聊那一段是在<strong>同一个研究账号的两个会话之间</strong>做的验证，没有碰真实用户；完整武器化代码没有公开。另外链条依赖"图表先把 MathLive 加载进来"这个前提，研究者是用限时重试处理资源加载竞态的。</p>
+                        <p><strong>修复的关键在哪里。</strong>研究者把根因归给<strong>三条设计选择同时成立</strong>：MathLive 会执行一条修改自身设置的跨 frame 消息而不校验发送方；这条消息被允许携带原始 HTML 作为键盘布局数据；这段 HTML 可以创建不带 sandbox 的 frame 并继承主站身份。所以<strong>只堵 YouTube 那一步不够</strong>——拦住它之后，一个不受信任的 Preview 仍然能把 HTML 推进主站。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这类 AI 产品把"渲染用户内容"和"信任主站身份"混在了一起</strong>。Preview 的设计前提是"这里面是数据"，但数据能创建 frame、frame 能继承身份，数据就变成了代码。</p>
+                        <p>第二，<strong>受害者不需要做错任何事</strong>。分享链接是 ChatGPT 的正常功能，任何人都会点。这一条比钓鱼更难防，因为它连"可疑的域名"都没有。</p>
+                        <p>第三，<strong>对企业来说，"分享出去的东西"已经是攻击面</strong>。任何带 Markdown 与 HTML 渲染、带图表、带嵌入内容的协作产品，都值得问一句：我渲染用户内容的那一层，是把它当数据还是当代码？</p>
+                        <div class="attack-flow">
+                            <div class="flow-step">点开一条公开分享链接<br/>Preview 在独立 frame 里渲染</div>
+                            <div class="flow-step critical">交互图表把 MathLive<br/>载入主页面</div>
+                            <div class="flow-step critical">键盘监听器不验来源<br/>且允许携带原始 HTML</div>
+                            <div class="flow-step critical">srcdoc frame 无 sandbox<br/>继承 chatgpt.com 身份</div>
+                            <div class="flow-step">借 YouTube 回调<br/>绕过 CSP 执行</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">GoAhead：撤销列表加载了，撤销检查从来没打开</h3>
+                    <div class="article-meta">
+                        <span>6.1.1 于 8-02 交设备商 · 10-12 公开 · 10-26 细节</span>
+                        <span class="cvss-score">CVE-2026-115881 · 厂商评 9.1 · 无在野利用报告 · 编号当时未进 NVD</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GoAhead 是个小 Web 服务器，被设备厂商编进固件，用来跑路由器、打印机、网关、工业控制器上的管理页面。它的东家 EmbedThis 说它<strong>跑在数亿台设备里</strong>。</p>
+                        <p><strong>问题只有一句话：证书吊销列表被读进来了，吊销检查从来没有启用。</strong>在使用 OpenSSL 后端、要求客户端证书（双向 TLS）、并且配置了吊销列表的构型下，服务器启动时会把 CRL 文件加载进来，<strong>不报任何错</strong>——配置了它的运维者有充分理由认为吊销在生效。它没有。</p>
+                        <p>结果就是：一张已经被撤销的客户端证书，比如一台被偷的、或者已经退役的设备，<strong>照常完成握手</strong>，拿到那个身份本来能有的一切。FoxIO 的 Sébastien Féry 在 GoAhead 6.1.0 加 OpenSSL 3.6.2 上验证过：<strong>把 issuer 校验打开，被撤销的证书依然被接受</strong>。OpenSSL 侧的安全公告把这件事描述成"被撤销的客户端证书被静默接受"。</p>
+                        <p><strong>触发条件必须原样写出来，否则会被误读成"默认就中"：</strong>构型使用 OpenSSL 后端；<strong>要求客户端证书</strong>；配了可信的 CA 证书包；<strong>打开了 issuer 校验</strong>；配了吊销列表。这是运维者主动打开的一套设置，不是默认构型。攻击者还得手里有一张由可信 CA 签发、并且已被列入吊销的证书。</p>
+                        <table class="affected-table">
+                            <tr><th>编号</th><th>厂商评分</th><th>受影响后端</th><th>成立条件与后果</th></tr>
+                            <tr><td>2026-115881</td><td class="risk-high">9.1</td><td>OpenSSL</td><td class="risk-high">上述五项同时成立，被撤销的客户端证书仍被当作有效身份</td></tr>
+                            <tr><td>第二枚</td><td>未单列</td><td>Mbed TLS</td><td>客户端未做密钥交换值的最小长度校验时，会接受过短或过弱的值</td></tr>
+                            <tr><td>2026-115884</td><td>未单列</td><td>旧 LibreSSL</td><td>要求客户端证书且关闭 issuer 校验时，超过 10 张的证书链仍能完成握手</td></tr>
+                        </table>
+                        <p><strong>Mbed TLS 后端不受第一枚影响</strong>，它的吊销检查走另一条代码路径。第二枚的影响面也有限：<strong>只有没做最小长度检查的客户端会接受</strong>，TLS 1.3 与 ECDHE 会话不受影响，Mbed TLS 4.x 已经把这个密钥交换整个移除了。</p>
+                        <p><strong>同一份 6.1.1 修了 11 个公告，其中 3 个严重。</strong>另外值得一提的一个是登录绕过：如果存储的密码用的是 6.1.0 新加的 <strong>Blowfish 格式</strong>，那么<strong>用户名对、密码随便填就能进</strong>——而内置管理页默认走的就是表单登录。</p>
+                        <p><strong>这条最难办的地方在信息不对称。</strong>TLS 后端和各项设置都是<strong>固件编译期定死的</strong>，设备主人从外面判断不了自己有没有中，也判断不了厂商用的是哪个后端。唯一的修复路径是厂商重新出一版 6.1.1 固件。到 10 月 27 日为止，这几枚都没有在野利用的报告，CVE 编号当时也还没进公开的 CVE 与 NVD 库；FoxIO 公开了 PoC，并给出 <strong>JA4Scan 指纹</strong>用于从外部识别 GoAhead 服务器及其后端。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"配置了就等于生效了"是个常见幻觉</strong>。CRL 加载成功、无报错、日志干净，三件事加在一起很容易被当成"吊销在工作"。真正该验的是：拿一张确实被撤销的测试证书去连一次。</p>
+                        <p>第二，<strong>这是嵌入式设备供应链的典型形状</strong>。上游修了，中间隔着一层层厂商，用户什么都做不了，只能等。</p>
+                        <p>第三，<strong>分数 9.1 和真实风险要分开看</strong>。9.1 是在"条件全部满足"前提下算的，而条件全部满足的构型是少数；反过来，那些构型恰恰是安全要求最高的场景——双向 TLS 加 CRL，本来就是给高敏感设备用的。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">VMware ESX：进在野清单的那个洞，CVSS 只有 2.7</h3>
+                    <div class="article-meta">
+                        <span>VMSA-2026-0006 于 7-29 发布、8-19 更新 · 10-28 进 KEV</span>
+                        <span class="cvss-score">CVE-2026-41709 · CWE-778 日志记录不足 · 联邦期限 11-11 · 无 workaround</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Broadcom 对这个洞的描述只有一句：<strong>"恶意管理员可以利用这个问题执行某些操作，而这些操作不会被记录。"</strong>它没说哪些操作。CVE 记录把弱点类型标成 <strong>CWE-778，日志记录不足</strong>。</p>
+                        <p>CVSS 3.1 向量是 <code>AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N</code>，<strong>2.7</strong>，Low。理由很直白：它需要高权限，自身不泄露数据、不中断服务、不给代码执行。<strong>它给的只有一样东西：看不见。</strong></p>
+                        <p><strong>为什么 2.7 能进 KEV。</strong>一个按分数排队的补丁队列，会把这个洞排到最后。但对一个已经拿到 ESX 管理员的人来说，"操作不被记录"就是全部价值——他要的是时间，不是权限。10 月 28 日 CISA 把它加进 KEV，联邦民事机构 11 月 11 日前修完；条目里勒索软件使用情况标"未知"，取证排查标记为"否"。</p>
+                        <p><strong>披露与利用的时间差值得单独说。</strong>Broadcom 7 月就发了公告，8 月 19 日更新补了一轮产品线；而 CrowdStrike 在 10 月 28 日发布的行业威胁报告里说，这个洞<strong>在被公开披露之前就已经作为零日被用过</strong>，攻击者在受害者的 vCenter 环境里部署了多种恶意软件。CISA 与 Broadcom 都没有点名任何行为体。</p>
+                        <table class="affected-table">
+                            <tr><th>产品线</th><th>受影响</th><th>修复构建</th></tr>
+                            <tr><td>Cloud Foundation 与 vSphere Foundation（ESX 9.1）</td><td>9.1.x.x</td><td>ESXi-9.1.0.0-25370933</td></tr>
+                            <tr><td>Cloud Foundation 与 vSphere Foundation（ESX 9.0）</td><td>9.0.x.x</td><td>ESXi-9.0.2.0100-25595025</td></tr>
+                            <tr><td>VMware ESX 8.0</td><td>8.0</td><td>ESXi80U3j-25429389</td></tr>
+                            <tr><td>Cloud Foundation（ESX 5.x）</td><td>5.x</td><td>5.2.4，见 KB88287</td></tr>
+                            <tr><td>Telco Cloud Platform（ESX）</td><td>5.0.x 与 5.1.x</td><td>KB449886</td></tr>
+                        </table>
+                        <p>这条 CVE 的矩阵里<strong>没有 ESX 7.0 的条目</strong>；Broadcom <strong>没有给任何 workaround</strong>，补丁就是唯一办法。自查只要两条命令：<code>esxcli system version get</code> 或 <code>vmware -vl</code>，把构建号跟上面比；vCenter 托管的环境也可以在每台主机的 Summary 页看构建号，不用逐台登。</p>
+                        <p><strong>但打补丁不解决这条的真正问题。</strong>它讲的是"什么没有被写进去"，所以没法对"一次没被记录的操作"告警。可行的检测只有三条，全是间接的：<strong>把 ESX 日志送出去</strong>（<code>esxcli system syslog config get</code> 看 <code>Syslog.global.logHost</code>，为空就意味着日志留在本地，可以被轮转掉、也可以丢）；<strong>对"日志配置被改"告警</strong>（syslog 目标被清空、被禁用、远程日志被关掉）；<strong>对"日志流突然停了"告警</strong>（一台平时稳定往外发事件的主机突然安静，本身就是信号）。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这是"评分体系"和"实际价值"脱节的教科书案例</strong>。2.7 分的东西成了长期驻留行动的钥匙，说明用 CVSS 单一维度排优先级会漏掉一整类"掩护型"漏洞。</p>
+                        <p>第二，<strong>虚拟化层是共享控制点</strong>。一台 ESX 上跑着几十台虚拟机，管理员权限的影响可以横跨看起来毫无关系的业务系统。这一层的日志断了，事后重建入侵路径就少了一整块。</p>
+                        <p>第三，<strong>已经打过 7 月补丁的也要回头查</strong>。今天的补丁关的是未来的窗口，历史上那些没被记录的操作已经发生了，缺的记录补不回来。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">VOLTA-AUTODOXER：把赃物打包，发给大模型问"这人值多少钱"</h3>
+                    <div class="article-meta">
+                        <span>Cisco Talos 10-31 发布 · 样本首见 10-11 · 由 CAIRN 框架发现</span>
+                        <span class="cvss-score">默认 claude-opus-4.6 · 温度 0.2 · 三级模型降级 · 无自有基础设施</span>
+                    </div>
+                    <div class="article-body">
+                        <p>先说这条最扎眼的一句，来自 Talos 研究者 Ryan Fetterman：<strong>"它的提示词写得很小心，没有明说任何恶意的东西。"</strong></p>
+                        <p>VOLTA-AUTODOXER 是一个会自删除的 Windows 信息窃取器。窃取部分本身很成熟，不新鲜；新鲜的是它偷完之后干的第二件事——<strong>把受害者的档案打包，通过 OpenRouter 发给商业大模型，让对方出一份"目标评估报告"</strong>。</p>
+                        <p><strong>第一层：偷。</strong>浏览器里存的密码、cookie、支付卡（覆盖 Chromium 系、Firefox、Thunderbird）；Outlook 配置；Slack 工作区；Steam 与 Battle.net 会话；Discord 与 Telegram 会话；Roblox 账号；Microsoft OAuth 令牌；SSH 与云服务配置（<code>gcloud</code>、<code>OpenVPN</code>、<code>Hide.me</code>）。它还会<strong>直接调 <code>WlanGetProfileList</code> 把所有保存过的 Wi-Fi 密码倒成明文</strong>，并用内嵌的破解器去打加密货币钱包库，结果写成一行 <code>WALLET VAULTS CRACKED</code>。Talos 说明，其中 cookie 与令牌那部分依赖绕过 Chrome 的 <strong>App-Bound Encryption</strong> 的手法。</p>
+                        <p><strong>第二层：用受害者自己的会话做二次侦察。</strong>这一步才是它跟大路货的分界线——翻受害者的 Gmail，找 Amazon、DoorDash、Uber Eats、Grubhub、Walmart、PayPal 的收据，<strong>用来确认家庭住址</strong>；调偷到的 Uber Eats 与 DoorDash 会话拉订单历史；用 Discord 令牌补全账号资料；拿公开的交易数据站点给 Roblox 库存估值。Talos 那句话写得很冷静：<strong>你的外卖订单历史现在是一项负债。</strong></p>
+                        <p><strong>第三层：交给大模型。</strong>所有东西拼成一份 <code>Identity_Report.txt</code>——地理位置与住址、雇主与雇主域名、推断出的出生年、卡号后四位、Slack 工作区、文档作者元数据、iPhone 备份迹象、Roblox 账户现值——序列化成 JSON，POST 到 OpenRouter 的对话端点。system prompt 要求模型扮演<strong>"取证情报分析员，根据结构化证据包起草一份目标评估"</strong>，约 240 词，带项目符号和编号列表。</p>
+                        <table class="affected-table">
+                            <tr><th>输出章节</th><th>要求的内容</th></tr>
+                            <tr><td>执行摘要 与 主体标识</td><td>这个人是谁、可佐证的事实、他做什么</td></tr>
+                            <tr><td class="risk-high">WHAT THEY RE WORTH</td><td class="risk-high">把财物按低、中、高三个档位排序，指出先从哪里下手</td></tr>
+                            <tr><td>THEIR OPSEC</td><td>安全实践评估，含密码卫生与 Wi-Fi 密码是否等于姓氏这类交叉判断</td></tr>
+                            <tr><td>最佳猜测 与 未确立项</td><td>把推断与事实分开写，证据注记要能追溯</td></tr>
+                        </table>
+                        <p>结果存成 <code>AI_Analysis.txt</code>，和原始数据一起打进 <code>volta_dox.zip</code> 外带。</p>
+                        <p><strong>模型侧的工程设计得很直白。</strong>默认 <code>anthropic/claude-opus-4.6</code>，温度硬编码 <strong>0.2</strong>（要稳定、可复现的结构化输出）；一条<strong>拒答检测加级联降级</strong>链：一旦返回里出现拒答措辞，就自动降到 Moonshot AI 的 <strong>Kimi K2</strong>，再不行降到 Google 的 <strong>Gemini 2.5 Flash</strong>。Fetterman 的判断是，攻击者<strong>预期第一次请求会被拦</strong>，所以按"逐级往更宽松的模型退"来设计。</p>
+                        <p><strong>没有自有基础设施，这一点最重要。</strong>Talos 观察到的所有端点都在第三方手里。对防守方意味着：<strong>杀软不会因为"某个进程向 OpenRouter 发了一个 HTTPS 请求"而报警</strong>，那是一条完全正常的 API 调用。</p>
+                        <p><strong>边界要写清楚：</strong>Talos <strong>没有追踪这个变种在野的实际使用</strong>；AI 那一步是<strong>可选的</strong>，去掉它木马照样偷、照样外带（Fetterman 原话是"AI 调用属于额外加成"）；PE 时间戳 8 月 17 日，样本首见于 10 月 11 日。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这是 LLM 第一次在犯罪链条里当"分析员"，而不是写代码或者写钓鱼邮件的助手</strong>。偷数据这件事早就是白菜价，贵的是判断哪个受害者值得投入——现在这一步被自动化了。</p>
+                        <p>第二，<strong>"模型拒答"被当成工程问题解决了</strong>。降级链的存在说明攻击者已经在按产品思维做容错，模型侧的安全对齐被当成一个需要绕过的可用性缺陷。</p>
+                        <p>第三，<strong>数据外流的形态变了</strong>。以前是"把 500MB 压缩包传到网盘，运营商和 DLP 看流量"，现在是"先在你机器上把 500MB 分析成 5KB 结论，再只带走结论"。只在出口做大流量检测的思路，对这一步是无效的。</p>
+                        <div class="attack-flow">
+                            <div class="flow-step">偷凭据 令牌 钱包<br/>与全部 Wi-Fi 密码</div>
+                            <div class="flow-step critical">用受害者的会话<br/>翻收据确认住址</div>
+                            <div class="flow-step">拼成身份档案<br/>含住址与资产清单</div>
+                            <div class="flow-step critical">POST 给大模型<br/>拒答就降级到下一家</div>
+                            <div class="flow-step critical">结论与原始数据<br/>一起打包外带</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">扑克辅助软件：签名是真的，签名那台机器早被人控着</h3>
+                    <div class="article-meta">
+                        <span>WolfSec 9-29 公开 · WIRED 10-28 报道 · 平台回应陆续</span>
+                        <span class="cvss-score">指控损失 150 万至 400 万美元 · 估计 1,000 名以上用户收到被改版本 · 三家平台处置不同</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条的思路跟大多数供应链攻击反过来：<strong>它不打扑克平台的服务器，它打玩家自己的电脑。</strong></p>
+                        <p><strong>两条分发路径，都走了"正常渠道"。</strong>第一条是 <strong>Jurojin 的更新系统被控</strong>：攻击者通过正常的自动更新，把远控组件 <strong>MeshAgent</strong> 送给既有用户。Jurojin 自己的安全公告承认，<strong>2025 年 6 月到 2026 年 1 月</strong>之间它间歇性替换了发给特定用户群的更新包，其中一些带远控工具，2026-01-28 之后没有再往服务器上传东西。</p>
+                        <p>第二条更绕：<strong>IntuitiveTables 的开发者测试机上装着 Jurojin</strong>，那台机器先被这条更新感染；攻击者用这个 agent，在开发者<strong>签代码签名证书之前</strong>，往新构建里加了恶意代码。签完名的版本被发到官网当正式下载，<strong>每个装它的人都装了个后门，而且签名校验一定通过</strong>。两家都是"标准更新通道加官方发布"，所以用户和杀软都没发现异常。</p>
+                        <p><strong>选择性执行让它更难被抓。</strong>改过的 IntuitiveTables 行为跟原版一模一样，只多做一件事：读玩家文件里的用户名，跟从攻击者基础设施下载的硬编码名单比对。<strong>在名单上，就下载后续恶意文件；不在，就完全正常。</strong>这也意味着随便找一台机器测一下，看不出问题。</p>
+                        <p><strong>发现过程很讽刺。</strong>玩家 Alex 让一个 <strong>Claude agent</strong> 帮他分析牌局统计，agent 发现 <strong>MeshAgent 正在后台跑</strong>，安装时间是 4 月 24 日、安装者不是他本人，而且这个程序能看屏幕、能控机器。agent 还从图形异常里标出了 <strong>11 次带时间戳的截屏事件</strong>，全都在他打 Americas Cardroom 的时候，其中 <strong>10 次同桌有同一个账号</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>口径</th><th>数字</th><th>含义</th></tr>
+                            <tr><td>分发暴露面</td><td>估计 1,000 名以上用户</td><td>装到了受影响的版本，不等于被定向</td></tr>
+                            <tr><td>定向感染</td><td>硬编码名单上的人</td><td>才会下载后续载荷</td></tr>
+                            <tr><td class="risk-high">已证实的赌资损失</td><td class="risk-high">无</td><td class="risk-high">目前全部是玩家的指控与估算</td></tr>
+                        </table>
+                        <p>损失估算在 <strong>150 万到 400 万美元</strong>之间，涉及 GGPoker、ACR、CoinPoker、ClubWPT Gold 等平台，这些数字<strong>都是指控，未经法庭认定</strong>。三家平台的反应差得很远：<strong>CoinPoker</strong> 2025 年就调查、封号，并退了 10 万多美元；<strong>GGPoker</strong> 禁了第三方工具、加了胜率异常检测；<strong>ACR</strong> 说调查<strong>没有发现比赛结果被操纵</strong>，不退款，但从 9 月 29 日起上线了屏幕保护。Jurojin 自己的口径则窄得多：高度定向、只针对少数高额桌玩家、目的是远程看对手底牌，不是大规模攻击。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>代码签名证明的是"这台机器上编出来的东西没被改过"，它不证明"这台机器是干净的"</strong>。签名发生在构建链的末端，而攻击者在签名之前就进去了。这一条对任何做代码签名合规的团队都成立。</p>
+                        <p>第二，<strong>"官方更新"这条信任链，前提是发布者的终端也干净</strong>。MSP、独立开发者、小团队往往把开发机和测试机混在一起，一台机器同时握有源码、签名证书和更新服务器权限。</p>
+                        <p>第三，<strong>这次是人类半年没看出来、一个 AI agent 看出来的</strong>。它不是在找漏洞，是在对着数据找异常——这类"用模型做日常巡检"的用法，比"用模型打漏洞"更早落地。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-medium">中</span>
+                    <h3 class="article-title">安卓"死亡短信"：补丁发了，只发给 Android 14 到 17</h3>
+                    <div class="article-meta">
+                        <span>5-05 报送 · 10-29 技术披露 · 10-31 PoC 公开</span>
+                        <span class="cvss-score">CVE-2026-58882 · 零点击拒绝服务 · 未列入 10 月公开公告 · Android 12 与 13 无补丁</span>
+                    </div>
+                    <div class="article-body">
+                        <p>零点击的拒绝服务，一条短信就够。研究者 Mark B 走的是 Google 的 Android and Devices 漏洞奖励计划，<strong>5 月 5 日报送，10 月 29 日公开技术细节</strong>，随后放出了能在另一台安卓手机上直接发这条消息的 PoC 工具。</p>
+                        <p><strong>机制只有一次类型转换。</strong>恶意载荷是一条发到 <strong>2948 端口</strong>的数据短信，字节是 <code>01 06 88 80 80 80 00 BE</code>。其中 <code>88 80 80 80 00</code> 是 5 字节的 uintvar，解出来是 <code>0x80000000</code>；Android 把它直接转成有符号 32 位整数，<strong>变成负的 2147483648 加一</strong>；接着拿这个负数去申请字节数组，抛出 <code>NegativeArraySizeException</code>，<strong>电话主线程 <code>com.android.phone</code> 当场死掉</strong>。</p>
+                        <p><strong>为什么受害者完全察觉不到。</strong>走的是数据短信，<strong>不进收件箱、不显示发件号码、没有通知</strong>。每崩一次掉 1 到 2 秒的手机功能，正在进行的通话直接断（断因 <code>DisconnectCause CS_DEATH</code>）。</p>
+                        <p><strong>为什么会从"崩一下"变成"设备不可用"。</strong>未确认的消息会被运营商重发，重发再崩；畸形消息还会留在待处理入站表里，<strong>每次开机重试，开机就崩</strong>。20 条左右足以让设备长时间报废；在 Android 12 上，系统的 RescueParty 大约<strong>每 90 秒</strong>把机器重启进恢复模式，而恢复菜单里那个"清除数据"选项，普通用户多半会点下去。</p>
+                        <p><strong>真正的问题在紧急呼叫。</strong>受影响期间和重启循环里，机器打不出急救电话。这不是"手机卡了"：在澳大利亚通信与媒体管理局的规则下，运营商<strong>有义务封禁无法拨打紧急号码的手机</strong>——Telstra 的说法是通知后 28 天封禁。也就是说，攻击者可以让受害者的手机被运营商停服，直到它被修好。</p>
+                        <p><strong>谷歌的修法跟报告人提的不是一个。</strong>报告人当天就交了补丁：在类型转换前校验长度，负数或超过 PDU 直接拒绝。<strong>谷歌 6 月 15 日的提交换了路线</strong>——把捕获的异常从数组越界放宽到运行时异常，把崩溃吞掉；同时让解码失败时<strong>删掉那条触发消息</strong>，避免重投递或开机再崩。两种做法都能止血，但一个是拦住坏输入，一个是承受坏输入并清理现场。</p>
+                        <table class="affected-table">
+                            <tr><th>项目</th><th>状态</th></tr>
+                            <tr><td>修复版本</td><td>随 2026 年 10 月 Android 安全更新，覆盖 Android 14 至 17</td></tr>
+                            <tr><td class="risk-high">是否列入公开公告</td><td class="risk-high">没有，10 月公开安全公告里查不到这一条</td></tr>
+                            <tr><td class="risk-high">Android 12 与 13</td><td class="risk-high">至今没有补丁，厂商与运营商都没有推送</td></tr>
+                            <tr><td>已复现设备</td><td>Pixel 9（2026 年 4 月固件）、多台三星 Galaxy；Android 12 上出现重启循环</td></tr>
+                        </table>
+                        <p><strong>自救办法需要一台电脑。</strong>在系统启动完成标志变成 1 之后的那个短窗口里，用 ADB 查 <code>content://sms/raw</code> 里 <code>destination_port=134020</code> 的行，临时给 shell 加写入短信的权限，<strong>只删这几行</strong>，再把权限改回去。这招由 GitHub 贡献者 @sakisdog 给出。清 <code>com.android.providers.telephony</code> 是最后手段，会连所有短信、彩信和 APN 设置一起没。</p>
+                        <p><strong>批量检测的信号很明确：</strong><code>com.android.phone</code> 的崩溃日志里出现 <code>WapPushOverSms.decodeWapPdu</code> 的负数数组异常，同时 <code>content://sms/raw</code> 里存在 <code>destination_port=134020</code> 的行。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这是 2011 年那波"死亡短信"的现代版</strong>。当年 Android 2.3 上一个 4 字节短信就能让手机重启，十几年过去，同一个解析器上少一次边界检查，效果一样。</p>
+                        <p>第二，<strong>"补丁存在"和"设备有补丁"是两件事</strong>。这一条连公告都没进，很多企业资产管理平台根本不会把它算进"待修漏洞"，因为它压根没出现在可扫描的清单里。</p>
+                        <p>第三，<strong>PoC 已经开源</strong>，声明仅限授权测试。零点击、不需要交互、能打急救呼叫，这三条叠加起来，它的实际风险不该被"只是拒绝服务"这个说法压低。</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-section">
+                <div class="quick-item">
+                    <h4>7. Amadeus：一个系统账号，六家航司，三年窗口</h4>
+                    <p>日本航空 10 月 23 日收到 Amadeus 通知，10 月 28 日披露：其旅客服务系统遭到未授权访问，<strong>访问区间是 2023 年 8 月 10 日至 2026 年 9 月 23 日</strong>。按各家公告汇总：日本航空与日本越洋航空约 <strong>92,000 人</strong>（其中约 2,000 人还含邮箱、电话、护照号、国籍、常旅客号、机票与座位号）；全日空约 <strong>37,800 人</strong>（约 36,100 基础加约 1,700 扩展）；国泰航空约 <strong>53,000 笔</strong>预订（10 月 28 日收到通知）；Star Flyer 经全日空渠道；大韩航空与韩亚航空确认受影响，未公布最终数字。合计已超 <strong>18 万条</strong>。</p>
+                    <p>机制不是攻破航司：<strong>用的是分配给各家航司系统账号的登录凭据</strong>去查订座数据，国泰的说法是 Amadeus 已重置该密码并加强监控，两家韩国航司都强调自己的系统没被入侵。Amadeus 曾在 10 月 1 日说明，9 月 21 日发现"旅行预订展示环境"里的一处漏洞，当时称不涉及支付数据、没有勒索软件迹象——事后看，日本航空的确认说明它被恶意利用了。<strong>必须分清的一点</strong>：那个三年区间是"检测到的访问痕迹所在的时间范围"，<strong>不等于攻击者连续控制了这套系统三年</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. 索尼 So-net：258 万条会员记录，5.4 万个邮箱密码</h4>
+                    <p>Sony Network Communications 的披露时间线很干净：<strong>10 月 19 日被入侵，10 月 23 日确认并下线服务器、切断攻击源，10 月 24 日查清外泄字段与数量，10 月 27 日公告、重置密码、报日本个人信息保护委员会</strong>。<strong>2,585,481 条</strong> 等于 So-net 的 2,141,986 条（1,869,771 现役加 272,215 于 2026 年 3 月之后退订）加上 plala 的 443,495 条。字段是姓名、电话、邮箱、用户 ID、出生日期、性别、上网连接标识。另外 <strong>54,401 个邮箱账号的地址与密码同时泄露</strong>（免费邮箱 24,655、A-Box 17,672、VAIO Mail 7,005、PostPet 5,069，已强制重置），<strong>16 条银行账户记录</strong>，7 条密码重置通知。主账号密码与信用卡不在其中，NURO 未受影响，2026 年 2 月底前退订的人不在范围内。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 战马工作室：官方只说"未授权访问"，勒索是内幕爆料</h4>
+                    <p>《天国：拯救》系列与一款《指环王》新作的开发商 Warhorse Studios，10 月 27 日首次确认遭网络攻击，措辞是"未授权访问公司系统以及公司数据"，首席执行官称这是"一起严重事件"，捷克警方已介入。10 月 31 日的更新更进一步：确认遭到未授权访问，<strong>影响了部分内部系统与服务的访问</strong>，"调查进行中，直接受影响的人会被逐一通知"。<strong>官方没有说被拿走什么、有没有涉及玩家数据、有没有影响开发排期。</strong>论坛与社区传出的内幕说法是勒索软件、所有电脑与内部系统停用以防扩散、开发基本停摆、正在被索要赎金——<strong>这些全部未经证实</strong>，工作室明确表示现阶段不接受采访。放进速览只为观察节奏，不当事实。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Linux 内核 98432 的补丁空窗，与 Xray 的应急动作</h4>
+                    <p>本刊 10-29 已详写的这枚内核 TCP 洞，到 10 月 31 日情况没有实质变化：<strong>Ubuntu 四个在支持版本全部仍是处理中，旧 LTS 直接标脆弱；RHEL 8、9、10 与 OpenShift 4 标"受影响，延期到后续更新"</strong>。已修复的是 Debian、Oracle UEK、Amazon Linux、SUSE 的对应内核，以及自行编译时的 5.10.272、6.1.190、6.12.113、6.18.56 等分支。应用侧能做的只有"别走那条路径"：<strong>Xray-core 在 10 月 31 日发布 v26.10.31，默认关闭 MPTCP，同时撤回上一版 v26.10.29</strong>；发布说明把"升级 Xray"和"升级内核"写成两件独立的事。这件事的分量在于，Go 1.24 起在支持的 Linux 上<strong>默认对监听 socket 启用 MPTCP</strong>，所以 Go 写的服务风险最高，而应用层唯一能做的是把这条路关掉，真正的修复还得等内核。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "扑克供应链 MeshAgent": [0.92, 0.76]
+    "ESX 41709 日志盲区": [0.94, 0.66]
+    "Amadeus 六家航司": [0.89, 0.60]
+    "索尼 So-net 258 万条": [0.87, 0.57]
+    "Linux 98432 补丁空窗": [0.66, 0.86]
+    "ChatGPT 分享链接接管": [0.15, 0.84]
+    "GoAhead 撤销检查失效": [0.31, 0.79]
+    "VOLTA 大模型估值": [0.43, 0.71]
+    "安卓死亡短信": [0.27, 0.54]
+    "战马工作室": [0.68, 0.49]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "供应链与更新通道": 26
+    "数据泄露与第三方": 24
+    "边界与嵌入式设备": 20
+    "AI 能力边界与滥用": 18
+    "移动与终端": 7
+    "取证与可见性": 5
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月27日至11月1日
+    10月27日 : 索尼 So-net 公告 258 万条记录外泄
+             : 战马工作室首次确认遭网络攻击
+             : GoAhead 多个 CVE 编号尚未进入 NVD
+    10月28日 : CISA 把 ESX 41709 列入 KEV
+             : CrowdStrike 行业报告牵出 ESX 日志盲区
+             : Parameter 公开 ChatGPT 分享链接的完整链条
+             : 国泰航空确认约五万三千笔预订受影响
+    10月29日 : 安卓死亡短信公开技术细节
+             : 联邦对 GitLab 97229 的死线进入倒计时
+    10月30日 : CISA 把 Ivanti 两枚列入 KEV
+             : VOLTA 报告进入公开视野
+    10月31日 : Talos 发布 VOLTA 完整分析
+             : Xray-core 发布新版本并撤回上一版
+             : 安卓死亡短信 PoC 在 GitHub 公开
+    11月1日 : GitLab 97229 联邦死线到期
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News（10-31）— 三步越界、MathLive 监听器、srcdoc frame 继承身份、YouTube 放行、10-18 报送与 8 天后修复、P2 升 P1、10-26 两个前端版本拒绝、10-28 公开、5,000 美元赏金、无在野使用</span>
+                        <a href="https://thehackernews.com/2026/10/a-shared-chatgpt-link-could-run.html">TNH · chatgpt link</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Parameter Labs（10-28）— 原始研究说明，含"可以代表受害者执行任何操作"的表述与两条跨 frame 消息的具体作用</span>
+                        <a href="https://www.parameter.ai/labs/we-found-a-gap-at-openai">parameter · labs</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">博客园 AI 前线（10-31）— 中文全链路复盘：辅助函数只标记可信未消毒、回调内容拼接、自动预览约 4.5 秒触发、限时重试处理数学库加载竞态</span>
+                        <a href="https://www.cnblogs.com/aifrontline/p/23510919">cnblogs · 复盘</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">secnews.in（10-27）— CVE-2026-115881 的五项成立条件、FoxIO 在 6.1.0 加 OpenSSL 3.6.2 上的验证、Mbed TLS 后端不受影响、第二枚弱密钥交换值与第三枚链长绕过、6.1.1 共修 11 个公告含 3 个严重、Blowfish 格式登录绕过、后端在固件编译期定死、JA4Scan 指纹</span>
+                        <a href="https://secnews.in/article/article-goahead-tls-revocation-not-enforced-cve-2026-115881">secnews · goahead</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityWeek（10-28）— GoAhead 的部署规模与三项 TLS 问题的横向对照</span>
+                        <a href="https://www.securityweek.com/tls-flaws-found-in-goahead-web-server-used-in-hundreds-of-millions-of-devices/">securityweek · goahead</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 清单（catalogVersion 2026.10.30）— CVE-2026-41709 的加录日期 10-28、联邦期限 11-11、勒索使用情况未知、取证排查标记为否</span>
+                        <a href="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json">CISA · KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense — CWE-778 判定、CVSS 向量、VMSA-2026-0006 的 7-29 发布与 8-19 更新、CrowdStrike 报告对零日使用的描述、无 workaround</span>
+                        <a href="https://brandefense.io/knowledge-hub/vulnerabilities/cve-2026-41709">brandefense · 41709</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ciphers Security — 完整修复构建矩阵、两条自查命令、日志旁路的三条检测思路、ESX 7.0 在该 CVE 矩阵中无条目</span>
+                        <a href="https://cipherssecurity.com/vmware-esx-cve-2026-41709-logging">ciphers · 41709</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rescana — 与 vCenter 记录、外部 syslog、网络数据交叉验证的建议，以及"打补丁不会让已被入侵主机上的本地日志变可信"这一判断</span>
+                        <a href="https://www.rescana.com/post/vmware-esx-cve-2026-41709-insufficient-logging-kev">rescana · 41709</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">explainx.ai（10-31）— Talos 报告要点：默认模型、降级链、温度 0.2、打包方式、样本首见 10-11 与 PE 时间戳 8-17、无自有基础设施</span>
+                        <a href="https://explainx.ai/blog/volta-infostealer-llm-ranks-victims-worth-talos-openrouter-what-to-do-2026">explainx · volta</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WIRED / Kernel Panic（10-31）— Ryan Fetterman 两句原话、CAIRN 框架的用途、Talos 未追踪在野使用、240 词提示词的构造</span>
+                        <a href="https://nowletus.com/news/spooky-new-infostealer-malware-uses-ai-to-autodox-victims-now10754.html">wired · volta</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">F5 Poker（10-29）— Claude agent 发现远控组件的经过、11 次截屏事件与 10 次同桌同一账号、Jurojin 公告的替换窗口、两家的清理工具、运营商侧的屏幕保护</span>
+                        <a href="https://f5poker.com/poker-news/2026/10/29/claude-finds-meshagent-on-acr-player-pc">f5poker · 事件</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Gadget Review（10-30）— 三家平台的不同处置：一家退款十万余美元、一家禁第三方工具并做胜率异常检测、一家称未发现比赛结果被操纵且不退款；损失为指控口径</span>
+                        <a href="https://www.gadgetreview.com/a-hacker-allegedly-stole-up-to-4-million-from-poker-players-by-secretly-watching-their-cards">gadgetreview · 平台回应</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MezoSoft — 三个数字层次的区分（分发暴露、定向感染、已证实损失），以及开发商自述的"高度定向、仅少数高额桌玩家"窄口径</span>
+                        <a href="https://www.mezosoft.net/2026/10/blog-post.html">mezosoft · 口径</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Random Chaos（10-29）— 字节级细节、端口与数据库字段、RescueParty 周期、断因常量、ADB 清除步骤、紧急呼叫封禁规则、谷歌提交的两个改动</span>
+                        <a href="https://randomchaos.us/articles/one-wap-push-sms-crashes-android-below-the-october-2026-patch">randomchaos · sms</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GBHackers（10-31）— 5-05 报送、10-29 披露、Pixel 9 与三星机型的复现范围、修复未进 10 月公开公告</span>
+                        <a href="https://gbhackers.com/new-zero-click-android-vulnerability/">gbhackers · sms</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（10-31）— PoC 公开与"强烈建议安装最新安全更新"的处置建议、ADB 清除的可用性说明</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones/">bleepingcomputer · sms</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（10-28）— 日本航空约 9.2 万人、Amadeus 10-23 通知、访问区间、字段分层、全日空与两家韩国航司的确认</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/japan-airlines-suffers-third-party-data-breach-exposing-passenger-info/">bleepingcomputer · JAL</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BreachNews — 国泰航空约 53,000 笔、系统账号凭据被使用、Amadeus 重置密码并加监控、各家数字汇总</span>
+                        <a href="https://breachnews.com/breaches/amadeus-breach-exposes-booking-data-of-jal-ana-and-cathay-pacific-passengers">breachnews · amadeus</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iThome（10-28）— So-net 与 plala 的分项数字、Sony 生命保险另一起 38.5 万笔并与本次为独立事件</span>
+                        <a href="https://ithome.com.tw/news/180057">ithome · sony</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PrivacyOn（10-27）— So-net 时间线四步、258 万条的构成、邮箱密码的四项服务拆分、16 条银行记录、退订用户的时间边界</span>
+                        <a href="https://www.privacyon.com/blog/what-to-do-after-the-sony-so-net-data-breach-2026">privacyon · sony</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GameRiv（10-31）— 战马工作室 10-27 首次公告与 10-31 更新的原话、"直接受影响的人会被逐一通知"</span>
+                        <a href="https://gameriv.com/anyone-affected-directly-will-be-notified-warhorse-says-after-cyberattack">gameriv · warhorse</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iXBT.games（10-31）— 内幕说法的来源与边界（勒索软件、全员停用电脑、开发停摆、被索赎金，均未经证实）</span>
+                        <a href="https://ixbt.games/en/news/2026/10/31/razrabotka-novoi-kingdom-come-ostanovlena-posle-xakerskoi-ataki-i-warhorse-santaziruiut-insaid.html">ixbt · warhorse</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AI IDE List（11-01）— Xray 新版本默认关闭 MPTCP、撤回上一版、Go 1.24 起默认启用 MPTCP 的解释、各发行版补丁状态与"厂商评分不一致"的横向对照</span>
+                        <a href="https://aiidelist.com/blog/cve-2026-98432-xray-go-mptcp-linux-fix">aiidelist · 98432</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注两边口径；勒索团伙声称与厂商对受害数量的自述均未经独立验证。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年11月1日
+            </p>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
