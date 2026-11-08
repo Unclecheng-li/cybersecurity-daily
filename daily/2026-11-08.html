@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月8日（第211期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月8日 星期日</span>
+            <span class="edition-number">第 211 期 | 总第 211 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>镜像里那个目录只是符号链接 · 一次公告就塞进两百四十七条 · 点了别再问了密码就原样存盘 · 打开文件夹那刻它就开始运行 · 数据堆着不删才成了数据宝库 · 只核自己有没有权限没核它归谁
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">先动作，后验证</h2>
+                <p class="sub-headline">Incus 拿到镜像哈希之后，先把响应体写进目标文件，再去核这个哈希对不对，写文件那一步用的是攻击者从 HTTP 响应头里直接给的字符串，连"它是不是 64 位十六进制"都没问。Penpot 认真核了调用者对自己项目的编辑权，没核那个 file-id 是谁的。Claude Code 把你点过"别再问了"的那条命令原样存进项目里的一个 JSON，密码就在里面。JFrog 那 42 个仓库把触发点从"运行代码"挪到了"打开文件夹"。IBM 一次给出 247 条编号，单条记录里连修复版本都不写，把"先修哪个"交回给读者。国家安全部今天那篇文章说的是同一件事：数据先无差别采、先长期留，安全是后面才想起来的事。六个地方都不是没做检查，是检查排在了动作后面。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-high">PoC 公开</span>
+                    <h3 class="article-title">镜像里的 rootfs 是一个指向 / 的符号链接，主机就交出去了</h3>
+                    <div class="article-meta">
+                        <span>08-21 NVD 收录 · 11-06 GitHub 一次性公开六份公告含 PoC · 修复已在 7 月落地</span>
+                        <span class="cvss-score">CVE-2026-48769 / 48749 等六条 · CVSS 3.1 9.9 · CWE-20 与 CWE-73 · 不在 KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 6 日，GitHub 上一次性公开了六份针对 <strong>Canonical LXD</strong> 与 <strong>Linux Containers Incus</strong> 的安全公告，全部给 CVSS 3.1 <strong>9.9</strong>，向量统一是 <code>AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H</code>。这个向量里最该看的是 <code>S:C</code>——范围变更：容器管理层里的一个缺陷，最终打到的是它下面那台主机。六份都不在 KEV 里，CISA 给它们附的 SSVC 决策记录只把其中三条标为 <code>poc</code>。</p>
+                        <p>时间线本身就值得注意：NVD 在 <strong>8 月 21 日</strong>就收录了这批 CVE 记录，而细节与可用 PoC 到 <strong>11 月 6 日</strong>才一起放出来。补丁其实早就有——LXD 的 <strong>5.0.7 LTS 与 5.21.5 LTS 在 7 月 1 日</strong>发布，Incus 修在 <strong>7.2.0</strong>。三个月里风险等级没变，可利用性变了。</p>
+                        <p><strong>CVE-2026-48769 把"顺序反了"写在了代码里。</strong>Incus 支持 <code>source.type=url</code> 的镜像导入，远端服务器在 <code>HEAD</code> 响应里用 <code>Incus-Image-Hash</code> 头告诉客户端"这个镜像的 SHA-256 应该是多少"。守护进程拿到这个字符串之后，<strong>没有检查它是不是合法的 64 位十六进制</strong>，直接当成指纹变量 <code>fp</code>，用 <code>filepath.Join(destDir, fp)</code> 拼路径。Go 的 <code>filepath.Join</code> 会调 <code>filepath.Clean</code>，把 <code>..</code> 段解析掉——于是值 <code>../../../../etc/cron.d/payload</code> 就拼成了主机上的 <code>/etc/cron.d/payload</code>。</p>
+                        <p>路径拼好，<code>os.Create()</code> 立刻打开文件，开始把 <code>GET</code> 的响应体流式写进去。<strong>哈希校验发生在整个响应流结束之后。</strong>攻击者只要让自己的服务器把响应挂住不关，清理函数就一直不执行。PoC 里挂的是 <strong>90 秒</strong>，这个数字是算过的：cron 每 60 秒扫一次 <code>/etc/cron.d/</code>，挂 90 秒保证在扫描窗口内被读到并执行。等连接关掉，守护进程算完哈希发现对不上、去 <code>unlink</code> 的时候，命令已经以 root 跑完了。</p>
+                        <p><strong>CVE-2026-48749 走的另一条路，代价更低</strong>，不需要守护进程能出网，只要能把镜像包导进来。构造方式很朴素：先做一个合法镜像目录（最小的 <code>metadata.yaml</code> 加一个空的 <code>rootfs/</code>）打成 tar，然后删掉本地 <code>rootfs/</code>、创建一个指向 <code>/</code> 的同名符号链接，用 <code>tar --append</code> 追加进同一个包——tar 允许同名成员，解包时后一条覆盖前一条。导入、<code>incus init</code> 建一个<strong>不启动</strong>的实例，然后对这台停着的容器做文件操作，特权辅助程序 <code>forkfile</code> 解析 <code>rootfs</code> 时不做限制，直接 chroot 进主机的 <code>/</code>。<code>file pull</code> 读 <code>/etc/shadow</code>，<code>file push</code> 写 <code>/etc/crontab</code> 或 <code>/root/.ssh/authorized_keys</code>，都是 root。</p>
+                        <p>修复也是两段式：对 <code>rootfs</code> 与 <code>templates</code> 做 <code>os.Lstat()</code> 检查、符号链接直接拒，再改用 Go 的 <code>os.OpenRoot</code> / <code>os.Root</code>（底层是 Linux <code>openat2</code> 的 <code>RESOLVE_BENEATH</code>）把后续操作关在实例目录里，顺带把 TOCTOU 也堵了。受影响区间：<strong>LXD <code>&lt; 4.0.11</code> / <code>&lt; 5.0.7</code> / <code>&lt; 5.21.5</code> / <code>&lt; 6.9.0</code>，Incus <code>&lt; 7.2.0</code></strong>。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>受影响人群不是"用旧版本的人"，是"用 LTS 的人"。</strong>LXD 5.0 LTS 与 5.21 LTS 的用户天然不升级，而 5.0.7 与 5.21.5 是 7 月才发的点版本。snap 装的、发行版仓库自带的、把代码 vendor 进自己项目里的三类部署，得分别核。</li>
+                            <li><strong>检测基本没法从主机侧做。</strong>守护进程的日志会显示导入成功或恢复成功，和一次正常操作完全一样——它在动手那一刻之前都相信内容是真的。有用的工作得往前挪：谁能往项目里加镜像源、谁能推快照，这个名单要收窄。</li>
+                            <li><strong>"客户机对象被信任得太早"这个模式今年在 hypervisor 逃逸上反复出现。</strong>只要产品线是"用别人的镜像、快照、模板来建东西"，就值得按这个模式自查一遍：先验后用的顺序有没有写反。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">镜像头返回 Incus-Image-Hash</span>
+                        <span class="flow-step critical">值未校验是否为 64 位十六进制</span>
+                        <span class="flow-step critical">filepath.Join 解析出镜像目录</span>
+                        <span class="flow-step critical">os.Create 打开主机文件并写入</span>
+                        <span class="flow-step">攻击者挂住连接 90 秒</span>
+                        <span class="flow-step critical">cron 60 秒窗口内执行</span>
+                        <span class="flow-step">连接关闭才校验哈希</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">未认证 RCE</span>
+                    <h3 class="article-title">一次公告 247 条编号，单条记录里不写修复版本</h3>
+                    <div class="article-meta">
+                        <span>11-07 两份 IBM 公告 · NVD 同日 05:18 UTC 收录 · 修复 10.0.8.13 / 12.1.1.3</span>
+                        <span class="cvss-score">CVE-2026-17408 等 · 最高 9.9 · 47 条 Critical · 均不在 KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 7 日，IBM 发布两份 IBM API Connect 安全公告（支持页 <code>node/7295635</code> 与 <code>node/7295637</code>）。其中<strong>一份单独就列了 247 条 CVE 条目</strong>，第二份再加一批。到当天为止，NVD 里描述为 IBM API Connect 的记录已超过 200 条，<strong>47 条 Critical</strong>，最高 <strong>9.9</strong>。受影响版本 <code>10.0.8.0</code> 至 <code>10.0.8.12</code>、<code>12.1.0.0</code> 至 <code>12.1.1.2</code>，修复在 <strong>10.0.8.13</strong> 或 <strong>12.1.1.3</strong>。</p>
+                        <p>整批里唯一一条"不用先登录还给 RCE"的是 <strong>CVE-2026-17408，9.8</strong>，向量 <code>AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</code>——<code>PR:N</code>，不需要任何账号。其余高分条目基本是一张"多租户 API 管理平台该有的所有坑"清单：路径遍历导致 RCE（<strong>17147</strong>，9.9）、SQL 注入（<strong>17132 / 17134</strong>，9.9）、LDAP 注入到跨租户管理员访问（<strong>17392</strong>，9.9）、用户可设置本该由系统控制的字段（<strong>17117</strong>，9.9）、租户隔离失效（<strong>17049 / 17066</strong>，9.9 / 9.1）、混淆代理（<strong>16920</strong>，9.9）、XXE（<strong>16884</strong>，9.9）、自定义模块上传校验不足可跨租户执行（<strong>17150</strong>，9.9）、SSRF 出网限制可绕（<strong>17131 / 16918</strong>，9.3）。</p>
+                        <p>一个容易被工具链吃掉的问题是：<strong>单条 CVE 记录里没有修复版本。</strong>查具体的某一条（例如 17392），NVD 记录写的是"该公告未指明修复版本"，修复信息只在 IBM 那两份公告的汇总页里，统一指向 <code>10.0.8.13</code> / <code>12.1.1.3</code>。按 CVE 逐条跟踪的做法，在这一批上会集体失明。</p>
+                        <p>EPSS 也帮不上忙。抽查几条都在 <strong>0.6% 上下</strong>（约 52 百分位），都不在 KEV，没有公开 PoC。低 EPSS 在批量披露场景下解释力很弱——它衡量的是历史同类漏洞的利用频率，不是这 247 条里哪一条明天会被人捡起来。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>247 不是一个产品有 247 个洞，是把历史欠账一次结了。</strong>里面大量是长期存在的代码质量问题——注入、路径遍历、属性控制、租户隔离——过去没集中报。批量披露的处理成本和单条完全不同：拿到一张 247 行的表，实际上无法逐条评估。</li>
+                            <li><strong>这种平台的位置决定了它必须优先。</strong>API 网关往下连后端、往上对公网、中间握着所有租户的凭据与路由。一台被打穿，等于拿到一张内部服务地图。用它做对外 API 开放平台的，<code>10.0.8.13</code> / <code>12.1.1.3</code> 该当硬性截止时间。</li>
+                            <li><strong>实操上别试图读完全部 247 条。</strong>按 <code>PR:N</code>（不需要凭据）先筛一遍，再把 <code>S:C</code> 与租户隔离相关的挑出来，剩下的按季度排。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">公网暴露的 API 管理面</span>
+                        <span class="flow-step critical">CVE-2026-17408 未认证 RCE</span>
+                        <span class="flow-step">或已认证越权打穿租户隔离</span>
+                        <span class="flow-step critical">拿到后端服务与租户凭据</span>
+                        <span class="flow-step">横向到所有接入方</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">已在公开仓库</span>
+                    <h3 class="article-title">点了"别再问了"，密码就被原样存进项目里那个 JSON</h3>
+                    <div class="article-meta">
+                        <span>11-05 Apiiro 研究 · 104,185 份公开副本 · 63 家组织 · 1 家确认密钥仍然有效</span>
+                        <span class="cvss-score">2,539 个密钥 / 1,994 个仓库 · 无 CVE · 产品设计行为</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Claude Code 执行 shell 命令前会请求批准。选 <strong>"Yes, and don't ask again"</strong> 时，它把<strong>那条命令的完整字符串</strong>——包含里面的密码、令牌、连接串——作为 allow 规则写进项目目录下的 <code>.claude/settings.local.json</code>。它不清洗参数，因为规则本身就是命令原文。</p>
+                        <p>它确实试过把这个文件留在本机：在 git 仓库里创建时会把它加进<strong>用户级全局 git ignore</strong>。但这层保护漏掉三种场景——文件夹先建、后来才变成仓库；别人克隆到另一台机器；文件已经被提交过。<strong>项目自己的 <code>.gitignore</code> 里从来没有这条规则</strong>，保护不跟着项目走。更麻烦的是 <strong>Claude 自己会提交它</strong>：在追踪到的 1,105 个含真实密钥的仓库里，有 <strong>539 个</strong>是"一次 Claude 作为共同作者的提交改动了这个文件"，提交记录点名了从 Sonnet 4.5 到 Opus 5.5 的每一代模型。</p>
+                        <p>规模：扫到 <strong>104,185 份</strong>公开副本（分布在 103,617 个公开仓库），其中 <strong>1,122 份</strong>至少含一个真实密钥，去重后 <strong>1,379 个</strong>。再加上 git 历史、团队共享的 <code>.claude/settings.json</code>、agent 聊天记录，总数是 <strong>2,539 个密钥、1,994 个仓库、63 家组织</strong>。历史版本里已经不在当前文件中的密钥有 <strong>734 个</strong>，74 个仓库的凭据被 fork 复制到了 <strong>211 个副本</strong>。</p>
+                        <p>泄露的构成：<strong>379 个数据库密码</strong>、<strong>122 个 Supabase service-role 密钥</strong>、103 个 Supabase 账号令牌、<strong>43 条 SSH 凭据</strong>（包括直接写在 <code>sshpass</code> 命令里的 root 登录）、<strong>42 个</strong> GitHub / GitLab / npm 令牌、<strong>23 个 AWS 密钥</strong>、6 个私钥。Apiiro 特意点了两个案例：一家数据库厂商自己的<strong>管理员级云密钥</strong>，和一个<strong>病历数据库的 owner 密码</strong>。</p>
+                        <p>最有价值的是漏报数据。同一批 1,122 个文件：<strong>Gitleaks 命中 564 个，TruffleHog 命中 643 个，两个都没命中的有 215 个</strong>。原因很具体——以 <code>PGPASSWORD=</code>、<code>sshpass -p</code>、<code>mysql -p</code> 形式出现的密码<strong>没有可识别的厂商前缀</strong>。结构化密钥检测和命令行上下文里的凭据识别，是两种能力。还有一层反讽：Shai-Hulud npm 蠕虫在受害机器上跑的就是 TruffleHog，那个能命中 643 个文件的工具同时也是攻击者的批量收割工具。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>这是"便利性设计"直接生成了凭据泄露管道。</strong>不是开发者手滑粘贴，是产品为了少问几次把命令原文落盘。审批记忆是刚需，但实现方式有多种：存命令模式而不是完整命令、存到不可提交的位置、自动写进项目 <code>.gitignore</code>。Apiiro 对比了 16 个编码 agent，Claude Code 是唯一一个<strong>默认</strong>把完整已批准命令持久化到项目文件的。</li>
+                            <li><strong>响应顺序必须是先轮换、再清理。</strong>删当前文件不影响历史里那 734 个旧密钥，也不影响 211 个 fork 里的副本。先轮换，再 <code>git rm --cached</code>、加 <code>.gitignore</code>、<code>git filter-repo</code> 清历史、请 GitHub 清缓存视图、通知能联系上的 fork 所有者。</li>
+                            <li><strong><code>.claude/</code> 这类目录应当按"存密钥的目录"对待。</strong>把 agent 配置目录加进全组织的 <code>.gitignore</code> 模板，并把扫描扩展到"命令里的密码"这种形态——215 个两个主流工具都看不见的文件，说明现有覆盖率在这类资产上是空的。</li>
+                            <li><strong>Anthropic 的回应是缺失的。</strong>报道提到 2025 年 8 月的一份 bug 报告被自动化机器人以 <code>not planned</code> 关闭，随后四份相关报告也被机器人无回应关闭；截至报道发布未公开回应。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">让 agent 跑一条带密码的命令</span>
+                        <span class="flow-step critical">选"别再问了"</span>
+                        <span class="flow-step critical">命令原文写进 settings.local.json</span>
+                        <span class="flow-step critical">文件被提交或被 clone 带走</span>
+                        <span class="flow-step">扫描器因无厂商前缀而漏报</span>
+                        <span class="flow-step critical">凭据进公开仓库被批量收割</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">供应链</span>
+                    <h3 class="article-title">42 个仓库被同一个蠕虫拿下，13MB 封装器让搜索和 API 都看不见它</h3>
+                    <div class="article-meta">
+                        <span>11-06 JFrog 研究成稿转述 · 触发点从"运行代码"挪到"打开文件夹"</span>
+                        <span class="cvss-score">testmetest 蠕虫 · Bun 1.2.18 · 四个常用检测手段同时失效</span>
+                    </div>
+                    <div class="article-body">
+                        <p>JFrog 定位到 <strong>42 个被接管的 GitHub 仓库</strong>，作用是给同名 npm 包做"掩护项目来源"——仓库是真的、提交历史是真的、README 是真的，只有里面被塞了东西。塞进去的清单本身就值得抄下来做自查项：<code>.github/init.js</code>（Actions 侧发布器）、<code>.claude/settings.json</code>（<strong>SessionStart 钩子</strong>）、<code>.gemini/settings.json</code>、<code>.cursor/mcp.json</code> 与 <code>.cursor/rules/setup.mdc</code>、<code>.vscode/tasks.json</code>（<strong>文件夹打开任务</strong>）、异常的 <code>composer.json</code> 与 <code>Makefile</code> 钩子、带 <code>skip-checks:true</code> 的提交，以及短命的 <code>chore/ci-*</code>、<code>deps/upd-*</code> 分支。</p>
+                        <p>一位分析师的评价被反复引用：<strong><code>.claude/settings.json</code> 已经成了新时代的 <code>autorun.inf</code></strong>。</p>
+                        <p>最值得记的细节是<strong>文件体积伪装</strong>：那些封装器约 <strong>13MB</strong>，有两个作用——超过 GitHub 代码搜索的索引上限，也超过内容 API 能返回的范围，所以早期分析明明找到了钩子文件，却把载荷文件误判成空文件；同时让"用 GitHub 搜索查一遍"这种自查方式直接失效。JFrog 的建议很直白：不要依赖代码搜索或内容 API，得直接枚举仓库文件树。攻击者显然读过检测工具的文档。</p>
+                        <p>载荷是一个 npm 蠕虫。加载器对一组<strong>字符码数组</strong>施加<strong>逐版本变化的凯撒密码</strong>变换，解出一个 AES-128-GCM 加密的阶段二，然后去找或下载 <strong>Bun 1.2.18</strong>；按版本不同，解密内容要么被管道送进 <code>bun run</code>，要么写进临时的 <code>.b-*</code> 目录、执行完删掉。完整载荷收集凭据、污染仓库和 CI 配置、通过包注册表传播。被激活的 <code>ci.js</code> 里，发布程序被设计成<strong>在 GitHub Actions 里跑</strong>，用 npm 令牌或可信发布机制生成更多恶意版本——<strong>包分发和仓库入侵形成闭环</strong>。</p>
+                        <p>另一个细节更麻烦：这个原生插件<strong>本身不携带载荷</strong>，并且拒绝在 CI 系统、容器环境、小型虚拟机、调试器监控状态下运行；Windows 上检测到 Wireshark 或 Process Monitor 在跑，它也会停。扫描工具看到的是占位程序，开发者的笔记本上跑的才是真的。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>触发点从"运行代码"搬到了"打开文件夹"。</strong>十年来供应链威胁模型都假设恶意代码在安装或执行时运行，防御建在 install 钩子和构建脚本上。这次植入的是 AI 编码工具的会话钩子与文件夹打开任务——开发者在受支持的工具里打开一个项目，载荷就跑起来了。而这个动作今天已经不算"执行代码"。</li>
+                            <li><strong>开发者的笔记本握着王国的钥匙。</strong>GitHub 令牌、npm 令牌、云密钥、AI 服务商凭据都在同一个用户目录下。攻击者找到的不是新漏洞，是新的收割点。</li>
+                            <li><strong>这一类感染只能按"已被入侵"处理。</strong>装过完整蠕虫版本的主机，应立即撤销并轮换 GitHub、GitLab、npm、PyPI、RubyGems、云服务、SSH、Vault、Kubernetes 以及 AI 服务商的全部凭据，再审计受影响身份能访问的所有仓库。</li>
+                            <li><strong>自查方式必须换。</strong>搜索引擎查不到、内容 API 查不到、装时扫描看不到、沙箱里运行不起来——四个常用手段全部失效，剩下的办法只有枚举文件树。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">接管 42 个仓库</span>
+                        <span class="flow-step">注入 AI 工具钩子文件</span>
+                        <span class="flow-step critical">封装器填充到约 13MB</span>
+                        <span class="flow-step critical">开发者打开文件夹即触发</span>
+                        <span class="flow-step">解凯撒密码取 AES 阶段</span>
+                        <span class="flow-step critical">收割凭据并改写 CI 配置</span>
+                        <span class="flow-step critical">Actions 发新恶意版本</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">数据泄露</span>
+                    <h3 class="article-title">一个半月一亿一千万条，和一份 100 亿日元的预算</h3>
+                    <div class="article-meta">
+                        <span>11-08 07:00 国家安全部通报 · 11-06 日本敲定中央抗黑客团队</span>
+                        <span class="cvss-score">1.15 亿条 · 近三成大企业承认 · 成因三条与建议三条</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 8 日上午，国家安全部微信公众号发布《仅一个半月，就有上亿条信息泄露！》。事实层面：仅 2026 年 9 月至 10 月中旬，日本已获悉的信息泄露量<strong>超过 1.15 亿条</strong>，其中大型软件企业逾 <strong>2,200 万条</strong>客户记录遭窃，某知名餐饮品牌<strong>上千万条</strong>会员信息外泄，物流巨头同样未能幸免；一项最新调查显示<strong>近三成</strong>日本大企业承认曾发生泄露或疑似泄露。</p>
+                        <p>成因归为三类，措辞很实。<strong>数据管理不规范</strong>：多数涉事企业长期<strong>无差别采集、超期留存</strong>用户信息，造成大量数据长期堆积，形成高风险的"数据宝库"，系统老旧、漏洞修复滞后、后台权限粗放进一步放大隐患。<strong>人员安全意识薄弱</strong>：误发邮件、未经核实即提供信息、弱口令，文中有个例子——某员工因误以为邮件来自合作伙伴且情况紧急，未电话核实就把敏感信息给了出去。<strong>供应链安全失守</strong>：多起案例里泄露不是因为自家系统被攻破，而是外包服务商、第三方平台防护不足、运维松散，原文明确<strong>供应链攻击已成为网络攻击的优先路径之一</strong>。</p>
+                        <p>风险给了三条：侵害个人权益（精准诈骗、定向骚扰、身份冒用）、冲击行业秩序（投诉纠纷、合规处罚、信任危机）、<strong>危害国家安全</strong>（海量民生数据与行为轨迹可能被境外间谍情报机关用于用户画像、行为分析、精准渗透）。建议也是三条：分类分级管理、严控采集范围与存储时限、常态化清理冗余过期数据、定期漏洞扫描与权限清查与日志审计；杜绝弱口令、共用账号、权限粗放、私连外网；建立第三方服务商的安全准入、动态考核、定期排查与退出机制。</p>
+                        <p>日本那边的动作是另一半。政府决定投入 <strong>100 亿日元</strong>（约 4.2 亿元人民币）组建<strong>中央抗黑客团队</strong>，首相高市早苗 11 月 6 日召开网络安全阁僚会议，指示修订《网络应对能力强化法》。她的表述是"就在此刻，未经授权的访问和数据泄露事件正在发生"，要求"调动政府的一切资源"。团队将用 AI 对抗黑客、检测系统薄弱环节，与会者用电影《捍卫战士》作比喻，把它定位成精锐部队。10 月倒下的清单：Times 集团约 <strong>660 万条</strong>、汉堡王约 <strong>1,118 万条</strong>、GMO 互联网集团 10 月 24 日证实被勒索 <strong>100 万美元</strong>并有客户资料外泄。日本当局分析后认为，这些企业<strong>委托的网安公司在防护措施上存在漏洞</strong>——和国家安全部说的"供应链安全失守"是同一个判断。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"1.15 亿条"的成因不是某一次高明攻击，是长期的采集与留存习惯。</strong>不采就不会丢，不长期留就不会一次丢一亿条。数据最小化在这里不是合规话术，是直接的损失上限控制。</li>
+                            <li><strong>供应链那一句是两份独立材料的共同结论。</strong>一边是中国国家安全部，一边是日本当局对本国企业的分析，都指向外包与第三方平台。但企业的第三方安全评估普遍还停留在问卷层面。</li>
+                            <li><strong>监管口径正在从"企业合规"往"国家安全"抬。</strong>这篇的落点是"数据安全是国家安全的重要组成部分"和 12339 举报渠道，泄露事件的后果评估里要加进这一层。</li>
+                            <li><strong>100 亿日元买的是响应能力，不是预防能力。</strong>中央团队、AI 对抗、漏洞检测都是事后与事中的能力。真正的下降只能来自减少留存和收紧第三方，而这两件事在任何国家都比建一支团队难。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">PoC 公开</span>
+                    <h3 class="article-title">只核了"你有没有权改自己的项目"，没核"这个文件是谁的"</h3>
+                    <div class="article-meta">
+                        <span>11-07 细节与 PoC 一起公开 · 1.20 至 2.18.0 全部受影响 · 尚无在野</span>
+                        <span class="cvss-score">GHSA-8qqw-wm58-45v7 · CVSS 9.9（开放注册时 10.0）· WebSocket 7.7</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Penpot 是开源的设计协作工具，后端是 Clojure。攻击面在 <code>import-binfile</code> 这个 RPC 路由上，缺陷类型是 <strong>CWE-862</strong>（缺少授权检查）加 <strong>CWE-639</strong>（通过用户可控键做授权绕过）。</p>
+                        <p>调用这个路由时，服务端<strong>只检查了调用者对"自己那个项目"有没有编辑权</strong>，从来没检查 <code>file-id</code> 参数指向的文件属于谁。于是攻击者把受害者的文件 UUID 填进去，后端就进入<strong>原地覆盖模式</strong>：数据库查询只按 ID 取那个文件，不带团队或项目条件，然后把攻击者的数据直接写进受害者的数据库行，同时把文件的 <code>project-id</code> 改成攻击者自己的项目。</p>
+                        <p>结果有三层。<strong>受害者失去设计稿，而且用不了恢复功能</strong>——行是被改写，不是被删除。<strong>攻击者成为新所有者</strong>，可以读、改、导出。<strong>如果被劫持的是共享库</strong>，其他团队所有引用它的文件在下一次同步时会拉进攻击者的改动。配套的 WebSocket 缺陷单独给 <strong>7.7</strong>：<code>subscribe-file</code> 与 <code>subscribe-team</code> 两个处理器都<strong>没有对目标 UUID 做访问检查</strong>，任何已登录用户只要知道文件或团队 UUID，就能实时看别人的编辑流、角色变更、光标移动。</p>
+                        <p>受影响区间是 <strong>1.20 起</strong>（2025 年 7 月引入 file-id 导入功能）到 <strong>2.18.0 之前</strong>的所有自建部署。修复在 <strong>2.18.0</strong>，具体两个 PR：<strong>10994</strong> 从 <code>import-binfile</code> 的 schema 里删掉不安全的 <code>file-id</code> 字段，<strong>11069</strong> 给所有 WebSocket 文件与团队流加上严格访问检查。临时缓解只有三件事：关闭开放注册、限制网络访问到可信人员、检查数据库日志里有没有跨团队的 <code>project-id</code> 异常变更。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>这是"两段式授权"缺失的教科书样本。</strong>检查了"你能操作这个项目"，没检查"这个对象属于你能操作的项目"。凡是接口里同时出现容器 ID 和对象 ID 的地方，都该问一遍：第二个 ID 的归属核了吗。</li>
+                            <li><strong>设计协作工具的资产不是数据，是文件本身。</strong>共享库是一层层引用的，劫持一个库能污染一整片文件。这种"供应链式的内部污染"在传统 DLP 里基本没覆盖。</li>
+                            <li><strong>自建部署的升级率是真实风险点。</strong>官方云会自己升，Docker 和自建实例不会。细节和 PoC 在 11 月 6 日到 7 日一起放出来，正好是自建用户最该动手的窗口。</li>
+                            <li><strong>1.20 到 2.18.0 跨度接近一年。</strong>一个默认开启的功能从引入到修掉，中间所有版本都受影响——这类"功能引入即缺陷引入"的情况，版本区间往往比想象的长。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">攻击者登录 Penpot</span>
+                        <span class="flow-step">服务端只核自己项目的编辑权</span>
+                        <span class="flow-step critical">未核 file-id 的归属</span>
+                        <span class="flow-step critical">原地覆盖受害者的数据行</span>
+                        <span class="flow-step critical">project-id 改为攻击者项目</span>
+                        <span class="flow-step">共享库被污染并同步扩散</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. 韩国未来资产证券：3.5 万员工信息加 3,800 个客户账号</h4>
+                    <p>11 月 7 日，未来资产证券（Mirae Asset Securities）公告称其<strong>移动网页手机认证登录服务</strong>与<strong>内部协同办公系统</strong>遭外部攻击。约 <strong>3,800 名客户的账号</strong>外泄，持有人姓名与其他敏感客户信息未泄露。员工侧范围更大：含离职者与外包人员共 <strong>35,255 人</strong>，<strong>姓名与员工编号全部泄露</strong>，邮箱、电话、加密后的密码<strong>部分泄露</strong>，居民登记号、护照号、驾驶证号等唯一识别信息未泄露。公司称检测到来自外部 IP 的异常访问后立即封锁路径，启动应急响应，并依法向金融委员会、金融监督院、个人信息保护委员会报告。<strong>口径冲突</strong>：一家媒体写攻击发生在 <strong>11 月 4 日至 5 日</strong>，另一家写的是 <strong>10 月 4 日至 5 日</strong>；按"公告 11-07、检测到即封锁"推断前者可能性更大，但两边口径都列在这里。这不是孤立事件：集团旗下未来资生产 10 月 26 日已泄露客户信息，未来资产全球投资 10 月 28 日、能源基础设施子公司 11 月 2 日分别遭到攻击尝试。一个月内四个主体被尝试，说明攻击者盯的是集团而不是单点；报道提到韩国金融业近期接连出现<strong>疑似利用 AI 智能体</strong>发起的攻击。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. ForgeRock OpenAM 一次性 18 条，含一条 CVSS 4.0 满分</h4>
+                    <p>NVD 在 11 月 8 日收录了一批 OpenAM 的 CVE，共 <strong>18 条</strong>，全部修复在 <strong>16.1.4</strong>。其中 <strong>CVE-2026-123551</strong> 的 CVSS 4.0 评分为 <strong>10.0</strong>（向量里 <code>VC/VI/VA</code> 与 <code>SC/SI/SA</code> 全为 <code>H</code>），描述为未认证攻击者可获取敏感信息。技术含量较高的几条：<strong>123536</strong> 与 <strong>123537</strong> 都是 SSRF——前者允许管理员（含被委派的 realm 管理员）通过联邦相关配置让服务器抓取任意 URL，后者允许注册 UMA 资源集的一方通过未校验的 scope 描述 URL 触发内部请求；<strong>123538</strong> 更直接，OpenAM <strong>不校验 SAML 1.x 断言或响应的签名者是否就是它声称的 issuer</strong>，只要签名来自 OpenAM keystore 里的任意一张证书就接受。SAML 的信任模型建立在"issuer 字段"与"签名证书"的绑定上，这个绑定不校验，keystore 里任何一张证书都能冒充任何一个合作方。做 SSO 集成的团队值得单独核一遍自己的 IdP 配置。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. TOTOLINK CA300-PoE：一天九条 9.9，全在同一个 CGI 里</h4>
+                    <p>11 月 7 日 NVD 收录 <strong>CVE-2026-123957 至 123961、124057 至 124060</strong>，共 <strong>9 条</strong>，全部针对 <strong>TOTOLINK CA300-PoE 6.2c.884</strong>，全部 9.9，全部位于 <strong><code>/cgi-bin/cstecgi.cgi</code></strong>，全部是缓冲区溢出类，PoC 已公开。对应的处理函数把攻击面列得很清楚：<code>setIpQosRules</code>、<code>setLanConfig</code>、<code>setLanguageCfg</code>、<code>setWanConfig</code>、<code>setWiFiBasicConfig</code>、<code>setWiFiMultipleConfig</code>、<code>setWiFiRepeaterConfig</code>、<code>setWiFiWdsAddConfig</code>、<code>UploadCustomModule</code>。九个功能函数、同一个 CGI 文件、同一种缺陷类型——这不是九个独立漏洞，是<strong>同一段没有边界检查的代码被复制了九次</strong>。这类设备通常同时满足弱口令与公网暴露两个前提，PoC 公开后风险实际由"有没有改过默认密码、有没有开外网管理"决定，而不是由 CVSS 决定。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. CISA KEV：11 月 7 日与 8 日连续零新增</h4>
+                    <p>KEV 目录当前版本 <strong>2026.11.06</strong>，共 <strong>1769 条</strong>。自 11 月 6 日加入 <strong>CVE-2026-19868</strong>（SonicWall SonicOS SSLVPN，SAML 认证绕过）之后，<strong>11 月 7 日与 11 月 8 日均无新增</strong>。这不代表今天没有在野利用，只代表没有新的"已被确认在野"条目进表。今天六条头条里，LXD/Incus 六条不在 KEV（CISA 的 SSVC 只把其中三条标为有 PoC），IBM 那 247 条不在 KEV，Penpot 也不在 KEV。<strong>KEV 条数不等于风险总量</strong>，这句话在每个批量披露的日子都成立：247 条 9.9 和 1 条在野，是两种完全不同性质的风险，但在很多看板上显示成同一种颜色。今天真正该动的是那些"分数高、PoC 有、补丁在但没装"的条目。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 英国士兵没拔 SIM 卡，手机被入侵，裸照被拿去勒索</h4>
+                    <p>11 月 8 日 Ars Technica 报道（凤凰网科技转述）：一名服役超过 7 年的英国陆军下士 Daniel Barton-Kennedy，2026 年 1 月随部队赴爱沙尼亚塔帕地区参加"东方勇士"演习（距俄罗斯边境约 145 公里）。出发前军方明确要求所有参演人员<strong>移除个人电子设备的 SIM 卡、关闭定位、使用可信 VPN</strong>，抵达后多次重申，他没有执行。1 月 19 日他向排长报告收到勒索信息，对方称已获取其手机相册中的裸照并通过社交媒体识别出他的身份。他先付了 <strong>100 英镑</strong>，对方加价到 250 英镑时拒绝并上报。7 月 30 日军事法庭听证，判 <strong>10 个月拘禁并降级</strong>，8 月上诉被驳回。报道未披露黑客身份，也没有证据表明与俄罗斯或其他国家支持的网络攻击有关。这条不进漏洞统计，但机制每天都在发生：<strong>手机号本身就是身份锚点</strong>——卡在网里、号码可达、社交账号可反查、相册可同步，一条命令都不需要。"拔掉 SIM 卡"看起来原始，实际是把"可达性"这个条件直接拿掉，是所有技术手段里成本最低的一种。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "LXDIncus镜像逃逸": [0.55, 0.93]
+    "IBM247条未认证RCE": [0.35, 0.90]
+    "Penpot文件劫持": [0.50, 0.88]
+    "ClaudeCode密钥": [0.92, 0.80]
+    "JFrog42仓库": [0.95, 0.85]
+    "日本1.15亿条": [0.88, 0.75]
+    "韩国未来资产": [0.85, 0.55]
+    "OpenAM批次": [0.30, 0.70]
+    "TOTOLINK九条": [0.58, 0.62]
+    "士兵SIM勒索": [0.70, 0.30]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "先动作后验证的顺序问题": 30
+    "供应链与分发链": 22
+    "凭据与密钥管理": 18
+    "批量披露与补丁状态": 16
+    "数据泄露": 10
+    "个人操作安全": 4
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年8月21日至11月8日
+    7月1日 : LXD 5.0.7 与 5.21.5 LTS 发布含修复
+    8月21日 : NVD收录LXD与Incus这批CVE记录
+    9月 : 日本企业信息泄露进入高发期
+    10月 : Times集团660万条 汉堡王1118万条
+    10月24日 : GMO证实被勒索100万美元
+    10月26日 : 未来资产生命泄露客户信息
+    11月2日 : 未来资产能源子公司遭攻击尝试
+    11月5日 : Apiiro发布Claude Code密钥研究
+    11月6日 : GitHub公开LXD与Incus六份公告含PoC
+    11月6日 : 日本敲定100亿日元中央抗黑客团队
+    11月6日 : JFrog 42个仓库与蠕虫成稿转述
+    11月7日 : IBM发布两份API Connect公告247条
+    11月7日 : TOTOLINK CA300-PoE九条9.9收录
+    11月7日 : 未来资产证券公告员工与客户泄露
+    11月7日 : Penpot细节与PoC公开
+    11月8日 : 国家安全部通报日本1.15亿条
+    11月8日 : OpenAM 18条收录 含CVSS4.0满分
+    11月8日 : KEV连续第二日零新增
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-48769（published 2026-08-21，lastModified 2026-11-06）— Incus 客户端在恶意镜像服务器返回构造的 Incus-Image-Hash 头时存在任意文件写入，7.2.0 修复</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-48769">nvd · 48769</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVEReports — GHSA-PJFF-C2WC-F6JM 完整代码分析、filepath.Join 与 filepath.Clean 的行为、90 秒挂住响应的 Python PoC 与 cron 执行</span>
+                        <a href="https://cvereports.com/reports/GHSA-PJFF-C2WC-F6JM">cvereports · 48769</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVEReports — GHSA-VGHH-5RFX-XHQ8：CVE-2026-48749 的 tar 同名成员构造、forkfile 无限制 chroot、审计用 find 命令与 10 个修复提交</span>
+                        <a href="https://cvereports.com/reports/GHSA-VGHH-5RFX-XHQ8">cvereports · 48749</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense — 六份 GHSA 的缺陷描述与修复提交日期对照表、CISA SSVC 对三条标 poc 三条标 none 的区分、KEV 2026.11.06 版本不在列</span>
+                        <a href="https://brandefense.io/security-news/lxd-incus-image-vulnerabilities">brandefense · 六份对照</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WorldProgramming — 受影响与修复版本矩阵（LXD 4.0.11 / 5.0.7 / 5.21.5 / 6.9.0，Incus 7.2.0）、EPSS 0.78%、端口 8443 与 unix socket 收敛建议</span>
+                        <a href="https://www.worldprogramming.org/posts/ghsa-pjff-c2wc-f6jm-cve-2026-48769-arbitrary-file-write-and-remote-code-execution-via-trusted-image-hash-in-canonical-lxd-tznisl">worldprog · 版本矩阵</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Dev.to / CVEReports — CVE-2026-48749 的六阶段 PoC 脚本（tar --append 注入 rootfs 符号链接至 /）</span>
+                        <a href="https://dev.to/cverports/ghsa-vghh-5rfx-xhq8-cve-2026-48749-arbitrary-host-file-read-and-write-via-malicious-image-symlink-fib">devto · 48749 PoC</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IBM 安全公告 node/7295635（11-07）— 单份即列 247 条 CVE 条目</span>
+                        <a href="https://www.ibm.com/support/pages/node/7295635">ibm · 公告一</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IBM 安全公告 node/7295637（11-07）— 第二份公告与修复版本 10.0.8.13 / 12.1.1.3</span>
+                        <a href="https://www.ibm.com/support/pages/node/7295637">ibm · 公告二</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">News Brief — 两份公告、NVD 同日 05:18 UTC 收录、CVE-2026-17408 为未认证 RCE、受影响版本区间与修复版本</span>
+                        <a href="https://news-brief.com/ng/news/ibm-api-connect-flaws-unauthenticated-remote-code-execution-among-hundreds-of-vulnerabilities-update-to-10-0-8-13-or-12-1-1-3-now-4944b50bc3f645bb">newsbrief · 247 条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Junglewise — 11-02 至 11-08 区间统计：IBM API Connect 205 条、47 条 Critical、最高 9.9、0 条在野</span>
+                        <a href="https://junglewise.ai/threats/technologies">junglewise · 周统计</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NextGuard — CVE-2026-17392（LDAP 注入 9.9）：单条记录未指明修复版本、EPSS 0.66% / 52 百分位、不在 KEV</span>
+                        <a href="https://nextguardhq.com/en/vulnerabilities/cve-2026-17392-ibm-api-connect">nextguard · 17392</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tech Times CVE Tracker — 同批编号与分数逐条列表（17150 / 17158 / 17146 / 17132 / 17134 / 17049 / 16884 等）</span>
+                        <a href="https://www.techtimes.com/cve-tracker">techtimes · 逐条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PAN（Apiiro 研究最完整转述）— 104,185 份副本 / 1,122 份含密钥 / 63 家组织 / 539 of 1,105 由 Claude 共同作者提交 / 用 Opus 5.5 与 Fable 5.1 复现</span>
+                        <a href="https://pan.parallax.kr/article/claude-code-permission-rules-leak-secrets-1122-public-github-files">pan · Apiiro 全文</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GBHackers — 379 个数据库密码、122 个 Supabase service-role 密钥、43 条 SSH（含 sshpass 里的 root）、23 个 AWS 密钥、6 个私钥</span>
+                        <a href="https://gbhackers.com/claude-codes-dont-ask-again-feature-exposed/">gbhackers · 构成</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CosmicBytez Labs（11-07）— 全局 git exclude 的三种失效场景、Anthropic 的 2025-08 报告被机器人以 not planned 关闭</span>
+                        <a href="https://labs.cosmicbytez.ca/news/2026-11-07-claude-codes-dont-ask-again-file-exposes-passwords-and-keys-in-1122-public-copie">cosmicbytez · 失效场景</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">iSec News（11-08）— 2,539 / 1,994 / 63 的统计口径、未验证凭据有效性的说明</span>
+                        <a href="https://www.isec.news/2026/11/08/claude-code-settings-files-exposed-secrets-github">isec · 口径</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">pid.co.il（Cyber Defense Magazine）— 734 个历史密钥、211 个 fork、PGPASSWORD 与 sshpass -p 的检测盲区、16 个 agent 横向对比</span>
+                        <a href="https://pid.co.il/claude-code-secrets-github-leak">pid · 检测盲区</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻（11-06 中文详版）— 注入文件清单（.github/init.js / .claude/settings.json / .gemini / .cursor / .vscode/tasks.json）、13MB 封装器、JFrog 处置建议原文</span>
+                        <a href="https://news.qq.com/rain/a/20261106A06NNZ00">腾讯 · JFrog 详版</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">至顶网（11-06）— 马哈帕特拉与 Frank Dickson 的分析、.claude/settings.json 是新时代 autorun.inf、插件拒绝在 CI 与调试器环境运行</span>
+                        <a href="https://www.zhiding.cn/network_security/2026/1106/3204980.shtml">至顶网 · 触发点转移</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TheNextGenTechInsider — JFrog 42 个被接管仓库的公告口径</span>
+                        <a href="https://www.thenextgentechinsider.com/pulse/jfrog-identifies-42-compromised-github-repositories-threatening-software-supply-chains">tngti · 42 仓库</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">国家安全部（2026-11-08 07:00 原文）— 仅一个半月就有上亿条信息泄露：三条成因、三条风险、三条建议、12339 渠道</span>
+                        <a href="http://mp.weixin.qq.com/s?__biz=MTIxMjEzMzc0MQ==&mid=2672795952&idx=2&sn=c60851bc83f15495cc295a85a082b902">国安部 · 原文</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻（11-08 全文转载）— 1.15 亿条、2,200 万条、上千万条会员信息、近三成大企业承认</span>
+                        <a href="https://news.qq.com/rain/a/20261108A040Z600">腾讯 · 全文</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">澎湃新闻（11-08）— 国家安全部案例与危害国家安全的表述</span>
+                        <a href="https://m.thepaper.cn/newsDetail_forward_34431305">澎湃 · 11-08</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">凤凰网（11-08）— 100 亿日元中央抗黑客团队、高市早苗 11-06 阁僚会议、Times 660 万 / 汉堡王 1,118 万 / GMO 100 万美元、PHP 漏洞被视为转折点</span>
+                        <a href="https://news.ifeng.com/c/8xsTBXBYhci">凤凰 · 100 亿日元</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityOnline（11-07）— GHSA-8qqw-wm58-45v7 与 GHSA-whxm-54w3-qr7w、9.9 与 10.0 两种口径、PR 10994 与 11069、Louis Sanchez 与 rbrents3000</span>
+                        <a href="https://securityonline.info/?p=807791">seconline · Penpot</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Penpot 仓库公告 GHSA-8qqw-wm58-45v7 — import-binfile 缺少目标文件归属检查（CWE-862 / CWE-639）</span>
+                        <a href="https://github.com/penpot/penpot/security/advisories/GHSA-8qqw-wm58-45v7">penpot · 主公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Penpot 仓库公告 GHSA-whxm-54w3-qr7w — 独立报告的同一文件导入缺陷</span>
+                        <a href="https://github.com/penpot/penpot/security/advisories/GHSA-whxm-54w3-qr7w">penpot · 重复报告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Penpot PR 10994 — 从 import-binfile schema 移除 file-id 字段</span>
+                        <a href="https://github.com/penpot/penpot/pull/10994">penpot · PR10994</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Penpot PR 11069 — 为 WebSocket 文件与团队流加严格访问检查</span>
+                        <a href="https://github.com/penpot/penpot/pull/11069">penpot · PR11069</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻（11-07）— 未来资产证券 35,255 名员工 / 3,800 个客户账号 / 报告金融委员会与金监院与个人信息保护委员会 / 集团四主体时间线</span>
+                        <a href="https://news.qq.com/rain/a/20261107A08MA000">腾讯 · 未来资产</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">钛媒体（11-07）— 另一版本时间口径（11 月 4 日至 5 日监测到攻击）与 3.5 万员工数字</span>
+                        <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_7736aeedab961052">钛媒体 · 口径二</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-123551（OpenAM，CVSS 4.0 10.0，未认证信息泄露）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123551">nvd · 123551</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-123538（SAML 1.x 断言签名未校验 issuer，接受 keystore 内任意证书）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123538">nvd · 123538</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OffSeq Threat Radar — CVE-2026-124057（TOTOLINK CA300-PoE，PoC 公开、不在 KEV、Mirage 未观测到攻击流量）</span>
+                        <a href="https://radar.offseq.com/threat/cve-2026-124057-buffer-overflow-in-totolink-ca300-poe-ad21251fb568fe25">offseq · 124057</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录 JSON（2026.11.06 版，1769 条）— 11-07 与 11-08 均无新增，最近一条为 CVE-2026-19868（11-06）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0 — 11-06 至 11-08 收录 1,065 条，本期 CVE 编号、评分与向量逐条核对</span>
+                        <a href="https://nvd.nist.gov/developers/vulnerabilities">nvd · API</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">凤凰网科技（11-08，转述 Ars Technica 与 Eesti Ekspress）— 英国士兵未移除 SIM 卡、勒索 100 英镑、判 10 个月并降级、上诉被驳</span>
+                        <a href="https://original.ifeng.com/c/8xsYz4aWOa5">凤凰 · 士兵勒索</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注两边口径；聚合站转述而未能核到原始公告的条目已在正文明确标注为二手；仅单一来源的条目已单独标注。勒索泄漏站条目为团伙自述，未经独立核实。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年11月8日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
