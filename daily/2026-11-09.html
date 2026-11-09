@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月9日（第212期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月9日 星期一</span>
+            <span class="edition-number">第 212 期 | 总第 212 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>四十四条一次发修复版本有两个 · 补丁十天前发了没人知道该升 · 装上去没打开手机就起不来了 · 同一个账号让两台机器都听话 · 点名的那个版本号还差一号 · 先当成开号问题四个月后才发现
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">修是修了，修的不是你以为的那一层</h2>
+                <p class="sub-headline">OpenEMR 11 月 8 日一次进库 44 条，29 条修在 8.3.0，15 条要 8.4.0 才修完——你按公告升到 8.3.0，还剩 15 条开着，其中一条是 9.8 分的患者门户令牌重放。Contact Form 7 的补丁 10 月 29 日就发了，更新日志里只有一句版本号，一千万个站点在 6.2.3 上待了十天才知道出过事。imgproxy 的公告点名 4.0.16，三条里有一条要到 4.0.17。GhostMap 更干脆：Google 第一次回"无法复现"，第二次带着可用 PoC 再报，回的是"不属于安全更新的范围"。ThisBash 里，Anthropic 按计划下线 Dispatch，同一个设计缺陷还留在另外两个产品里。DigiCert 把自注册口子补上了，四个月后才发现数据早在那之前就被读走了。六件事都不是没修，是修的位置离你以为的位置差一格。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">两个修复版本</span>
+                    <h3 class="article-title">一次进库 44 条，修复版本号给了两个</h3>
+                    <div class="article-meta">
+                        <span>11-08 NVD 一次性收录 44 条 · CNA 为 VulnCheck · 29 条在 8.3.0 修，15 条要 8.4.0</span>
+                        <span class="cvss-score">最高 9.9（124469 / 124450）· 10 条 9 分以上 · 不在 KEV、无公开 PoC</span>
+                    </div>
+                    <div class="article-body">
+                        <p>2026 年 11 月 8 日，NVD 一次性收录了 <strong>44 条</strong>描述指向 <strong>OpenEMR</strong> 的 CVE 记录，CNA 全部是 <strong>VulnCheck</strong>。OpenEMR 是开源社区里部署量最大的电子病历系统，跑在医院、诊所、社区卫生院。它存的东西不是"用户资料"，是<strong>病历</strong>——诊断、用药、检验、账单。</p>
+                        <p>这批最该先看的是那张版本表。按记录正文写的修复版本拆开：<strong>29 条</strong>写的是 <code>before 8.3.0</code>，<strong>15 条</strong>写的是 <code>before 8.4.0</code>。这不是笔误，是两条不同的修复线。<strong>升到 8.3.0，那 15 条一条都没盖住。</strong>而 15 条里分数最高的是 9.8。</p>
+                        <p><strong>CVE-2026-124469（9.9 / 4.0 口径 9.4）</strong>在 Fee Sheet 的药品库存查询里，<code>DrugSalesService::sellDrug</code> 把表单字段 <code>prod[N][warehouse]</code> 直接拼进 SQL 的 <code>ORDER BY</code>。门槛低到不用写 exploit：<strong>能打开费用单的账号就能打</strong>，默认安装下护士这类低权限临床角色就有这个权限。提交带常量子查询的产品行构成时间盲注 oracle，逐位读出患者数据，以及 <code>users_secure</code> 表里的 bcrypt 哈希——爆破出来是医生和管理员账号。向量里有 <code>S:C</code>，范围变更，因为这个表单能走到整个数据库。</p>
+                        <p><strong>CVE-2026-124450（9.9）</strong>走另一条路：Fax/SMS 模块的 <code>disposeDocument</code> 接收 <code>file_path</code> 参数不校验，低权限用户拿它读 <code>sqlconf.php</code>——OpenEMR 的数据库配置文件，里面是明文口令。读到之后是两件事，直连数据库，或用同一个路径穿越往 web 目录写文件、以 web 用户身份执行。能读文件的地方通常也能写，能读写的地方通常就是 RCE。</p>
+                        <p><strong>CVE-2026-124445（9.8，修在 8.4.0）</strong>是 15 条里最该单独拎出来的，因为它根本不需要"账号"。患者门户的一次性登录组件 <code>src/Common/Auth/OneTimeAuth.php</code> 有三个问题叠在一起：<strong>不执行</strong>调用方设的 <code>enforce_onetime_use</code> 与 <code>max_access_count</code> 限额；<strong>用完不吊销</strong>，被消费过的 <code>service_auth</code> 令牌一直有效；<strong>PIN 校验没有速率限制</strong>，且用的是非严格比较。一个被截获的令牌可以重放，配合无速率限制的 PIN 可以爆破，进去是完整的患者门户会话。受影响区间从 <strong>7.0.1</strong> 起。</p>
+                        <p><strong>CVE-2026-124467（8.8）</strong>把两处小问题拼成一条链：ESign 路由 <code>library/ESign/Router.php</code> 把未净化的 <code>module</code> 参数塞进 <code>require_once '&lt;module&gt;/Controller.php'</code>；同时 fax 模块的 <code>faxProcessUploads</code> 把攻击者命名的文件写到可预测的临时路径，不检查扩展名。传一个叫 <code>Controller.php</code> 的文件上去，用路径穿越的 <code>module</code> 参数指过去，<code>require_once</code> 执行它。</p>
+                        <p>这批的共同点写在缺陷类型里。15 条 8.4.0 分组里大半是 <code>CWE-639</code> / <code>CWE-862</code> / <code>CWE-863</code>：portal 的 onsite document、FHIR 的 QuestionnaireResponse、处方 REST API、SMART standalone launch。它们全都在做"<strong>你能进这个模块吗</strong>"的检查，没有做"<strong>这条记录属于你能看的人吗</strong>"的检查。另外 <strong>124480 与 124483</strong> 都提到同一个放大器：页面里暴露给 JS 的 <code>api_csrf_token_js</code> 值可以直接塞进 <code>APICSRFTOKEN</code> 请求头跳过 FHIR scope 检查。CSRF token 一旦能当授权凭据用，就等于把"我是本站用户"当成"我有权读这条"。</p>
+                        <p>截至 11 月 8 日，<strong>没有在野证据，也没有公开 PoC</strong>——OffSeq 记录显示没有 nuclei 模板、没有 Metasploit 模块、没有 Exploit-DB 条目，不在 KEV。这个事实要写进风险判断，但不能拿来当"可以慢慢来"的理由：44 条里 10 条 9 分以上，而 OpenEMR 的实例大多数直接对着公网。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"升到最新版"在有两个修复版本时不成立。</strong>拿到一张 44 行的表，第一反应是升到最新。这里最新有两个：8.3.0 和 8.4.0，只有 8.4.0 能一次盖全。正确的升级决策输入是"所有条目的修复版本取最大值"，不是"最高分那条的修复版本"。</li>
+                            <li><strong>医疗机构的时间窗和别的行业不一样。</strong>病历系统停机要评估临床影响，升级要排窗口、做回归、厂商配合。所以"分两次修"在这里不是小事——第一次升级之后，系统会有一段时间处在"看起来打过补丁了"的状态，而最狠的那条还在。</li>
+                            <li><strong>利用门槛低到不需要工具链。</strong>124469 是打开一个表单、改一个 POST 字段；124445 是重放一个链接。这类漏洞在日志里不会留下明显的攻击载荷特征，靠特征检测基本抓不到。</li>
+                            <li><strong>EPSS 在批量披露里没有解释力。</strong>单条 EPSS 反映的是"历史上同类漏洞被利用的频率"，不是"这一条明天会不会被捡起来"。今天这 44 条里，最该先修的是"门槛最低 × 数据最敏感"那几条，不是分数最高的那条。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">护士账号打开费用单</span>
+                        <span class="flow-step critical">仓库字段未校验进 ORDER BY</span>
+                        <span class="flow-step critical">盲注读出患者数据与 bcrypt</span>
+                        <span class="flow-step">或读 sqlconf.php 拿库口令</span>
+                        <span class="flow-step critical">写文件到 web 目录执行</span>
+                        <span class="flow-step">升到 8.3.0 还剩 15 条</span>
+                        <span class="flow-step critical">只有 8.4.0 一次盖全</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">千万站点</span>
+                    <h3 class="article-title">补丁十天前发了，日志里只写了个版本号</h3>
+                    <div class="article-meta">
+                        <span>10-29 发 6.2.4（同日跟 6.2.4.1）· 11-08 WPScan 给编号 · PoC 排到 11-19</span>
+                        <span class="cvss-score">CVE-2026-114432 · CVSS 3.1 9.8 · CWE-434 · NVD 未评分</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>Contact Form 7</strong> 是 WordPress 生态里最常见的"陌生人给你提交东西"的入口，活跃安装 <strong>1000 万以上</strong>。11 月 8 日，WPScan 发布了 <strong>CVE-2026-114432</strong>，CVSS 3.1 <strong>9.8</strong>，<code>AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</code>，CWE-434（危险类型文件无限制上传）。受影响 <strong>6.2 至 6.2.3</strong>。</p>
+                        <p>修复其实早就发了：<strong>6.2.4 在 10 月 29 日</strong>发布，同一天还跟了一个 6.2.4.1。改法是把文件名切到<strong>扩展名白名单</strong>。这没有可指摘的地方，很多项目会刻意在补丁扩散前不点名安全修复。但它带来一个实际后果：<strong>10 月 29 日到 11 月 8 日这十天，一个跑着 6.2.3 的管理员没有任何理由去点那个更新按钮。</strong></p>
+                        <p>机制是两层叠在一起。第一层，表单的文件字段<strong>不校验类型，也不校验扩展名</strong>。第二层是决定性的：<strong>临时文件清理逻辑本身有缺陷，上传的文件没有被删掉，留在了磁盘上</strong>。很多上传洞之所以只"能传不能执行"，是因为文件落在临时目录、请求结束就没了；这里文件留下来了，攻击者可以从容去找它。</p>
+                        <p>后续取决于服务器配置。<strong>Debian / Ubuntu 默认的 Apache</strong>：目录列表开着，<code>.phar</code> 被映射到 PHP handler，攻击者列出目录、找到自己传的文件、请求它，就是 <strong>RCE</strong>。<strong>nginx，或开了 <code>.htaccess</code> 覆盖的 Apache</strong>：拿不到执行，但仍能往 uploads 目录写任意文件，而这个目录在本站 origin 下，写进去的 HTML 或 SVG 会被当成本站内容提供出去——存储型 XSS、钓鱼页、绕 CSP 的载荷入口，都在这一层。</p>
+                        <p><strong>这里有两套口径，得分开写。</strong>Brandefense 的条目标注"exploited in the wild"，并称 11 月 8 日进入 <strong>Industry KEV feed</strong>；同一页面又写明"不在 CISA KEV"、"无公开 PoC 代码"。pwn.watch 的追踪条目则明确写 <strong>"No exploitation has been reported"</strong>，并把 WPScan 的 PoC 发布时间标为 <strong>11 月 19 日</strong>。CISA KEV 目录（2026.11.06 版，1769 条）里没有这一条。也就是说，<strong>Industry KEV 和 CISA 的 KEV 是两张不同的表</strong>，前者由厂商与情报方维护，进得快、门槛低、可被单一情报源推动。同一件事在两套表里给出相反结论，这件事本身值得记：查"有没有在打"的时候，得说清查的是哪张表。</p>
+                        <p>另一个细节：NVD 到现在没有给这条打分，页面上显示的 9.8 是 CNA（WPScan）的分数。这不影响处置优先级，但会影响那些按"NVD 评分"做自动化排序的资产台账——一条没有 NVD 分数的记录，在很多看板上会掉到列表末尾。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>1000 万这个基数下，"低概率"没有意义。</strong>EPSS 给 0.2%（约 12 百分位），它衡量的是未来 30 天被利用的概率，按全网平均算。真正决定风险的是两个本地变量：这个站点有没有开文件上传字段、服务器是不是 Debian/Ubuntu 的默认 Apache。两个都中的站点，概率不是 0.2%。</li>
+                            <li><strong>受影响下限是 6.2，不是陈年旧账。</strong>这是一个近期版本引入的问题，"我用的版本一直很稳"这种判断在这里不成立。</li>
+                            <li><strong>"能写文件"这个后果不该被降级。</strong>很多处置流程里，"没有 RCE，只是任意文件写入"会被降一档。但写在自家 origin 下的 HTML/SVG，在钓鱼、绕同源策略、投放恶意脚本这三件事上都是完整能力。</li>
+                            <li><strong>11 月 19 日是个明确的时间点。</strong>在那之前把版本号推上去，成本是一次点击；在那之后，成本取决于有多少自动化扫描器已经把这个洞加进指纹库。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">站点开了带文件字段的表单</span>
+                        <span class="flow-step critical">类型与扩展名都不校验</span>
+                        <span class="flow-step critical">清理逻辑失效，文件留在磁盘</span>
+                        <span class="flow-step">Debian Apache 目录可列出</span>
+                        <span class="flow-step critical">.phar 映射到 PHP handler 即执行</span>
+                        <span class="flow-step">其他配置退化为任意文件写入</span>
+                        <span class="flow-step critical">本站 origin 下作为主动内容提供</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">无 CVE 无补丁</span>
+                    <h3 class="article-title">一个扩展，让两台机器上的 Claude 都听话</h3>
+                    <div class="article-meta">
+                        <span>11-05 Forever Security 披露 · 11-07 02:30 UTC 更新 · 研究者 Weizman</span>
+                        <span class="cvss-score">需有 claude.ai 权限的扩展 + 双端登录 · 跨设备生效 · 同缺陷在 Remote Control 与 Cowork</span>
+                    </div>
+                    <div class="article-body">
+                        <p>代号 <strong>ThisBash Escape</strong>。前提只有两个，都很普通：用户装了某个<strong>有权访问 <code>claude.ai</code> 的浏览器扩展</strong>（恶意的，或者被劫持的正常扩展）；用户<strong>同时</strong>登录着 <code>claude.ai</code> 网页和 Claude Desktop。</p>
+                        <p>中间的通道叫 <strong>Dispatch</strong>——claude.ai 网页与 Claude Desktop 之间的通信功能，让网页上的操作能触发桌面应用里的行为。产品设计上，这是"我在网页上让 Claude 干点事，它在我的电脑上干"。</p>
+                        <p>流程是这样：扩展往 <code>claude.ai</code> 页面注入脚本，通过 Dispatch <strong>向 Claude Desktop 下发指令</strong>，在协议层面看起来和用户自己操作没有区别。要求执行命令时 Claude 会迟疑——研究里让它装一个陌生的 npm 包，它起初是拒绝的。于是扩展<strong>持续构造后续消息</strong>（研究者称之为 prompt forcing），模仿用户语气一轮轮往下推，直到它同意。最后一步是那个"允许"按钮：<strong>扩展自动点击页面上的 Allow 提示</strong>，人不在场也能过。</p>
+                        <p>实测结果：<strong>全局 npm 安装成功，然后在本机启动了计算器</strong>。计算器只是用来证明命令真的执行了。</p>
+                        <p>三个让它比"一次点击"更麻烦的地方。<strong>不需要浏览器漏洞</strong>——整条链上没有内存破坏、没有沙箱逃逸，用的是产品自己的功能，加上"用户已经批准过这个扩展"这个既成事实。<strong>跨设备</strong>——同一个 Claude 账号下，被控的那台浏览器可以操控<strong>其他终端</strong>上的 Claude Desktop；研究者提到在客户的办公电脑上见过个人 Claude 账号开着跨设备的 Dispatch，个人账号登在工作机器上，这个组合让"一台机器上的浏览器扩展"变成了"多台机器上的命令执行入口"。<strong>同一个设计缺陷还在别处</strong>——研究者指出 Claude Code Remote Control 和 Claude Cowork 的网页会话里存在同类弱点。</p>
+                        <p>Anthropic 的处理有一部分是时间差。公司表示计划在 <strong>2026 年 10 月底</strong>停用 Dispatch 功能，但截至 <strong>10 月 30 日</strong>，其支持页面仍把 Dispatch 列为"面向现有用户的 limited beta"。功能下线和技术债清理是两件不同的事：把入口关掉，不代表"网页能驱动桌面执行"这个模式在其他产品里也被重新设计过。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>这是"跨信任域桥接"这一类设计的通病。</strong>浏览器里的东西（低信任）能触发桌面上的执行（高信任），中间的授权判断依赖"用户点过允许"。只要允许可以被脚本点，这个判断就等于没有。同类设计今天非常多：网页版 IDE 连着本地 agent、浏览器插件连着本地服务、手机 App 连着桌面客户端。</li>
+                            <li><strong>企业终端的风险不是"员工用了 Claude"，是"个人账号登在公司机器上"。</strong>跨设备 Dispatch 让攻击面从"这台机器"扩到"这个账号登录过的所有机器"。这类影子 IT 组合在终端管理里基本是盲区。</li>
+                            <li><strong>没有 CVE，意味着它不会出现在任何漏洞扫描结果里。</strong>它是设计属性，不是可修补的缺陷。处置只能靠策略：扩展白名单、限制浏览器对本地服务的访问、要求个人账号与工作设备分离。</li>
+                            <li><strong>"AI 会拒绝"在持续施压下不成立。</strong>Claude 第一次确实拒了。防护的价值在于把攻击成本从一个请求抬到多轮对话，但只要对手能自动重试，这个成本就趋近于零。这也是为什么"自动点 Allow"那一步比 prompt injection 本身更值得记。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">装上有 claude.ai 权限的扩展</span>
+                        <span class="flow-step">扩展往页面注入脚本</span>
+                        <span class="flow-step critical">经 Dispatch 下发桌面指令</span>
+                        <span class="flow-step">Claude 首次拒绝</span>
+                        <span class="flow-step critical">prompt forcing 逐轮施压</span>
+                        <span class="flow-step critical">扩展自动点击 Allow</span>
+                        <span class="flow-step critical">全局 npm 安装并执行命令</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">厂商拒修</span>
+                    <h3 class="article-title">装上去，不用打开，手机就起不来了</h3>
+                    <div class="article-meta">
+                        <span>11-05 Bitdefender 披露 · Android 10 至 17 全部在内 · 8-20 与 8-25 两次上报</span>
+                        <span class="cvss-score">GhostMap · 无 CVE 无补丁 · 恢复出厂是唯一出路 · Google 判定不属安全更新范围</span>
+                    </div>
+                    <div class="article-body">
+                        <p>触发条件只有一个：<strong>安装</strong>。不需要权限，不需要运行，不需要打开。装完就行。</p>
+                        <p>Bitdefender Labs 在 <strong>Pixel 10 / Android 17 / 2026 年 8 月 5 日安全补丁</strong>上复现，并确认 <strong>Android 10 及以上</strong>都受影响。一次测试的记录是：安装后约 <strong>1 秒</strong>出现首次崩溃，随后循环 <strong>110 次</strong>，屏幕停在启动动画；另一次安全模式下的运行循环了 <strong>72 次</strong>。重启无效，安全模式也无效。</p>
+                        <p>根因是两个库对同一个字段的判断不一致。APK 是 ZIP，条目里记录两件事：<strong>压缩方式</strong>与<strong>声明的解压后大小</strong>。<code>libziparchive</code> <strong>只在条目被标记为 <code>stored</code>（不压缩）时</strong>才核对声明的解压大小；<code>libandroidfw</code> <strong>只要条目不是标记为 <code>deflated</code></strong> 就按声明的解压大小去映射内存。一个条目的压缩方式填<strong>第三种值</strong>（既不是 stored 也不是 deflated），两个库各自的判断都能通过。于是 Android 把一个小文件按一个远大于实际的值映射进内存，进程读到文件真实结尾之外的那一页，收到 <strong>SIGBUS</strong>，当场死掉。</p>
+                        <p>如果这个畸形条目是一个<strong>资源文件</strong>，而读它的是 <code>system_server</code>，事情就变成循环：进程崩、系统把它拉起来、它重新扫已安装应用、又读到同一个文件、又崩。启动永远走不完。同一手法还能用在别处：让启动器崩（删不掉那个应用）、让"设置"里的卸载界面崩、让安全检查工具在读它的时候崩掉。</p>
+                        <p>Google 回了两次。<strong>8 月 20 日</strong>第一次报告，以 <strong>"Won't Fix (Not Reproducible)"</strong> 关闭。<strong>8 月 25 日</strong>第二次报告，附可用 PoC 与复现步骤，判定<strong>"不属于安全更新的修复范围"</strong>，转给功能团队评估是否放进未来某个 Android 版本。Bitdefender 拿了一个先例对比：<strong>CVE-2016-6724</strong>，性质更弱的同类问题，Google 当时按 Moderate 修了，而那个问题同样需要恢复出厂。</p>
+                        <p>起点很荒诞。2026 年 8 月 12 日，Bitdefender 的分析环境里有一个从野外套来的 APK 在安装时把模拟器搞崩了。样本是一个银行木马 dropper，被加壳器重写过——加壳器为了对抗逆向改写了 APK 内部结构，<strong>顺手把 Android 解析安装包的逻辑搞坏了</strong>。写这个木马的人不知道自己做出了一个能让手机变砖的文件，真正把它变成武器的是研究团队后续的构造工作。</p>
+                        <p>现在能做的只有三层：装之前拦住（安全软件把这种畸形文件标记为 <code>Android.Riskware.Ghostmap.rA</code>，但 Android 的权限模型不允许第三方应用自己阻止安装或卸载别的应用，最后按下按钮的还是机主）、出事之后恢复（只能恢复出厂，本地数据全没）、极端情况下用 ADB 删文件（<strong>前提是 USB 调试本来就开着</strong>，而且要在崩溃间隙完成，设备完整重启过一次之后这条路也失效）。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"厂商判定不修"需要被纳入风险模型。</strong>漏洞管理默认假设"有编号的会被修"，但现实里有一类问题被明确归类为"不是安全问题"——功能设计、边界情况、需要恢复出厂的 DoS。这类东西没有补丁日期，也就永远不会出现在"补丁合规率"这个指标里。</li>
+                            <li><strong>一个不需要权限、不需要运行的安装包能做到设备变砖。</strong>这个能力在勒索场景里是现成的杠杆：不给钱就让你恢复出厂。研究者说没有观察到在野使用，但能力的成本和收益都摆在那里。</li>
+                            <li><strong>解析器的"两套实现"是这类缺陷的高发区。</strong>同一个文件格式，装包时由一个库看、运行时由另一个库看，两边对"边界"的定义不一样，中间就有缝。这类缝在压缩包、图片、字体、文档解析里反复出现。</li>
+                            <li><strong>时间线的落差值得记一笔：8 月报告、11 月公开、Android 10 到 17 全部在内、没有编号。</strong>用户侧唯一的防线是"不要装来源不明的 APK"——这句话在 2026 年已经说了太多次，但在这里它是唯一有效的那一条。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">ZIP 条目填第三种压缩方式</span>
+                        <span class="flow-step critical">两个库的判断都通过</span>
+                        <span class="flow-step critical">按声明大小映射远超真实长度</span>
+                        <span class="flow-step">越界读触发 SIGBUS</span>
+                        <span class="flow-step critical">system_server 反复崩溃重启</span>
+                        <span class="flow-step critical">启动循环，安全模式无效</span>
+                        <span class="flow-step">只能恢复出厂清空数据</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">差一版</span>
+                    <h3 class="article-title">公告点名 4.0.16，三条里有一条要 4.0.17</h3>
+                    <div class="article-meta">
+                        <span>11-08 02:16 UTC 三条同批进库 · 公告 10-06 就发了 · 项目 7 月起无 release notes</span>
+                        <span class="cvss-score">123614 为 9.8 · 123615 与 123616 各 7.5（4.0 口径 8.7）· 三条均未被 NVD 分析</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>imgproxy</strong> 是自建的图片处理服务，常见于"上传图片自动裁剪转码"这条链路上，通常直接对公网。11 月 8 日 <strong>02:16 UTC</strong>，NVD 一次收进三条记录，CNA 都是 VulnCheck，三条提交时间相差不到半秒。三条全部在 <strong>ICO 图片加载器</strong>里，全部可以被<strong>未认证攻击者</strong>触发——只要能把一张构造好的图片送进服务。</p>
+                        <p><strong>CVE-2026-123614（CVSS 3.1 9.8 / 4.0 9.3，CWE-122）</strong>：<code>vips/icoload.c</code> 里 <code>data_size</code> 回绕，导致堆缓冲区溢出，可崩进程或执行代码。受影响 <strong>4.0.0 至 4.0.15</strong>，修在 <strong>4.0.16</strong>。<strong>CVE-2026-123615（7.5 / 8.7，CWE-787）</strong>：<code>vips_foreign_load_ico_header</code> 重建 BMP 头时按一个过小的 <code>data_size</code> 计算，造成越界读写，触发 glibc abort 或堆破坏。受影响从 <strong>3.3.0</strong> 起，修在 <strong>4.0.17</strong>。<strong>CVE-2026-123616（7.5 / 8.7，CWE-789）</strong>：<code>data_size</code> 未校验导致无界内存分配。受影响从 <strong>3.3.0</strong> 起，修在 <strong>4.0.16</strong>。</p>
+                        <p>这张表最容易读错的地方在最后两列。三条同时公开，其中一条 9.8，最自然的动作是"看最高分那条的修复版本"→ 4.0.16 → 升级到 4.0.16。<strong>然后你身上还留着 CVE-2026-123615，它要到 4.0.17 才修。</strong>受影响下限也不一样：9.8 那条从 4.0.0 开始，两个 7.5 从 3.3.0 开始。停在 3.x 的部署<strong>不在那个吓人的 9.8 范围里，却在两个 7.5 的范围里</strong>——按"我版本号比 9.8 的起点小，应该没事"来判断，结论正好是反的。</p>
+                        <p>关键那条不是新东西。项目自己在 <strong>10 月 6 日</strong>就发了 <strong>GHSA-hff9-5pqw-6w9f</strong>，标题写着"ICO 加载器整数溢出导致远程拒绝服务，并通过堆溢出允许远程代码执行"，评级 Critical <strong>9.8</strong>，向量和现在的 CVE 记录完全一致，标了 CWE-122 / CWE-190 / CWE-787。受影响版本写的是 <code>&gt;= 4.0.0, = 4.0.16</code>——一个下限加一个单点，这个写法本身就不太常规。报告者是 mateofumis 与 JasonPuglisi，分析者 JacobBrackett，指向提交 <code>f4fedbb</code>，<strong>没有 workarounds 一节</strong>。而到 11 月 8 日，CVE 记录已经上线几小时之后，<strong>那份公告页面上仍然印着 "No known CVE"</strong>。</p>
+                        <p>三个技术细节也值得记。三条的 <code>vulnStatus</code> 都是 <strong>Received</strong>，分数是 CNA 给的，NVD 没有自己的评分，也没有 configurations 块——依赖 NVD 的 CPE 匹配判断"我这份资产中不中"的自动化工具，在这里会落空。<strong>123615 连 packageURL 都没有</strong>，另外两条至少有 <code>pkg:golang/github.com/imgproxy/imgproxy/v4</code> 这个模块坐标，123615 的 affected 数据是两个裸字符串 <code>imgproxy</code> 加一个版本区间。项目<strong>自 7 月以来没发 release notes</strong>，4.0.16 和 4.0.17 修了什么，除了公告本身没有第二处可查。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"按最高分那条的修复版本升级"是一个会出错的启发式。</strong>批量披露时不同 CVE 的修复版本经常不一致，尤其是同一天由同一个 CNA 一次性提交的情况。正确输入是"所有条目的修复版本取最大值"。</li>
+                            <li><strong>受影响下限不一致，会让"我不在范围内"这个判断失效。</strong>3.x 用户今天的正确结论是"我不中 9.8，但我中两个 7.5"，而不是"我安全"。</li>
+                            <li><strong>图片处理服务是最容易被推到公网的一类中间件。</strong>它天生要接收外部上传、天生要解析别人给的二进制、天生跑在容器里。ICO 这种"很少人用但解析器一定会支持"的格式，是这类服务里最容易被忽略的入口。</li>
+                            <li><strong>公告页面上的元数据会误导人。</strong>一份 33 天前就公开、评级 Critical、带修复版本的公告，页面上写着"No known CVE"——按 CVE 编号建工单的流程，这条永远不会被建出来。资产台账的输入如果只有 CVE，GitHub Security Advisory 这一层的信息就全丢了。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">把构造的 ICO 送进服务</span>
+                        <span class="flow-step critical">icoload 读取未校验的 data_size</span>
+                        <span class="flow-step critical">整数溢出回绕后堆溢出</span>
+                        <span class="flow-step">或 BMP 头重建时越界读写</span>
+                        <span class="flow-step">升到 4.0.16 以为修完了</span>
+                        <span class="flow-step critical">123615 仍开着</span>
+                        <span class="flow-step critical">只有 4.0.17 一次盖全</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">数据泄露</span>
+                    <h3 class="article-title">迁移到公网没做评审，四个月后才知道数据被读走</h3>
+                    <div class="article-meta">
+                        <span>2025-02 迁移暴露 · 2026-06-18 发现异常账号 · 06-27 至 07-02 被读取 · 10-19 才确认</span>
+                        <span class="cvss-score">护照驾照与水电账单扫描件 · 证书与私钥未受影响 · 受影响人数未披露</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>DigiCert</strong> 通报了一起数据泄露，涉及身份核验文件。<strong>不是</strong>证书或私钥泄露。</p>
+                        <p>起点是 2025 年 2 月的一次基础设施迁移。一个原本只能在 VPN 后访问的内部业务系统被搬到了<strong>公网可达的网段</strong>，<strong>没有对新暴露面做安全评审</strong>。那个系统本来只给内部用，所以带了一个<strong>自注册端点</strong>——设计目的是让其他内部应用能自己开户。搬到公网之后，这个端点就对着全世界了。</p>
+                        <p>通过这条路径创建的账号有三件事同时成立：<strong>不走 MFA</strong>（系统本来没打算面对外部用户）、<strong>没有被分配到任何应用</strong>、但因为一个<strong>授权缺陷</strong>默认拿到了对归档客户数据的<strong>只读</strong>权限。</p>
+                        <p>时间线拉得很长。<strong>6 月 18 日</strong>发现该系统上存在非员工账号，初判是"这些账号没有绑定应用，碰不到客户数据"。<strong>6 月 21 日</strong>通过其托管安全研究项目收到报告，指出外部用户可以在该系统上自助注册，于是限制访问、修掉授权缺陷——但当时没有意识到数据已经被读过。<strong>6 月 27 日至 7 月 2 日</strong>，未授权账号读取了归档客户数据。<strong>10 月 19 日</strong>才确认这件事，事件升级为可报告级别。<strong>11 月</strong>开始通知受影响客户。从首次检测到确认外泄，中间隔了约<strong>四个月</strong>。</p>
+                        <p>DigiCert 自己的根因分析写得很直白：这次迁移被当成<strong>基础设施变更</strong>处理，而不是<strong>安全变更</strong>，因此没有触发配套的评审；网络可达性改了，但没有重新评估由此产生的暴露面。另外还有一个监控缺口——被拦下的访问尝试<strong>没有产生 SIEM 告警</strong>，直到事后才补上。</p>
+                        <p>泄露的是姓名、公司邮箱、电话、公司地址；部分记录还带身份核验材料——<strong>护照、驾照、水电账单</strong>扫描件。没有泄露的是 CA 核心服务、CertCentral、DiGiCert ONE、已签发的证书、客户登录凭据。受影响人数<strong>没有披露</strong>，公司称仍在核查归档的身份文件、会继续通知。</p>
+                        <p>为什么"只读"这件事不能安慰人。安全工程师 Donovan Farrell 的说法被反复引用：<strong>一张护照扫描件加一张水电账单，已经够过很多客服的身份核验了</strong>——改手机号、改银行预留、重置账号，这类操作要的往往就是这两样。安全架构师 Fabian Bader 本人也在受影响范围内，他说"有限"的泄露覆盖了他的完整个人数据，可能还包括他为申请证书提交的核验文件。放在 CA 这个位置上还有一层：<strong>证书的信任建立在核验流程的完整性上，不只是密钥的保密性。</strong>这次核验材料本身泄露了，证书没被伪造，但"我们靠这些材料确认过你是谁"这件事的可信度被动摇了。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"从 VPN 后面搬到公网"是一次安全变更，不是一次网络变更。</strong>这句话在 DigiCert 的根因分析里是自己写的，也是整件事最可复用的一条。任何"临时开放""迁移期间放通""新区域可达"的动作，都该触发一次对暴露面的重新评估，而不是只改路由。</li>
+                            <li><strong>只读权限在归档数据面前等于完全权限。</strong>只读能做的事就是读，而这类系统的全部价值就是"里面存着东西"。把"不能改"当成"危害有限"，是权限分级里最常见的误判。</li>
+                            <li><strong>检测到异常账号，和确认数据是否被读，是两件事。</strong>前者是账号层面的信号，后者需要查访问日志、对象级读取记录。中间那四个月是这次事件真正的成本——如果 6 月就把"这个账号读过哪些归档"查清楚，通知能在 7 月发出去。</li>
+                            <li><strong>身份核验材料是一类被低估的高价值资产。</strong>它不参与任何加密运算、不签发任何东西、不在密钥管理体系里，所以经常不在最高保护级别。但它能做的事比一把密钥更直接。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">内部系统从 VPN 后搬到公网</span>
+                        <span class="flow-step critical">迁移按基础设施变更处理，无安全评审</span>
+                        <span class="flow-step critical">自注册端点对外，账号不走 MFA</span>
+                        <span class="flow-step">授权缺陷给到归档只读权限</span>
+                        <span class="flow-step critical">06-27 至 07-02 数据被读取</span>
+                        <span class="flow-step">06-18 就发现账号，初判错误</span>
+                        <span class="flow-step critical">10-19 才确认，四个月空窗</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Hickory DNS 六条，DNSSEC 验签不看 Signer's Name 是不是本区</h4>
+                    <p>11 月 7 日至 8 日，NVD 收进一批 <strong>Hickory DNS</strong> 的 CVE——Rust 生态里最常用的 DNS 库，<code>hickory-proto</code> / <code>hickory-net</code> / <code>hickory-resolver</code>，全部修在 <strong>0.26.2</strong>，报告者 qifan-sailboat。最重的是 <strong>CVE-2026-123605</strong>（CVSS 3.1 <strong>8.8</strong> / 4.0 8.7，CWE-347）：校验器拿 RRSIG 去比对的 DNSKEY，是<strong>按 RRSIG 里 Signer's Name 字段写的那个名字</strong>去取的，<strong>没有核对这个名字是不是这条 RRset 所在的区</strong>。后果是：任何控制了一个安全区（有 DNSSEC 签名的区）的人，都能为<strong>任意不相关区</strong>里的记录签出"有效"签名，而用 <code>DnssecDnsHandle</code> 的解析器、递归服务器和客户端会把它当已认证数据接受。同批还有几条：<strong>123581</strong>（6.9，CWE-345）——应答区里只要出现任何一个有效 RRset 就当成肯定回答，不检查这个 RRset 是不是在回答这个查询，攻击者可以塞"签过名但不相关"的 RRset，把本该是 no-data 的响应变成肯定回答；<strong>123583</strong>（6.3）——对否定应答没有做出站域（bailiwick）过滤，可以投毒缓存，也让上面那个验签缺陷更容易被利用；<strong>123597</strong>（3.7）——DS 查询路径把 SERVFAIL / REFUSED / 超时这类瞬时错误缓存成 Bogus 结论，攻击者只要让子区的 DS 子查询失败，该区下所有名字会一直返回 SERVFAIL 直到缓存 TTL 到期。另外还有 123582、123596 两条。DNSSEC 的整个信任模型建立在"签名者身份"和"签名范围"的绑定上，这个绑定不校验，等于把"我控制了一个区"放大成"我能替所有区签名"。做递归解析、做 DNS 中间件、把 hickory 编进自己产品的团队，值得单独核一遍版本。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Kyverno 两条：10 月 23 日就修好了，11 月 8 日才给编号</h4>
+                    <p><strong>CVE-2026-124440</strong>（CVSS 3.1 <strong>9.9</strong>）——1.19.1 里那个 apiCall 命名空间限制，可以被<strong>畸形的百分号转义</strong>绕过，再次到达集群管理员权限；<strong>CVE-2026-124441</strong>（8.8）——generate 规则在目标 kind 或 namespace 是变量时<strong>跳过授权检查</strong>。两条都修在 <strong>1.19.2</strong>（Helm chart 3.9.2），而这个版本 <strong>10 月 23 日</strong>就发布了，编号到 11 月 8 日才给。这和 11 月 5 日那一批是同一个模式：项目早发版，CVE 编号晚到。11-05 期已经写过同批七条（122302 / 303 / 304 / 310 / 311 / 313 / 321，六个 9.8 至 9.9），今天这两条是补充。在 10 月 23 日到 11 月 8 日之间升级过 Kyverno 的集群，实际上已经安全了；只看 CVE 编号的资产台账，会把它们记成"今天新出的高危"。多租户集群、租户能写命名空间级 Kyverno 策略的环境，是这批的共同受害面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 两个不需要账号的 9.8：一个 WordPress 插件，一台停产路由器</h4>
+                    <p><strong>CVE-2026-110963</strong>（<strong>9.8</strong>，Userplace WordPress 插件 1.2.0 及以下）：一个对未认证用户开放的 AJAX 动作<strong>没有做授权检查</strong>，而且保护它的 nonce <strong>是公开暴露的</strong>。两件事加起来，未认证访问者可以<strong>直接创建一个管理员账号</strong>，或者写任意站点选项——站点接管，修在 1.3.0。<strong>CVE-2026-124560</strong>（<strong>9.8</strong>，CVSS 4.0 8.9，v2 口径 10.0，D-Link DIR-878 1.20B05）：HNAP 处理器的 <code>GetCAPTCHAsetting</code> 函数，<code>uid</code> 参数未做边界检查，导致<strong>堆溢出</strong>，可远程触发，<strong>PoC 已公开</strong>（GitHub 上有专门目录），而且记录里明确写着"该产品已不再由维护者支持"——不会有补丁。11 月 9 日发布，VulDB 是 CNA。两台设备的共同点：一旦暴露在公网，决定风险的不是 CVSS，是"有没有改过默认口令"和"有没有开外网管理"。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Truffle Security 直接去找发钥匙的人：140 万条还活着的泄露密钥</h4>
+                    <p><strong>11 月 4 日</strong>，Truffle Security（TruffleHog 的维护方）启动 <strong>Secrets Revocation Program</strong>，免费，目标是处置约 <strong>140 万条</strong>在公网上公开暴露、<strong>经实测仍然有效</strong>的密钥。推它出来的数字很刺眼：<strong>去年上报的密钥里，有 81% 在六个月后依然可用。</strong>通知不管用。机制是绕开"等人来改"这一步：把经过验证的活密钥直接交给<strong>发钥匙的那一方</strong>。发行方可以提供一个吊销端点让 Truffle 直接调用，也可以通过 webhook 接收已验证的密钥、<strong>在 14 天内自行吊销</strong>。无论密钥主人看不看邮件，钥匙都会死。目前 <strong>16 家</strong>发行方接入，包括 Hugging Face、Notion、Vercel、Resend、RubyGems、Twilio。效果有先例：Google 从 2024 年 6 月 16 日起默认禁用暴露的 GCP 服务账号密钥，在只做通知的年代 Truffle 测到 <strong>72%</strong> 的暴露密钥保持有效，改成自动禁用之后降到 <strong>11%</strong>（用户可主动退出，到不了零）。AI 编码工具这一层也在统计里：<strong>2025 年 1 月以来，在 AI 编码工具的配置文件里找到 2,655 个有效密钥</strong>，这一类在一年前几乎不存在。顺带两个更大的存量数字：公开 GitHub 仓库里 <strong>54.3 万</strong>条有效凭据，跨代码库、镜像、CI 日志的 <strong>43.1 万</strong>条 AWS 密钥。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. KEV 连续三天零新增，而云端那两个 10.0 客户什么也不用装</h4>
+                    <p>CISA KEV 目录当前版本 <strong>2026.11.06</strong>，共 <strong>1769 条</strong>。自 11 月 6 日加入 CVE-2026-19868（SonicWall SonicOS SSLVPN，SAML 认证绕过）之后，<strong>11 月 7 日、8 日、9 日均无新增</strong>。今天六条头条里，OpenEMR 那 44 条不在 KEV，Contact Form 7 不在 CISA KEV（尽管有情报源把它列进了自己的 Industry KEV 表），imgproxy 三条不在，GhostMap 连编号都没有。<strong>KEV 零新增不等于没有在打</strong>，它只说明没有新的"已被确认在野"条目进表。对照的另一面：11 月 5 日至 6 日，微软安全更新指南挂出两个 CVSS <strong>10.0</strong>——<strong>CVE-2026-85889</strong>（Azure AI Foundry，CWE-306 关键功能缺失认证，<code>PR:N</code>，范围变更，未认证攻击者可经网络提权，报告者 Rémy Marot）与 Entra 设备注册那条（11-07 期已写）。两条公告都写着同一句：<strong>客户不需要执行任何操作即可解决</strong>。同一批里真正需要装补丁的本地提权（UMPS 的 <strong>7.8</strong> 与安全内核的 <strong>8.2</strong>），分数反而更低，埋在 26H1 的带外累积更新 KB5129194 里。看板上"分数"和"是否需要我动手"这两个维度必须分开：<strong>云端满分是一条通知，本地 7.8 是一项待办。</strong></p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "OpenEMR四十四条": [0.22, 0.95]
+    "CF7千万站点": [0.45, 0.90]
+    "imgproxy三条": [0.28, 0.85]
+    "ThisBash跨设备": [0.62, 0.78]
+    "Kyverno两条": [0.30, 0.75]
+    "GhostMap无补丁": [0.40, 0.72]
+    "HickoryDNS六条": [0.25, 0.70]
+    "Userplace与DIR878": [0.55, 0.68]
+    "DigiCert归档": [0.88, 0.66]
+    "Truffle密钥吊销": [0.70, 0.45]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "授权检查缺在对象层": 28
+    "修复版本与公告错位": 24
+    "设计属性而非缺陷": 18
+    "厂商拒绝修复": 12
+    "配置与迁移事故": 10
+    "凭据生命周期": 8
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月6日至11月9日
+    10月6日 : imgproxy公告评级Critical 页面至今仍写无CVE
+    10月19日 : DigiCert确认归档数据被读取
+    10月23日 : Kyverno 1.19.2发布含两处修复
+    10月29日 : Contact Form 7 6.2.4发布 日志未提安全
+    11月4日 : Truffle密钥吊销计划启动
+    11月5日 : Bitdefender公开GhostMap
+    11月5日 : ThisBash Escape首次披露
+    11月6日 : KEV加入SonicWall 19868
+    11月7日 : Hickory DNS一批CVE进库
+    11月7日 : ThisBash更新 扩展自动点Allow
+    11月8日 : OpenEMR 44条一次性收录
+    11月8日 : WPScan发布Contact Form 7编号
+    11月8日 : imgproxy三条凌晨2点16分进库
+    11月8日 : Kyverno 124440与124441给编号
+    11月9日 : DIR-878 124560收录 PoC已公开
+    11月9日 : KEV连续第三日零新增
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-124469（OpenEMR Fee Sheet 药品库存 SQL 注入，CVSS 3.1 9.9 / 4.0 9.4，低权限可打，可读患者数据与 bcrypt）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-124469">nvd · 124469</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — CVE-2026-124450（fax/sms disposeDocument 路径穿越，读 sqlconf.php 拿库口令后写文件到 RCE，9.9，修 8.3.0）</span>
+                        <a href="https://www.vulncheck.com/advisories/openemr-before-8.3.0-arbitrary-file-read-write-via-disposedocument">vulncheck · 124450</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — CVE-2026-124445（OneTimeAuth 忽略一次性与访问次数限制、消费后不吊销、PIN 无速率限制，9.8，受影响自 7.0.1）</span>
+                        <a href="https://www.vulncheck.com/advisories/openemr-7.0.1-before-8.4.0-onetimeauth-token-replay-and-pin-brute-force">vulncheck · 124445</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-124467（ESign Router require_once 未净化 module 参数，配合 fax 上传任意名文件到可预测临时路径，8.8）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-124467">nvd · 124467</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — CVE-2026-124483（处方 REST API 核 patients.med 而非 patients.rx，可伪造与停用处方的全租户生效，8.7）</span>
+                        <a href="https://www.vulncheck.com/advisories/openemr-before-8.4.0-improper-authorization-via-prescription-rest-api">vulncheck · 124483</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — CVE-2026-124458（FHIR /fhir/Person/:uuid 患者区隔绕过，可读全体员工人口学信息，7.1）</span>
+                        <a href="https://www.vulncheck.com/advisories/openemr-before-8.4.0-fhir-patient-compartment-bypass-via-person-endpoint">vulncheck · 124458</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory — GHSA-rq9x-wq7p-vvvq（CVE-2026-124480，APICSRFTOKEN 头跳过 FHIR scope 检查，跨患者读问卷 PHI，8.8）</span>
+                        <a href="https://github.com/advisories/GHSA-rq9x-wq7p-vvvq">github · 124480</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense — 高危条目版本对照表（CVE 评分与 OpenEMR 自身评级两套标准）、"只有 8.4.0 盖全"的结论、四 Critical 一 High</span>
+                        <a href="https://brandefense.io/security-news/openemr-critical-vulnerabilities-8-3-0-8-4-0">brandefense · 版本表</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OffSeq Threat Radar — CVE-2026-124483（11-08 发布、无 nuclei 模板、无 Metasploit 与 Exploit-DB 条目、不在 KEV、Mirage 无攻击流量）</span>
+                        <a href="https://radar.offseq.com/threat/cve-2026-124483-incorrect-authorization-in-openemr-7d0b6925b1343df3">offseq · 无在野证据</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WPScan — CVE-2026-114432 原始条目（6.2 至 6.2.3、无类型与扩展名校验、临时文件未清理、扩展名白名单修复）</span>
+                        <a href="https://wpscan.com/vulnerability/6b0a5d1f-84fb-425f-8d37-ddde5703937c/">wpscan · 114432</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-114432（CVSS 3.1 9.8，向量全为 N 与 H，CWE-434，NVD 尚未给出自己的评分）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-114432">nvd · 114432</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense ATLAS — 口径一：标注已在野、11-08 进 Industry KEV feed、不在 CISA KEV、无公开 PoC 代码、EPSS 0.2%</span>
+                        <a href="https://atlas.brandefense.io/vulnerability-intelligence/CVE-2026-114432">atlas · 口径一</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">pwn.watch — 口径二：明确写 "No exploitation has been reported"、6.2.4 发布于 10-29 并同日跟 6.2.4.1、PoC 排到 11-19</span>
+                        <a href="https://pwn.watch/">pwn.watch · 口径二</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Azeem Hassni — 1000 万活跃安装、Debian/Ubuntu Apache 的 .phar 执行路径、nginx 与 .htaccess 场景降级为任意文件写入、changelog 未点名安全</span>
+                        <a href="https://azeemhassni.com/blog/wire-contact-form-7-unauthenticated-file-upload">azeem · 配置差异</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">pwn.watch — ThisBash Escape 追踪条目（自 11-05、11-07 02:30 UTC 更新、无补丁、同缺陷存在于 Claude Code Remote Control 与 Claude Cowork、10-30 支持页仍标 limited beta）</span>
+                        <a href="https://pwn.watch/">pwn.watch · ThisBash</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">商传媒（转述 The Hacker News）— Forever Security 演示、prompt forcing 与自动点击 Allow、全局 npm 安装后启动计算器、跨设备触达、Anthropic 计划 10 月底停用 Dispatch</span>
+                        <a href="https://sunmedia.tw/news/technology/1794014743">商传媒 · 攻击链</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻（11-08 综述）— ThisBash Escape 的攻击链描述与"暂未分配 CVE 编号"的表述</span>
+                        <a href="http://mp.weixin.qq.com/s?__biz=Mzg5MjEzMjE4Mw==&amp;mid=2247566629&amp;idx=3&amp;sn=89a1e84db142feb5e0ebb30e72c2dcf5">腾讯 · 11-08</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatCluster（Bitdefender Labs 研究转述）— SIGBUS 机制、安装即触发、110 次循环、Pixel 10 / Android 17 / 8-05 补丁复现、起点是加壳银行木马 dropper</span>
+                        <a href="https://threatcluster.io/article/ghostmap-android-90c15c7d">threatcluster · GhostMap</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense — libziparchive 只在 stored 时校验、libandroidfw 对非 deflated 一律按声明大小映射、Google 两次回复原文、三个滥用方向</span>
+                        <a href="https://brandefense.io/security-news/ghostmap-android-flaw">brandefense · 机制</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AndroidPure — 安全模式下 72 次循环、ADB 恢复的严格前提、CVE-2016-6724 先例对比、检测名 Android.Riskware.Ghostmap.rA</span>
+                        <a href="https://www.androidpure.com/android-ghostmap-crash-loop-flaw">androidpure · 细节</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">网易（11-05 中文详版）— 1 秒首崩、110 次循环、8 月 20 日与 25 日两次报告、截至披露无修复方案</span>
+                        <a href="https://www.163.com/dy/article/LB3IOLNV0511CQ7I.html">网易 · 11-05</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SeverityDaily — 三条完整参数对照、公告 10-06 比 CVE 早 33 天、下限不一致（4.0.0 与 3.3.0）、页面仍印 No known CVE、vulnStatus 全为 Received、123615 无 packageURL</span>
+                        <a href="https://severitydaily.com/imgproxy-three-ico-loader-cves-november-8-cve-2026-123614-9-8-integer-overflow-data-size-fix-4-0-16-cve-2026-123615-7-5-out-of-bounds-write-fix-4-0-17-cve-2026-123616-ghsa-hff9-october-6-33-days-no-re">severitydaily · 三条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory — GHSA-hff9-5pqw-6w9f（10-06 发布，Critical 9.8，CWE-122/190/787，报告者 mateofumis 与 JasonPuglisi，分析者 JacobBrackett，无 workarounds）</span>
+                        <a href="https://github.com/imgproxy/imgproxy/security/advisories/GHSA-hff9-5pqw-6w9f">github · GHSA-hff9</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-123614（ICO 加载器整数溢出导致堆溢出，4.0.0 起至 4.0.16 前）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123614">nvd · 123614</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Record（readkernel 转述）— 迁移被当作基础设施变更而非安全变更、6-18 发现账号、6-21 外部报告、6-27 至 7-02 读取、10-19 确认、已报执法</span>
+                        <a href="https://readkernel.com/security/digicert-data-breach">readkernel · 时间线</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">pid.co.il（Cyber Defense Magazine）— 自注册端点原为内部应用设计、账号不走 MFA、默认只读、四个月空窗、Donovan Farrell 的评估、处置四项</span>
+                        <a href="https://pid.co.il/digicert-data-breach-identity-documents">pid · DigiCert</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Future Technology — 控制对照表（迁移前评审 / MFA / 监控研判 / 网络位置）、Fabian Bader 本人数据在受影响范围内</span>
+                        <a href="https://futuretechnologyhq.com/article/digicert-breach-id-documents-exposed-by-botched-migration">futuretech · 对照表</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT Daily — 事件报告发布在 Mozilla Bugzilla、公司最初按"账号创建问题"而非"数据访问事件"处理</span>
+                        <a href="https://en.it-daily.net/shortnews-en/digicert-data-breach-passports">itdaily · 初判</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — CVE-2026-123605（RRSIG 按 Signer's Name 取 DNSKEY 而不校验是否本区，8.8 / 8.7，修 0.26.2，报告者 qifan-sailboat）</span>
+                        <a href="https://www.vulncheck.com/advisories/hickory-dns-through-0.25.0-alpha.3-dnssec-validation-bypass-via-rrsig-signer-s-name">vulncheck · 123605</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — CVE-2026-123581（有效但不相关的 RRset 被当成肯定回答，6.9）</span>
+                        <a href="https://www.vulncheck.com/advisories/hickory-dns-through-0.26.0-alpha.1-dnssec-validation-bypass-via-unrelated-rrset">vulncheck · 123581</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OffSeq — CVE-2026-123583（否定应答未做出站域过滤，6.3）与 CVE-2026-123597（DS 瞬时错误被缓存为 Bogus，3.7），均修 0.26.2</span>
+                        <a href="https://radar.offseq.com/threat/cve-2026-123583-acceptance-of-extraneous-untrusted-data-with-trusted-data-in-hickory-dns-0b86bf7bbd74f11a">offseq · 123583</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">pwn.watch — Kyverno 124440（畸形百分号转义绕过命名空间限制至集群管理员，9.9）与 124441（目标为变量时跳过授权，8.8），修于 1.19.2、发布于 10-23、编号 11-08</span>
+                        <a href="https://pwn.watch/">pwn.watch · Kyverno</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WPScan — CVE-2026-110963（Userplace 1.2.0 及以下，未认证 AJAX 动作无授权检查且 nonce 公开，可建管理员，9.8）</span>
+                        <a href="https://wpscan.com/vulnerability/c30f71d3-2ec4-4bee-8864-f7c19cf6fcb7/">wpscan · 110963</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-124560（D-Link DIR-878 1.20B05 HNAP GetCAPTCHAsetting uid 堆溢出，9.8 / 4.0 8.9 / v2 10.0，PoC 公开，产品已停产）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-124560">nvd · 124560</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Quantum Dispatch — Truffle Security 密钥吊销计划（140 万条、81%、16 家发行方、72% 降至 11%、AI 工具配置文件 2,655 个有效密钥）</span>
+                        <a href="https://thequantumdispatch.com/articles/truffle-secrets-revocation-program-leaked-keys">qd · 140 万条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TSCO（转述 BleepingComputer）— 两种接入方式（吊销端点 / webhook 14 天内自行吊销）、54.3 万 GitHub 凭据与 43.1 万 AWS 密钥</span>
+                        <a href="https://tscogroup.com/truffle-security-launches-program-to-revoke-14-million-live-secrets">tsco · 接入方式</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录 JSON（2026.11.06 版，1769 条；最近一条为 11-06 的 CVE-2026-19868；11-07 至 11-09 无新增）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CSDN DevPress（微软技术日报 11-08 转述）— CVE-2026-85889（Azure AI Foundry，CWE-306，10.0，PR:N，Rémy Marot）、CVE-2026-85885（9.9）、本地两条 7.8 与 8.2 修于 KB5129194</span>
+                        <a href="https://devpress.csdn.net/aibjcy/6aefb52c40858c2d88192cbb.html">csdn · 微软日报</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安天威胁情报（每日安全简讯 20261108）— 当日要闻清单，用于交叉核对该批条目存在性</span>
+                        <a href="http://ti.antiy.cn/">安天 · 简讯</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0 — 11-08 至 11-09 收录 338 条，本期 OpenEMR 按修复版本分组统计（8.3.0 共 29 条 / 8.4.0 共 15 条）与全部评分、向量逐条核对</span>
+                        <a href="https://nvd.nist.gov/developers/vulnerabilities">nvd · API</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注两边口径（Contact Form 7 是否已在野、GhostMap 崩溃循环次数、OpenEMR 的 CVE 评分与项目自身评级两套标准）；仅单一来源支撑的条目已在正文单独标注。勒索泄漏站条目为团伙自述，未经独立核实。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年11月9日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
