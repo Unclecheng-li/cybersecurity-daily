@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月11日（第214期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月11日 星期三</span>
+            <span class="edition-number">第 214 期 | 总第 214 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>空的取回来正好是第一张令牌 · 厂商能给的最安全建议是关机 · 撤销令牌那一步会删掉家目录 · 唯一的在野是本月最低那个分 · 同一家写的两份文件互相对不上 · 今年第八个零日已经不算新闻
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">看起来最干净的那一格</h2>
+                <p class="sub-headline">一个人往请求里塞了个空对象——{}——就拿到了虚拟化管理平台的管理员会话，进而 root 掉整台 XCP-ng 节点，而这个洞到今天还没有 CVE 编号。一家 RMM 厂商在被公开 33 个零日之后能做的最安全的事，是让所有客户把自己的产品关掉。一个 Ruby gem 在安装时就已经跑完了，而事件响应手册的第一步"先撤销被盗令牌"会触发它删掉你整个家目录。微软这个月修了一千多条，其中唯一被在野利用的那条评了 6.5 分、等级 Moderate。Adobe 同一份公告上写"不需要权限"，Adobe 自己提交的 CVE 记录上写"需要低权限"，三行都不一样。Chrome 今年第八个在野零日，已经写不进"重大"这个词里了。每一个判断依据看起来都没问题，问题是它们指向的方向。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">空对象</span>
+                    <h3 class="article-title">一个空 JSON 对象，换一张管理员令牌</h3>
+                    <div class="article-meta">
+                        <span>VSA-2026-062 · 11-10 公告 · 无 CVE 编号 · 无 CVSS 评分 · 影响 Xen Orchestra 与 XOA</span>
+                        <span class="cvss-score">已在野利用 · 修复见 6.9.1–6.10.0 与 6.9.2–6.10.1 两种口径</span>
+                    </div>
+                    <div class="article-body">
+                        <p>2026 年 11 月 10 日，法国 Vates VMS 发布安全公告 VSA-2026-062，说 Xen Orchestra 里有一个严重的认证绕过，并且<strong>已经在被利用</strong>。这份公告最刺眼的地方不是严重性，是它<strong>没有 CVE 编号，也没有 CVSS 评分</strong>。</p>
+                        <p>Xen Orchestra 是管 XCP-ng 虚拟化环境的 Web 控制台——虚拟机、主机、资源池都从这里管。这类东西一旦被拿管理员，结果不是"一个后台被登录"，是<strong>整批宿主机</strong>。</p>
+                        <p><strong>缺陷本身只有一句话。</strong>公告原文是这么写的：REST 的 cookie 解析会把 <code>authenticationToken=j:%7B%7D</code> 变成 <code>{}</code>，REST 认证<strong>不要求这个值必须是字符串</strong>就把它交给 XO 的 token provider；token 集合把 <code>{}</code> 当成"没有过滤条件"的查询，返回它拿到的第一条令牌；如果这条令牌没过期，provider 就以它的所有者身份通过认证。进去之后，<code>/rest/v0/users/me/authentication_tokens</code> 这个已经认证过的路由会把"可复用的登录令牌 ID"一并交出来。</p>
+                        <p>也就是说：<strong>攻击者不需要密码、不需要劫持会话、不需要过 MFA。</strong>他只需要让服务端相信"我手上这个空对象，就是某个人的令牌"。</p>
+                        <p>Vates 自己的影响描述是：攻击者可以以 Admin 权限执行操作，Xen Orchestra 被攻陷可导致受管资源池上的任意代码执行，以及以 root 身份完全接管 XCP-ng 节点。发现者是 TDC NET Security 的 Filip Magic（@mad31k）和 Christoffer Olsen，修复提交是 PR #10748。</p>
+                        <table class="affected-table">
+                            <tr><th>类别</th><th>指标</th></tr>
+                            <tr><td>攻击方基础设施</td><td><code>91.211.251[.]112:8001</code>、<code>ustar3rqxgnskzgnwkgpofgtvxevm6cx3lxdbwt4mndtveqyaohid[.]onion:3333</code>（该 IP 在 VirusTotal 上被标为 RedLine Stealer 的 C2）</td></tr>
+                            <tr><td>可疑 cookie</td><td>任何含 <code>authenticationToken=j:%7B%7D</code> 或 <code>authenticationToken=j:{}</code> 的 HTTP 请求</td></tr>
+                            <tr><td>虚拟机</td><td>一台名叫 <code>pivot2</code> 的虚拟机</td></tr>
+                            <tr><td>VM 配置</td><td>配置了 <code>hvm_serial: file</code> 参数的虚拟机</td></tr>
+                            <tr><td>落地文件</td><td><code>/etc/cron.d/zz-ustar</code>、<code>/etc/cron.d/zz-ustar2</code>、<code>/.ustar5</code>、<code>/.ustar6</code>，检查清单里还含 <code>/etc/ld.so.preload</code></td></tr>
+                        </table>
+                        <p><strong>版本号对不上，这件事要单独说。</strong>BleepingComputer 与 The Hacker News 都写修复版本是 Xen Orchestra 6.9.1（stable）与 6.10.0（latest），对应 xo-server 包 5.211.2 与 5.213.1。但另有一份逐条读公告的分析指出，<strong>Vates 现行公告列的是 6.9.2 与 6.10.1</strong>，早期报道引的是上一版。这种情况下的正确做法是回厂商公告本身核当前版本，不是照着新闻里的数字验收——两个都是"官方说过"的数字，但只有一个是最新的。</p>
+                        <p><strong>最难的部分是"发现了也没记录"。</strong>Vates 明确说，这种利用<strong>不会在日志里留下任何标识</strong>——它就是一次带着怪 cookie 的正常 HTTP 请求，认证通过了，后面全是合法 API 调用。没有崩溃、没有告警、没有可用性抖动。所以只能靠 HTTP 层的流量监控（tcpdump、Wireshark、代理或 WAF 日志）去捞那串 <code>j:%7B%7D</code>。历史日志要往前翻，因为这种会话可以在里面躺几天到几周没人看。</p>
+                        <p><strong>没有 CVE 编号的副作用</strong>：所有按 CVE 匹配的扫描器都不会标出这台机器，核对版本只能手工对公告。这是这类"厂商自有编号"漏洞的固定成本，而它出现的位置——虚拟化管理面——恰好是扫不到就最危险的那种。Vates 也给了个降风险的判断：大多数 XO 部署并不对公网开放，暴露面有限。这句话既是安慰也是提醒，真正需要今天动手的，是那批把管理口开在公网上的。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">塞一个空对象进 cookie</span>
+                        <span class="flow-step critical">不校验类型 直接交给令牌提供方</span>
+                        <span class="flow-step">集合当成无过滤查询</span>
+                        <span class="flow-step critical">返回第一条未过期令牌</span>
+                        <span class="flow-step">取可复用登录令牌 ID</span>
+                        <span class="flow-step critical">Admin 权限 接管整片资源池</span>
+                        <span class="flow-step">日志里什么都不会留下</span>
+                    </div>
+                </article>
+
+                <!-- 文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">全量下线</span>
+                    <h3 class="article-title">三十三条零日公开后，厂商让客户把产品关掉</h3>
+                    <div class="article-meta">
+                        <span>N-able N-central · 11-08 公开带 PoC · 11-09 14:00 UTC 托管版三区下线 · 11-10 发 2026.4 HF2</span>
+                        <span class="cvss-score">33 条零日对 7 个 CVE · Censys 记 1,728 台公网暴露 · 单 IP 18 小时 68 次尝试</span>
+                    </div>
+                    <div class="article-body">
+                        <p>一家软件厂商让客户把自己的产品关机，这件事不常发生。<strong>2026 年 11 月 10 日，N-able 这么做了。</strong></p>
+                        <p>起因是 11 月 8 日（周日）晚，独立安全研究者 Sean Bales（GitHub 账号 Oracle-Security）公开了一个名叫 <strong>Able2Shell</strong> 的仓库，里面是 N-able N-central 的 30 多条零日漏洞和可用的利用代码——安全公司 Huntress 数的结果是 <strong>33 条</strong>。他测的是 N-central Appliance <strong>2026.4.0.31</strong>，一个预发布构建，并在仓库文档里说这些洞"大多数或全部"同样影响更早的版本，包括当前最新发布版。他自述挖掘过程用了 AI 辅助。</p>
+                        <p>N-central 是 MSP 和 IT 团队用来远程监控、打补丁、支持终端的 RMM 平台。<strong>一台 N-central 服务器上挂着这家 MSP 所有客户的机器</strong>，所以它的失陷不是一家的事。</p>
+                        <p><strong>33 条拼成四条链，最狠的那条不需要任何凭据。</strong>链路一：<code>service-import</code> 功能的<strong>未认证 XXE</strong> 窃取本地可信会话，重置某个账号密码，以 <code>nable</code> 服务账户执行命令，同一条链还能直接创建一个<strong>已启用、密码由攻击者指定</strong>的 Default Administrator 账号。链路二：设备有一套可预测的 passcode，匿名攻击者借此注入恶意补丁元数据，管理员查看补丁详情时存储型 XSS 在管理员浏览器里执行，调用以 <code>nable</code> 身份运行命令的接口。链路三：同一个 XSS 可以劫持管理员会话，提交一份构造好的审计导出配置，命令以 root 执行。链路四：软件仓库功能的目录穿越把一个可执行的网页写进服务器 Web 目录，再通过一个免密码安装程序升到 root。</p>
+                        <p>另有一条原生 <strong>GenericTCP 栈溢出</strong>，单独也能到 root。披露清单里还包括凭据泄露、任意文件写入、目录穿越、认证绕过，以及<strong>审计日志篡改</strong>——最后这条意味着：如果一台控制台在被关机之前就已经失陷，它自己的日志可能证明不了什么。</p>
+                        <table class="affected-table">
+                            <tr><th>时间</th><th>事件</th></tr>
+                            <tr><td>11-08 晚</td><td>Able2Shell 仓库公开，33 条零日带 PoC，无预警</td></tr>
+                            <tr><td>11-09 14:00 UTC</td><td>Hosted N-central 在美洲、APAC、欧洲三区全部下线；本地部署客户被要求关机</td></tr>
+                            <tr><td>11-09 夜间</td><td>watchTowr 观测到针对蜜罐的利用尝试；Previdian 记单 IP 约 18 小时内 68 次</td></tr>
+                            <tr><td>11-10</td><td>发布 N-central 2026.4 HF2，公告列出 7 个 CVE；托管区逐区升级恢复</td></tr>
+                            <tr><td>之后</td><td>N-able 声明还会有一次后续 hotfix 补剩下的</td></tr>
+                        </table>
+                        <p>HF2 列的七个 CVE 是：<strong>125883</strong>（多条 XXE）、<strong>125878</strong>（多条 OGNL 注入）、<strong>125879</strong>（通过 <code>nable</code> 可写的 syslog-ng 配置本地提权到 root）、<strong>125880</strong>（MMS3 补丁元数据存储型 XSS，管理员上下文）、<strong>125881</strong>（service import schema 校验的 schema-hint SSRF）、<strong>125882</strong>（文件仓库上传路径穿越导致 RCE，致谢 Nate Fair / Sprocket Security）、<strong>91000</strong>（不安全 IPC 通道导致本地提权）。<strong>33 条对 7 条</strong>——厂商自己也没说这七个覆盖了多少。</p>
+                        <p><strong>三个必须一起看的数字</strong>：Censys 记到 <strong>1,728 台</strong>公网暴露的 N-central；Previdian 那个 68 次、单 IP、18 小时的数字说明扫描已经开始得很彻底；而 N-able 反复强调"没有证据表明客户环境被成功利用"。这三句话不矛盾，但它们回答的是三个不同的问题——暴露多少、被戳多少、成了几个。第三个问题的答案取决于你有没有日志能回答它，而审计篡改正好在攻击链里。</p>
+                        <p><strong>为什么是这时候爆的</strong>：Bales 对 BleepingComputer 说，他之所以不预警直接公开，是因为 N-able 对他报在<strong>另一个产品</strong>里的漏洞拖了几个月没修。这是 15 个月里 N-able 第四次被迫紧急响应——2025 年 8 月它修 CVE-2025-8875 和 8876 时，那两个洞已经作为零日被打了。Huntress 的一个实操提醒值得单独抄下来：补好的构建<strong>可能不会带新的版本号</strong>，别拿版本字符串当验收依据。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">周日晚上三十三条带 PoC 公开</span>
+                        <span class="flow-step critical">未认证 XXE 窃取本地可信会话</span>
+                        <span class="flow-step">可预测口令注入补丁元数据</span>
+                        <span class="flow-step critical">管理员看一眼就触发 XSS</span>
+                        <span class="flow-step">目录穿越写入可执行网页</span>
+                        <span class="flow-step critical">三区托管平台全部下线</span>
+                        <span class="flow-step">补丁只列了七个 CVE</span>
+                    </div>
+                </article>
+
+                <!-- 文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">装包即感染</span>
+                    <h3 class="article-title">装包那一刻就已经跑完了，撤销令牌会删掉家目录</h3>
+                    <div class="article-meta">
+                        <span>RubyGems 上的 strutil-core 1.0.1 · 5.48 MB 载荷 · 上架到下架约 5 小时 · 发布后 70 秒被标记</span>
+                        <span class="cvss-score">读取 51 个凭据存储 · 令牌一旦返回 401 就删掉整个主目录 · Miasma 家族第一个 RubyGems 构建</span>
+                    </div>
+                    <div class="article-body">
+                        <p>一个自称"轻量字符串处理助手"的 Ruby gem，在 11 月 1 日上架，两个小时后被换成带载荷的版本，五小时后被下架。<strong>这五个小时里，任何人跑一次 <code>gem install</code> 或 <code>bundle install</code>，就已经完成了感染——不需要 require，不需要调用，不需要在应用里用到它。</strong></p>
+                        <p>Socket 在 11 月 6 日公开了分析。时间戳精确到秒：11-01 <strong>02:19:56</strong>，账号 <code>jamnajiea</code> 发布干净的 1.0.0，沙箱跑下来无恶意行为；<strong>04:05:04</strong> 同一账号发布 1.0.1，带 <strong>5.48 MB</strong> 载荷；<strong>04:06:14</strong> Socket 的 AI 扫描器标记为已知恶意代码——<strong>发布后 70 秒</strong>；<strong>08:52–09:13</strong> RubyGems 下架两个版本，前后约 5 小时。</p>
+                        <p><strong>载荷为什么能"装的时候就跑"</strong>：gem 声明了一个原生扩展，而 <code>ext/strutil-core/extconf.rb</code> <strong>里面一行构建逻辑都没有</strong>。在 Linux 和 macOS 上，它把 Bun 1.2.18 运行时从官方 Release 下到临时目录，用 Bun 跑旁边的 <code>index.js</code>，清理现场，然后写一个目标为空的 Makefile——这样安装过程不会报错，看起来一切正常。</p>
+                        <p><strong>最值得记的一点是：这个 gem 是蠕虫自己的注入器输出的产物。</strong>解码后的载荷里带一个 RubyGems 传播模块——拿到偷来的 API key 之后，逐个下载可发布的 gem，把载荷和安装器塞进去，改 gemspec 的版本号，用伪装成 gem 客户端的 User-Agent 推上去。把载荷里的安装器模板用自己的常量填满，能<strong>逐字节复现</strong>出这次发出去的 <code>extconf.rb</code>（SHA-256 c5264f3b…9c749）；安装器 36 行非空代码里，<strong>33 行</strong>与 2026 年 6 月那份为防御研究而公开的 Miasma 载荷逐字相同。</p>
+                        <p>这也顺手解释了一个很蠢但很好用的追踪线索：<strong>注入器只改 gemspec 的版本号，不改源码</strong>，所以那个发布为 1.0.1 的 gem，里面仍然写着 VERSION = '1.0.0'。十一月这版与六月相比改了四处：Bun 从 1.3.13 换成 1.2.18、把下载 URL 拆开以打断静态签名、换了新的客户端 UA、加了进度日志和 dry-run 开关。</p>
+                        <p><strong>它偷什么</strong>：先做一次 locale 检查，遇到俄语、白俄语、哈萨克语、乌兹别克语、吉尔吉斯语、塔吉克语、亚美尼亚语、阿塞拜疆语、乌克兰语、格鲁吉亚语、土库曼语、摩尔多瓦语的系统直接退出。然后收集云、包仓库、Git 托管、SSH、Docker、Kubernetes、Vault、密码管理器、系统钥匙串、钱包，以及 <strong>AI 编码工具的凭据</strong>——<code>.claude/.credentials.json</code> 和 <code>.codex/auth.json</code> 都在里面。Bitbison 的沙箱记录到它读了 <strong>51 个凭据存储</strong>。拿到 AWS 凭据会调 STS，在 <strong>17 个区域</strong>枚举 Secrets Manager 与 SSM 参数，在 11 个区域申请 ECR token。</p>
+                        <p>在 GitHub Actions runner 上它会去 <code>/proc</code> 里找 worker 进程，通过免密码 sudo 把一段内嵌 Python 管道过去抓进程内存里的密钥（2025 年 3 月 tj-actions/changed-files 那次的手法），接着通过 docker socket 杀掉 StepSecurity 的 Harden-Runner 容器，再装一个特权 Alpine 容器给 runner 免密码 sudo。数据用 AES-256-GCM 加密、密钥用 RSA-OAEP 包裹，POST 到 <code>paleasbest[.]top/v1/api</code>；失败就回退到公开 GitHub 仓库（描述写 project-utils，commit 前缀 AutoSyncComplete）或 GitLab。</p>
+                        <p><strong>AI 工具投毒是这轮最该看的部分</strong>：它会在用户主目录里找 AI 编码工具的配置，加一个叫 <code>workspace-tools</code> 的 MCP 服务器，用 node 把载荷再跑一遍；再加 SessionStart 钩子，会话一开就执行。有可用 Git 凭据的话，它把这套东西推进仓库：<code>.claude/settings.json</code>、<code>.cursor/mcp.json</code>、<code>CLAUDE.md</code>、<code>AGENTS.md</code>、<code>.vscode/tasks.json</code>。<strong>生成的 AGENTS.md 会让编码代理在第一条命令之前先跑一个 setup 脚本</strong>——只要在带信任设置的 AI 工具里打开一个受影响的仓库，就可能重新触发它。</p>
+                        <p><strong>持久化和那个陷阱</strong>：它装一个 Python 后门 <code>sync.py</code>，注册成 systemd 用户服务 <code>pkg-runtime</code> 或 LaunchAgent，每小时去公开 GitHub commit 里搜标记 <code>msync-3f7a</code>，只执行带有效 RSA-PSS 签名的脚本。另有一个叫 <code>net-health-checker</code> 的监视器，<strong>每 45 秒</strong>验一次偷来的 GitHub token；一旦返回 401 或 403，就执行删掉整个主目录的命令。</p>
+                        <p><strong>这就是为什么处置顺序要反着写</strong>：事件响应的第一反应是"立刻撤销被盗 token"，而在这套设计里，撤销就是引爆。正确顺序是先在隔离的主机上清掉 <code>net-health-checker</code> 和 <code>pkg-runtime</code>，再从<strong>干净设备</strong>上轮换全部凭据，最后重装机器。卸载 gem 不能解除感染，因为载荷活在 gem 目录之外。同一套基础设施还出现在 PyPI 包 <code>pystr-codec</code>（0.1.0–0.1.2）上，记为 MAL-2026-18432。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">干净版本上架两小时后被换掉</span>
+                        <span class="flow-step critical">extconf 里一行构建逻辑都没有</span>
+                        <span class="flow-step">下载 Bun 跑 index.js</span>
+                        <span class="flow-step critical">读五十一处凭据 加密外传</span>
+                        <span class="flow-step">往 MCP 配置里塞假服务器</span>
+                        <span class="flow-step critical">四十五秒查一次令牌 失效就删家目录</span>
+                        <span class="flow-step">先清进程再换设备轮换</span>
+                    </div>
+                </article>
+
+                <!-- 文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-medium">口径三种</span>
+                    <h3 class="article-title">三个数字都算对，唯一在野的那条是六点五分</h3>
+                    <div class="article-meta">
+                        <span>微软 2026 年 11 月补丁日 · MSRC 口径 1,094 条 · BleepingComputer 口径 1,235 条 · Tenable 口径 1,093 条</span>
+                        <span class="cvss-score">CVE-2026-124194 Outlook 欺骗 6.5 Moderate 唯一在野 · KEV 死线 11-24</span>
+                    </div>
+                    <div class="article-body">
+                        <p>十一月补丁日最大的新闻其实不是"又破纪录了"，而是一个月前刚破过——十月是 1,411（BleepingComputer）或 1,413（Tenable），十一月是 1,235 或 1,094，<strong>连续两个月过千之后，"一千多条"从紧急状态变成了地板价</strong>。</p>
+                        <p>先把数字对齐，因为今天不同来源给的三个数都"对"。<strong>MSRC 官方发布说明</strong>写：这次发布含 <strong>1,094 条微软 CVE</strong>（Windows 726、Office 174、SQL Server 59、开发者工具 53、SharePoint 27、Azure 20、Exchange Server 9、Defender 1、其他 25），另外重新发布 165 条非微软 CVE 但不含 Chrome；这 1,094 条里有 1,093 条是微软自己作为 CNA 分配的，Tenable 报的 1,093 就是这一栏。<strong>BleepingComputer 报 1,235</strong>，因为它把 Edge（Chromium）那一栏 <strong>142 条</strong>也算进来了，并且不含本月早些时候已经修掉的 108 条（Entra 设备注册 1、Mariner 82、Edge 25）。</p>
+                        <p>分类也跟着口径漂：BleepingComputer 的分布是 536 提权 / 296 RCE / 157 信息泄露 / 46 DoS / 27 安全功能绕过 / 22 欺骗 / 142 Edge；Tenable 的是 535 提权 / 296 RCE / 156 信息泄露 / 46 DoS / 27 绕过 / 22 欺骗 / 11 篡改。差异不大，但足够说明"这个月的严重漏洞有几个"这个问题没有唯一答案。</p>
+                        <p><strong>唯一被在野利用的那条，是本月的低分。</strong><strong>CVE-2026-124194</strong>，Microsoft Outlook 欺骗漏洞，CVSS 3.1 <strong>6.5</strong>（AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N），微软自己的等级是 <strong>Moderate</strong>。机制是：未认证攻击者发一个特制的邮件文件，说服用户用 Outlook 打开；打开后 Outlook 会去连一个攻击者控制的网络位置，<strong>并且不显示平常那个"外部内容"警告</strong>；连接过程里 Windows 自动尝试认证，把用户的 <strong>NTLMv2 哈希</strong>送出去。哈希可以离线爆破，也可以直接拿去做中继。预览窗格不够，必须真的打开文件。</p>
+                        <p>受影响的不只是 Windows：Outlook 2016、Office 2021 LTSC、Office 2024 LTSC、Microsoft 365 Apps 企业版都在列表里，所以<strong>只装 Windows 累积更新不够，得单独跑一次 Office 更新</strong>，再重启 Outlook。CISA 已在 11-10 把它收进 KEV，联邦机构死线 11 月 24 日。</p>
+                        <p>一个值得记的细节：Tenable 说这条是一位<strong>与 Anthropic 的 Claude 模型合作</strong>的安全研究者报的，但没有点名研究者，也没说是哪个模型版本。同一周里，Mozilla 那边也说 Firefox 160 修的洞里约四分之一由 OpenAI 的研究员提交——<strong>两家浏览器的补丁量正在被 AI 一起推高</strong>。</p>
+                        <p><strong>同批的最高分反而是 Important</strong>：CVE-2026-<strong>120002</strong>（SharePoint 授权不当，9.9）和 CVE-2026-<strong>109467</strong>（Azure DevOps 认证不当，9.9）。四个 9.8 是 <strong>112967</strong>（Xbox Live 网络服务堆溢出）、<strong>116928</strong>（Windows Search 组件越界写，可经 Exchange 附件索引零点击触达）、<strong>119958</strong>（Windows LDAP 越界写）、<strong>119990</strong>（Azure OpenAI 关键功能缺认证）。ZDI 把其中 30 条判为"可能蠕虫化"。</p>
+                        <p>另外记一笔<strong>不要被 feed 带偏</strong>：CVE-2026-100223（Windows NTFS 提权，7.8）这一周被若干个情报源标成"已在野利用"，而 MSRC 自己的公告写的是未公开披露、未被利用、"利用可能性较低"、仅本地。它是常规补丁，不是零日。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">一千零九十四条微软 CVE</span>
+                        <span class="flow-step critical">加一百四十二条 Edge 口径变一千二百三十五</span>
+                        <span class="flow-step">唯一在野的是六点五分</span>
+                        <span class="flow-step critical">打开邮件文件就连过去送哈希</span>
+                        <span class="flow-step">最高分九点九反而是 Important</span>
+                        <span class="flow-step critical">只装 Windows 更新不够要装 Office</span>
+                        <span class="flow-step">禁出站 SMB 与 NTLM</span>
+                    </div>
+                </article>
+
+                <!-- 文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">自相矛盾</span>
+                    <h3 class="article-title">同一家写的两份文件，权限要求对不上</h3>
+                    <div class="article-meta">
+                        <span>Adobe APSB26-191 · 11-10 发布 · 24 条 CVE · 18 Critical · 6 条 10.0 · Priority 2（30 天）</span>
+                        <span class="cvss-score">三行公告与 CVE 记录的 PR 值不一致 · 两次跨档 · Adobe 称无在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 10 日，Adobe 发布 <strong>APSB26-191</strong>，修 Adobe Connect（Windows 本地部署 12.12 及更早）的 <strong>24 条</strong>漏洞，定级 Priority 2。18 条 Critical、4 条 High、2 条 Medium。Adobe 明说：不知道有任何在野利用。</p>
+                        <p><strong>六条 10.0</strong>：CVE-2026-<strong>121351</strong> 与 <strong>121354</strong>（路径穿越，CWE-22）、<strong>121352</strong>（授权不当，CWE-863）、<strong>121353</strong>（CRLF 注入，CWE-93）、<strong>121356</strong> 与 <strong>121889</strong>（SSRF，CWE-918）。其中五条共用完全相同的向量 CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N——<strong>四种不同的弱点类，一个向量字符串</strong>。</p>
+                        <p>这不是今天的问题。<strong>问题是另外三行。</strong>Adobe 是这 24 条全部记录的 CNA，也是唯一给它们打分的机构；每条记录只有一份 CVSS（来源 psirt@adobe.com，类型 Primary），vulnStatus 全是 Received，NVD 还没分析，所以记录里没有任何"第二种读法"。而在三行里，<strong>Adobe 公告页上印的向量，和 Adobe 自己提交的 CVE 记录里的向量不一样，差的正是权限要求</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>弱点</th><th>公告 APSB26-191</th><th>CVE 记录</th></tr>
+                            <tr><td>CVE-2026-121904</td><td>存储型 XSS</td><td>High 8.7，PR:N</td><td>Critical 9.6，PR:L</td></tr>
+                            <tr><td>CVE-2026-122102</td><td>存储型 XSS</td><td>Critical 9.3，PR:N / UI:R</td><td>High 8.7，PR:L / UI:R</td></tr>
+                            <tr><td>CVE-2026-121900</td><td>SQL 注入</td><td>Critical 9.4，PR:N</td><td>High 8.3，PR:L</td></tr>
+                        </table>
+                        <p>三次方向一致：<strong>公告说不需要权限，记录说需要低权限</strong>。Adobe 自己的评级页把 Critical 划在 9.0–10.0、High 划在 7.0–8.9，所以按公告读的人看到两个 Critical，按记录读只有 High；第三条方向相反——公告叫 High，记录把它抬成 Critical。第四行还能证明这不是统一规则：<strong>CVE-2026-121902</strong> 同样是 SQL 注入、公告上分数和向量与 121900 一字不差（9.4、PR:N/UI:N/S:U），但在记录里它保留了 PR:N 和 9.4 Critical，只有 121900 掉到了 8.3。</p>
+                        <p><strong>这件事的影响不是学术性的</strong>：PR:N 意味着"不用登录就能打"，PR:L 意味着"得先有一个低权限账号"。在补丁优先级排序里，这两个条件的差别经常就是"今晚加班"和"下周排期"的差别。而两句话都出自同一家厂商的同一次发布。</p>
+                        <p>同月 Adobe 一共发了九份公告、约 110 条 CVE、22 条 Critical。另一个 Priority 2 是 <strong>APSB26-189</strong>（Experience Manager，14 条，含四条 9.9 代码执行）。其余七份是 After Effects（17 条）、Photoshop（13 条）、Content Credentials SDK（13 条）、Premiere（11 条）、Audition（11 条）、Media Encoder（6 条）、Dimension（1 条，仅 macOS），都评 Priority 3。<strong>Photoshop 2025 不再更新</strong>，用户得迁到 2026 或 2027。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">二十四条里六条满分</span>
+                        <span class="flow-step critical">公告印 PR:N 记录写 PR:L</span>
+                        <span class="flow-step">同一条 SQL 注入 公告九点四 记录八点三</span>
+                        <span class="flow-step critical">两次跨过自家 Critical 线</span>
+                        <span class="flow-step">另一个同型漏洞却保留 PR:N</span>
+                        <span class="flow-step critical">要不要今晚加班取决于读哪份</span>
+                    </div>
+                </article>
+
+                <!-- 文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">第八次</span>
+                    <h3 class="article-title">今年第八个在野零日，已经不算新闻</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-125350 · XML 组件 UAF · 11-06 匿名报告 11-09 修复 · Chrome 157.0.8103.50–.51</span>
+                        <span class="cvss-score">2026 第八个在野零日 · KEV 死线 11-24 · 沙箱逃逸未确认 · 无任何 IOC</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 9 日，Google 发 Chrome 稳定版更新，一共修 9 条（7 条 High、2 条 Medium 的 GPU 未初始化资源），其中 <strong>CVE-2026-125350</strong> 是 XML 组件的 use-after-free，Google 明说"已知该漏洞的利用代码存在于野外"。</p>
+                        <p>它被匿名研究者在 <strong>11 月 6 日</strong>报告，<strong>三天后</strong>就发了补丁——这个节奏说明 Google 内部已经把它当紧急处理。修好的版本是 Windows/macOS 的 <strong>157.0.8103.50 / .51</strong>、Linux 的 <strong>157.0.8103.50</strong>；用扩展稳定通道的用户对应 <strong>156.0.8078.96</strong>。CISA 在 11-10 把它收进 KEV，死线 11-24。</p>
+                        <p><strong>第八个。</strong>今年的清单是：2 月 <strong>2441</strong>（CSS 的 UAF）、3 月 <strong>3909</strong>（Skia 越界写）与 <strong>3910</strong>（V8）、4 月 <strong>5281</strong>（Dawn/WebGPU 的 UAF）、6 月 <strong>11645</strong>（V8 越界访问）、9 月 <strong>85046</strong>（V8 类型混淆）与 <strong>87491</strong>（V8 越界写）、11 月 <strong>125350</strong>。2025 年全年也是 8 个，而 2026 年还剩七周。<strong>当"今年第八个"变成一句需要查表才能确认的话，这个词本身就已经失效了。</strong></p>
+                        <p><strong>两个不该被忽略的技术限定。</strong>第一，<strong>沙箱逃逸没有被确认</strong>。NVD 分析后的描述是"允许远程攻击者通过构造的 HTML 页面在沙箱内执行任意代码"，给 8.8，CISA 的 KEV 描述也写 inside the sandbox。但 SANS Internet Storm Center 在 11-10 明确指出：Google 的公告没有说这是 RCE，没有公布确认的影响，也没有说攻击者能逃出 Chrome 的沙箱。浏览器被完整利用通常需要两条洞——一条在渲染进程里拿到代码执行，另一条出去，目前没有任何公开材料证明这条链存在。</p>
+                        <p>第二，<strong>没有任何可用于防守的指标</strong>。没有 IOC、没有恶意域名、没有文件哈希、没有说受害者怎么碰到利用。Chromium 的 issue（582442907）仍然是受限状态，Google 按惯例要等大多数用户升完才公开细节。</p>
+                        <p>所以这条的现实动作只有一个：<strong>升级，然后重启</strong>。下载了不重启，当前会话仍然没有保护。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">匿名报告三天后补丁</span>
+                        <span class="flow-step critical">XML 组件释放后再用</span>
+                        <span class="flow-step">沙箱内执行 逃逸未确认</span>
+                        <span class="flow-step critical">今年第八个 去年也是八个</span>
+                        <span class="flow-step">没有 IOC 没有域名</span>
+                        <span class="flow-step critical">升级之后必须重启</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. OpenSSH 已在野：16 条成功链，一个跑不起来的后门</h4>
+                    <p>这条我们在 <strong>11 月 6 日期</strong>写过本体（CVE-2026-123158，musl 的 crypt() 出错返回星号，刚好等于 shadow 里那个星号）。今天的新增量是<strong>它已经被打了</strong>。时间表极短：11 月 5 日 OpenSSH <strong>10.6p2</strong> 修复发布；约 <strong>4 小时后</strong>出现 PoC；Previdian 记录 11 月 6 日首次成功利用；GreyNoise 记录的首个确认成功是 <strong>11 月 7 日 00:46 UTC</strong>，距修复约 <strong>40 小时</strong>。GreyNoise 追踪的活动方编号为 <strong>GT10</strong>，在其东南亚蜜罐上做了"成熟的入侵"：系统与容器侦察、查云元数据服务、读密码哈希与 root 的 SSH 密钥、改 authorized_keys 做持久化，共 <strong>16 条成功利用链 / 6 个源 IP</strong>。同期背景噪声是 2750 万次 22 端口扫描与 2010 万次 SSH 会话尝试——GreyNoise 自己提醒，这些<strong>不等于</strong> SSHole 利用。一次得手后装了 <strong>TAC Agent</strong>：Python C2 代理，支持命令执行、系统侦察、文件上传下载、自更新，没有内置持久化（攻击者靠加开机服务补）。它的 C2 <code>tac.vpnla[.]org</code> 不可达，所以从未收到任务。<strong>注释、日志、报错都是中文</strong>，Ars Technica 说它看起来是 AI 生成的。Previdian 侧是 20 次尝试 / 13 个 IP / 9 个国家；watchTowr 在 11 月 6 日看到的活动与僵尸网络、挖矿相关；芬兰 Defused 的措辞最保守——"少数行为者"，未大范围扩散。KEV 已在 11-09 收录，死线 11-12。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. KEV 11-10 加了六条，其中两条是十天前写过的</h4>
+                    <p>11 月 10 日 KEV 新增：<strong>CVE-2026-124194</strong>（Outlook，死线 11-24）、<strong>CVE-2026-111793</strong>（Openwave Webtop Media Transcoder，11-24）、<strong>CVE-2026-20320</strong>（Cisco BroadWorks XXE，11-24）、<strong>CVE-2026-125350</strong>（Chromium，11-24）、<strong>CVE-2026-111560</strong> 与 <strong>CVE-2026-116606</strong>（Barracuda 多个产品，死线 <strong>11-13</strong>，只有三天）。目录版本 2026.11.10，共 <strong>1,779</strong> 条。Barracuda 那两条我们在 <strong>11 月 6 日期</strong>写过（Index.pm 密码修改失败分支写成 return userrole，一路走到 fix_tz.pl 被 sudo 拉起），当时它们不在 KEV，今天进去了，而且 Barracuda 更新公告承认<strong>利用不再需要管理员权限，只要能访问管理界面</strong>。Cisco BroadWorks 那条要留一个心眼：CISA 把它当"已被利用"收录，而 <strong>Cisco PSIRT 的公告仍写着不知道有公开宣告或恶意使用</strong>。两个说法可以同时成立（CISA 看得到厂商看不到的遥测），但排序时应该知道这是一个分歧，不是一个结论。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Ivanti 十一月：EPM 一条 9.8 未认证 SQL 注入</h4>
+                    <p>13 条 CVE 分布在五个产品。最重的是 <strong>CVE-2026-121653</strong>，Ivanti Endpoint Manager 的 Core 里一条<strong>未认证 SQL 注入</strong>，CVSS <strong>9.8</strong>，可直达 RCE，2024 SU8 修复。另外：EPMM 六条（12.11.0.0 / 12.10.0.1 / 12.9.0.3 修）、Sentry 四条（含 <strong>CVE-2026-105425</strong>，管理员认证后的 OS 命令注入，7.2，与 EPMM 共用同一个缺陷）、Cloud Services Application 的 <strong>121683</strong>、User Workspace Manager 的 <strong>105813</strong>。Ivanti 说披露时不知道有客户被这两组漏洞利用。同月它还修了 Connect Secure（ICS）两个洞，BleepingComputer 说这两个洞<strong>至少从 10 月 1 日起就被串起来当零日用</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Mozilla 一次 208 条：沙箱逃逸 9.6，四分之一由 OpenAI 研究员提交</h4>
+                    <p>11 月 10 日：Firefox <strong>160</strong> 修 <strong>99</strong> 条（57 High）、ESR <strong>153.7</strong> 修 <strong>81</strong> 条（51 High）、ESR <strong>115.45</strong> 修 <strong>28</strong> 条（全 High）。最显眼的是 <strong>CVE-2026-124853</strong>，Graphics: Text 组件的边界条件错误导致<strong>沙箱逃逸</strong>，CVSS <strong>9.6</strong>；另一位是 <strong>CVE-2026-124907</strong>，CanvasWebGL 的 UAF，同样可用于提权与沙箱逃逸。<strong>约四分之一的 Firefox 160 修复由 OpenAI 的研究员署名</strong>——延续 Firefox 159 的趋势。同时提醒：Mozilla 自己的评级比部分第三方跟踪站低（124941 与 124950 被它标为 Low），对外报数用 Mozilla 的口径。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. FFmpeg 六十条：数量吓人，前提是"你得先让它读你的文件"</h4>
+                    <p>NVD 在 11-09 到 11-10 之间收录了 <strong>60 条</strong>描述以 FFmpeg through 9.0.2 开头的记录，覆盖 g726、Bink、Motion Pixels、C93、OpenEXR、VAAPI HEVC、libwebp 编码器等等。但看向量：<strong>几乎全部是 AV:L/AC:L/PR:N/UI:R</strong>，也就是本地触发、需要用户打开文件；最高分只有 <strong>7.0</strong>（flicvideo.c 的越界写、liboapvenc 与 VAAPI HEVC 的堆溢出等），大批是 3.3 的未初始化内存泄露和 5.5 的 NULL 解引用。<strong>这是一次规模很大的低危批量，不是 60 个 RCE。</strong>真正该关心的是"有服务端在转码不可信媒体"的那类部署。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. 硬编码回退密钥与一句话的 9.9</h4>
+                    <p><strong>CVE-2026-125370</strong>（Kubero 3.0.0–3.1.1）：<strong>没设 JWT_SECRET 的时候用硬编码的回退签名密钥</strong>，攻击者可以伪造任意 role、userGroups、permissions 的管理员 JWT，而 JwtStrategy.validate() <strong>信任这些声明且不回查数据库</strong>。9.8（CVSS 3.1）/ 9.3（CVSS 4.0）。同一天还有 <strong>CVE-2026-125383</strong> 与 <strong>125384</strong>：INDOTALENT WHMS 在 appsettings.json 里硬编码 JWT 密钥与 issuer/audience，且 UserAdminSeeder 会创建一个 admin@root.com / 123456 的账号。另有一条值得单独记一笔的：Axis 的 <strong>CVE-2026-13312</strong>，评分 <strong>9.9</strong>，NVD 上的描述全文是"一个可以让攻击者攻陷系统的漏洞"——<strong>就这一句</strong>，没有任何组件、版本、弱点类信息，唯一参考是 Axis 的一份 PDF。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Xen空对象绕过": [0.93, 0.95]
+    "Ncentral三十三条": [0.55, 0.96]
+    "strutil蠕虫": [0.82, 0.88]
+    "SSHole在野": [0.90, 0.84]
+    "Chrome第八个零日": [0.88, 0.78]
+    "Outlook一百二十四": [0.90, 0.62]
+    "Adobe六个满分": [0.16, 0.90]
+    "微软四个九点八": [0.22, 0.86]
+    "Kubero回退密钥": [0.35, 0.70]
+    "FFmpeg六十条": [0.12, 0.32]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "认证判断被绕过": 26
+    "分数与版本口径不一致": 24
+    "安装期即执行": 18
+    "补丁量本身成为风险": 14
+    "已在野但无细节": 12
+    "数量大但前置条件高": 6
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年11月1日至11月24日
+    11月1日 : strutil-core 干净版上架 两小时后换成带载荷版本
+    11月1日 : 七十秒后 AI 扫描器标记 五小时后两个版本下架
+    11月5日 : OpenSSH 10.6p2 发布 约四小时后出现 PoC
+    11月6日 : Chrome 125350 被匿名报告
+    11月6日 : Socket 公开 strutil-core 分析
+    11月7日 : 00时46分 UTC SSHole 首次确认成功利用
+    11月8日 : N-central 三十三条零日与 PoC 公开
+    11月9日 : 托管版 N-central 三区下线
+    11月9日 : Chrome 157 修复 125350 今年第八个
+    11月10日 : Adobe 发 APSB26-191 共二十四条
+    11月10日 : 微软补丁日 一千零九十四条微软 CVE
+    11月10日 : Vates 公告 VSA-2026-062 已在野
+    11月10日 : N-central 2026.4 HF2 只列七个 CVE
+    11月10日 : KEV 加六条 其中两条是补录
+    11月12日 : KEV 四条整改截止
+    11月13日 : Barracuda 两条整改截止
+    11月24日 : KEV 四条整改截止
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — Xen Orchestra 认证绕过在野利用（公告原文引用：REST cookie 解析把 j:%7B%7D 变空对象、拿可复用令牌 ID、91.211.251.112 被 VT 标为 RedLine C2、TDC NET 两位研究者）</span>
+                        <a href="https://thehackernews.com/2026/11/hackers-exploit-critical-xen-orchestra.html">thn · xen</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer — Critical Xen Orchestra auth bypass exploited to hijack VM servers（6.9.1/6.10.0 与 xo-server 5.211.2/5.213.1 口径、完整 IOC 与三条宿主机检查命令）</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/critical-xen-orchestra-auth-bypass-flaw-exploited-to-hijack-vm-servers/">bc · xen</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DEV Community — An Empty Cookie That Hands Attackers Admin（指出通行报道引 6.9.1/6.10.0 而现行公告列 6.9.2/6.10.1、PR #10748；其补充 IP 列表为单一来源，本期未采信）</span>
+                        <a href="https://dev.to/sharz_ninesec/xen-orchestra-vsa-2026-062-an-empty-cookie-that-hands-attackers-admin-on-your-virtualization-plane-50fm">dev · xen</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix — Xen Orchestra 攻击路径与合规映射（空对象被 token collection 当成无过滤查询、RedLine C2 与 TOR 端点、cron 与隐藏文件持久化）</span>
+                        <a href="https://aviatrix.ai/threat-research-center/hackers-exploit-critical-xen-orchestra-auth-bypass-flaw-gain-admin-access/">aviatrix · xen</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">N-able 状态页 — N-central Critical Security Incident（2026.4 HF2 发布、七个 CVE 清单、后续 hotfix 说明、托管三区影响范围、仍在观测 PoC 相关扫描）</span>
+                        <a href="https://uptime.n-able.com/">n-able · status</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — N-able Takes N-central Cloud Offline After Researcher Discloses 33 Zero-Days（33 条、四条链的功能分类、watchTowr 蜜罐观测、无成功利用声明）</span>
+                        <a href="https://thehackernews.com/2026/11/n-able-takes-hosted-n-central-offline.html">thn · ncentral</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Intel Hub — N-able N-central gets emergency fix two days after 33 exploits（四条链逐条细节、Censys 1,728 台、Previdian 单 IP 68 次、15 个月第四次、2025 年 8875/8876 前情）</span>
+                        <a href="https://securityintelhub.com/article/n-able-n-central-gets-emergency-fix-two-days-after-33-exploits-published/">sih · ncentral</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechCrunch — N-able takes its remote access service offline（Bales 的披露动机、CEO 与 CTO 请求删仓库、"他们没有威胁我"）</span>
+                        <a href="https://techcrunch.com/2026/11/10/n-able-takes-its-remote-access-service-offline-after-researcher-publishes-dozens-of-zero-day-bugs">tc · ncentral</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">RedEye Security — Able2Shell（审计篡改在攻击链中、Huntress 的 33 条口径、watchTowr 蜜罐与处置建议）</span>
+                        <a href="https://threat-intelligence.redeyesecurity.com/blog/n-able-n-central-able2shell-zero-days-2026">redeye · able2shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AL-ICE — Install Was the Infection（秒级时间戳、逐字节复现 extconf.rb、33/36 行同源、locale 跳过清单、17 区 AWS 枚举、sync.py 与 msync-3f7a）</span>
+                        <a href="https://al-ice.ai/posts/2026/11/strutil-core-rubygems-shai-hulud-worm-ai-tool-poisoning-november-2026">alice · strutil</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GBHackers — Shai-Hulud Descendant Hides in Malicious Ruby Gem（51 个凭据存储、net-health-checker 45 秒与 401/403 触发删除、pystr-codec 同基础设施）</span>
+                        <a href="https://gbhackers.com/ruby-gem-discovered/">gbh · strutil</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Malicious Ruby Gem Steals 51 Types of Credentials（workspace-tools MCP 与 SessionStart 钩子、AGENTS.md 让代理先跑 setup、Harden-Runner 被杀、locale 跳过）</span>
+                        <a href="https://cybersecuritynews.com/malicious-ruby-gem/">csn · strutil</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Agentbeam — strutil-core 检测与处置（Gemfile.lock 与 mcp.json 自查命令、撤销令牌触发删除的处置顺序、beam 能做什么不能做什么）</span>
+                        <a href="https://agentbeam.com/blog/strutil-core-rubygems-miasma-worm-ai-tool-poisoning">beam · strutil</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MSRC — November 2026 Security Updates 发布说明（1,094 条微软 CVE 与产品族分布：Windows 726、Office 174、SQL 59、开发工具 53、SharePoint 27；重发布 165 条非微软 CVE；Outlook 124194 标 Exploitation Detected）</span>
+                        <a href="https://msrc.microsoft.com/update-guide/releaseNote/2026-Nov">msrc · nov</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer — Microsoft November 2026 Patch Tuesday fixes 1,235 flaws, Outlook zero-day（1,235 口径与分类、66 Critical 含 48 RCE、142 Edge、排除的 108 条、十月 1,411 对比）</span>
+                        <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-november-2026-patch-tuesday-fixes-1-235-flaws-outlook-zero-day/">bc · patchtuesday</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatAft — Microsoft's Quiet Month: 1,093 CVEs（1,093 与 1,094 口径差异、63 Critical、535 提权、ZDI 判 30 条可能蠕虫化）</span>
+                        <a href="https://threataft.com/articles/microsoft-patch-tuesday-november-2026-1093-cves">taft · ms</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">UGetFix — Microsoft patches Outlook zero-day（三家口径差异解释、受影响 Office 版本清单、点名 Claude 协助发现、预览窗格不足以触发）</span>
+                        <a href="https://ugetfix.com/news/windows-november-2026-patch-tuesday-outlook-zero-day">ugetfix · ms</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ivanti — November 2026 Patch Tuesday 汇总（Adobe 九份公告约 110 条、Connect 24 条六条 10.0、AEM 四条 9.9、Ivanti 自身 13 条、Firefox 与 Android 数据）</span>
+                        <a href="https://www.ivanti.com/blog/november-2026-patch-tuesday">ivanti · pt</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Severity Daily — Adobe Connect APSB26-191 三行公告与 CVE 记录权限要求不一致（121904 / 122102 / 121900 的分数与 PR 对照、121902 反向例证、24 条 vulnStatus 全为 Received）</span>
+                        <a href="https://severitydaily.com/adobe-connect-apsb26-191-24-cves-six-10-0-three-rows-bulletin-pr-n-vs-filed-record-pr-l-cve-2026-121904-8-7-computes-to-10-0-cve-2026-121900-9-4-vs-8-3-cve-2026-122102-9-3-vs-8-7-priority-2-30-days">sd · adobe</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Register — Chrome zero-day whack-a-mole continues as 2026 tally hits 8（第八个、11-06 匿名报告、157.0.8103.50/.51、2025 全年同为 8 个、往年零日清单）</span>
+                        <a href="https://www.theregister.com/security/2026/11/10/chrome-zero-day-whack-a-mole-continues-as-2026-tally-hits-8/5308732">reg · chrome</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyPro — Chrome Zero-Day CVE-2026-125350 Exploited（SANS ISC 指出未确认沙箱逃逸、扩展稳定通道 156.0.8078.96、精确披露时间线）</span>
+                        <a href="https://cypro.co.uk/insights/cyber-bulletins/chrome-zero-day-cve-2026-125350-exploited">cypro · chrome</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-125350（分析后描述限定为沙箱内执行、CVSS 3.1 8.8、issue 582442907 引用）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-125350">nvd · 125350</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA — Known Exploited Vulnerabilities Catalog（catalogVersion 2026.11.10 共 1,779 条；11-09 新增四条死线 11-12；11-10 新增六条，Barracuda 两条死线 11-13、其余 11-24）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ars Technica — Vulnerability that lets hackers SSH into Linux devices is under active exploitation（GT10 编号、成熟入侵、TAC Agent 疑似 AI 生成、五项前置条件、Red Hat 的措辞）</span>
+                        <a href="https://arstechnica.com/security/2026/11/vulnerability-that-lets-hackers-ssh-into-linux-devices-is-under-active-exploitation">ars · sshole</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer — Hackers exploit SSHole OpenSSH flaw to breach Linux systems（16 条链 / 6 个 IP、2750 万次扫描与 2010 万次会话、TAC Agent 的 C2 与功能、Defused 与 watchTowr 口径）</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-sshole-openssh-flaw-to-breach-linux-systems/">bc · sshole</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Hunt — November 2026 Patch Tuesday and KEV surge（Cisco BroadWorks 进 KEV 而 PSIRT 称不知恶意使用、CVE-2026-100223 被误标已在野、PoC 公开不等于已在野）</span>
+                        <a href="https://zerohunt.ai/blog/security-incidents-november-8-10-2026-tracker">zh · tracker</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threadlinqs — TL-2026-5681（Barracuda 两条时间线：10-15 与 10-22 收到报告、11-02 公告、11-05 更正为无需认证、11-09 承认小范围被利用、11-10 进 KEV）</span>
+                        <a href="https://intel.threadlinqs.com/threat/TL-2026-5681">tl · barracuda</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-121653（Ivanti EPM Core 未认证 SQL 注入 9.8，2024 SU8 修）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121653">nvd · 121653</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-124853（Firefox Graphics: Text 边界条件错误导致沙箱逃逸 9.6，Firefox 160 与 ESR 153.7 / 115.45 修）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-124853">nvd · 124853</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-125370（Kubero 未设 JWT_SECRET 时用硬编码回退密钥，JwtStrategy.validate 不回查数据库，9.8 / 9.3）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-125370">nvd · 125370</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-13312（Axis 产品，9.9，描述全文仅一句"可让攻击者攻陷系统"，唯一参考为厂商 PDF）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-13312">nvd · 13312</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-124194（Outlook 欺骗 6.5，UI:R，泄露 NTLMv2 哈希，微软自评 Moderate）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-124194">nvd · 124194</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0 — 11-09 至 11-11 收录 2,629 条，本期按 CVSS 降序筛出 Adobe Connect 24 条、FFmpeg 60 条、微软 9.8 与 9.9、Kubero、Axis 等，并逐条核对向量与 published 日期</span>
+                        <a href="https://nvd.nist.gov/developers/vulnerabilities">nvd · api</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注两边口径（微软补丁量 1,094 / 1,235 / 1,093、Xen Orchestra 修复版本 6.9.1–6.10.0 与 6.9.2–6.10.1、Adobe 公告与 CVE 记录的 PR 值、N-able 零日 33 条与公告所列 7 个 CVE、Cisco BroadWorks 是否已遭利用）。N-able 的 33 条零日中厂商只确认并编号了 7 个，其余能力描述来自研究者仓库与第三方分析，未经厂商逐条复核；VSA-2026-062 至今未有 CVE 编号，补充 IP 列表因单一来源未采信。涉华涉台归因类内容不予收录。
+                <br>
+                每日精选 · 值得关注 | 2026年11月11日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
