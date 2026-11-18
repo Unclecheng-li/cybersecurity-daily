@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月18日（第220期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月18日 星期三</span>
+            <span class="edition-number">第 220 期 | 总第 220 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>六十五个字节就足够写坏一块堆 · 挑战串和令牌躺在同一张表里 · 对方说是谁系统就当成是谁 · 补丁两周前就发了还在等排期 · 数据是从别人家应用导出的 · 六百四十条里只有一条上头条
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">今天五个 10.0 分，四个输在同一句话上</h2>
+                <p class="sub-headline">今天 NVD 在 11-17 00:00 到 11-18 06:00 这个窗口里收了 1,308 条新 CVE，其中 107 条在 9.0 以上，绝大部分来自 Oracle 的同一次批量发布。真正该记住的却不是分数最高的那几条：一个 Base64 解码器相信了输入里的填充符，一个认证函数分不清"挑战"和"令牌"是两种东西，一个 JWT 校验器读了头里的 <code>alg</code> 就信了，一个管理台把密钥硬编码进了二进制，一个反序列化器把客户端写的类型名当成了要执行的代码。这不是新的漏洞类型，是同一个老毛病换了一层皮：把输入里的自称，当成了事实。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">已修 · 无在野证据 · 修的是 JDK 不是应用</span>
+                    <h3 class="article-title">六十四个 A 加一个等号，堆就写坏了</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-114938 · Java4Shell · Calif 披露 · OpenJDK 17.0.6 及以上，需 AVX-512 VBMI</span>
+                        <span class="cvss-score">CVSS 4.0 记 9.2 · Oracle 记录按 3.1 记 8.1 · 65 字节触发未认证 RCE</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条放在最前面，因为它把"补漏洞"这件事的层级讲清楚了：<strong>修的是运行时，不是你那个应用</strong>。</p>
+                        <p>研究机构 Calif 于 11 月 17 日公开，取名 Java4Shell。它是这家机构在 PHP2Shell 之后的第二个作品，公告开头那句挺老实："在我们披露 PHP2Shell 之后，发现很多人不知道 PHP 是什么，所以我们选了个更眼熟的东西：Java。"</p>
+                        <p>缺陷在 OpenJDK 的 Base64 解码器里，具体在 x86-64 上那条手写的 AVX-512 VBMI 加速路径。这段代码由 JDK-8268276 引入，2023 年 1 月随 17.0.6 进入 Java 17 线（backport 编号 JDK-8296735）。它处理字符串结尾的填充时算错了输出长度：送进去 64 个 <code>A</code> 加一个 <code>=</code>（共 65 字节），解码器给输出分配 50 字节，先干净地解完前 64 个字符，再处理那个孤零零的等号时，<code>output_len</code> 下溢成负数。负数传给掩码计算没有任何拦截（<code>bzhiq</code> 之后掩码变成全 1），随后一条 <code>VMOVDQU8</code> 把整个 64 字节寄存器一次性写下去，比 50 字节的缓冲区多写了 62 字节。</p>
+                        <p><strong>Java 在下一毫秒就拒绝了这段畸形输入，但内存已经坏了。</strong></p>
+                        <p>Calif 给的利用链分四段。第一段用堆排布把溢出打到相邻数组的长度字段上，让那个数组"以为自己很大"，固定值写于是变成可控写；第二段对另一个数组做同样的事，把内容回显到应用响应里，得到一个堆泄露原语，他们叫它 JavaBleed，走的是 Heartbleed 那条路，堆里有会话令牌、凭据、密钥；第三段用泄露出来的原始字节把被改坏的对象头修回去，让 JVM 不崩、可以重试；第四段才是把可控写打进 JVM 内部，摸到代码缓存拿下执行。跨网络的堆排布靠两招：把成对的对象喷到 G1 的不同 region，以及用 TCP ACK 的节奏去控分块发送的 HTTP 请求体，让分配顺序可控。失败的尝试通常直接把 JVM 打崩，吵，但可以重试。</p>
+                        <p>它之所以敢叫"Shell"，是因为打中的位置太普遍。Calif 在默认配置下验证了预认证 RCE：<strong>Keycloak、Atlassian Jira、Atlassian Confluence、JFrog Artifactory、Jenkins、PingFederate</strong>；认证后 RCE：Apache Kafka、Apache Solr、Elasticsearch、Gerrit、Netflix Spinnaker；Spring Boot 与 Apache Struts 的样例应用也复现了。名单明确写了"不穷尽"，任何把攻击者可控字节送进 Base64 解码的端点都是候选。samczsun 还补了个反向场景：一个 Java 程序只要主动去连一个恶意 TLS 服务器，自己一个端口都不开，照样被打。<strong>出站连接也是攻击面。</strong></p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>触发串</td><td>64 个 <code>A</code> 加 <code>=</code>；OpenJDK 17 的块阈值不同，是 128 个 A 加 <code>=</code></td></tr>
+                            <tr><td>填充变体</td><td><code>=</code>、<code>==</code>、<code>X=</code>、<code>X==</code>、<code>XY=</code>、<code>===</code> 都能触发</td></tr>
+                            <tr><td>受影响</td><td>OpenJDK 17.0.6 及以上；Corretto、Temurin、Microsoft Build of OpenJDK、Zulu、Liberica、SapMachine、Red Hat OpenJDK、Oracle Java SE、GraalVM 全线</td></tr>
+                            <tr><td>修复版本</td><td>8u513、11.0.33.1、17.0.21.1、21.0.13.1、25.0.5.1、27.0.1.1（GraalVM 未列修复版）</td></tr>
+                            <tr><td>硬件边界</td><td>仅支持 AVX-512 VBMI 的 x86-64：Xeon Ice Lake / Sapphire Rapids / Emerald Rapids / Granite Rapids，AMD Zen 4 及以后；ARM64 不受影响</td></tr>
+                            <tr><td>自查命令</td><td><code>grep -m1 '^flags' /proc/cpuinfo</code> 后确认 avx512f、avx512bw、avx512vbmi、bmi2 四个 flag 齐全</td></tr>
+                            <tr><td>缓解</td><td><code>-XX:-UseBASE64Intrinsics</code> 或 <code>-XX:UseAVX=2</code>；后者在 ARM 上会让 JVM 起不来</td></tr>
+                            <tr><td>在野</td><td>截至发稿无确认在野，未进 KEV</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>修的是 JDK，不是产品</strong>。Jira 出了新版本、Confluence 出了新版本，都不解决问题。运维清单上要查的是"这台机器的 <code>java -version</code> 是什么"。这条对打包型产品尤其致命：Jenkins、Jira 这类东西在几千个部署里构建方式和内存布局高度重复，Calif 说的"没有通用利用、每个目标要单独做链"在它们身上会打折扣。</p>
+                        <p>第二，<strong>两个官方分数差得有点远</strong>。Calif 按 CVSS 4.0 记 9.2，Oracle 在自己的 CSPU 记录里按 CVSS 3.1 记 8.1，两份都是"官方"数据。评级打架的时候，按"能不能预认证、能不能从公网打到"来排，比按小数点排更有用。</p>
+                        <p>第三，<strong>这次披露里最该被记住的数字不是 9.2</strong>。Calif 说他们一名研究员<strong>一小时找到这个 bug，两小时后有了可用利用，AI token 成本不到 200 美元</strong>，靠的是预先搭好的智能体流水线。Wiz 也做了一遍：他们的 AI 研究装置在细节公开后两小时内产出可用 PoC，并对 Jenkins、Confluence、Tomcat 验证了远程执行。这条接在昨天 GTIG 那份"全自动补丁到利用"后面：<strong>漏洞发现的边际成本正在肉眼可见地往下掉</strong>。以后公告里那句"AI 辅助代码审计发现"，会越来越常见。</p>
+                        <p>第四，<strong>暴露面要先盘硬件再盘软件</strong>。AVX-512 VBMI 是 2021 年之后的服务器 CPU 才有的东西，很多老机器天然免疫，而新建的云主机几乎全中。这类"看 CPU 才知道自己有没有事"的漏洞，资产库里通常没有对应字段。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">送进 65 字节 64 个 A 加一个等号</span>
+                        <span class="flow-step critical">分配 50 字节 却按负数算长度</span>
+                        <span class="flow-step critical">掩码变全 1 一次写满 64 字节</span>
+                        <span class="flow-step">越界 62 字节 JVM 随后才拒绝输入</span>
+                        <span class="flow-step critical">改相邻数组长度 固定写变可控写</span>
+                        <span class="flow-step critical">第二个数组泄回响应 堆里全是令牌</span>
+                        <span class="flow-step">修对象头让 JVM 活下来 再打代码缓存</span>
+                        <span class="flow-step critical">修的是 JDK 不是 Jira 换版本没用</span>
+                    </div>
+                </article>
+
+                <!-- 文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">10.0 · 未认证冒充管理员</span>
+                    <h3 class="article-title">挑战串本来只用一次，没人说它只能用来做挑战</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-100397 · Rucio（CERN 主导的科学数据框架）· CWE-287 · 1.14.0 起，35.9.1 之前的四条线</span>
+                        <span class="cvss-score">CVSS 3.1 记 10.0（S:C）· 两步拿到任意账号，含管理员</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这个洞的技术含量不高，但它的形状特别值得记：<strong>两种东西存在同一张表里，校验函数却不知道手上拿的是哪一种。</strong></p>
+                        <p>Rucio 管的是 PB 级科学数据，ATLAS、CMS 这些大科学装置都在用。问题出在 <code>lib/rucio/core/authentication.py</code> 的 <code>validate_auth_token</code>：短期有效的 SSH 挑战 nonce 和真正的认证令牌存在同一张 token 表里，这个函数不区分两者。</p>
+                        <p>利用只有两步。先拿 <code>X-Rucio-Account</code> 头指定任意账号（包括管理员），请求 <code>/auth/ssh_challenge_token</code>，服务端规规矩矩返回一个挑战串；然后把这个挑战串当成 <code>X-Rucio-Auth-Token</code> 去请求别的 API 端点，就通过了。</p>
+                        <p>修复版本是 35.9.1、38.6.1、40.4.2、41.1.1，对应四条维护线，安全公告来自 GitHub 的 security-advisories 通道，附了四个 commit。</p>
+                        <table class="affected-table">
+                            <tr><th>环节</th><th>本该如此</th><th>实际如此</th></tr>
+                            <tr><td>挑战 nonce</td><td>只能配合签名验一次，不能当凭据</td><td>落在同一张 token 表里</td></tr>
+                            <tr><td>校验函数</td><td>按用途分流两条路径</td><td>只看"表里有没有这条"</td></tr>
+                            <tr><td>账号参数</td><td>绑定已经证明过的身份</td><td>直接取请求头里的 <code>X-Rucio-Account</code></td></tr>
+                            <tr><td>后果</td><td>——</td><td>任意账号，包括 admin</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>这类缺陷几乎不可能靠扫描发现</strong>。没有畸形输入、没有异常报错、没有越界，请求在日志里看起来完全合法。第二，<strong>审查认证代码时该问的问题变了</strong>。不是"令牌有没有签名"，而是"这张表里躺了几种东西，校验函数怎么知道它拿到的是哪一种"。第三，<strong>10.0 分不算夸张</strong>。S:C 是因为下游所有接了 Rucio 令牌的服务一起被穿透，科研计算环境里那种"一次认证、处处通行"的便利，在这种洞面前就是放大器。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">请求挑战串 头里直接写 X-Rucio-Account</span>
+                        <span class="flow-step critical">服务端把 nonce 写进同一张 token 表</span>
+                        <span class="flow-step">把挑战串填进 X-Rucio-Auth-Token</span>
+                        <span class="flow-step critical">校验函数只查表 不查用途</span>
+                        <span class="flow-step critical">以管理员身份放行 全程没有密码</span>
+                        <span class="flow-step">四条维护线各自出了修复版</span>
+                    </div>
+                </article>
+
+                <!-- 文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">两个 10.0 · 一个 alg=none 一个硬编码</span>
+                    <h3 class="article-title">两个满分，都没验那个签名</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-120387 · CIRCUTOR PowerStudio SCADA WAVE · CVE-2026-114202 · ASUS Control Center Express</span>
+                        <span class="cvss-score">均 CVSS 4.0 记 10.0 · 一个用 alg=none 冒充，一个用硬编码密钥伪造</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这两条放一起，因为它们的失败点是同一句话：<strong>"他说他是谁"被当成了"他是谁"。</strong></p>
+                        <p>CIRCUTOR 那条更赤裸。PowerStudio SCADA WAVE 桌面版（Windows 64 位，24.8.0 到 24.11.16.x）的共享 JWT 校验组件接受 <code>alg</code> 设为 <code>none</code> 的未签名令牌，不验证任何密码学签名，于是自己编一个 JWT 就能以别人的身份进系统。CWE-347，CAPEC-39，教科书级。CVE 记录引用了一个 PoC 仓库，研究者没有独立验证其内容。修复版 24.11.17.0 及以上，厂商没给临时缓解。</p>
+                        <p>ASUS 那条是硬编码密钥（CWE-321），在 Control Center Express 里，远程用户可以用伪造的认证令牌拿到管理员权限。同批还有 CVE-2026-126574（CVSS 4.0 9.4）：Control Center Datacenter 与 Enterprise 里，低权限 Viewer 角色能通过一个构造的改密请求把管理员账号的密码改掉。两件事叠起来的意思是：<strong>这套"管所有终端的管理台"，从密钥到权限判断都不太结实</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>对比项</th><th>CIRCUTOR PowerStudio</th><th>ASUS Control Center</th></tr>
+                            <tr><td>缺陷类型</td><td>JWT 签名校验缺失（CWE-347）</td><td>硬编码加密密钥（CWE-321）</td></tr>
+                            <tr><td>攻击动作</td><td>提交 <code>alg: none</code> 的未签名令牌</td><td>用已知密钥伪造认证令牌</td></tr>
+                            <tr><td>前置条件</td><td>网络可达，无需凭据</td><td>网络可达，无需凭据</td></tr>
+                            <tr><td>影响版本</td><td>桌面版 24.8.0 至 24.11.16.x</td><td>Express 与 Datacenter / Enterprise 相关版本</td></tr>
+                            <tr><td>修复</td><td>24.11.17.0 及以上，无临时缓解</td><td>见 ASUS 安全公告对应章节</td></tr>
+                            <tr><td>落点</td><td>配电与能耗监测，常在工业网络内</td><td>整批商用终端的软件分发与远程控制</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<code>alg: none</code> 是 2015 年就被写进 JWT 库默认黑名单的东西，2026 年还能在出货软件里出现，说明<strong>"用了 JWT 库"和"用对了 JWT 库"是两件事</strong>。第二，<strong>硬编码密钥等于把密钥发给了所有拿到二进制的人</strong>，换密钥只能靠发新版本，所以这类洞的实际寿命跟产品的更新率一样长。第三，两条都能十分钟自查完：搜 <code>alg</code>、搜 <code>verify</code> 的调用点、搜代码里的长字符串常量。<strong>工业网络不是隔离网</strong>，远程维保普及之后，"它在内网"不再是一条防护措施。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">一个把 alg 改成 none 就不验签名</span>
+                        <span class="flow-step critical">一个密钥写死在二进制里 谁都能算</span>
+                        <span class="flow-step">两条都不需要任何凭据</span>
+                        <span class="flow-step critical">拿到的是"以别人身份"而不是"绕过登录"</span>
+                        <span class="flow-step">落在 SCADA 与终端管理台上</span>
+                        <span class="flow-step critical">自查十分钟 搜 alg 搜 verify 搜常量</span>
+                    </div>
+                </article>
+
+                <!-- 文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">已进 KEV · 12-01 到期</span>
+                    <h3 class="article-title">补丁两周前就发了，今天才进 KEV</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-115731 · Perforce Puppet Enterprise · 11-03 披露带 PoC，11-17 进 KEV</span>
+                        <span class="cvss-score">CVSS 4.0 记 9.4 · 设计上就是"客户端给的元数据被当成代码"</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 17 日，CISA 把这条收进 KEV，目录版本 2026.11.17，第 1,782 条。而在两周前的 11 月 3 日，OpenVox 的 GHSA-ffr6-rwpm-p5wq 与 Neodyme 的 write-up 就已经带着<strong>可用的示例报告</strong>公开了。</p>
+                        <p>机制值得完整看一遍，因为它是"客户端给的元数据被当成代码"的标准样本。Puppet agent 每次跑完会往 <code>PUT /puppet/v3/report</code> 发一份 JSON 报告，里面列这次运行的事件。服务端为了让时间戳、二进制、资源引用这些原生类型能往返，会走一层 rich-data 转换，而这层<strong>信任客户端给的类型名</strong>：事件体进 <code>FromDataConverter.convert(data, {:allow_unresolved => true, ...})</code>，攻击者可控的 <code>__ptype</code> 字段被 <code>Types::TypeParser</code> 解析，然后对解析出的类型调 <code>.create(value)</code>。如果没有为这个类型注册实现类，Puppet 会<strong>自己生成一个</strong>：<code>RubyGenerator.new.create_class(self)</code> 用类型声明的函数拼出一段 Ruby 类定义，再交给 <code>cls.class_eval(class_def)</code>。反引号在类定义时就会执行，<strong>对象根本不需要被实例化，命令就跑了</strong>。</p>
+                        <p>前置条件是"持有一张由该 CA 签发的证书"。听起来像门槛，实际不是：很多环境开了 autosign，<code>autosign.conf</code> 还写着宽泛的名字匹配，这时候未认证的网络攻击者先去要一张证书，再拿它打这个端点，两步就到。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>受影响</td><td>Puppet Enterprise 2023.8.13 / 2025.12.1 / 2026.0.1 之前；OpenVox Server 9.1.0 及以下、8.17.0 及以下</td></tr>
+                            <tr><td>修复</td><td>PE 2023.8.13 / 2025.12.1 / 2026.0.1；OpenVox Server 9.2.0 与 8.18.0；OpenVox Agent 9.3.0 与 8.32.0</td></tr>
+                            <tr><td>开源版</td><td>Puppet 开源版已不维护，<strong>没有修复</strong></td></tr>
+                            <tr><td>落点</td><td><code>PUT /puppet/v3/report</code>，<code>__ptype</code> 指向带 RubyMethod 的 Object 类型</td></tr>
+                            <tr><td>执行身份</td><td><code>puppet</code> 服务用户，持有 CA 签名密钥</td></tr>
+                            <tr><td>整改期限</td><td>2026-12-01（BOD 26-04）</td></tr>
+                            <tr><td>必需动作</td><td>升级后<strong>重启 Puppet Server 服务</strong>，否则加载的还是旧代码</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>这是配置管理服务器</strong>。它给全网发证书、推配置、在每台节点上跑代码，被打穿等于整片受管机群失守，而且走的是你信任的通道。</p>
+                        <p>第二，<strong>打完补丁还有第二件事</strong>。代码执行发生在 <code>puppet</code> 用户下，这个用户握着 CA 签名密钥。发现中招就要按"CA 私钥已泄露"处理：重建 CA、重新注册 agent。光打补丁不够，因为穿透它的那把钥匙还在。</p>
+                        <p>第三，<strong>KEV 的通知节奏再次落后于公开 PoC</strong>。11 月 3 日有 PoC，11 月 17 日才进 KEV，中间这两周，等 KEV 才动的组织什么都没做，而攻击者手上已经有能直接发的东西。</p>
+                        <p>第四，CISA 是"在野"的唯一信源，条目里没说用的是 autosign 证书、偷来的 agent 证书还是已经被拿下的节点。三种路径打到同一个端点，处置时都要查。查法也不难：把 11 月 3 日以来 CA 签过的证书过一遍，问一句"这张是我批的吗"。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">11-03 PoC 与示例报告同日公开</span>
+                        <span class="flow-step critical">11-17 CISA 才收进 KEV 两周空窗</span>
+                        <span class="flow-step">一份构造的 agent 报告 PUT 到服务端</span>
+                        <span class="flow-step critical">rich-data 信任 __ptype 现场生成类</span>
+                        <span class="flow-step critical">class_eval 时反引号先跑 对象还没实例化</span>
+                        <span class="flow-step critical">puppet 用户握着 CA 密钥 等于整片机群</span>
+                        <span class="flow-step">升级还要重启 否则加载旧代码</span>
+                    </div>
+                </article>
+
+                <!-- 文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">640 条 CVE · 62 个 critical</span>
+                    <h3 class="article-title">同一天，安静的 640 条</h3>
+                    <div class="article-meta">
+                        <span>Oracle 2026 年 11 月 CSPU · 640 个唯一 CVE / 655 个补丁 / 62 个 critical · 21 个产品族</span>
+                        <span class="cvss-score">5 条 CVSS 3.1 满分 · Fusion Middleware 71 个补丁里 53 个免认证远程</span>
+                    </div>
+                    <div class="article-body">
+                        <p>媒体今天都在写 Java4Shell，但 Oracle 同一天发的这份 CSPU 才是数量上的主体。CSPU 是 Oracle 从 2026 年 5 月起在季度 CPU 之外加的月度高风险补丁通道，这次的盘子是：<strong>640 个唯一 CVE，655 个安全更新，62 个 critical，覆盖 21 个产品族</strong>。</p>
+                        <p>按产品族分，Oracle Hyperion 一家占 267 个（40.8%），Supply Chain 74 个，E-Business Suite 71 个，Fusion Middleware 71 个，其中<strong>53 个是"网络可达且无需认证"</strong>。Java SE 这一族 11 个补丁，<strong>11 个全是网络可达且免认证</strong>，Java4Shell 就在里面，被 Tenable 标为 Compiler 组件、CVSS 3.1 8.1。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>组件</th><th>说明</th></tr>
+                            <tr><td>91569</td><td>WebLogic Server · TopLink Integration</td><td>未认证 HTTP 接管 WebLogic，S:C，12.2.1.4.0 / 14.1.1.0.0 / 14.1.2.0.0 / 15.1.1.0.0</td></tr>
+                            <tr><td>91510</td><td>Access Manager · Authentication Engine</td><td>未认证 HTTP 绕过，12.2.1.4.0 与 14.1.2.1.0</td></tr>
+                            <tr><td>91500</td><td>Access Manager · Authentication Engine</td><td>同组件另一条独立缺陷，同样满分</td></tr>
+                            <tr><td>114835</td><td>Access Manager · Admin Console</td><td>未认证接管管理台</td></tr>
+                            <tr><td>114784</td><td>BI Enterprise Edition · Platform Security</td><td>未认证 HTTP 接管</td></tr>
+                            <tr><td>91585 / 91583 / 91570</td><td>WebLogic Server · TopLink Integration</td><td>三条 9.8，与 91569 同组件同批</td></tr>
+                            <tr><td>114848 / 114819 / 114822</td><td>Database Server（Oracle Text / RDBMS）</td><td>三条 9.9，低权限即可，19.3 至 23.26 多线受影响</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>真正决定暴露面的是"免认证远程"这一列，不是总分</strong>。71 个 Fusion Middleware 补丁里 53 个不需要凭据，这才是该先排的队列；反过来，一个 7.5 分的免认证漏洞比一个 9.9 分的"需要高权限"更急。</p>
+                        <p>第二，<strong>Hyperion 占 40.8% 这件事本身是信号</strong>。一个财务合并与规划产品拿到 267 个补丁，说明这一族的代码欠账在集中爆，用它的组织最好确认一下自己停在哪个版本。</p>
+                        <p>第三，<strong>CSPU 是月度节奏</strong>。这种量级的补丁包以后每月来一次，靠"季度打一次"的流程会持续落后一个季度，而且每次都追不完。</p>
+                        <p>第四，<strong>媒体口径有出入</strong>：韩媒写"652 个补丁"，Tenable 统计 655 个，Oracle 官方 advisory 才是准数。引用时别拿二手数字当结论，这也是今天这条的额外教训。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">640 条 CVE 一天进库 单日窗口 1308 条</span>
+                        <span class="flow-step critical">Hyperion 一家 267 个 占四成</span>
+                        <span class="flow-step critical">WebLogic TopLink 五条满分 同组件</span>
+                        <span class="flow-step">Access Manager 两条 10.0 都是认证引擎</span>
+                        <span class="flow-step critical">Java SE 十一个补丁 全部免认证</span>
+                        <span class="flow-step">排期看免认证这一列 不看总分</span>
+                    </div>
+                </article>
+
+                <!-- 文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">未验证 · 单一来源</span>
+                    <h3 class="article-title">一天挂五家，没有一家确认</h3>
+                    <div class="article-meta">
+                        <span>Inception（新品牌）· 11-17 · AMD / Cigna / Henry Schein / Paychex / PepsiCo</span>
+                        <span class="cvss-score">无 CVE · 两份文件被媒体实读，其余均为卖方自述</span>
+                    </div>
+                    <div class="article-body">
+                        <p>一个此前没有任何记录的勒索品牌，11 月 17 日上线了一个叫 "Inception, Chapter 1" 的泄露站，一天之内把五家美国大公司标成 Leaked。同日，一个叫 InceptionGroup 的账号在俄语犯罪论坛 Exploit 上挂出数据，<strong>账号注册日期就是当天</strong>，五条帖子，零托管交易记录。媒体与 ransomware.live 都找不到这个牌子更早的活动。</p>
+                        <p>两家媒体实际下载并检查了两份文件：</p>
+                        <p><strong>PepsiCo</strong>：一个 72 MB 的文件，<strong>500,817 行</strong>员工目录，几乎每行有全名、工作邮箱、头像引用，多数带职位，约二十分之一带部门。没有密码、没有电话、没有家庭住址、没有生日、没有工号、没有薪资。行结构里出现 <code>checkedInCampus</code>、<code>skills</code> 这类字段，看起来是某个"办公位预约 / 同事查找"类工作场所应用的导出格式。</p>
+                        <p><strong>Cigna</strong>：<strong>421,661 张</strong> IT 服务台工单，来自 Cigna 的 ServiceNow，内部链接指向 <code>cigna.service-now.com</code>，最新一张更新到 10 月 31 日，这个日期排除了"翻出旧泄露充数"的可能。里面 31,593 个去重邮箱、84,398 个报障人、306,089 张带回调电话、7,791 个内网 IP 与设备名、5,120 张提到会员或投保人编号、2,552 张带理赔号、156 万条评论与处理记录。还有一条要单独说：<strong>40,837 张工单里出现了 password 这个词，2,808 张里的文本形状像是一个被明文写出来的密码。</strong></p>
+                        <table class="affected-table">
+                            <tr><th>公司</th><th>文件与规模</th><th>验证状态</th></tr>
+                            <tr><td>PepsiCo</td><td>72 MB，500,817 行员工目录（第三方计数 420,106 条记录、348,763 个邮箱）</td><td>媒体已读</td></tr>
+                            <tr><td>Cigna Healthcare</td><td>421,661 张 ServiceNow 工单，截至 10-31</td><td>媒体已读</td></tr>
+                            <tr><td>AMD</td><td>卖方称：SAP 角色映射、1,665 台主机名与 TLS、约 5.3 万封内部邮件、58,678 条身份含工牌号</td><td>未检查</td></tr>
+                            <tr><td>Henry Schein / Paychex</td><td>未披露细节</td><td>未检查</td></tr>
+                            <tr><td>五家共同</td><td>均未发布公开声明，ransomware.live 标注"应谨慎对待"</td><td>无一确认</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>这批数据的价值不在密码上，在可信度上</strong>。一个能报出你的工单号、部门代码、主管是谁、上次找 IT 是为什么的人，在电话里几乎无法被识破。Cigna 那 30 多万个回调电话加上 8 万多个报障人，是一份现成的社会工程剧本。</p>
+                        <p>第二，<strong>泄露源看起来不是"打进内网"，而是"从应用里导出"</strong>。两份文件的形态都指向业务应用的导出能力，而不是数据库被拖，这意味着传统边界防护和 EDR 可能全程没有信号。</p>
+                        <p>第三，<strong>新品牌第一天上五家，本身就该被当成营销行为看</strong>。注册当天开站、零托管记录、五家一起标 Leaked，这套打法更像拿"半成品数据 + 大品牌名字"抬价，而不是五起独立入侵。</p>
+                        <p>第四，<strong>处置动作不受"是否真实"影响</strong>：员工目录与工单历史本来就该按敏感数据管，导出权限、导出审计、工单里不写明文密码，这三件事今天就能做。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">某工作场所应用与服务台系统</span>
+                        <span class="flow-step critical">一份可用登录 或 一次导出接口滥用</span>
+                        <span class="flow-step">72 MB 目录 加 42 万张工单</span>
+                        <span class="flow-step critical">新品牌当天开站 当天标五家</span>
+                        <span class="flow-step">论坛账号同日注册 零托管记录</span>
+                        <span class="flow-step critical">五家都没确认 单一来源</span>
+                        <span class="flow-step">真正的风险是身份能被冒充</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Apache Roller：9.8 未认证反序列化，公告里直接写了"已在被利用"</h4>
+                    <p><strong>CVE-2026-129448</strong>，CVSS 3.1 <strong>9.8</strong>，Apache Roller 4.0.0 到 6.1.4。XML-RPC 端点接受"厂商扩展类型"，并且<strong>在认证请求方之前就完成反序列化</strong>，所以是未认证 RCE。Apache 公告原话是 This issue is being actively exploited，修复版 6.1.6（禁掉扩展类型，XML-RPC 关闭时直接拒请求）。临时缓解只能改 <code>WEB-INF/web.xml</code> 的 <code>enabledForExtensions</code> 为 false，或删掉 <code>/roller-services/xmlrpc</code> 的 servlet 映射再重启；<strong>在管理界面里关 XML-RPC 不够</strong>，老版本是先反序列化再读这个开关。一条口径冲突：Apache 说已在被利用，CISA 的 SSVC 记录却写 Exploitation none，截至 11-18 也没进 KEV。同一漏洞还有个旧编号 CVE-2026-82384，当时只列了 6.1.5 受影响。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. ZoneMinder：任何一个登录用户都能把监控服务器变成执行点</h4>
+                    <p><strong>CVE-2026-28273</strong>，CVSS 3.1 <strong>9.9</strong>（S:C），1.38.4 之前。<code>/api/configs/edit/{name}.json</code> 背后 <code>ConfigsController::edit()</code> 没有执行 System=Edit 授权检查，所谓"系统变量保护"也无效。攻击者把 <code>ZM_PATH_FFMPEG</code> 改成带命令的值，再请求一次抽帧，<code>web/views/image.php</code> 或 <code>web/includes/Event.php</code> 里的 <code>exec()</code> 就执行了，权限是 Web 服务用户。摄像头画面、录像、数据库一并暴露。开源监控系统常年放在"内网所以不管"的位置，但它往往同时接着摄像头网段和办公网。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 一家餐饮 POS，一天六条 CVE，全是同一次审计的产物</h4>
+                    <p>ICRTouch 的 PocketTouch 1.700 build 2025.3726：<strong>CVE-2026-122055</strong>（9.8）套接字默认密码就是字面量 password；<strong>CVE-2026-122147</strong>（9.8）套接字、配置、关机三个密码全是硬编码默认值；<strong>CVE-2026-122149</strong>（9.1）<code>SAVECONFIG</code> 命令能远程覆盖收银机配置文件；<strong>CVE-2026-122150</strong> <code>CHECKPAYMENT</code> 流程接受调用方自报的收银员编号，不校验他是否有权代表这个收银员；<strong>CVE-2026-122142</strong>（9.8）管理登录无失败次数限制，且不同 siteID 返回不同响应；<strong>CVE-2026-122122</strong> 订单跟踪不校验归属，改个订单号就能看别人的单。POS 的价值不在数据量，在"它连着钱"。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. 两个国产 AI 平台，同一天两个 9.3，都是默认密钥和没关的初始化接口</h4>
+                    <p><strong>CVE-2026-130840</strong>（BISHENG 3.0.0 之前，CVSS 4.0 <strong>9.3</strong>）：<code>AuthJwt</code> 用了硬编码的默认 <code>jwt_secret</code>，离线伪造一个 user_id 为 1、角色 admin 的 HS256 令牌，塞进 <code>access_token_cookie</code>，直接拿到用户、工作空间、知识库、工作流的全部管理权限。<strong>CVE-2026-130856</strong>（53AIHub 0.5.5 之前，9.3）：公开的 <code>POST /api/init</code> 没有鉴权，任何人可以"重新初始化"已安装实例，重置已有账号密码、把自己提成最高 creator 角色、拿 token 接管。这类平台通常由业务部门自己试装，不在运维的资产表里，这正是最危险的地方。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Zyxel 9.8：固件里的越界写，WAN 默认关着也挡不住内网</h4>
+                    <p><strong>CVE-2026-79614</strong>，CVSS 3.1 <strong>9.8</strong>，DX3301-T0 / EX3301-T0 固件 5.50(ABVY.8.3)C0 及更早，<code>libclinkc.so</code> 的越界写，未认证攻击者发一个构造的 HTTP 请求就能提权并执行命令。NVD 描述里那句"WAN 访问默认关闭"是厂商给分级理由用的，它只说明"从公网直接打不到"，不说明"内网安全"，这类设备的典型位置就是内网边界，同一个二层里还有办公终端。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. Atomic Server：9.8 分，但没有完整修复版本</h4>
+                    <p><strong>CVE-2026-69157</strong>，CVSS 3.1 <strong>9.8</strong>，0.29.0 到 0.40.2。服务首次启动会创建一个 <code>/setup</code> 邀请，写权限、目标是 Drive 根、<code>usagesLeft</code> 为 1；而 <code>server/src/plugins/invite.rs</code> 的 <code>construct_invite_redirect</code> <strong>丢弃了兑换者身份</strong>。结果是一个未认证请求带上攻击者自己的公钥，就能创建一个新 Agent 并授予整个 Drive 的写权限。在没有被认领的新部署上，等于把整个库交出去。CVE 记录明确写了"截至审查未确认完整修复版本"。这类自托管 headless CMS 部署量不小，而且常常由非安全岗的人一键起。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 是否已发生或可利用象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 是否已发生或可利用
+    x-axis "未利用或仅研究演示" --> "已发生或已在野"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Puppet进KEV": [0.95, 0.92]
+    "Roller说已在被利用": [0.90, 0.88]
+    "Inception五家": [0.85, 0.70]
+    "Java4Shell待利用": [0.40, 0.96]
+    "Oracle五条10.0": [0.30, 0.93]
+    "Rucio冒充管理员": [0.25, 0.90]
+    "PowerStudioSCADA": [0.35, 0.86]
+    "ASUS管理台": [0.30, 0.84]
+    "ZoneMinder9.9": [0.28, 0.76]
+    "POS六条CVE": [0.45, 0.62]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日失败点分布</div>
+                    <div class="mermaid">
+pie title 今日六条主线的失败点分布
+    "把输入的边界当成合法": 26
+    "把对方自称当成身份": 24
+    "补丁在但没进流程": 18
+    "批量修复压垮排期": 14
+    "数据从应用侧导出": 12
+    "没有修复版本的组件": 6
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月23日至11月18日
+    10月23日 : Puppet 漏洞预留编号
+    10月31日 : Cigna 工单导出里最新一条的日期
+    11月03日 : Puppet 披露 带可用示例报告
+    11月03日 : OpenVox 与 Neodyme 同步公开 write-up
+    11月10日 : KEV 加入 BroadWorks 与 Openwave
+    11月13日 : KEV 加入 UnrealIRCd 与 Check Point
+    11月16日 : Oracle 预发布 Java 关键补丁
+    11月17日 : Oracle 发 11 月 CSPU 共 640 条
+    11月17日 : Java4Shell 细节与 PoC 公开
+    11月17日 : Apache 披露 Roller 并称已利用
+    11月17日 : CISA 把 Puppet 收进 KEV
+    11月17日 : Rucio 与 PowerStudio 进 NVD
+    11月17日 : Inception 开站 一天标五家
+    11月17日 : Zyxel 与 Atomic Server 两条 9.8
+    11月18日 : 韩国 NCSC 就 Java 发预警
+    11月18日 : 本期统计窗口收 1308 条新 CVE
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Calif 官方公告 Java4Shell（含 PoC、四阶段利用链、受影响 CPU 与分发版清单）</span>
+                        <a href="https://calif.io/java4shell/">calif · java4shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OpenJDK 漏洞公告 2026-11-17（无技术细节，仅版本与修复状态）</span>
+                        <a href="https://openjdk.org/groups/vulnerability/advisories/2026-11-17">openjdk · advisory</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Oracle 11 月 CSPU 公告（640 条 CVE 的官方清单与版本矩阵）</span>
+                        <a href="https://www.oracle.com/security-alerts/cspunov2026.html">oracle · cspunov2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Oracle 安全博客 — 11 月 CSPU 发布说明（21 个产品族的范围）</span>
+                        <a href="https://blogs.oracle.com/security/november-2026-critical-security-patch-update-released">oracle · blog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tenable — 640 CVE / 655 补丁 / 62 critical 的逐产品统计与免认证列</span>
+                        <a href="https://ar.tenable.com/blog/oracle-november-2026-critical-security-patch-update-addresses-640-cves-cve-2026-114938">tenable · cspu</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">oss-security 2026/q4/757 — Java4Shell 的分发版清单、CPU flag 自查命令与缓解参数</span>
+                        <a href="https://seclists.org/oss-sec/2026/q4/757">seclists · oss-sec</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IKZERO — Java4Shell 技术拆解（JDK-8268276 / 8296735、四阶段、JavaBleed、G1 堆喷）</span>
+                        <a href="https://www.ikzero.com/blog/cve-2026-114938-java4shell-openjdk-rce">ikzero · java4shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IronMonkey — CVE-2026-114938 检测与缓解汇总（含 Wiz 两小时 PoC 的复述）</span>
+                        <a href="https://imtr.net/article/cve-2026-114938-rce-in-openjdk-everything-you-need-to-know-f659">imtr · java4shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">首尔经济日报 — 韩国 NCSC 向公共机构发 Java 漏洞预警（11-17）</span>
+                        <a href="https://en.sedaily.com/business/2026/11/17/critical-java-flaw-found-after-php-putting-korean-systems">sedaily · java</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-100397（Rucio 挑战串与令牌同表，10.0，S:C）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-100397">nvd · 100397</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rucio 修复 release（35.9.1 / 38.6.1 / 40.4.2 / 41.1.1 四条维护线）</span>
+                        <a href="https://github.com/rucio/rucio/releases/tag/35.9.1">github · rucio</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-120387（CIRCUTOR PowerStudio SCADA，alg=none，CVSS 4.0 10.0）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120387">nvd · 120387</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IONIX — CVE-2026-120387 受影响区间 24.8.0 至 24.11.16.x、修复 24.11.17.0</span>
+                        <a href="https://www.ionix.io/threat-center/cve-2026-120387">ionix · 120387</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-114202（ASUS Control Center Express 硬编码加密密钥，10.0）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-114202">nvd · 114202</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-126574（ASUS Control Center Viewer 改管理员密码，9.4）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-126574">nvd · 126574</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录（2026.11.17 版，1,782 条，最新一条为 Puppet 115731，期限 12-01）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Hunt — Puppet CVE-2026-115731 反序列化链、版本表与 PoC 位置</span>
+                        <a href="https://zerohunt.ai/blog/puppet-enterprise-cve-2026-115731-deserialization-rce">zerohunt · 115731</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DugganUSA — KEV 收录时间线与"CA 私钥按已泄露处理"的处置建议</span>
+                        <a href="https://www.dugganusa.com/post/puppet-enterprise-cve-2026-115731-exploited-kev">dugganusa · 115731</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OpenVox 安全公告 GHSA-ffr6-rwpm-p5wq（含可直接发送的示例报告）</span>
+                        <a href="https://github.com/openvoxproject/openvox/security/advisories">github · openvox</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Apache 官方公告 CVE-2026-129448（apache-announce，11-17，含"已在被利用"原话与缓解步骤）</span>
+                        <a href="https://marc.info/?m=179491843816391">marc · apache-announce</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ransomnews — Inception 泄露站与 PepsiCo / Cigna 两份文件的逐项统计</span>
+                        <a href="https://ransomnews.com/inception-leak-site-pepsico-amd-cigna-2026">ransomnews · inception</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DataBreach.com — PepsiCo 条目（420,106 条记录 / 348,763 个邮箱的独立计数）</span>
+                        <a href="https://databreach.com/breach/pepsico-2026">databreach · pepsico</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DataBreach.com — Cigna 条目（工单数、邮箱、回调电话、内网 IP 的统计口径）</span>
+                        <a href="https://databreach.com/breach/cigna-healthcare-2026">databreach · cigna</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackFeeds — 11 月勒索受害统计（本月 731 起口径，按泄露站声明日期计）</span>
+                        <a href="https://hackerfeeds.com/ransomware/reports/2026-11">hackerfeeds · 2026-11</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-28273（ZoneMinder 配置越权到 exec 命令执行，9.9）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-28273">nvd · 28273</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-122055 / 122147 / 122149 / 122150 / 122142 / 122122（ICRTouch POS 六条）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-122055">nvd · 122055</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-130840（BISHENG 硬编码 jwt_secret，伪造管理员令牌，9.3）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-130840">nvd · 130840</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-130856（53AIHub 初始化接口未鉴权，可重置密码接管，9.3）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-130856">nvd · 130856</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-79614（Zyxel DX3301-T0 / EX3301-T0 libclinkc.so 越界写，9.8）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-79614">nvd · 79614</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-69157（Atomic Server 邀请接口丢弃兑换者身份，9.8，无完整修复版本）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-69157">nvd · 69157</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0 — 本期窗口查询（11-17 00:00 至 11-18 06:00 共 1,308 条、9.0 以上 107 条，本刊一手统计）</span>
+                        <a href="https://services.nvd.nist.gov/rest/json/cves/2.0">nvd · api</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Junglewise — 11-11 至 11-17 供应商缺陷量（Oracle 512 条 / 49 critical，作为量级参照）</span>
+                        <a href="https://junglewise.ai/threats/technologies">junglewise · vendors</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分、受影响与修复版本以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注口径或直接指出差异：CVE-2026-114938 的 9.2 来自 Calif 的 CVSS 4.0 评分，Oracle 在 CSPU 记录里按 CVSS 3.1 记 8.1，两套体系不可直接横比；11 月 CSPU 的 640 个 CVE 与 655 个补丁是 Tenable 的统计口径，部分媒体写 652 个，Oracle 官方 advisory 才是准数；“截至发稿无在野”成立于 11-18，之后可能变化；Apache Roller 公告称“已在被利用”，而 CISA 的 SSVC 记录写“未观测到利用”且未进 KEV，两种说法各有其信息边界；Inception 五家中只有 PepsiCo 与 Cigna 两份文件被媒体实际检查，AMD、Henry Schein、Paychex 的数据规模均为卖方自述，五家均未确认；Cigna 与 PepsiCo 的条数在不同统计方之间有差异（42 万与 50 万行、348,763 与 31,593 个邮箱分别对应不同文件的去重口径）；Rucio 的 10.0 是 CVSS 3.1 且 S:C；Puppet 的 9.4 由 Perforce 作为 CNA 给出，NVD 侧仍在分析；本周期的 1,308 条与 107 条为本刊按 NVD API 2.0 时间窗自行统计。涉华涉台的归因类内容本期不予收录，技术事实按各报告方原文转述。文中涉及的 PoC、IOC 与复现细节仅用于自查与识别，不要用于未授权环境。
+                <br>
+                每日精选 · 值得关注 | 2026年11月18日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
