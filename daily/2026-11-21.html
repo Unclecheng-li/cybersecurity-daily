@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月21日（第222期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月21日 星期六</span>
+            <span class="edition-number">第 222 期 | 总第 222 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>洞是模型先找到的补丁还得人来打 · 两个半月的窗口里没有一条告警 · 上个月补过的洞这次不算数 · 一个字节写出了缓冲区边界 · 装完就该删的安装文件还挂着 · 系统停了十天没查到入口
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">找洞的换成了模型，扛时间的还是人</h2>
+                <p class="sub-headline">vCenter 那个 9.8 被用了两个半月才等到补丁 · PHP 一次交七个 9.2 其中一个由模型扫出 · Ruby 的一个字节把 PoC 时间定在 11-25 · Drupal 的安装脚本被同一类扫描器报上来</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">9.8 · 在野两个半月 · 未进 KEV</span>
+                    <h3 class="article-title">补丁发出去那天，洞已经被用掉两个半月</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-123890 · VMware vCenter Server 目录服务 · VMSA-2026-0009 · 修在 9.1.1.0200 / 9.0.2.0200 / 8.0 U3m</span>
+                        <span class="cvss-score">CVSS 3.1 记 9.8 · 未认证拿管理员会话 · 7.0 无公开修复</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 19 日，Broadcom 发了 VMSA-2026-0009，修 vCenter Server 目录服务（vmdird）里的一个认证绕过。按 NVD 记录，网络可达的攻击者不需要任何凭据，就能拿到一个管理员会话。同一天，Google 威胁情报组与 Mandiant 说这个洞在九月初就已经被用了，比补丁早两个半月。</p>
+                        <p>技术路径写得很具体：vmdird 的 DCE/RPC 接口在 TCP 2012 上泄露 SRP 会话密钥，外面的人拿到密钥就等于拿到一个 administrator@vsphere.local 的已认证会话，不用密码。工具链是成套的：BONESAW 走这个洞复制 SSO 目录库、抽走 SAML 签名密钥、建一个隐藏的 SSO 管理员；SAWSNAKE 拿签名密钥伪造 SAML 断言与 session cookie，也就是常说的 Golden SAML，伪造出来的令牌在改密码之后依然有效，MFA 也拦不住；BEARBONES 是一个改过的 Dropbear SSH，挂在 TCP 33992 上；LAZYBONES 用 Slack 当 C2。除此之外还有五个新命名的恶意家族。</p>
+                        <p>进入点不是 vCenter 本身。Mandiant 的描述是从一台 BeyondTrust Remote Support 设备的零日（CVE-2026-102764）进来，横向到一台没有装 EDR 的内网 Linux 应用机，再从那里打 vCenter。<strong>vCenter 从头到尾没有暴露在公网上，它是被别人家管理平面带进来的。</strong></p>
+                        <p><strong>受影响与修复：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>版本线</th><th>修复版本</th><th>风险</th></tr>
+                            <tr><td>vCenter 9.1.x</td><td>9.1.1.0200</td><td class="risk-high">立即升级</td></tr>
+                            <tr><td>vCenter 9.0.x</td><td>9.0.2.0200</td><td class="risk-high">立即升级</td></tr>
+                            <tr><td>vCenter 8.0 与 VCF 5.x</td><td>8.0 U3m / 5.2.5（KB88287）</td><td class="risk-high">立即升级</td></tr>
+                            <tr><td>Telco Cloud Platform 与 Infrastructure</td><td>KB463116</td><td class="risk-high">立即升级</td></tr>
+                            <tr><td>vCenter 7.0</td><td>无公开修复，仅延长支持</td><td class="risk-high">网络隔离</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>时间窗比日志留存还长。</strong>两个半月大约 75 天，中型企业日志常见保留 30 到 90 天。入侵如果落在上限之外，你今天去打补丁的时候，能查的证据已经滚出保留期了。</li>
+                            <li><strong>改密码不解毒。</strong>Golden SAML 伪造的是签名，只要签名证书没换，攻击者随时可以再签一张。处置顺序是轮换 SAML 签名证书，再重置 administrator@vsphere.local 与 vpxuser。</li>
+                            <li><strong>公告不提在野，KEV 也不收。</strong>Broadcom 的公告没有写正在被利用，功劳记在 Mandiant 名下；截至 11-18 版 KEV（1,786 条）里没有这一条。只跟 KEV 打补丁的团队，这一条会被漏掉。</li>
+                            <li><strong>七月的补丁不算数。</strong>Broadcom 的 FAQ 明确说这个洞与七月的 CVE-2026-59309 不是同一个，打过七月那版的人今天仍然暴露。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">BeyondTrust 零日取初始立足点</span>
+                        <span class="flow-step">横向到未装 EDR 的内网 Linux 机</span>
+                        <span class="flow-step critical">BONESAW 打 vmdird 的 2012 端口</span>
+                        <span class="flow-step critical">泄露 SRP 密钥 拿到管理员会话</span>
+                        <span class="flow-step critical">抽走 SAML 签名密钥 建隐藏管理员</span>
+                        <span class="flow-step critical">伪造断言 绕过 MFA 冒充任意用户</span>
+                        <span class="flow-step">VAMI 开 SSH 取主密钥与库口令</span>
+                        <span class="flow-step critical">以 vpxuser 上 ESXi 取 NTDS</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">七个 4.0 记 9.2 · 十月补丁不覆盖</span>
+                    <h3 class="article-title">七个 9.2 一起发，其中一个不是人找到的</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-126714 PHPAfterShell · CVE-2026-129289 FPM 走私 · PHP 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36</span>
+                        <span class="cvss-score">17 或 18 条 CVE 两套口径 · 无在野报告 · 上传进度默认开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 18 日 PHP 团队提前一天预告"最高级别为 critical"，19 日 14:00 UTC 后放出四个分支的更新。数字有两套口径：PHP 自己的公告覆盖 17 个 CVE，Aikido 与 BleepingComputer 按 18 个算（多出来的是打包的 uriparser 库漏洞，PHP 侧没有对应公告）。七个 critical 在 CVSS 4.0 下全是 9.2。</p>
+                        <p>最受关注的是 CVE-2026-126714，代号 PHPAfterShell。它落在默认的文件会话处理器上，也就是绝大多数站点实际在用的那一套。会话记录是"键加序列化数据加长度字段"，但没有"写完了"的标记。如果 worker 在一次写入中途死掉，文件里会留下新记录的开头拼着旧记录的尾巴。研究方 Depthfirst 证明，只要长度凑得巧，残留字节会在下一次会话启动时被当成另一个对象反序列化。再往下要代码执行，还需要应用里存在 gadget 链，或者像他们演示那样串第二个 PHP 洞；但即使不执行代码，这个原语也能改登录状态、改 CSRF token、读别人的会话。</p>
+                        <p>进门的路径是上传进度：session.upload_progress 在这版之前默认开着，一个带进度字段的 multipart 请求会在任何应用代码跑之前触发一次会话写入，所以不需要有上传表单，只要有一个之后会开 session 的页面。</p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>条目</th><th>风险</th></tr>
+                            <tr><td>CVE-2026-129289 PHP-FPM 请求走私（前端复用后端连接）</td><td class="risk-high">9.2 未认证</td></tr>
+                            <tr><td>CVE-2026-129474 / 129481 / 129496 / 129182 四处 use-after-free</td><td class="risk-high">9.2 可执行代码</td></tr>
+                            <tr><td>CVE-2026-115560 会话序列化器切换，PoC 已在网上</td><td class="risk-high">9.2 前提苛刻</td></tr>
+                            <tr><td>CVE-2026-129291 epoll UAF，worker 打 master</td><td class="risk-medium">8.8 本地提权</td></tr>
+                            <tr><td>CVE-2026-128090 PHAR 的 OpenSSL 签名算法降级</td><td class="risk-medium">绕过签名</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>上个月打的补丁不算。</strong>129481 的公告直接写"是对此前一个洞的不完整修复"，那句"此前"指的就是十月那轮 PHP2Shell。打过十月紧急版的人，今天还得再打一遍。</li>
+                            <li><strong>标准配置确实不受影响，但"标准"很难界定。</strong>129289 只在复用后端连接时成立（nginx 的 fastcgi_keep_conn、Apache 的 enablereuse、部分 HAProxy 与 LSAPI），可这几种恰恰是追求吞吐量的生产环境常开的。</li>
+                            <li><strong>发现方式值得记住。</strong>PHPAfterShell 是 Depthfirst 用专门面向安全任务的模型扫出来的。加上 11 月 13 日那个 Apache mod_http2 的 9.8、以及下面 Drupal 那条，模型在开源项目里扫洞已经不是演示。</li>
+                            <li><strong>披露之后多久会有人来试，已经有答案。</strong>Cloudflare 记录到至少一次针对某个州选举网站的利用尝试，打在一个刚披露的 critical PHP 洞上，不是这七个里的任何一个，但时间尺度是同一档。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">multipart 请求带进度字段</span>
+                        <span class="flow-step">应用代码还没跑 会话已写入</span>
+                        <span class="flow-step critical">worker 写入中途被杀掉</span>
+                        <span class="flow-step critical">新旧记录拼在同一个会话文件</span>
+                        <span class="flow-step critical">长度凑巧 残留字节被当成对象</span>
+                        <span class="flow-step critical">下次 session_start 反序列化</span>
+                        <span class="flow-step">有 gadget 链就是代码执行</span>
+                        <span class="flow-step">没有也能改登录态与 CSRF</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">官方判 critical · NVD 记 7.4 · PoC 11-25</span>
+                    <h3 class="article-title">一个 ß 变成两个 S，缓冲区边界差一位</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-132825 Ruby2Shell · 同批共七个内存问题 · GitLab 19.6.0 与 GHES 3.22.5 仍带受影响解释器</span>
+                        <span class="cvss-score">3.3.14 / 3.4.13 / 4.0.10 修复 · 从 2.4.0 起就有这段代码</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 18 日 Ruby 发了三个分支的修复版，一次修七个内存安全问题。CVE-2026-132825 是其中最重的一个，研究方 Veria Labs 给它起名 Ruby2Shell。</p>
+                        <p>机理短到能一句话讲完。Ruby 的几个单字节编码（ISO-8859 系列、Windows-125x）里没有大写 ß，转大写时它要变成两个字符 SS。转换循环只检查了缓冲区里够不够放<strong>一个</strong>字节，写第一个 S 之后，第二个 S 直接落在边界外面——一个字节的堆溢出。输入长度决定溢出落在哪里，所以攻击者对位置有控制权，21 个 ß 就够跨过分配边界。触发路径是 upcase、swapcase、downcase(:fold)、casecmp?；UTF-8 走另一条代码路径，不受影响。</p>
+                        <p>两个口径必须并列写，不然会误判风险等级。Ruby 官方安全公告判 critical，并说"已知有 PoC 在某些场景下能达成远程代码执行"；NVD 现在给的是 7.4，向量是 AV:L（本地）。Veria Labs 的说法是默认配置的 Rails 与老式 Sinatra 未认证可达，但他们没有公开请求路径，PoC 定在 11-25 08:00 UTC 发布，如果主要厂商届时还没出包就再往后推。<strong>也就是说今天是 11-21，留给运维的时间是四天。</strong></p>
+                        <p>真正的麻烦在"绑定了自己解释器"的产品上。系统包管理器升级对它们无效：披露时 GitLab 19.6.0、GitHub Enterprise Server 3.22.5、Chatwoot 4.20.0 仍然带着受影响的 Ruby，Mastodon、Discourse、OpenProject 已出修复版。旧分支没有修复，3.2 及更早全部 EOL，而按研究方的说法，2.4.0 起的每一版都有这段代码。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>字节小不等于门槛高。</strong>一个字节足够改掉相邻对象的头部或指针低位，配合堆布局塑造就能走远；这类原语在实践中被反复证明可用。</li>
+                            <li><strong>PoC 有确切日期。</strong>11-25 08:00 UTC 是研究方自己写的时间，这种"预告式披露"给出的是可执行的倒排工期，不是模糊的"近期"。</li>
+                            <li><strong>WAF 大概率拦不住。</strong>触发输入是一串合法的编码字符，21 个 ß 在日志里看上去只是乱码，不像攻击载荷。</li>
+                            <li><strong>同批还有六条。</strong>正则编译的 double free、转换的整数溢出、正则匹配的越界读、Regexp#to_s 的堆溢出。Rails 应用里用用户输入拼正则的写法并不罕见。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">输入 21 个 ß 的 ISO-8859 字符串</span>
+                        <span class="flow-step">upcase 展开成 42 个 SS</span>
+                        <span class="flow-step critical">循环只校验了一个字节的空间</span>
+                        <span class="flow-step critical">第二个 S 写到缓冲区边界外</span>
+                        <span class="flow-step critical">位置由输入长度决定 可控</span>
+                        <span class="flow-step">堆元数据或相邻对象被改</span>
+                        <span class="flow-step critical">配合堆布局走到代码执行</span>
+                        <span class="flow-step">PoC 定在 11-25 08:00 UTC</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">18/25 · 已有 PoC · 模型报的</span>
+                    <h3 class="article-title">装完就该删的安装文件，还在那儿等着被重装</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-132165 · SA-CORE-2026-017 · 修在 10.6.22 / 11.3.22 / 11.4.13 · 同日另有 132166</span>
+                        <span class="cvss-score">Drupal 自评 18/25 · 未认证 · 报告方 Anthropic OSS Scanner</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 18 日，Drupal 安全团队发 SA-CORE-2026-017，修 core 里 install.php 的一个洞。Drupal 每个发行包里都带这个安装脚本，默认的 .htaccess 规则不会挡它，装完之后它是否可达完全取决于站点自己的配置。在特定条件下，未认证的攻击者可以让它重跑安装流程，结果是站点被接管或者服务器上执行任意代码。有几条利用路径在 Web 服务器不能写、不能改 settings.php 权限时会被挡住，这是最直接的一道闸。</p>
+                        <p>发现者这一栏写的是 Anthropic OSS Scanner，内部编号 ANT-2026-GMRPK0BU，报告里带了复现与候选补丁。这个扫描器十月才上线，这是它一个月内送出的第二个公开 critical——11 月 13 日那个 Apache mod_http2 的 9.8 也是它报的。Drupal 安全团队自己提到，近期安全报告里 AI 生成的比例在明显上升。</p>
+                        <p>同一天还修了 CVE-2026-132166（7.2），一条管理员配合反序列化才能走通的 gadget 链。10.5.x 及更早、11.2.x 及更早、Drupal 8 与 9 全部 EOL，没有包可打。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>这是"配置债"而不是"代码债"。</strong>install.php 是设计上就存在的文件，问题在于它不该在装完之后还被访问到。封掉它的收益是长期的：这个洞以及未来所有安装器相关的洞一起消失。</li>
+                            <li><strong>封禁写法有坑。</strong>Apache 的 Require all denied 必须写在 server 或 vhost 配置里，写进 .htaccess 会让整站 500；nginx 是 location ^~ /core/install.php 直接 return 404。封安装器不影响 update.php。</li>
+                            <li><strong>EOL 分支没有任何选项。</strong>按第三方统计，仍在报数的站点里约 29% 跑在 10.5 及更早、8 或 9 上，这些站点今天拿不到补丁，只能封路径加迁移。</li>
+                            <li><strong>"模型报的"正在变成常态。</strong>三个月前这还是个新闻点，现在已经需要按流程处理：报告量大、带复现、审核压力全在维护者这一侧。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">请求 /core/install.php</span>
+                        <span class="flow-step">默认 htaccess 不挡这个路径</span>
+                        <span class="flow-step critical">触发重装流程</span>
+                        <span class="flow-step critical">Web 用户能写 settings.php</span>
+                        <span class="flow-step critical">覆写配置 接入自己的数据库</span>
+                        <span class="flow-step critical">站点接管或服务器执行代码</span>
+                        <span class="flow-step">封路径 可一次解决所有安装器洞</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">无 CVE · 停摆十余天 · 未归因</span>
+                    <h3 class="article-title">系统停了十天，查不到入口在哪</h3>
+                    <div class="article-meta">
+                        <span>欧盟委员会 · 10-22 发现 · Sysper 与 MyPMO 停摆 · CERT-EU 指认 ARTEX</span>
+                        <span class="cvss-score">无勒索要求 · 无数据泄露结论 · 入口未公开</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 19 日 Politico 报道后，欧盟委员会确认了这起事件：10 月 22 日发现异常，10 月 26 日初步调查确认，随后把多个应用下线。受影响的是 Sysper（人事平台，工资单、工时、休假）与 MyPMO（医疗费用报销），翻译服务在 11 月 17 日也停过；Sysper 在 11 月 18 日恢复后又短暂崩了一次。工资按时发了，但一部分员工有十来天没法填工时、没法请假。</p>
+                        <p>CERT-EU 在 11 月初识别出攻击方使用了 ARTEX，一套开源的人工智能渗透框架。它的工作方式在 CERT-EU 11 月 5 日的技术通告里写得很清楚：操作者用自然语言给一个目标，框架把它拆成子任务，交给多个智能体去调真实的攻击工具。它自己不训练模型，接的是操作者选的外部模型。原作者的仓库在十月因为被滥用而下架，但独立副本还在流通，下架原仓库不解决问题。</p>
+                        <p>必须分开写清楚的三件事：委员会自己没有点名 ARTEX，是 CERT-EU 识别、Politico 报道；没有公开信息说明攻击者是怎么进来的，ARTEX 究竟用于打进去还是只用于扫弱点，官方没说；没有证据表明员工数据整体泄露，也没有收到勒索要求，但调查没有结束。按欧盟 2018/1725 条例，确认个人数据泄露后要在 72 小时内报 EDPS，这个时钟只有在"确认"之后才开始走。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>门槛从"会打洞"降到"会写字"。</strong>11 月 14 日那期写过 ARTEX 的行为体与报价，这次落到一个具体机构头上，是第一次有大型公共机构公开承认与之相关的停摆。</li>
+                            <li><strong>下线不等于止损。</strong>服务恢复只证明它能用，不证明数据没被复制。委员会的公开口径一直是"相信已控制大部分"，而"有没有丢数据"到 11-20 仍然没有答案。</li>
+                            <li><strong>下架原仓库不起作用。</strong>开源框架一旦流出，删除源仓库只能影响后来者，已经拿到副本的人不受任何影响。这类工具只能靠行为检测，不能靠封域名。</li>
+                            <li><strong>这是今年第三次。</strong>1 月是管理员工手机的系统的痕迹泄露了姓名与电话，3 月是 Trivy 供应链投毒进了 AWS 环境。三次之间没有公开的关联，但同一家机构一年三次，说明问题在流程而不是某一次运气。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">操作者给一句自然语言目标</span>
+                        <span class="flow-step">框架拆成子任务</span>
+                        <span class="flow-step">多个智能体调真实攻击工具</span>
+                        <span class="flow-step critical">10-22 发现异常</span>
+                        <span class="flow-step critical">Sysper 与 MyPMO 下线十余天</span>
+                        <span class="flow-step">11-18 向全体委员通报</span>
+                        <span class="flow-step critical">入口与数据归属仍未公开</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">无 CVE 无补丁 · 物理接触 · 当日复现</span>
+                    <h3 class="article-title">锁屏不是墙，Narrator 给它开了条缝</h3>
+                    <div class="article-meta">
+                        <span>FastUnlock · 11-19 公开 · Chaotic Eclipse · Windows 11 26H2 加 11 月补丁仍可复现</span>
+                        <span class="cvss-score">代码以 WsiAccount 运行 · 不破加密只破锁屏 · 12-08 才是补丁日</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 19 日，研究者 Chaotic Eclipse 在 GitHub 放出 FastUnlock，一段没有和微软协调过的公开披露。场景很窄但很实在：一台开着、锁着、BitLocker 全盘加密的 Windows 11，攻击者只要坐在键盘前。</p>
+                        <p>路径是这样的：锁屏的"我忘记 PIN"入口按 Win+U 起 Narrator，Narrator 的新界面被放在锁屏账户上下文里跑，焦点落在一个本不该可见的窗口上。用 Caps Lock、方向键、回车走进 Narrator 设置，再到蓝牙和其他设备，再打开自动播放，插一个 U 盘，资源管理器就开了，从 U 盘启动的程序以 WsiAccount 身份运行，也就是锁屏用来托管界面的那个低权限账户。研究者说在装了 11 月补丁的 26H2 上，五分钟能走完。ThreatLocker 当天复现，确认代码执行限制在 WsiAccount，不是管理员。</p>
+                        <p>三个必须纠正的说法。第一，它不是"破解 BitLocker"：加密没被破，密钥没被取出，只是 TPM 单独托管的那套配置下，开机时盘已经解好了，锁屏是唯一那道门，而这个洞开的正是这道门。第二，需要至少一个账户绑定在线微软账户，因为入口是找回流程。第三，研究者自己说没跑完最后一步，手上没有 U 盘，视频演示到进入设置为止。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>它打的是"已开机"这个状态。</strong>TPM 单独托管的笔记本，关机时是加密的，开着锁着时不是。办公区、会议室、咖啡馆里最常见的状态恰好是后者。</li>
+                            <li><strong>WsiAccount 不等于无害。</strong>它不是管理员，但能读已解锁卷上的用户文件、能装带持久化的程序、能用这台机器去打内网。对一台丢失的机器来说，这已经够了。</li>
+                            <li><strong>没有补丁的窗口是十九天。</strong>11-19 公开，12-08 才是补丁日。这期间唯一的硬防线是开机前 PIN，而多数企业的 BitLocker 部署是 TPM 单独托管、没有 PIN。</li>
+                            <li><strong>检测只能靠事后。</strong>Narrator.exe 拉起 cmd.exe 或 powershell.exe 是极强的异常信号，但需要物理在场才有这个进程链，日常告警里几乎不会自己出现。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">物理接触锁定中的 Windows 11</span>
+                        <span class="flow-step">找回 PIN 入口按 Win+U</span>
+                        <span class="flow-step critical">Narrator 在锁屏账户上下文启动</span>
+                        <span class="flow-step critical">焦点落在隐藏窗口</span>
+                        <span class="flow-step critical">键盘导航进设置 蓝牙与自动播放</span>
+                        <span class="flow-step critical">插 U 盘 资源管理器打开</span>
+                        <span class="flow-step critical">程序以 WsiAccount 运行</span>
+                        <span class="flow-step">读已解锁卷上的用户数据</span>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Mitel MiCollab 一条 10.0，盲注命令拼接</h4>
+                    <p><strong>CVE-2026-133323</strong>，10.0（CVSS 3.1，AV:N/AC:L/PR:N/UI:N/<strong>S:C</strong>），影响 MiCollab 到 10.3（10.3.0.18）的 AWV（音频、Web 与视频会议）组件，厂商编号 MTLVULN-1864：参数过滤不足导致未认证的盲注命令执行。S:C 意味着影响会越出组件本身，落到宿主系统。MiCollab 这两年被反复打过，边界设备一旦被拿下，攻击者拿到的是能进内网的会议与语音网关。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Splunk 一轮清掉近 140 条，SOAR 里有两条 9.9 与 9.6</h4>
+                    <p>Splunk Enterprise、Enterprise Security 与 SOAR 一并更新，合计近 140 条。SOAR 8.8.0 修 59 条，其中 <strong>CVE-2026-131253</strong>（9.9）与 <strong>131287</strong>（9.6）都需要一个持有 Apps 或 Playbooks 编辑权限的已认证用户。更值钱的是 <strong>CVE-2026-76536</strong>（9.4，<strong>未认证</strong>）：在 10.4.5 / 10.2.9 / 10.0.12 / 9.4.17 之前的版本上，集群共享密钥为空时，单机实例的集群配置 REST 接口可以被未认证用户读写。SIEM 是日志的唯一副本，它在攻击链里通常是被删的那一环。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. WatchGuard Dimension 三条 9.3，日志采集服务不需要认证</h4>
+                    <p><strong>CVE-2026-86130</strong>（9.3，CVSS 4.0）：日志采集服务缺失认证，远程未认证即可执行任意 SQL，最终以 Dimension WebUI 进程用户的身份执行代码。另两条 <strong>84322</strong> 与 <strong>86094</strong>（均 9.3）是在管理 API 响应和诊断日志里返回未打码的会话标识，低权限用户可借别人的会话。日志与报表平台常被当成"只读的旁路系统"，它手里握着全网的会话标识。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Postgres Enterprise Manager 三条 9.4，监控代理自带读写文件的权限</h4>
+                    <p><strong>CVE-2026-132658 / 132659 / 132660</strong> 均 9.4（CVSS 4.0，PR:H / S:C）。132658 的核心是角色设计：每个 PEM agent 登录都继承的 pem_agent 角色，同时是 PEM 后端库上 pg_read_server_files 与 pg_write_server_files 的成员。控制任何一台被监控的主机，就拿到了那台主机的 agent 证书，于是能在 PEM 服务器上读写文件。监控系统天生要"看得见所有机器"，这个设计把"看得见"变成了"写得进"。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 伦敦交通局 26.5 万张 Oyster 照片卡，泄露的是安全问题答案</h4>
+                    <p>TfL 11 月 16 日发现异常，18 日通知用户，20 日把数字定在约 26.5 万个网络账户（此前口径 25 万，可能还会涨）。泄露字段是全名、邮箱、电话、住址、出生日期，以及<strong>账户的安全问题与答案</strong>；密码、银行卡与支付信息、行程记录、照片均未泄露，持 Zip 卡的儿童姓名与生日也未泄露。门户仍下线，已通报 ICO。这份数据里最贵的不是生日，是安全问题答案，人们几乎不会改它，而"第一所学校""母亲娘家姓"这几个问题在银行、运营商、政务系统里反复出现。另一处细节：用户是靠收到 TfL 自己系统发出的异常邮件才发现出事的，也就是说攻击者能驱动官方事务邮件，这类信会顺利通过 SPF、DKIM 与 DMARC。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. KEV 停在 1,786 条，连续两天没有新增</h4>
+                    <p>CISA 的目录仍是 2026.11.18 版，1,786 条，11-19 与 11-20 都没有新增。但这不代表风平浪静：11-18 那批四条里有三条的整改期限是 11-21，也就是今天，其中包括那个厂商明确不出修复版的 Apache Axis 9.8。KEV 是"确认被利用"的名单，不是"有危险"的名单，vCenter 那条两个半月在野的洞至今不在里面。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 现实可利用度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日重点：严重性 × 现实可利用度
+    x-axis "需要前提或仅研究演示" --> "已在野或已公开 PoC"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "vCenter两个半月在野": [0.97, 0.96]
+    "Drupal安装器已有PoC": [0.78, 0.90]
+    "PHP七个9.2": [0.62, 0.92]
+    "FastUnlock公开视频": [0.70, 0.74]
+    "Ruby2Shell等发布": [0.55, 0.86]
+    "欧盟委员会停摆": [0.88, 0.80]
+    "MiCollab盲注10.0": [0.30, 0.88]
+    "Splunk未认证9.4": [0.28, 0.84]
+    "PEM代理越权": [0.34, 0.80]
+    "Dimension未认证9.3": [0.26, 0.78]
+    "TfL安全问题答案": [0.72, 0.52]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日失败点分布</div>
+                    <div class="mermaid">
+pie title 今日六条主线的失败点分布
+    "补丁比利用晚两个半月": 26
+    "上个月修的不算这一次": 18
+    "转换循环少算一个字节": 16
+    "装完没删的入口文件": 15
+    "会写字就能用的框架": 14
+    "锁屏账户能跑程序": 11
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年9月3日至11月21日
+    09月03日 : vCenter 漏洞被实际使用
+    10月22日 : 欧盟委员会发现系统异常
+    10月26日 : 欧盟委员会初步调查确认
+    11月05日 : CERT-EU 发布 ARTEX 技术通告
+    11月13日 : Apache mod_http2 由模型扫出
+    11月16日 : 伦敦交通局发现 Oyster 门户异常
+    11月18日 : Ruby 三个分支修七个内存问题
+    11月18日 : Drupal 修 install.php 重装问题
+    11月18日 : Splunk 一轮清掉近 140 条
+    11月18日 : KEV 更新到 1786 条
+    11月19日 : Broadcom 发 VMSA-2026-0009
+    11月19日 : PHP 四个分支同日发安全版
+    11月19日 : FastUnlock 在 GitHub 公开
+    11月19日 : 欧盟委员会确认遭攻击
+    11月20日 : TfL 确认约 26.5 万账户受影响
+    11月21日 : 三条 KEV 整改期限到期
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Broadcom VMSA-2026-0009（版本对照与官方问答，明确与七月 59309 无关）</span>
+                        <a href="https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/36792">support.broadcom.com · VMSA-2026-0009</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Mandiant 与 GTIG：vCenter 零日的完整链路（BONESAW、SAWSNAKE、BEARBONES、LAZYBONES）</span>
+                        <a href="https://cloud.google.com/blog/topics/threat-intelligence/armory-castle-exploits-vsphere">cloud.google.com · threat-intelligence</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer：VMware 修 vCenter 零日，自 9 月起被利用</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/vmware-patches-vcenter-zero-day-exploited-in-attacks-since-september/">bleepingcomputer.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-123890（9.8，版本区间与修复版本原文）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123890">nvd.nist.gov · CVE-2026-123890</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Inception Security：MSP 视角的影响面与补丁版本对照</span>
+                        <a href="https://www.inceptionsecurity.com/post/vcenter-armory-castle-zero-day">inceptionsecurity.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PHP 官方归档：11 月 19 日多分支安全发布</span>
+                        <a href="https://www.php.net/archive/2026.php">php.net · archive</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aikido：PHP 18 条 CVE 与七个 9.2 清单</span>
+                        <a href="https://www.aikido.dev/blog/php-november-2026-security-release">aikido.dev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SECNEWS：PHPAfterShell 写入中断机理、十月补丁不覆盖</span>
+                        <a href="https://secnews.co.uk/2026/11/php-security-release-phpaftershell-cve-2026-126714-php-fpm">secnews.co.uk</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Breach-Signal：PHPAfterShell 由 Depthfirst 用面向安全的模型发现</span>
+                        <a href="https://breach-signal.com/vulnerabilities/php-patches-18-vulnerabilities-november-updates">breach-signal.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-126714（4.0 记 9.2，会话文件部分覆写）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-126714">nvd.nist.gov · CVE-2026-126714</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-129289（PHP-FPM 走私，复用连接前提）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129289">nvd.nist.gov · CVE-2026-129289</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ruby 官方：正则与字符串相关的多个漏洞（2026-11-18）</span>
+                        <a href="https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/">ruby-lang.org</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory：GHSA-34m4-m9fh-gqp5（Ruby2Shell）</span>
+                        <a href="https://github.com/ruby/ruby/security/advisories/GHSA-34m4-m9fh-gqp5">github.com · ruby/ruby</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ethiack：21 个 ß 的算式与 Rails 默认暴露的判断</span>
+                        <a href="https://ethiack.com/info-hub/research/cve-2026-132825-ruby2shell-rce-via-heap-overflow-in-ruby-string-case-conversion">ethiack.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Orca Security：Ruby2Shell 与自带解释器的产品清单</span>
+                        <a href="https://orca.security/resources/blog/ruby2shell-ruby-heap-overflow-rce">orca.security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Sonatype：Ruby 同批七个漏洞逐条对照</span>
+                        <a href="https://www.sonatype.com/blog/november2shell-continues-with-7-patches-ruby-vulnerabilities">sonatype.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-132825（7.4，AV:L，与官方 critical 口径不同）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132825">nvd.nist.gov · CVE-2026-132825</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Drupal 官方：SA-CORE-2026-017（18/25，重装导致接管）</span>
+                        <a href="https://www.drupal.org/sa-core-2026-017">drupal.org · sa-core-2026-017</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Drupal 官方文档：如何封禁 install.php（Apache 与 nginx 两种写法）</span>
+                        <a href="https://www.drupal.org/docs/administering-a-drupal-site/security-in-drupal/securing-the-installer-installphp">drupal.org · securing the installer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Pivot News：报告方为 Anthropic OSS Scanner，内部编号 ANT-2026-GMRPK0BU</span>
+                        <a href="https://pivotnews.ai/security/drupal-credits-anthropic-s-oss-scanner-for-critical">pivotnews.ai</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CIRT Guyana：Drupal 影响版本表与处置建议</span>
+                        <a href="https://cirt.gy/article/al2026_60-critical-drupal-installer-vulnerability-could-allow-remote-code-execution-november-20th-2026">cirt.gy</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Affairs：欧盟委员会十天停摆与 ARTEX 的角色边界</span>
+                        <a href="https://securityaffairs.com/203483/hacking/european-commission-cyberattack-artex-ai-tool-suspected-in-prolonged-disruption.html">securityaffairs.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News：Sysper 与 MyPMO 的恢复顺序</span>
+                        <a href="https://cybersecuritynews.com/european-commission-cyberattack/">cybersecuritynews.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Digital Watch：CERT-EU 11-05 通告与 ARTEX 的智能体工作方式</span>
+                        <a href="https://dig.watch/updates/european-commission-cyberattack-personal-data">dig.watch</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review：FastUnlock 机理与"不破加密只破锁屏"</span>
+                        <a href="https://dailysecurityreview.com/resources/unpatched-windows-fastunlock-zero-day-abuses-narrator-at-lock-screen">dailysecurityreview.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetSecOps：FastUnlock 的检测线索（Narrator 与 WsiAccount 进程链）</span>
+                        <a href="https://cyber.netsecops.io/stix-viz/windows-fastunlock-zero-day-vulnerability-allows-lock-screen-bypass">cyber.netsecops.io</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Hardware Busters：五个前提与研究者未跑完最后一步的说明</span>
+                        <a href="https://hwbusters.com/news/fastunlock-zero-day-turns-windows-11s-narrator-into-a-way-past-the-lock-screen-on-bitlocker-pcs">hwbusters.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ngCERT：FalconFlank 缘起与 CrowdStrike 的临时缓解（背景，非本期新增）</span>
+                        <a href="https://csirt.ncc.gov.ng/index.php/resources/security-advisories/444-ngcert-security-advisory-on-alleged-crowdstrike-falcon-sensor-local-privilege-escalation-vulnerability">csirt.ncc.gov.ng</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-133323（Mitel MiCollab 10.0，MTLVULN-1864）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-133323">nvd.nist.gov · CVE-2026-133323</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-76536（Splunk Enterprise 未认证集群配置接口 9.4）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-76536">nvd.nist.gov · CVE-2026-76536</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-86130（WatchGuard Dimension 日志采集缺认证 9.3）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86130">nvd.nist.gov · CVE-2026-86130</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD：CVE-2026-132658（PEM 代理角色的文件读写权限 9.4）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132658">nvd.nist.gov · CVE-2026-132658</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyPro：Oyster 照片卡事件时间线与泄露字段清单</span>
+                        <a href="https://cypro.co.uk/insights/cyber-bulletins/oyster-photocard-breach-affects-265000-users">cypro.co.uk</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT Pro：TfL 第二次重大泄露与安全问题答案的长期价值</span>
+                        <a href="https://www.itpro.com/uk/cyber-resilience/data-breaches/oyster-photocard-breach-tfl-takes-system-offline-after-260-000-customers-affected-by-attack">itpro.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA 已知被利用漏洞目录（2026.11.18 版，1,786 条）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa.gov</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0（本期窗口 1,578 条、9.0 以上 75 条，本刊一手统计）</span>
+                        <a href="https://services.nvd.nist.gov/rest/json/cves/2.0">services.nvd.nist.gov</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注口径或直接指出差异。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年11月21日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
