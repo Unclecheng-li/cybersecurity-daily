@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网安日报速递 · 2026年11月21日（第222期）</title>
+    <title>网安日报速递 · 2026年11月21日（第223期）</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
@@ -408,7 +408,7 @@
             .article-card:hover { transform: none; box-shadow: none; }
         }
     </style>
-</head>
+
 <body>
     <div class="newspaper">
         <!-- ========== 报头 ========== -->
@@ -421,13 +421,13 @@
         <!-- ========== 日期栏 ========== -->
         <div class="edition-info">
             <span class="edition-date">2026年11月21日 星期六</span>
-            <span class="edition-number">第 222 期 | 总第 222 期</span>
+            <span class="edition-number">第 223 期 | 午间更新</span>
             <span>每日精选 · 值得关注</span>
         </div>
 
         <!-- ========== 关键词横幅 ========== -->
         <div class="keywords-banner">
-            <strong>今日关键词：</strong>洞是模型先找到的补丁还得人来打 · 两个半月的窗口里没有一条告警 · 上个月补过的洞这次不算数 · 一个字节写出了缓冲区边界 · 装完就该删的安装文件还挂着 · 系统停了十天没查到入口
+            <strong>今日关键词：</strong>一个智能体十一分钟摸到一个零日 · 供应商的钥匙一直挂在门上 · 补丁发了一个月只在等一件事 · 安装包是别人递过来的 · 冰柜的温度能被人远程调高 · 能复现的门槛降到 docker
         </div>
 
         <!-- ========== 正文 ========== -->
@@ -435,225 +435,223 @@
 
             <!-- ===== 头条 ===== -->
             <div class="headline-section">
-                <h2 class="main-headline">找洞的换成了模型，扛时间的还是人</h2>
-                <p class="sub-headline">vCenter 那个 9.8 被用了两个半月才等到补丁 · PHP 一次交七个 9.2 其中一个由模型扫出 · Ruby 的一个字节把 PoC 时间定在 11-25 · Drupal 的安装脚本被同一类扫描器报上来</p>
+                <h2 class="main-headline">洞越来越便宜，门还是原来那几扇</h2>
+                <p class="sub-headline" style="font-size:1.15em;">一个智能体十一分钟摸到零日 · 供应商的 IAM 角色三年没人收 · 补丁发了一个月只等来一条公开利用 · 安装包是从搜索结果里点来的 · 冷柜控制器从来没进过资产清单</p>
+                <p class="sub-headline" style="font-size:1.0em;font-style:normal;color:#4a4a4a;">凌晨那版报过六条，本期是白天这一段的增量。NVD 在 11-20 16:30 到 11-21 15:00 收了 <strong>532 条</strong>新 CVE，按 CVSS 3.1 口径 critical 3 条、high 9 条。有意思的不是数字，是这六件事没一件靠打穿一道墙：一台智能体自己找到了没人知道的洞，一个供应商的 IAM 角色三年没人收回，一台边缘网关的集群端口对着公网开着、cookie 是编译时写死的，一个安装包是从搜索结果里点来的，一台冷柜控制器从来没进过资产清单。</p>
             </div>
 
             <!-- ===== 文章卡片网格 ===== -->
             <div class="articles-grid">
 
-                <!-- ★ Featured 文章 -->
                 <article class="article-card featured">
                     <span class="article-number">1</span>
-                    <span class="severity-badge severity-critical">9.8 · 在野两个半月 · 未进 KEV</span>
-                    <h3 class="article-title">补丁发出去那天，洞已经被用掉两个半月</h3>
+                    <span class="severity-badge severity-critical">GHSA 记 Critical · 无 CVE · 默认不认证</span>
+                    <h3 class="article-title">十一分钟，一个智能体自己摸到一个零日</h3>
                     <div class="article-meta">
-                        <span>CVE-2026-123890 · VMware vCenter Server 目录服务 · VMSA-2026-0009 · 修在 9.1.1.0200 / 9.0.2.0200 / 8.0 U3m</span>
-                        <span class="cvss-score">CVSS 3.1 记 9.8 · 未认证拿管理员会话 · 7.0 无公开修复</span>
+                        <span>Cairn 自主智能体 · MONAI Label 路径穿越 · GHSA-qc22-rmgc-vg94 · 0.8.5 及以前</span>
+                        <span class="cvss-score">写 sitecustomize.py 拿 root · 修复在主干不在发行包</span>
                     </div>
                     <div class="article-body">
-                        <p>11 月 19 日，Broadcom 发了 VMSA-2026-0009，修 vCenter Server 目录服务（vmdird）里的一个认证绕过。按 NVD 记录，网络可达的攻击者不需要任何凭据，就能拿到一个管理员会话。同一天，Google 威胁情报组与 Mandiant 说这个洞在九月初就已经被用了，比补丁早两个半月。</p>
-                        <p>技术路径写得很具体：vmdird 的 DCE/RPC 接口在 TCP 2012 上泄露 SRP 会话密钥，外面的人拿到密钥就等于拿到一个 administrator@vsphere.local 的已认证会话，不用密码。工具链是成套的：BONESAW 走这个洞复制 SSO 目录库、抽走 SAML 签名密钥、建一个隐藏的 SSO 管理员；SAWSNAKE 拿签名密钥伪造 SAML 断言与 session cookie，也就是常说的 Golden SAML，伪造出来的令牌在改密码之后依然有效，MFA 也拦不住；BEARBONES 是一个改过的 Dropbear SSH，挂在 TCP 33992 上；LAZYBONES 用 Slack 当 C2。除此之外还有五个新命名的恶意家族。</p>
-                        <p>进入点不是 vCenter 本身。Mandiant 的描述是从一台 BeyondTrust Remote Support 设备的零日（CVE-2026-102764）进来，横向到一台没有装 EDR 的内网 Linux 应用机，再从那里打 vCenter。<strong>vCenter 从头到尾没有暴露在公网上，它是被别人家管理平面带进来的。</strong></p>
+                        <p>11 月 20 日到 21 日，亚马逊威胁情报团队的一篇复盘在多个信源上扩散开。调查的起点很偶然：一台公网可达、没加认证的开源智能体框架 Cairn 实例被人放在那里跑渗透，运营历史、历史提示词、输出全部可见。亚马逊公开的时间是九月八日到十日。</p>
+                        <p>操作者只给两样东西：一批目标 IP，和一句自然语言目标 obtain shell access。之后智能体自己规划、执行、按结果调整，人不逐步下指令。大部分尝试是失败的——对一台开放 Redis 的服务器跑了十六小时、一百四十八个动作，包括一次 Log4Shell，没成；对一台高校 GPU 服务器用六小时撞了三万多个凭据组合、八十个真实用户名，也没成。</p>
+                        <p>唯一成功的是 MONAI Label，一个医学影像标注工具。智能体摸完 API，找到一个上传接口的 filename 参数可以穿越路径，十一分钟内就能往服务器的任意位置写文件。后续一次会话里，它把 Python 反向 shell 写进 sitecustomize.py，再调训练接口拉起一个新的 Python 进程，拿到了 root。再往后，操作者给它一个代理，进了第二所跑同样软件的高校内网。</p>
+                        <p><strong>默认值是真正的入口。</strong>通告编号 GHSA-qc22-rmgc-vg94（Critical、CWE-22、没有分配 CVE），点名 PUT /datastore/image 与 PUT /datastore/label 两个端点，影响 monailabel 包 0.8.5 及以前。真正的坑在 MONAI_LABEL_AUTH_ENABLE=False：认证默认关着，任何能连上服务的人都能写文件；即使开了认证，ANNOTATOR 角色也够用。</p>
+                        <p><strong>修复状态与新闻稿不一致。</strong>PR #1915（commit 113527bf6）在 10 月 19 日就把写入路径限制到 datastore 目录，但 11 月 18 日的通告写的是 Patched versions: None——补丁在主干上，还没有带修复的发行包。所以"升级到最新版"这句话今天还不成立。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>十一分钟这个数字比"AI 会找洞"要紧。</strong>"披露到被利用"的窗口不再是天，而是小时。按人速设计的阈值——多少次登录失败算可疑、多长窗口算扫描——在十六小时一百四十八个动作面前需要重标。</li>
+                            <li><strong>被打穿的原因是默认关闭认证，不是零日本身。</strong>MONAI Label 的设计定位是局域网内科研工具，维护方在通告里也这么说。国内医疗影像 AI、科研标注平台大量部署这套栈，资产清单里通常没有这一行。</li>
+                            <li><strong>sitecustomize.py 这个落点要记住。</strong>它不是 web shell、不落在 web 目录，靠解释器启动时自动加载 user site 生效。查 webshell 的规则看不见它，看进程启动参数也看不见它。</li>
+                            <li><strong>三件事同一个方向。</strong>同一个星期里，还有研究者用面向安全的模型扫出 PHP 会话处理器的洞、Anthropic 的开源扫描器报出 Drupal 安装脚本的洞。开源组件的审计正在被机器接手。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">只给目标 IP 与一句 get shell access</span>
+                        <span class="flow-step">智能体自己拆任务 摸 API</span>
+                        <span class="flow-step">Redis 16 小时 148 动作 失败</span>
+                        <span class="flow-step">GPU 机 3 万组凭据 失败</span>
+                        <span class="flow-step critical">上传接口 filename 路径穿越</span>
+                        <span class="flow-step critical">11 分钟能写任意文件</span>
+                        <span class="flow-step critical">写 sitecustomize.py 反向 shell</span>
+                        <span class="flow-step critical">调训练接口拉起进程 拿 root</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">供应链 · 合法凭据 · 54GB 起</span>
+                    <h3 class="article-title">供应商的钥匙一直挂在门上，没人收</h3>
+                    <div class="article-meta">
+                        <span>n0n 团伙 · Qubole 跨账号 IAM 角色 · Chase / Visa / 万事达 · 攻击窗口 10-14 至 10-26</span>
+                        <span class="cvss-score">14 个文件里没有卡号 · 有的是手机号与消费轨迹</span>
+                    </div>
+                    <div class="article-body">
+                        <p>n0n 这个团伙 11 月 11 日认领了对 Qubole 的攻击（一家被 Idera 收购的云数据分析公司），11 月 16 日把标着 Chase、Visa、万事达的数据挂上泄露站。三家公司在 11 月 19 日先后确认问题出在第三方服务商，自己的支付网络没有被碰。</p>
+                        <p>技术细节在 Wiz 与 Sentra、Mandiant 合作的那份分析里，它比新闻稿难看得多。攻击窗口是 10 月 14 日到 26 日，手法是拿 Qubole 的 AWS 账号身份，去承担客户当年为方便它跨账号访问而建的那些 IAM 角色。Wiz 记了两个细节：<strong>大多数被承担的角色平时根本没被用过</strong>——在很多环境里，攻击者的调用是那个十月唯一一次来自该供应商账号的角色承担；<strong>每一次承担请求都带了正确的 External ID，每一次都成功了</strong>。</p>
+                        <p>External ID 从来不是密钥。它明文出现在 CloudTrail 里、常常还写进 IaC 代码里，把它当验证手段等于没有验证。真正该做的是把不再需要的信任策略删掉，而不是给它加一个可见的字符串。</p>
+                        <p><strong>各家的口径必须分开看：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>主体</th><th>官方口径</th><th>判断</th></tr>
+                            <tr><td>Chase</td><td>营销数据，可能含部分客户姓名与邮箱</td><td class="risk-high">已确认</td></tr>
+                            <tr><td>Visa</td><td>亚太地区一家第三方服务商，卡号未受影响</td><td class="risk-medium">已确认</td></tr>
+                            <tr><td>万事达</td><td>权益项目小部分持卡人邮箱，非支付信息</td><td class="risk-medium">已确认</td></tr>
+                            <tr><td>n0n 自称</td><td>Qubole 侧 53.9 GB / 30,743 文件，客户网络近 1 PB</td><td class="risk-high">未证实</td></tr>
+                        </table>
+                        <p>SOCRadar 把公开的 14 个 Visa 与万事达压缩包全量解了：<strong>没有卡号、没有有效期、没有 CVV、没有密码、没有出生日期、没有家庭住址</strong>；有的是手机号、BIN 前缀、以及带日期的机票酒店餐厅订单。这不能直接刷卡，但足够撑起一条高精度钓鱼与账户接管流水线——冒充礼宾台或银行客服时，能说出你上周在哪座城市吃过饭，比说出卡号更有用。这批只是 n0n 声称总量的一小部分（约 4.3 GB、190 万条营销事件）。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>这不是被打穿，是从正门走进去的。</strong>拿的是供应商的合法凭据，用的是客户自己配的权限。只拦异常流量的检测，拦不住一次合法的 AssumeRole。</li>
+                            <li><strong>供应商下线了，角色还在。</strong>合同结束、集成废弃、账号停用，但客户账号里的信任策略没人删。国内同构的场景是外包驻场账号、第三方运维通道、SaaS 数据同步角色。</li>
+                            <li><strong>支付数据没泄露，不等于损失为零。</strong>最贵的字段组合是手机号加消费轨迹加机构关系，它服务的正是社工与账户接管。</li>
+                            <li><strong>一个动作能自查。</strong>列出所有允许外部主体承担的角色、标注上次评审日期，超过 90 天没人碰过的本季度清掉。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">多年前授予的跨账号 IAM 角色信任</span>
+                        <span class="flow-step">角色长期空转 从未被使用</span>
+                        <span class="flow-step critical">拿到供应商侧凭据</span>
+                        <span class="flow-step critical">用 External ID 承担角色 全部成功</span>
+                        <span class="flow-step critical">翻 S3 桶 取密钥与敏感数据</span>
+                        <span class="flow-step critical">直接搬走 53.9 GB 文件</span>
+                        <span class="flow-step critical">11-16 挂上敲诈站</span>
+                        <span class="flow-step">三家确认 支付网络未受影响</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">9.8 · 硬编码凭据 · 已进 KEV</span>
+                    <h3 class="article-title">补丁发了一个月，只等来一条公开利用</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-76466 · Cisco Expressway 集群 · cisco-sa-vcs-static-cred-hr7EWZ8t · 修在 X15.5.20</span>
+                        <span class="cvss-score">wombat@ 维护身份 + 固定 cookie · 无 workaround · X14 只能迁移</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Cisco Expressway 的这个洞在 10 月 21 日就修了，11 月 20 日才被 CISA 收进 KEV，整改期限 11 月 23 日。中间这一个月，正是它从 PoC 走到在野的三十天。</p>
+                        <p>漏洞在集群用的数据库服务里。两个问题叠加：服务用的是持久化 cookie，而且开了 TLS Verify Mode 之后仍然不校验客户端证书。拿着 cookie、网络能到服务的人，就能调用特定的 RPC 命令，以 root 执行任意系统命令。Cisco 把它归类成使用硬编码凭据——因为它们编译在 Erlang 模块里，<strong>每套装置都一样</strong>。</p>
+                        <p>公开利用 11 月 5 日出现在 GitHub（dinosn/cve-2026-76466）。作者写清了打法：集群管理端接受一个固定的维护节点身份 wombat@127.0.0.1，配一个在所有受影响版本上完全相同的 cookie，走 TCP 4372 的 Erlang 分布端口。作者说自己只在 Expressway-C X15.3.2 的两节点集群、TLS Permissive 模式下验证过。</p>
+                        <p>11 月 18 日，俄罗斯事件响应公司 F6 发布报告，称调查了首个在野利用案例：攻击者先拿下两台对公网开放的 X15.5.3，再经其中一台进入内网的两台同集群节点，<strong>四台全部 root</strong>。之后用自己写的 Python 脚本扫内网、找 SMB 共享、连 SQL Server 与 WinRM、翻 GitLab 仓库找凭据；脚本在入侵过程中还在改，代码注释带着 AI 编程助手的痕迹。F6 没有归因给任何已知组织，也没说有没有数据被拿走。</p>
                         <p><strong>受影响与修复：</strong></p>
                         <table class="affected-table">
                             <tr><th>版本线</th><th>修复版本</th><th>风险</th></tr>
-                            <tr><td>vCenter 9.1.x</td><td>9.1.1.0200</td><td class="risk-high">立即升级</td></tr>
-                            <tr><td>vCenter 9.0.x</td><td>9.0.2.0200</td><td class="risk-high">立即升级</td></tr>
-                            <tr><td>vCenter 8.0 与 VCF 5.x</td><td>8.0 U3m / 5.2.5（KB88287）</td><td class="risk-high">立即升级</td></tr>
-                            <tr><td>Telco Cloud Platform 与 Infrastructure</td><td>KB463116</td><td class="risk-high">立即升级</td></tr>
-                            <tr><td>vCenter 7.0</td><td>无公开修复，仅延长支持</td><td class="risk-high">网络隔离</td></tr>
+                            <tr><td>Expressway X15.5.3 及以前</td><td>X15.5.20</td><td class="risk-high">立即升级</td></tr>
+                            <tr><td>Expressway X14 及更早</td><td>该分支无修复，只能迁移</td><td class="risk-high">迁移或断网</td></tr>
+                            <tr><td>非集群单机部署</td><td>不在公告范围</td><td class="risk-medium">确认 peer 字段为空</td></tr>
+                            <tr><td>临时缓解</td><td>TCP 4371 / 4372 只允许集群对端</td><td class="risk-medium">非修复，仅收口</td></tr>
                         </table>
                         <p><strong>值得关注的原因：</strong></p>
                         <ul>
-                            <li><strong>时间窗比日志留存还长。</strong>两个半月大约 75 天，中型企业日志常见保留 30 到 90 天。入侵如果落在上限之外，你今天去打补丁的时候，能查的证据已经滚出保留期了。</li>
-                            <li><strong>改密码不解毒。</strong>Golden SAML 伪造的是签名，只要签名证书没换，攻击者随时可以再签一张。处置顺序是轮换 SAML 签名证书，再重置 administrator@vsphere.local 与 vpxuser。</li>
-                            <li><strong>公告不提在野，KEV 也不收。</strong>Broadcom 的公告没有写正在被利用，功劳记在 Mandiant 名下；截至 11-18 版 KEV（1,786 条）里没有这一条。只跟 KEV 打补丁的团队，这一条会被漏掉。</li>
-                            <li><strong>七月的补丁不算数。</strong>Broadcom 的 FAQ 明确说这个洞与七月的 CVE-2026-59309 不是同一个，打过七月那版的人今天仍然暴露。</li>
+                            <li><strong>从 PoC 到被打穿只隔十三天。</strong>而这十三天里，补丁已经发布一个月。信息不缺，缺的是变更窗口。</li>
+                            <li><strong>它不是单机问题，是入口问题。</strong>Expressway 给外部人员接视频会议、语音、消息用，天生公网可达；打进一台等于站在内网里。判断在不在范围内只看一页：System &gt; Clustering 里 peer 地址字段是否非空。</li>
+                            <li><strong>厂商公告比事实慢。</strong>截至 11 月 20 日，Cisco 公告仍是 10 月 21 日的 1.0 版，还写着 PSIRT 不知道该漏洞的公开公告或恶意利用。等厂商确认等于等排期。</li>
+                            <li><strong>KEV 一天进四条，全部 11-23 到期。</strong>除这条，还有 vCenter 的 CVE-2026-123890（凌晨那版说它没进 KEV，今天进了）、Apache Roller 的 CVE-2026-129448、SAP NetWeaver 的 CVE-2025-42884。</li>
                         </ul>
                     </div>
                     <div class="attack-flow">
-                        <span class="flow-step">BeyondTrust 零日取初始立足点</span>
-                        <span class="flow-step">横向到未装 EDR 的内网 Linux 机</span>
-                        <span class="flow-step critical">BONESAW 打 vmdird 的 2012 端口</span>
-                        <span class="flow-step critical">泄露 SRP 密钥 拿到管理员会话</span>
-                        <span class="flow-step critical">抽走 SAML 签名密钥 建隐藏管理员</span>
-                        <span class="flow-step critical">伪造断言 绕过 MFA 冒充任意用户</span>
-                        <span class="flow-step">VAMI 开 SSH 取主密钥与库口令</span>
-                        <span class="flow-step critical">以 vpxuser 上 ESXi 取 NTDS</span>
+                        <span class="flow-step">10-21 Cisco 发 X15.5.20</span>
+                        <span class="flow-step critical">11-05 公开 PoC 上线</span>
+                        <span class="flow-step critical">11-18 F6 报告首个在野案例</span>
+                        <span class="flow-step critical">两台公网 X15.5.3 被 root</span>
+                        <span class="flow-step critical">经其进内网 另两台节点也被 root</span>
+                        <span class="flow-step critical">脚本扫 SMB SQL WinRM GitLab</span>
+                        <span class="flow-step">11-20 进 KEV 期限 11-23</span>
+                        <span class="flow-step">X14 那批只剩网络层收敛</span>
                     </div>
                 </article>
 
-                <!-- ★ 普通文章 2 -->
-                <article class="article-card">
-                    <span class="article-number">2</span>
-                    <span class="severity-badge severity-critical">七个 4.0 记 9.2 · 十月补丁不覆盖</span>
-                    <h3 class="article-title">七个 9.2 一起发，其中一个不是人找到的</h3>
-                    <div class="article-meta">
-                        <span>CVE-2026-126714 PHPAfterShell · CVE-2026-129289 FPM 走私 · PHP 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36</span>
-                        <span class="cvss-score">17 或 18 条 CVE 两套口径 · 无在野报告 · 上传进度默认开</span>
-                    </div>
-                    <div class="article-body">
-                        <p>11 月 18 日 PHP 团队提前一天预告"最高级别为 critical"，19 日 14:00 UTC 后放出四个分支的更新。数字有两套口径：PHP 自己的公告覆盖 17 个 CVE，Aikido 与 BleepingComputer 按 18 个算（多出来的是打包的 uriparser 库漏洞，PHP 侧没有对应公告）。七个 critical 在 CVSS 4.0 下全是 9.2。</p>
-                        <p>最受关注的是 CVE-2026-126714，代号 PHPAfterShell。它落在默认的文件会话处理器上，也就是绝大多数站点实际在用的那一套。会话记录是"键加序列化数据加长度字段"，但没有"写完了"的标记。如果 worker 在一次写入中途死掉，文件里会留下新记录的开头拼着旧记录的尾巴。研究方 Depthfirst 证明，只要长度凑得巧，残留字节会在下一次会话启动时被当成另一个对象反序列化。再往下要代码执行，还需要应用里存在 gadget 链，或者像他们演示那样串第二个 PHP 洞；但即使不执行代码，这个原语也能改登录状态、改 CSRF token、读别人的会话。</p>
-                        <p>进门的路径是上传进度：session.upload_progress 在这版之前默认开着，一个带进度字段的 multipart 请求会在任何应用代码跑之前触发一次会话写入，所以不需要有上传表单，只要有一个之后会开 session 的页面。</p>
-                        <p><strong>受影响组件：</strong></p>
-                        <table class="affected-table">
-                            <tr><th>条目</th><th>风险</th></tr>
-                            <tr><td>CVE-2026-129289 PHP-FPM 请求走私（前端复用后端连接）</td><td class="risk-high">9.2 未认证</td></tr>
-                            <tr><td>CVE-2026-129474 / 129481 / 129496 / 129182 四处 use-after-free</td><td class="risk-high">9.2 可执行代码</td></tr>
-                            <tr><td>CVE-2026-115560 会话序列化器切换，PoC 已在网上</td><td class="risk-high">9.2 前提苛刻</td></tr>
-                            <tr><td>CVE-2026-129291 epoll UAF，worker 打 master</td><td class="risk-medium">8.8 本地提权</td></tr>
-                            <tr><td>CVE-2026-128090 PHAR 的 OpenSSL 签名算法降级</td><td class="risk-medium">绕过签名</td></tr>
-                        </table>
-                        <p><strong>值得关注的原因：</strong></p>
-                        <ul>
-                            <li><strong>上个月打的补丁不算。</strong>129481 的公告直接写"是对此前一个洞的不完整修复"，那句"此前"指的就是十月那轮 PHP2Shell。打过十月紧急版的人，今天还得再打一遍。</li>
-                            <li><strong>标准配置确实不受影响，但"标准"很难界定。</strong>129289 只在复用后端连接时成立（nginx 的 fastcgi_keep_conn、Apache 的 enablereuse、部分 HAProxy 与 LSAPI），可这几种恰恰是追求吞吐量的生产环境常开的。</li>
-                            <li><strong>发现方式值得记住。</strong>PHPAfterShell 是 Depthfirst 用专门面向安全任务的模型扫出来的。加上 11 月 13 日那个 Apache mod_http2 的 9.8、以及下面 Drupal 那条，模型在开源项目里扫洞已经不是演示。</li>
-                            <li><strong>披露之后多久会有人来试，已经有答案。</strong>Cloudflare 记录到至少一次针对某个州选举网站的利用尝试，打在一个刚披露的 critical PHP 洞上，不是这七个里的任何一个，但时间尺度是同一档。</li>
-                        </ul>
-                    </div>
-                    <div class="attack-flow">
-                        <span class="flow-step">multipart 请求带进度字段</span>
-                        <span class="flow-step">应用代码还没跑 会话已写入</span>
-                        <span class="flow-step critical">worker 写入中途被杀掉</span>
-                        <span class="flow-step critical">新旧记录拼在同一个会话文件</span>
-                        <span class="flow-step critical">长度凑巧 残留字节被当成对象</span>
-                        <span class="flow-step critical">下次 session_start 反序列化</span>
-                        <span class="flow-step">有 gadget 链就是代码执行</span>
-                        <span class="flow-step">没有也能改登录态与 CSRF</span>
-                    </div>
-                </article>
-
-                <!-- ★ 普通文章 3 -->
-                <article class="article-card">
-                    <span class="article-number">3</span>
-                    <span class="severity-badge severity-high">官方判 critical · NVD 记 7.4 · PoC 11-25</span>
-                    <h3 class="article-title">一个 ß 变成两个 S，缓冲区边界差一位</h3>
-                    <div class="article-meta">
-                        <span>CVE-2026-132825 Ruby2Shell · 同批共七个内存问题 · GitLab 19.6.0 与 GHES 3.22.5 仍带受影响解释器</span>
-                        <span class="cvss-score">3.3.14 / 3.4.13 / 4.0.10 修复 · 从 2.4.0 起就有这段代码</span>
-                    </div>
-                    <div class="article-body">
-                        <p>11 月 18 日 Ruby 发了三个分支的修复版，一次修七个内存安全问题。CVE-2026-132825 是其中最重的一个，研究方 Veria Labs 给它起名 Ruby2Shell。</p>
-                        <p>机理短到能一句话讲完。Ruby 的几个单字节编码（ISO-8859 系列、Windows-125x）里没有大写 ß，转大写时它要变成两个字符 SS。转换循环只检查了缓冲区里够不够放<strong>一个</strong>字节，写第一个 S 之后，第二个 S 直接落在边界外面——一个字节的堆溢出。输入长度决定溢出落在哪里，所以攻击者对位置有控制权，21 个 ß 就够跨过分配边界。触发路径是 upcase、swapcase、downcase(:fold)、casecmp?；UTF-8 走另一条代码路径，不受影响。</p>
-                        <p>两个口径必须并列写，不然会误判风险等级。Ruby 官方安全公告判 critical，并说"已知有 PoC 在某些场景下能达成远程代码执行"；NVD 现在给的是 7.4，向量是 AV:L（本地）。Veria Labs 的说法是默认配置的 Rails 与老式 Sinatra 未认证可达，但他们没有公开请求路径，PoC 定在 11-25 08:00 UTC 发布，如果主要厂商届时还没出包就再往后推。<strong>也就是说今天是 11-21，留给运维的时间是四天。</strong></p>
-                        <p>真正的麻烦在"绑定了自己解释器"的产品上。系统包管理器升级对它们无效：披露时 GitLab 19.6.0、GitHub Enterprise Server 3.22.5、Chatwoot 4.20.0 仍然带着受影响的 Ruby，Mastodon、Discourse、OpenProject 已出修复版。旧分支没有修复，3.2 及更早全部 EOL，而按研究方的说法，2.4.0 起的每一版都有这段代码。</p>
-                        <p><strong>值得关注的原因：</strong></p>
-                        <ul>
-                            <li><strong>字节小不等于门槛高。</strong>一个字节足够改掉相邻对象的头部或指针低位，配合堆布局塑造就能走远；这类原语在实践中被反复证明可用。</li>
-                            <li><strong>PoC 有确切日期。</strong>11-25 08:00 UTC 是研究方自己写的时间，这种"预告式披露"给出的是可执行的倒排工期，不是模糊的"近期"。</li>
-                            <li><strong>WAF 大概率拦不住。</strong>触发输入是一串合法的编码字符，21 个 ß 在日志里看上去只是乱码，不像攻击载荷。</li>
-                            <li><strong>同批还有六条。</strong>正则编译的 double free、转换的整数溢出、正则匹配的越界读、Regexp#to_s 的堆溢出。Rails 应用里用用户输入拼正则的写法并不罕见。</li>
-                        </ul>
-                    </div>
-                    <div class="attack-flow">
-                        <span class="flow-step">输入 21 个 ß 的 ISO-8859 字符串</span>
-                        <span class="flow-step">upcase 展开成 42 个 SS</span>
-                        <span class="flow-step critical">循环只校验了一个字节的空间</span>
-                        <span class="flow-step critical">第二个 S 写到缓冲区边界外</span>
-                        <span class="flow-step critical">位置由输入长度决定 可控</span>
-                        <span class="flow-step">堆元数据或相邻对象被改</span>
-                        <span class="flow-step critical">配合堆布局走到代码执行</span>
-                        <span class="flow-step">PoC 定在 11-25 08:00 UTC</span>
-                    </div>
-                </article>
-
-                <!-- ★ 普通文章 4 -->
                 <article class="article-card">
                     <span class="article-number">4</span>
-                    <span class="severity-badge severity-high">18/25 · 已有 PoC · 模型报的</span>
-                    <h3 class="article-title">装完就该删的安装文件，还在那儿等着被重装</h3>
+                    <span class="severity-badge severity-high">国内预警 · 搜索投毒 · 无 CVE</span>
+                    <h3 class="article-title">银狐把木马塞进 VPN 安装包，走的是搜索排名</h3>
                     <div class="article-meta">
-                        <span>CVE-2026-132165 · SA-CORE-2026-017 · 修在 10.6.22 / 11.3.22 / 11.4.13 · 同日另有 132166</span>
-                        <span class="cvss-score">Drupal 自评 18/25 · 未认证 · 报告方 Anthropic OSS Scanner</span>
+                        <span>CVERC 11-20 预警 · letsvpn 捆绑样本 · kkRAT（Gh0st 变种）· 回连 dabaitt3.com</span>
+                        <span class="cvss-score">PNG 的 IDAT 块装 RC4 载荷 · 冒用身份在微信钉钉扩散</span>
                     </div>
                     <div class="article-body">
-                        <p>11 月 18 日，Drupal 安全团队发 SA-CORE-2026-017，修 core 里 install.php 的一个洞。Drupal 每个发行包里都带这个安装脚本，默认的 .htaccess 规则不会挡它，装完之后它是否可达完全取决于站点自己的配置。在特定条件下，未认证的攻击者可以让它重跑安装流程，结果是站点被接管或者服务器上执行任意代码。有几条利用路径在 Web 服务器不能写、不能改 settings.php 权限时会被挡住，这是最直接的一道闸。</p>
-                        <p>发现者这一栏写的是 Anthropic OSS Scanner，内部编号 ANT-2026-GMRPK0BU，报告里带了复现与候选补丁。这个扫描器十月才上线，这是它一个月内送出的第二个公开 critical——11 月 13 日那个 Apache mod_http2 的 9.8 也是它报的。Drupal 安全团队自己提到，近期安全报告里 AI 生成的比例在明显上升。</p>
-                        <p>同一天还修了 CVE-2026-132166（7.2），一条管理员配合反序列化才能走通的 gadget 链。10.5.x 及更早、11.2.x 及更早、Drupal 8 与 9 全部 EOL，没有包可打。</p>
+                        <p>11 月 20 日，国家计算机病毒应急处理中心与计算机病毒防治技术国家工程实验室发了一份预警：境内连续发现多个捆绑木马的 VPN 客户端安装包，主要针对 Windows 用户，样本与长期针对我国的"银狐"（又名游蛇、谷堕大盗、UTG-Q-1000）活动相关。报告点明了手法——<strong>搜索引擎结果投毒</strong>：把提供"VPN 软件下载"的钓鱼站排名刷上去，等人自己点。</p>
+                        <p>样本的技术结构比投毒手法更值得看。以 winx64-Letsvpnkaulian.x189.exe 为例（105.30 MB，MD5 76fde3d9e22459c5ff81ea824796a6d3），外壳是 Inno Setup 自解压、内层 Delphi 编译。用户双击之后只看到正常的 letsvpn 安装界面，同目录里同时落下四个文件：真的 VPN 客户端、加载器 wmtk.exe、一个 .NB 后缀的伪装 PE、一个 .CIZ 的 PNG 图片。</p>
+                        <p>加载器读 PNG 的 IDAT 数据块，把里面 RC4 加密的 DLL 解出来（1_stage2.dll），再展开成两段——1_stage3-antiav 负责削弱安全软件，1_stage3-rat 是 kkRAT，回连 dabaitt3.com 并注入系统进程。<strong>用图片格式当载荷容器，是为了让静态扫描看到一堆像素</strong>，而不是一段 PE 头。</p>
                         <p><strong>值得关注的原因：</strong></p>
                         <ul>
-                            <li><strong>这是"配置债"而不是"代码债"。</strong>install.php 是设计上就存在的文件，问题在于它不该在装完之后还被访问到。封掉它的收益是长期的：这个洞以及未来所有安装器相关的洞一起消失。</li>
-                            <li><strong>封禁写法有坑。</strong>Apache 的 Require all denied 必须写在 server 或 vhost 配置里，写进 .htaccess 会让整站 500；nginx 是 location ^~ /core/install.php 直接 return 404。封安装器不影响 update.php。</li>
-                            <li><strong>EOL 分支没有任何选项。</strong>按第三方统计，仍在报数的站点里约 29% 跑在 10.5 及更早、8 或 9 上，这些站点今天拿不到补丁，只能封路径加迁移。</li>
-                            <li><strong>"模型报的"正在变成常态。</strong>三个月前这还是个新闻点，现在已经需要按流程处理：报告量大、带复现、审核压力全在维护者这一侧。</li>
+                            <li><strong>它打的是"下载软件"这个动作本身。</strong>不需要漏洞、不需要附件、不需要点开奇怪的链接，只要搜"VPN 下载"然后点第一个结果。</li>
+                            <li><strong>对抗能力写在官方通报里。</strong>报告原话是滥用人工智能技术不断增强传播能力和对抗能力、对抗安全软件的能力较强。这不是推测，是分析结论。</li>
+                            <li><strong>第二波传播靠受害者的社交关系。</strong>通报点明会冒用身份通过微信、钉钉向亲友同事扩散，甚至投送勒索软件。一个人中招，下一跳是他的工作群。</li>
+                            <li><strong>处置便宜、排查很贵。</strong>卸载重装、改密码、查启动项与实际外联就行；但要在几千台终端里判断哪个 letsvpn 是真的很难——真客户端确实存在，捆绑包里的也能正常用。</li>
                         </ul>
                     </div>
                     <div class="attack-flow">
-                        <span class="flow-step">请求 /core/install.php</span>
-                        <span class="flow-step">默认 htaccess 不挡这个路径</span>
-                        <span class="flow-step critical">触发重装流程</span>
-                        <span class="flow-step critical">Web 用户能写 settings.php</span>
-                        <span class="flow-step critical">覆写配置 接入自己的数据库</span>
-                        <span class="flow-step critical">站点接管或服务器执行代码</span>
-                        <span class="flow-step">封路径 可一次解决所有安装器洞</span>
+                        <span class="flow-step">搜索结果里排名被刷高的下载站</span>
+                        <span class="flow-step">下载捆绑木马的安装包</span>
+                        <span class="flow-step">双击 只显示正常安装界面</span>
+                        <span class="flow-step critical">同目录落下 4 个文件</span>
+                        <span class="flow-step critical">加载器读 PNG 的 IDAT 块</span>
+                        <span class="flow-step critical">RC4 解出隐藏 DLL</span>
+                        <span class="flow-step critical">kkRAT 注入系统进程 回连 C2</span>
+                        <span class="flow-step">冒用身份在微信钉钉继续扩散</span>
                     </div>
                 </article>
 
-                <!-- ★ 普通文章 5 -->
                 <article class="article-card">
                     <span class="article-number">5</span>
-                    <span class="severity-badge severity-medium">无 CVE · 停摆十余天 · 未归因</span>
-                    <h3 class="article-title">系统停了十天，查不到入口在哪</h3>
+                    <span class="severity-badge severity-high">OT · 物理后果 · 无 CVE</span>
+                    <h3 class="article-title">冰柜被调到 50 度，英国给几万台控制器打补丁</h3>
                     <div class="article-meta">
-                        <span>欧盟委员会 · 10-22 发现 · Sysper 与 MyPMO 停摆 · CERT-EU 指认 ARTEX</span>
-                        <span class="cvss-score">无勒索要求 · 无数据泄露结论 · 入口未公开</span>
+                        <span>Resource Data Management 制冷控制器 · 法比超市先中 · NCSC 与 Defra、FSA 介入</span>
+                        <span class="cvss-score">认证缺陷 · 入侵需特定硬件但市面可买 · 厂商未见恶意活动</span>
                     </div>
                     <div class="article-body">
-                        <p>11 月 19 日 Politico 报道后，欧盟委员会确认了这起事件：10 月 22 日发现异常，10 月 26 日初步调查确认，随后把多个应用下线。受影响的是 Sysper（人事平台，工资单、工时、休假）与 MyPMO（医疗费用报销），翻译服务在 11 月 17 日也停过；Sysper 在 11 月 18 日恢复后又短暂崩了一次。工资按时发了，但一部分员工有十来天没法填工时、没法请假。</p>
-                        <p>CERT-EU 在 11 月初识别出攻击方使用了 ARTEX，一套开源的人工智能渗透框架。它的工作方式在 CERT-EU 11 月 5 日的技术通告里写得很清楚：操作者用自然语言给一个目标，框架把它拆成子任务，交给多个智能体去调真实的攻击工具。它自己不训练模型，接的是操作者选的外部模型。原作者的仓库在十月因为被滥用而下架，但独立副本还在流通，下架原仓库不解决问题。</p>
-                        <p>必须分开写清楚的三件事：委员会自己没有点名 ARTEX，是 CERT-EU 识别、Politico 报道；没有公开信息说明攻击者是怎么进来的，ARTEX 究竟用于打进去还是只用于扫弱点，官方没说；没有证据表明员工数据整体泄露，也没有收到勒索要求，但调查没有结束。按欧盟 2018/1725 条例，确认个人数据泄露后要在 72 小时内报 EDPS，这个时钟只有在"确认"之后才开始走。</p>
+                        <p>11 月 21 日披露的这起事件，主体不是 IT 系统而是冷柜：英国在一次未公开的行动中，为数千台控制冷柜运行的设备修补了安全漏洞；作为预防措施，控制着数万台冰箱的这些设备被切断互联网访问，部分超市的 IT 人员直接拔了网线做物理隔离。</p>
+                        <p>起因是欧洲的攻击。10 月先波及法国，随后扩散到比利时等国的超市，冷柜被远程调温到 50 摄氏度；受影响的不止零售，还有血液机构和一处美军基地的冰箱。最先识别问题的是制冷行业咨询机构 Omega Solutions，之后英国国家网络安全中心、环境食品和农村事务部、食品标准局相继介入。</p>
+                        <p>问题出在英国使用最广的一批制冷控制器上，厂商是 Resource Data Management，缺陷类型与欧洲被攻击设备类似，属于认证方面的不足。厂商强调入侵需要借助特定硬件，但这类硬件在市面上能自由买到；同时确认在自家控制器上没有发现恶意活动迹象。</p>
                         <p><strong>值得关注的原因：</strong></p>
                         <ul>
-                            <li><strong>门槛从"会打洞"降到"会写字"。</strong>11 月 14 日那期写过 ARTEX 的行为体与报价，这次落到一个具体机构头上，是第一次有大型公共机构公开承认与之相关的停摆。</li>
-                            <li><strong>下线不等于止损。</strong>服务恢复只证明它能用，不证明数据没被复制。委员会的公开口径一直是"相信已控制大部分"，而"有没有丢数据"到 11-20 仍然没有答案。</li>
-                            <li><strong>下架原仓库不起作用。</strong>开源框架一旦流出，删除源仓库只能影响后来者，已经拿到副本的人不受任何影响。这类工具只能靠行为检测，不能靠封域名。</li>
-                            <li><strong>这是今年第三次。</strong>1 月是管理员工手机的系统的痕迹泄露了姓名与电话，3 月是 Trivy 供应链投毒进了 AWS 环境。三次之间没有公开的关联，但同一家机构一年三次，说明问题在流程而不是某一次运气。</li>
+                            <li><strong>这是可用性攻击的物理版本。</strong>不偷数据、不加密文件，只把温度调高。仓库里数百万英镑的食品几小时内变质，营业中断与供应链中断同时发生，损失不需要窃取任何数据。</li>
+                            <li><strong>OT 资产清单里没有"冷柜"。</strong>冷链控制器通常归设施部门管，不归 IT，不在扫描范围、不打补丁、默认密码没人改，它联网只是为了远程看温度。</li>
+                            <li><strong>隔离比补丁现实。</strong>英国这次是断网加物理拔线。可迁移的动作：把控制器挪出可路由网段、只允许单向数据上报、改掉默认凭据。</li>
+                            <li><strong>同一天还有一起可对照。</strong>理研 11 月 17 日通告，攻击者经公开的运行状态看板进入内部运维网并篡改多台服务器，最高 4,597 名用户信息可能泄露，超算已断外网。运维状态页也是攻击面。</li>
                         </ul>
                     </div>
                     <div class="attack-flow">
-                        <span class="flow-step">操作者给一句自然语言目标</span>
-                        <span class="flow-step">框架拆成子任务</span>
-                        <span class="flow-step">多个智能体调真实攻击工具</span>
-                        <span class="flow-step critical">10-22 发现异常</span>
-                        <span class="flow-step critical">Sysper 与 MyPMO 下线十余天</span>
-                        <span class="flow-step">11-18 向全体委员通报</span>
-                        <span class="flow-step critical">入口与数据归属仍未公开</span>
+                        <span class="flow-step">制冷控制器通过认证缺陷被接管</span>
+                        <span class="flow-step critical">冷柜被远程调到 50 摄氏度</span>
+                        <span class="flow-step">10 月法国超市先中招</span>
+                        <span class="flow-step">扩散到比利时 血液机构 美军基地</span>
+                        <span class="flow-step">Omega Solutions 先识别问题</span>
+                        <span class="flow-step critical">NCSC 与 Defra、FSA 介入</span>
+                        <span class="flow-step critical">数千台设备断网 部分直接拔线</span>
+                        <span class="flow-step">厂商确认控制器上无恶意活动</span>
                     </div>
                 </article>
 
-                <!-- ★ 普通文章 6 -->
                 <article class="article-card">
                     <span class="article-number">6</span>
-                    <span class="severity-badge severity-high">无 CVE 无补丁 · 物理接触 · 当日复现</span>
-                    <h3 class="article-title">锁屏不是墙，Narrator 给它开了条缝</h3>
+                    <span class="severity-badge severity-high">9.2 · 有复现无在野 · 国家级通报</span>
+                    <h3 class="article-title">nginx 那两个洞，复现门槛降到了 docker 级</h3>
                     <div class="article-meta">
-                        <span>FastUnlock · 11-19 公开 · Chaotic Eclipse · Windows 11 26H2 加 11 月补丁仍可复现</span>
-                        <span class="cvss-score">代码以 WsiAccount 运行 · 不破加密只破锁屏 · 12-08 才是补丁日</span>
+                        <span>CVE-2026-123007 与 CVE-2026-123633 · HTTP/2 流控记账 · 影响 1.9.5 至 1.31.8</span>
+                        <span class="cvss-score">修在 1.31.9 与 1.30.7 · EPSS 6.03% 却无在野确认</span>
                     </div>
                     <div class="article-body">
-                        <p>11 月 19 日，研究者 Chaotic Eclipse 在 GitHub 放出 FastUnlock，一段没有和微软协调过的公开披露。场景很窄但很实在：一台开着、锁着、BitLocker 全盘加密的 Windows 11，攻击者只要坐在键盘前。</p>
-                        <p>路径是这样的：锁屏的"我忘记 PIN"入口按 Win+U 起 Narrator，Narrator 的新界面被放在锁屏账户上下文里跑，焦点落在一个本不该可见的窗口上。用 Caps Lock、方向键、回车走进 Narrator 设置，再到蓝牙和其他设备，再打开自动播放，插一个 U 盘，资源管理器就开了，从 U 盘启动的程序以 WsiAccount 身份运行，也就是锁屏用来托管界面的那个低权限账户。研究者说在装了 11 月补丁的 26H2 上，五分钟能走完。ThreatLocker 当天复现，确认代码执行限制在 WsiAccount，不是管理员。</p>
-                        <p>三个必须纠正的说法。第一，它不是"破解 BitLocker"：加密没被破，密钥没被取出，只是 TPM 单独托管的那套配置下，开机时盘已经解好了，锁屏是唯一那道门，而这个洞开的正是这道门。第二，需要至少一个账户绑定在线微软账户，因为入口是找回流程。第三，研究者自己说没跑完最后一步，手上没有 U 盘，视频演示到进入设置为止。</p>
+                        <p>这一条是补第 221 期的。当时写的是本体：两个洞都落在 HTTP/2 的流控记账上，连接窗口被反复累加后超过上限，符号比较绕过帧数限制，后续 WINDOW_UPDATE 的字节数整数下溢，把超出申请大小的数据写进流内存池。影响 1.9.5 到 1.31.8，修在 1.31.9 与 1.30.7，代码可以追到 2015 年 HTTP/2 支持初版。今天的变化在生态侧。</p>
+                        <p>11 月 21 日，台湾数位发展部资安署发新闻稿提醒政府机关与企业尽快升级，按 CVSS 4.0 两个洞都记 9.2，并给了临时缓解：暂时关掉 HTTP/2。这个动作的意义是国家级通报落地——它会把一批原本排在季度维护里的资产拉进本周变更窗口。</p>
+                        <p>社区侧更直接。以 CVE 命名的 GitHub 仓库从 8 个涨到 10 个，头部项目 272 星；新出现的不再只是检测脚本，而是两个中英文的 Docker 复现实验室、一个给各发行版自己打包全套补丁构建的项目（覆盖 Debian 8 到 13、CentOS 7 到 8、RHEL 8 到 10）、以及一个 RCE 复现加版本标定工具。完整武器化还没到，公开的仍是用 pcap 确认记账错误的脚本，完整 RCE 链没有公开——但"能不能搭个环境复现"已经不是问题了。</p>
                         <p><strong>值得关注的原因：</strong></p>
                         <ul>
-                            <li><strong>它打的是"已开机"这个状态。</strong>TPM 单独托管的笔记本，关机时是加密的，开着锁着时不是。办公区、会议室、咖啡馆里最常见的状态恰好是后者。</li>
-                            <li><strong>WsiAccount 不等于无害。</strong>它不是管理员，但能读已解锁卷上的用户文件、能装带持久化的程序、能用这台机器去打内网。对一台丢失的机器来说，这已经够了。</li>
-                            <li><strong>没有补丁的窗口是十九天。</strong>11-19 公开，12-08 才是补丁日。这期间唯一的硬防线是开机前 PIN，而多数企业的 BitLocker 部署是 TPM 单独托管、没有 PIN。</li>
-                            <li><strong>检测只能靠事后。</strong>Narrator.exe 拉起 cmd.exe 或 powershell.exe 是极强的异常信号，但需要物理在场才有这个进程链，日常告警里几乎不会自己出现。</li>
+                            <li><strong>窗口期按周算，不按季度算。</strong>从 PoC 出现到 docker 一键复现，这中间的时间就是防守方真正拥有的时间。</li>
+                            <li><strong>发行版要按版本字符串判断，别按 nginx -V。</strong>发行版会把补丁 backport 进旧版本号，编译参数看不出是否已修。</li>
+                            <li><strong>它和今天的 KEV 条目形成一次对照。</strong>nginx 没有在野确认，EPSS 却到 6.03%（93.5 分位）；Expressway 与 vCenter 都确认在野，EPSS 只有 0.42% 与 0.84%。EPSS 吃历史特征，11 月 20 日刚进 KEV 的条目它还没来得及学习。</li>
+                            <li><strong>按分数派单的团队，今天会把两个正在挨打的系统排到周四。</strong>风险分数是导航，不是自动驾驶。</li>
                         </ul>
                     </div>
                     <div class="attack-flow">
-                        <span class="flow-step">物理接触锁定中的 Windows 11</span>
-                        <span class="flow-step">找回 PIN 入口按 Win+U</span>
-                        <span class="flow-step critical">Narrator 在锁屏账户上下文启动</span>
-                        <span class="flow-step critical">焦点落在隐藏窗口</span>
-                        <span class="flow-step critical">键盘导航进设置 蓝牙与自动播放</span>
-                        <span class="flow-step critical">插 U 盘 资源管理器打开</span>
-                        <span class="flow-step critical">程序以 WsiAccount 运行</span>
-                        <span class="flow-step">读已解锁卷上的用户数据</span>
+                        <span class="flow-step">HTTP/2 连接窗口被反复累加</span>
+                        <span class="flow-step critical">记账值超过上限 符号比较绕过限制</span>
+                        <span class="flow-step critical">WINDOW_UPDATE 字节数整数下溢</span>
+                        <span class="flow-step critical">超出申请大小的数据写进内存池</span>
+                        <span class="flow-step critical">堆越界读写 可执行代码</span>
+                        <span class="flow-step">公开的仍是 pcap 确认记账错误</span>
+                        <span class="flow-step">10 个仓库 两个 docker 复现实验室</span>
+                        <span class="flow-step">资安署 11-21 发文要求升级</span>
                     </div>
                 </article>
             </div>
@@ -662,28 +660,28 @@
             <h3 class="section-header">速览</h3>
             <div class="quick-news">
                 <div class="quick-item">
-                    <h4>7. Mitel MiCollab 一条 10.0，盲注命令拼接</h4>
-                    <p><strong>CVE-2026-133323</strong>，10.0（CVSS 3.1，AV:N/AC:L/PR:N/UI:N/<strong>S:C</strong>），影响 MiCollab 到 10.3（10.3.0.18）的 AWV（音频、Web 与视频会议）组件，厂商编号 MTLVULN-1864：参数过滤不足导致未认证的盲注命令执行。S:C 意味着影响会越出组件本身，落到宿主系统。MiCollab 这两年被反复打过，边界设备一旦被拿下，攻击者拿到的是能进内网的会议与语音网关。</p>
+                    <h4>7. KEV 一天进四条，1,790 条，11-23 三条同日到期</h4>
+                    <p>CISA 目录更新到 2026.11.20 版，<strong>1,790 条</strong>（此前 1,786）。11-20 一次进四条，整改期限全是 11-23：Cisco Expressway <strong>CVE-2026-76466</strong>（9.8，硬编码凭据）、VMware vCenter <strong>CVE-2026-123890</strong>（9.8，目录服务认证绕过）、Apache Roller <strong>CVE-2026-129448</strong>（反序列化）、SAP NetWeaver <strong>CVE-2025-42884</strong>（查询逻辑特殊元素未中和）。同时 11-18 那批里 Synology DSM <strong>CVE-2024-10441</strong>、REDCap <strong>CVE-2026-90817</strong>、Apache Axis <strong>CVE-2026-90436</strong> 的期限就是今天，Axis 那条厂商已明说不提供修复版。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>8. Splunk 一轮清掉近 140 条，SOAR 里有两条 9.9 与 9.6</h4>
-                    <p>Splunk Enterprise、Enterprise Security 与 SOAR 一并更新，合计近 140 条。SOAR 8.8.0 修 59 条，其中 <strong>CVE-2026-131253</strong>（9.9）与 <strong>131287</strong>（9.6）都需要一个持有 Apps 或 Playbooks 编辑权限的已认证用户。更值钱的是 <strong>CVE-2026-76536</strong>（9.4，<strong>未认证</strong>）：在 10.4.5 / 10.2.9 / 10.0.12 / 9.4.17 之前的版本上，集群共享密钥为空时，单机实例的集群配置 REST 接口可以被未认证用户读写。SIEM 是日志的唯一副本，它在攻击链里通常是被删的那一环。</p>
+                    <h4>8. 乐天证券测试环境被入侵，最高 1,125 万账户信息受影响</h4>
+                    <p>11 月 11 日侵入，测试环境里用的是真实数据——这个教训重复了很多年还在重复。可能泄露的是最高 <strong>1,125 万</strong>账户的登录 ID 与分行代码，以及 <strong>447 万</strong>账户的身份信息与出金银行账户。测试环境通常不在生产监控、脱敏、访问审计的覆盖范围内，但它和生产共用同一套真实客户数据。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>9. WatchGuard Dimension 三条 9.3，日志采集服务不需要认证</h4>
-                    <p><strong>CVE-2026-86130</strong>（9.3，CVSS 4.0）：日志采集服务缺失认证，远程未认证即可执行任意 SQL，最终以 Dimension WebUI 进程用户的身份执行代码。另两条 <strong>84322</strong> 与 <strong>86094</strong>（均 9.3）是在管理 API 响应和诊断日志里返回未打码的会话标识，低权限用户可借别人的会话。日志与报表平台常被当成"只读的旁路系统"，它手里握着全网的会话标识。</p>
+                    <h4>9. 富岳超算断网，4,597 名用户信息可能泄露</h4>
+                    <p>理研 11 月 17 日通告：外部人员经公开的运行状态看板进入内部运维网，篡改多台服务器，最高 <strong>4,597 名</strong>用户的姓名、邮箱、ID 可能泄露，超算已切断外网运行。监控看板为了让人看得见而生，它往往没有认证、没有速率限制、还直接连着内部采集端。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>10. Postgres Enterprise Manager 三条 9.4，监控代理自带读写文件的权限</h4>
-                    <p><strong>CVE-2026-132658 / 132659 / 132660</strong> 均 9.4（CVSS 4.0，PR:H / S:C）。132658 的核心是角色设计：每个 PEM agent 登录都继承的 pem_agent 角色，同时是 PEM 后端库上 pg_read_server_files 与 pg_write_server_files 的成员。控制任何一台被监控的主机，就拿到了那台主机的 agent 证书，于是能在 PEM 服务器上读写文件。监控系统天生要"看得见所有机器"，这个设计把"看得见"变成了"写得进"。</p>
+                    <h4>10. Bazuka 把大模型接进了诈骗后台</h4>
+                    <p>荷兰 ThreatFabric 在追踪另一款 NFC 中继木马时顺出来的 Android 诈骗框架：dropper 加核心加 <strong>23 个模块</strong>，覆盖浮层、键盘记录、2FA 与短信拦截、远程控制、加密货币地址替换。三个新东西：先截屏再把静态画面盖在真界面上（受害者盯着照片看，后台在跑转账）；面板内置 LLM 集成（本地模型或 API 两种接法），运营方可以让模型给受害者打分、判断值不值得继续投入；自带引流下线账号体系，能定制 manifest 权限组合绕 Google Play 审核。样本伪装成 TikTok 高级版（com.tiktok.premium）。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>11. 伦敦交通局 26.5 万张 Oyster 照片卡，泄露的是安全问题答案</h4>
-                    <p>TfL 11 月 16 日发现异常，18 日通知用户，20 日把数字定在约 26.5 万个网络账户（此前口径 25 万，可能还会涨）。泄露字段是全名、邮箱、电话、住址、出生日期，以及<strong>账户的安全问题与答案</strong>；密码、银行卡与支付信息、行程记录、照片均未泄露，持 Zip 卡的儿童姓名与生日也未泄露。门户仍下线，已通报 ICO。这份数据里最贵的不是生日，是安全问题答案，人们几乎不会改它，而"第一所学校""母亲娘家姓"这几个问题在银行、运营商、政务系统里反复出现。另一处细节：用户是靠收到 TfL 自己系统发出的异常邮件才发现出事的，也就是说攻击者能驱动官方事务邮件，这类信会顺利通过 SPF、DKIM 与 DMARC。</p>
+                    <h4>11. WordPress 插件一条 9.8，一个 GET 请求就是代码执行</h4>
+                    <p>BuddyPress 的 Restrictions 插件（1.5.4 及以前）<strong>CVE-2026-120539</strong>，CVSS 3.1 记 9.8，CWE-95。插件把攻击者可控的请求 URI 拼进双引号字符串里的 PHP 表达式再 eval()，因为 PHP 会在双引号里做变量插值，路径里写 <code>{${...}}</code> 就能直接执行，不需要闭合引号，WordPress 的转义也拦不住。需要同时启用 BuddyPress 与 Paid Memberships Pro，但相关判断在任何登录校验之前执行、默认开启，所以未认证即可打。</p>
                 </div>
                 <div class="quick-item">
-                    <h4>12. KEV 停在 1,786 条，连续两天没有新增</h4>
-                    <p>CISA 的目录仍是 2026.11.18 版，1,786 条，11-19 与 11-20 都没有新增。但这不代表风平浪静：11-18 那批四条里有三条的整改期限是 11-21，也就是今天，其中包括那个厂商明确不出修复版的 Apache Axis 9.8。KEV 是"确认被利用"的名单，不是"有危险"的名单，vCenter 那条两个半月在野的洞至今不在里面。</p>
+                    <h4>12. 补丁在主干上，发行包里没有</h4>
+                    <p>MONAI Label 那条的修复状态值得单独记一笔：PR #1915 在 10 月 19 日就合进主干了，11 月 18 日的通告却写着暂无修复版本。也就是说从 10-19 到今天，凡是按有补丁就升级逻辑处理的团队，升级完仍然暴露。同理适用于今天很多 AI 生态项目：发版节奏慢于修复节奏，通告里的 fixed in next release 要当成现在没有修复来读。</p>
                 </div>
             </div>
 
@@ -701,29 +699,29 @@ quadrantChart
     quadrant-2 "重点加固"
     quadrant-3 "持续观察"
     quadrant-4 "常规跟进"
-    "vCenter两个半月在野": [0.97, 0.96]
-    "Drupal安装器已有PoC": [0.78, 0.90]
-    "PHP七个9.2": [0.62, 0.92]
-    "FastUnlock公开视频": [0.70, 0.74]
-    "Ruby2Shell等发布": [0.55, 0.86]
-    "欧盟委员会停摆": [0.88, 0.80]
-    "MiCollab盲注10.0": [0.30, 0.88]
-    "Splunk未认证9.4": [0.28, 0.84]
-    "PEM代理越权": [0.34, 0.80]
-    "Dimension未认证9.3": [0.26, 0.78]
-    "TfL安全问题答案": [0.72, 0.52]
+    "Expressway 已 root 四台": [0.96, 0.95]
+    "Cairn 十一分钟拿 root": [0.90, 0.93]
+    "Qubole 供应链正门进入": [0.86, 0.88]
+    "银狐 VPN 安装包投毒": [0.82, 0.80]
+    "vCenter 已进 KEV": [0.93, 0.92]
+    "nginx 两个 9.2 有复现": [0.74, 0.86]
+    "BuddyPress 未认证 9.8": [0.42, 0.84]
+    "冷柜控制器被远程调温": [0.58, 0.72]
+    "Bazuka 带 LLM 面板": [0.50, 0.70]
+    "乐天证券测试环境真数据": [0.66, 0.64]
+    "富岳经状态看板进入": [0.62, 0.60]
                     </div>
                 </div>
                 <div class="chart-container">
-                    <div class="chart-title">今日失败点分布</div>
+                    <div class="chart-title">今日六条主线卡在哪一环</div>
                     <div class="mermaid">
-pie title 今日六条主线的失败点分布
-    "补丁比利用晚两个半月": 26
-    "上个月修的不算这一次": 18
-    "转换循环少算一个字节": 16
-    "装完没删的入口文件": 15
-    "会写字就能用的框架": 14
-    "锁屏账户能跑程序": 11
+pie title 今日六条主线卡在哪一环
+    "默认关掉的认证没人开": 24
+    "供应商角色没人回收": 21
+    "集群端口与硬编码 cookie": 19
+    "搜索结果排名可被刷": 15
+    "冷柜不在资产清单里": 12
+    "修复在主干不在发行包": 9
                     </div>
                 </div>
             </div>
@@ -733,23 +731,23 @@ pie title 今日六条主线的失败点分布
             <div class="timeline-section">
                 <div class="mermaid">
 timeline
-    title 2026年9月3日至11月21日
-    09月03日 : vCenter 漏洞被实际使用
-    10月22日 : 欧盟委员会发现系统异常
-    10月26日 : 欧盟委员会初步调查确认
-    11月05日 : CERT-EU 发布 ARTEX 技术通告
-    11月13日 : Apache mod_http2 由模型扫出
-    11月16日 : 伦敦交通局发现 Oyster 门户异常
-    11月18日 : Ruby 三个分支修七个内存问题
-    11月18日 : Drupal 修 install.php 重装问题
-    11月18日 : Splunk 一轮清掉近 140 条
-    11月18日 : KEV 更新到 1786 条
-    11月19日 : Broadcom 发 VMSA-2026-0009
-    11月19日 : PHP 四个分支同日发安全版
-    11月19日 : FastUnlock 在 GitHub 公开
-    11月19日 : 欧盟委员会确认遭攻击
-    11月20日 : TfL 确认约 26.5 万账户受影响
-    11月21日 : 三条 KEV 整改期限到期
+    title 2026年9月8日至11月23日
+    09月08日 : Cairn 智能体开始打高校
+    09月10日 : 亚马逊发现未加认证的实例
+    10月14日 : Qubole 攻击窗口打开
+    10月19日 : MONAI Label 修复合进主干
+    10月21日 : Cisco 发 X15.5.20
+    10月26日 : Qubole 攻击窗口关闭
+    11月05日 : Expressway 公开 PoC 上线
+    11月11日 : n0n 认领对 Qubole 的攻击
+    11月16日 : 三家支付数据被挂上敲诈站
+    11月17日 : 理研通告富岳被入侵
+    11月18日 : MONAI Label 发 GHSA 通告
+    11月18日 : F6 报告首个在野案例
+    11月20日 : 银狐 VPN 投毒预警发布
+    11月20日 : KEV 一天进四条到 1790
+    11月21日 : 资安署就 nginx 发通报
+    11月23日 : 八条 KEV 与旧条目同日到期
                 </div>
             </div>
 
@@ -758,160 +756,87 @@ timeline
             <div class="references-section">
                 <div class="references-grid">
                     <div class="reference-item">
-                        <span class="reference-source">Broadcom VMSA-2026-0009（版本对照与官方问答，明确与七月 59309 无关）</span>
-                        <a href="https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/36792">support.broadcom.com · VMSA-2026-0009</a>
+                        <span class="reference-source">亚马逊安全博客：Cairn 智能体自行发现零日</span>
+                        <a href="https://aws.amazon.com/blogs/security/chinese-nexus-actors-cairn-ai-agents-found-a-zero-day-on-their-own/">aws.amazon.com</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">Mandiant 与 GTIG：vCenter 零日的完整链路（BONESAW、SAWSNAKE、BEARBONES、LAZYBONES）</span>
-                        <a href="https://cloud.google.com/blog/topics/threat-intelligence/armory-castle-exploits-vsphere">cloud.google.com · threat-intelligence</a>
+                        <span class="reference-source">GitHub 安全通告 GHSA-qc22-rmgc-vg94（MONAI Label 路径穿越）</span>
+                        <a href="https://github.com/Project-MONAI/MONAILabel/security/advisories/GHSA-qc22-rmgc-vg94">github.com</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">BleepingComputer：VMware 修 vCenter 零日，自 9 月起被利用</span>
-                        <a href="https://www.bleepingcomputer.com/news/security/vmware-patches-vcenter-zero-day-exploited-in-attacks-since-september/">bleepingcomputer.com</a>
+                        <span class="reference-source">BleepingComputer：用 Cairn 找到零日并接管服务器</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/hackers-use-autonomous-ai-tool-cairn-to-find-zero-day-take-over-server/">bleepingcomputer.com</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-123890（9.8，版本区间与修复版本原文）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123890">nvd.nist.gov · CVE-2026-123890</a>
+                        <span class="reference-source">独立复核：受影响版本与 workaround 细节</span>
+                        <a href="https://protect.computer/news/2026-11-20-cairn-ai-agents-zero-day-monai-label">protect.computer</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">Inception Security：MSP 视角的影响面与补丁版本对照</span>
-                        <a href="https://www.inceptionsecurity.com/post/vcenter-armory-castle-zero-day">inceptionsecurity.com</a>
+                        <span class="reference-source">BleepingComputer：第三方泄露波及 Chase、Visa、万事达</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/vendor-data-breach-exposes-chase-visa-mastercard-customer-info/">bleepingcomputer.com</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">PHP 官方归档：11 月 19 日多分支安全发布</span>
-                        <a href="https://www.php.net/archive/2026.php">php.net · archive</a>
+                        <span class="reference-source">The Register：SOCRadar 解析 14 个文件，无卡号</span>
+                        <a href="https://www.theregister.com/cyber-crime/2026/11/20/visa-mastercard-theft-included-info-useful-for-phishing-but-not-draining-bank-accounts-say-researchers/">theregister.com</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">Aikido：PHP 18 条 CVE 与七个 9.2 清单</span>
-                        <a href="https://www.aikido.dev/blog/php-november-2026-security-release">aikido.dev</a>
+                        <span class="reference-source">Wiz：Qubole 跨账号访问被滥用（External ID 细节）</span>
+                        <a href="https://www.wiz.io/blog/">wiz.io</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">SECNEWS：PHPAfterShell 写入中断机理、十月补丁不覆盖</span>
-                        <a href="https://secnews.co.uk/2026/11/php-security-release-phpaftershell-cve-2026-126714-php-fpm">secnews.co.uk</a>
+                        <span class="reference-source">Cisco 安全公告 cisco-sa-vcs-static-cred-hr7EWZ8t</span>
+                        <a href="https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-vcs-static-cred-hr7EWZ8t">sec.cloudapps.cisco.com</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">Breach-Signal：PHPAfterShell 由 Depthfirst 用面向安全的模型发现</span>
-                        <a href="https://breach-signal.com/vulnerabilities/php-patches-18-vulnerabilities-november-updates">breach-signal.com</a>
+                        <span class="reference-source">F6 事件响应报告：Expressway 首个在野案例</span>
+                        <a href="https://f6.security/media-center/press-releases/cisco-vulnerability-exploitation/">f6.security</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-126714（4.0 记 9.2，会话文件部分覆写）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-126714">nvd.nist.gov · CVE-2026-126714</a>
+                        <span class="reference-source">公开 PoC 仓库 dinosn/cve-2026-76466</span>
+                        <a href="https://github.com/dinosn/cve-2026-76466">github.com</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-129289（PHP-FPM 走私，复用连接前提）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129289">nvd.nist.gov · CVE-2026-129289</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Ruby 官方：正则与字符串相关的多个漏洞（2026-11-18）</span>
-                        <a href="https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/">ruby-lang.org</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">GitHub Advisory：GHSA-34m4-m9fh-gqp5（Ruby2Shell）</span>
-                        <a href="https://github.com/ruby/ruby/security/advisories/GHSA-34m4-m9fh-gqp5">github.com · ruby/ruby</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Ethiack：21 个 ß 的算式与 Rails 默认暴露的判断</span>
-                        <a href="https://ethiack.com/info-hub/research/cve-2026-132825-ruby2shell-rce-via-heap-overflow-in-ruby-string-case-conversion">ethiack.com</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Orca Security：Ruby2Shell 与自带解释器的产品清单</span>
-                        <a href="https://orca.security/resources/blog/ruby2shell-ruby-heap-overflow-rce">orca.security</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Sonatype：Ruby 同批七个漏洞逐条对照</span>
-                        <a href="https://www.sonatype.com/blog/november2shell-continues-with-7-patches-ruby-vulnerabilities">sonatype.com</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-132825（7.4，AV:L，与官方 critical 口径不同）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132825">nvd.nist.gov · CVE-2026-132825</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Drupal 官方：SA-CORE-2026-017（18/25，重装导致接管）</span>
-                        <a href="https://www.drupal.org/sa-core-2026-017">drupal.org · sa-core-2026-017</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Drupal 官方文档：如何封禁 install.php（Apache 与 nginx 两种写法）</span>
-                        <a href="https://www.drupal.org/docs/administering-a-drupal-site/security-in-drupal/securing-the-installer-installphp">drupal.org · securing the installer</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Pivot News：报告方为 Anthropic OSS Scanner，内部编号 ANT-2026-GMRPK0BU</span>
-                        <a href="https://pivotnews.ai/security/drupal-credits-anthropic-s-oss-scanner-for-critical">pivotnews.ai</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">CIRT Guyana：Drupal 影响版本表与处置建议</span>
-                        <a href="https://cirt.gy/article/al2026_60-critical-drupal-installer-vulnerability-could-allow-remote-code-execution-november-20th-2026">cirt.gy</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Security Affairs：欧盟委员会十天停摆与 ARTEX 的角色边界</span>
-                        <a href="https://securityaffairs.com/203483/hacking/european-commission-cyberattack-artex-ai-tool-suspected-in-prolonged-disruption.html">securityaffairs.com</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Cybersecurity News：Sysper 与 MyPMO 的恢复顺序</span>
-                        <a href="https://cybersecuritynews.com/european-commission-cyberattack/">cybersecuritynews.com</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Digital Watch：CERT-EU 11-05 通告与 ARTEX 的智能体工作方式</span>
-                        <a href="https://dig.watch/updates/european-commission-cyberattack-personal-data">dig.watch</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Daily Security Review：FastUnlock 机理与"不破加密只破锁屏"</span>
-                        <a href="https://dailysecurityreview.com/resources/unpatched-windows-fastunlock-zero-day-abuses-narrator-at-lock-screen">dailysecurityreview.com</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">NetSecOps：FastUnlock 的检测线索（Narrator 与 WsiAccount 进程链）</span>
-                        <a href="https://cyber.netsecops.io/stix-viz/windows-fastunlock-zero-day-vulnerability-allows-lock-screen-bypass">cyber.netsecops.io</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">Hardware Busters：五个前提与研究者未跑完最后一步的说明</span>
-                        <a href="https://hwbusters.com/news/fastunlock-zero-day-turns-windows-11s-narrator-into-a-way-past-the-lock-screen-on-bitlocker-pcs">hwbusters.com</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">ngCERT：FalconFlank 缘起与 CrowdStrike 的临时缓解（背景，非本期新增）</span>
-                        <a href="https://csirt.ncc.gov.ng/index.php/resources/security-advisories/444-ngcert-security-advisory-on-alleged-crowdstrike-falcon-sensor-local-privilege-escalation-vulnerability">csirt.ncc.gov.ng</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-133323（Mitel MiCollab 10.0，MTLVULN-1864）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-133323">nvd.nist.gov · CVE-2026-133323</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-76536（Splunk Enterprise 未认证集群配置接口 9.4）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-76536">nvd.nist.gov · CVE-2026-76536</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-86130（WatchGuard Dimension 日志采集缺认证 9.3）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86130">nvd.nist.gov · CVE-2026-86130</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">NVD：CVE-2026-132658（PEM 代理角色的文件读写权限 9.4）</span>
-                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132658">nvd.nist.gov · CVE-2026-132658</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">CyPro：Oyster 照片卡事件时间线与泄露字段清单</span>
-                        <a href="https://cypro.co.uk/insights/cyber-bulletins/oyster-photocard-breach-affects-265000-users">cypro.co.uk</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">IT Pro：TfL 第二次重大泄露与安全问题答案的长期价值</span>
-                        <a href="https://www.itpro.com/uk/cyber-resilience/data-breaches/oyster-photocard-breach-tfl-takes-system-offline-after-260-000-customers-affected-by-attack">itpro.com</a>
-                    </div>
-                    <div class="reference-item">
-                        <span class="reference-source">CISA 已知被利用漏洞目录（2026.11.18 版，1,786 条）</span>
+                        <span class="reference-source">CISA KEV 目录（2026.11.20 版，1,790 条）</span>
                         <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa.gov</a>
                     </div>
                     <div class="reference-item">
-                        <span class="reference-source">NVD API 2.0（本期窗口 1,578 条、9.0 以上 75 条，本刊一手统计）</span>
+                        <span class="reference-source">国家计算机病毒应急处理中心：银狐利用 VPN 安装包传播木马预警</span>
+                        <a href="https://www.cverc.org.cn/head/zhaiyao/news20261120-VPN.htm">cverc.org.cn</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">国家计算机病毒协同分析平台（样本查询）</span>
+                        <a href="https://virus.cverc.org.cn">virus.cverc.org.cn</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">中央社：资安署就 nginx 两个 9.2 发通报</span>
+                        <a href="https://www.cna.com.tw/news/ait/202611210071.aspx">cna.com.tw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">英国为冷柜控制器批量打补丁（NCSC 与 FSA 介入）</span>
+                        <a href="https://news.qq.com/rain/a/20261121A035AW00">news.qq.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatFabric：Bazuka 安卓诈骗框架（LLM 面板）</span>
+                        <a href="https://threatfabric.com/blogs">threatfabric.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Wordfence：BuddyPress Restrictions 插件 CVE-2026-120539</span>
+                        <a href="https://www.wordfence.com/threat-intel/vulnerabilities/">wordfence.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD CVE API 2.0（本期窗口 532 条，CVSS 3.1 critical 3、high 9，本刊一手统计）</span>
                         <a href="https://services.nvd.nist.gov/rest/json/cves/2.0">services.nvd.nist.gov</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ========== 页脚 ========== -->
         <footer class="newspaper-footer">
             <div class="footer-logo">AI城 · 网安日报</div>
             <p class="footer-disclaimer">
-                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注口径或直接指出差异。建议读者查阅原始来源获取最新动态。
+                免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分、受影响与修复版本以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注口径或直接指出差异：MONAI Label 通告写 Patched versions 为 None，部分媒体写已发布安全更新，实际是修复合并进主干、尚无带修复的发行包；Expressway 的在野定性来自 F6 的事件响应报告，Cisco 公告截至 11-20 仍为 1.0 版；n0n 自称的 53.9 GB、30,743 个文件与近 1 PB 客户网络数据均为其单方面声明，未经证实，三家支付机构只确认了姓名与邮箱层面的暴露；nginx 两个洞按 CVSS 4.0 记 9.2，与 CVSS 3.1 体系的分数不可直接横比；富岳与乐天证券的受影响人数均为通告口径的上限。涉华涉台的归因类内容本期不予收录，技术事实按各报告方原文转述。文中涉及的 PoC、IOC 与复现细节仅用于自查与识别，不要用于未授权环境。
                 <br>
-                每日精选 · 值得关注 | 2026年11月21日
+                每日精选 · 值得关注 | 2026年11月21日 午间更新
             </p>
         </footer>
 
