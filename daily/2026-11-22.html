@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月22日（第224期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月22日 星期日</span>
+            <span class="edition-number">第 224 期 | 总第 224 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>签名是对的所以金库照付了钱 · 两分钟里两条链各走了一步 · 中间件被跳过而路由照常派发 · 一个超长用户名触发了两次释放 · 工控库那边没人接这通电话 · 智能体把战果直接发给了蜜罐
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">校验都通过了，所以没人拦</h2>
+                <p class="sub-headline">两条桥一天之内各出一件事，一笔签名是真的，一笔根本没有源记录 · 中间件被静默跳过而路由照常派发 · 一个超长用户名让库把同一块内存释放了两次 · 工控库没人回信，所以补丁不存在</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">约 1,200 万美元 · 全协议停摆 · 无 CVE</span>
+                    <h3 class="article-title">签名是真的，所以金库没得选</h3>
+                    <div class="article-meta">
+                        <span>Chainflip 以太坊金库 · 2026-11-21 07:10:59 UTC · 一笔 transferBatch · FROST 门限签名 100/150</span>
+                        <span class="cvss-score">299,677 个历史签名里唯一破序的一笔 · 9 分钟内洗完 · 悬赏 11-23 截止</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 21 日 07:10:59 UTC，一笔 transferBatch 从 Chainflip 的以太坊金库转出 520.2243399 ETH、3,249,631.41 USDC 与 758,141.33 USDT，按当时价格约 486 万美元。这笔交易带的是有效的聚合 Schnorr 签名，金库合约 Vault.transferBatch 验证通过，照设计付了钱。</p>
+                        <p>Chainflip 用的是 FROST 门限签名：最多 150 个验证者共管一把密钥，至少 100 个签名才能拼出一次合法出金。合约能验的只有"这把钥匙签的"，而它验过了。<strong>这一次没有任何一道检查报错。</strong></p>
+                        <p>唯一的异常留在了 nonce 上。Bitquery 拉了 2023 年以来金库接受过的 299,677 个签名，正常的出金 nonce 是顺序递增的，攻击前一个大约在 314,000。这一笔的 nonce 是 39 位。这里要说清楚：这个 nonce 是合约用于防重放的交易序号，不是 Schnorr 签名内部那个每签一次就用掉的一次性随机数。异常值说明这笔出金不在正常签名流水里，但它不能证明 FROST 本身被攻破。</p>
+                        <p>洗钱是脚本化的。07:09:59，攻击者钱包先从 Tornado Cash 收到 gas；07:12 到 07:14，稳定币在 Uniswap 换成以太；到 07:19，约 2,909 ETH 已经分成 38 笔进了 Tornado，其中 29 笔每笔 100 ETH、9 笔每笔 1 ETH，全部在约 48 秒内完成。稳定币占被窃价值约 82%，先换掉它们是因为 Circle 和 Tether 能冻结，而没人能冻结以太。</p>
+                        <p>08:53:35 UTC，验证者换到新的聚合密钥，比原定计划提前约 13 小时，也就是出事之后 1 小时 42 分。这个间隔被不少报道当成疑点，Bitquery 自己提醒过：时间差本身不能推出结论，此前也有过非计划的轮换。</p>
+                        <p><strong>损失与处置：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>项目</th><th>数量 / 状态</th><th>备注</th></tr>
+                            <tr><td>比特币侧</td><td>122.86137042 BTC</td><td class="risk-high">Chainflip 自报</td></tr>
+                            <tr><td>以太坊侧</td><td>520.2243399 ETH</td><td class="risk-high">单笔出金</td></tr>
+                            <tr><td>稳定币</td><td>324.96 万 USDC / 75.81 万 USDT</td><td class="risk-high">已换成 ETH</td></tr>
+                            <tr><td>协议状态</td><td>Full Safe Mode</td><td class="risk-high">存提兑报价全停</td></tr>
+                            <tr><td>FLIP 代币</td><td>跌 34% 至 39%</td><td class="risk-medium">市值 4,160 万降至 2,480 万</td></tr>
+                            <tr><td>悬赏</td><td>10%，约 120 万美元</td><td class="risk-medium">期限 11-23 18:38 UTC</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>合约没错，所以没有补丁。</strong>这次不是重入、不是价格操纵、不是舍入误差。合约做了它能做的全部检查，然后付了钱。传统 DeFi 审计的检查清单在这类事件面前是空的。</li>
+                            <li><strong>信任根是钥匙，不是代码。</strong>100/150 的门限听起来很稳，但 Chainflip 把原因指向 11 月 20 日注册的一个恶意验证者账号，其资金在 11 月 11 日经 Tornado Cash 进入。问题可能出在"谁能成为验证者"和"密钥生成与签名基础设施"这两步，而不是数学。</li>
+                            <li><strong>冻结的时间窗只有分钟级。</strong>从出金到洗完不到九分钟。任何依赖发行方冻结或交易所拦截的事后响应，在这条时间线上都来不及。</li>
+                            <li><strong>三个月内第三次。</strong>八月有一次未成功的利用，九月十二日 Tron 侧因交易备注处理缺陷被重复出金 736,442 USDT，十一月二十一日这次是全口径 1,200 万美元。同一个协议，三种完全不同的失效方式。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">07:09:59 攻击者钱包从 Tornado 拿到 gas</span>
+                        <span class="flow-step critical">07:10:59 一笔 transferBatch 出金</span>
+                        <span class="flow-step critical">签名通过聚合公钥验证</span>
+                        <span class="flow-step critical">合约按设计付款 486 万美元</span>
+                        <span class="flow-step">07:12 至 07:14 稳定币换成以太</span>
+                        <span class="flow-step critical">07:19 前 2,909 ETH 分 38 笔进 Tornado</span>
+                        <span class="flow-step">08:53 换掉聚合密钥 晚了 1 小时 42 分</span>
+                        <span class="flow-step">11:23 新密钥下无新签名被接受</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">5,213,000 枚 · 两家交易所先冻 · 原因未公布</span>
+                    <h3 class="article-title">两分钟，两条链，一条没人签过的消息</h3>
+                    <div class="article-meta">
+                        <span>Cyber 跨链桥 · LayerZero 消息 · 16:13:24 UTC 铸币 / 16:15:11 UTC 释放 · 区块 26,464,606</span>
+                        <span class="cvss-score">约 96.8 万美元变现 · 575.29 ETH · 项目方未确认成因</span>
+                    </div>
+                    <div class="article-body">
+                        <p>同一天下午，跨链桥 Cyber（原 CyberConnect）出了另一件事。16:13:24 UTC，Solana 上一笔交易铸出 5,213,000 枚 CYBER 到单一钱包；16:15:11 UTC，以太坊区块 26,464,606 里，桥的适配器合约 CyberTokenAdapter 把同样数量的 CYBER 放给了另一个地址。两条都是 LayerZero 消息。</p>
+                        <p>两分钟后，20:51 UTC 时适配器里只剩约 6,700 枚 CYBER。攻击者通过 KyberSwap 与 MetaMask Swaps 分多笔卖出，多数是每笔 15 万枚，换到约 575.29 ETH（约 96.8 万美元），转进一个新地址后再没动过。</p>
+                        <p>交易所比项目方快。17:08 UTC，Upbit 停掉 CYBER 的以太坊充提，十二分钟后发波动警示；17:18，Bithumb 跟进，两家援引的都是韩国《虚拟资产用户保护法》施行令第 17 条第 2 项 b。18:25 UTC，Cyber 才在 X 上发第一句"正在排查哪些资产与桥路由受影响"。CYBER 一度跌 8% 到 13%。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>桥的两侧各信各的。</strong>一条跨链消息的全部安全性，取决于"这条消息真的来自对岸吗"。这次公开报道的说法是伪造消息绕过了校验，但 Cyber 至今没有说明铸造是怎么被授权的，也没给最终损失数字。技术结论还悬着。</li>
+                            <li><strong>铸币和释放是两次独立的机会。</strong>就算第一步只是"多铸了一批没人背书的代币"，只要第二步能让锁仓合约认账，虚拟增发就变成了真实资产流出。任何先铸后放的桥都得回答：第二步凭什么相信第一步。</li>
+                            <li><strong>交易所成了事实上的断路器。</strong>冻结发生在项目方发声明之前，而且只停充提不停交易。同一时刻不同交易所的 CYBER 价格会分叉，套利的人搬不动货。这是应急处置的常态，不是漏洞，但持有者要清楚自己在哪个价格上。</li>
+                            <li><strong>同一天两条桥出事。</strong>Chainflip 是签名是真的但没人授权，Cyber 是消息没有源记录。一个攻击了授权的前提，一个攻击了消息的来源，两条路径都绕过了"代码是对的所以安全"这个假设。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step critical">构造一条声称来自 Cyber 链的消息</span>
+                        <span class="flow-step">源链上找不到对应的发送记录</span>
+                        <span class="flow-step critical">16:13:24 Solana 铸出 521.3 万枚</span>
+                        <span class="flow-step critical">16:15:11 锁仓适配器释放同数量</span>
+                        <span class="flow-step">KyberSwap 与 MetaMask 分批卖出</span>
+                        <span class="flow-step critical">约 575.29 ETH 落到新地址</span>
+                        <span class="flow-step">17:08 Upbit 停充提 17:18 Bithumb 跟进</span>
+                        <span class="flow-step">18:25 项目方首次公开回应</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">一天五个 CVE · 全是 9.1 · 无需非默认配置</span>
+                    <h3 class="article-title">一个理解分歧，开出五个号</h3>
+                    <div class="article-meta">
+                        <span>@fastify/express 4.0.10 与 @fastify/middie 9.3.8 · CWE-436 / 288 / 174 · OpenJS 作为 CNA 评分</span>
+                        <span class="cvss-score">AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N · 无公开利用 · 11-19 预留</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 21 日，OpenJS 基金会一次性公开了五个 CVE，全部 9.1，全部同一个根因：Fastify 的路由和 Express 的中间件对"这个请求是哪个路径"读出了不同答案。</p>
+                        <p>具体形态分成五种。CVE-2026-133120 是百分号编码被解码了两次，传给 Express 的 URL 与路由实际派发的路径不一致；CVE-2026-129504 是字符串拼接，插件前缀以斜杠结尾或者挂载路径缺前导斜杠时结果对不上；CVE-2026-133867 是正则式挂载路径没有按参数化前缀重写；CVE-2026-124626 是动态段的匹配器要求非空值而路由把空段当命中；CVE-2026-133250 在 middie 里，空参数、不以斜杠开头的请求目标、挂载路径里的字面百分号都能触发。</p>
+                        <p><strong>受影响与修复：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>组件与版本</th><th>修复</th></tr>
+                            <tr><td>CVE-2026-133120</td><td>@fastify/express 低于 4.0.10</td><td class="risk-high">4.0.10</td></tr>
+                            <tr><td>CVE-2026-129504</td><td>@fastify/express 4.0.0 至 4.0.9</td><td class="risk-high">4.0.10</td></tr>
+                            <tr><td>CVE-2026-133867</td><td>@fastify/express 4.0.7 至 4.0.9</td><td class="risk-high">4.0.10</td></tr>
+                            <tr><td>CVE-2026-124626</td><td>@fastify/express 4.0.5 至 4.0.9</td><td class="risk-high">4.0.10</td></tr>
+                            <tr><td>CVE-2026-133250</td><td>@fastify/middie 9.3.7 及以前</td><td class="risk-high">9.3.8</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>不需要构造请求，也不需要改配置。</strong>公告写得很直白：任何网络上的攻击者都能用，没有特殊配置前提。对一个"兼容层"来说这是最坏的形状，它本来就是为了让老 Express 中间件在 Fastify 里继续工作，而中间件最常见的用途恰好是鉴权、限流、审计。</li>
+                            <li><strong>中间件失败的模式是静默。</strong>它不报错、不 500、不留日志，只是不执行。Fastify 那边照常派发，处理器该跑还是跑。你在访问日志里看到的是一条 200，不是一条 401。</li>
+                            <li><strong>五个号，一次教训。</strong>同一天为同一类缺陷开五个 CVE，说明这类"两个组件各自解析同一条路径"的问题有多个变体。升级只打一个版本号，但排查思路要覆盖全部五种形态：编码、前缀拼接、正则、空段、异常请求目标。</li>
+                            <li><strong>排查看代码，不看版本号。</strong>判断是否受影响看两件事：有没有在带前缀的插件里用路径限定的 app.use 做鉴权；有没有直接用 middie。两条都中的，4.0.10 与 9.3.8 之前一律按已暴露处理。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">请求 /api/%2e%2e/admin</span>
+                        <span class="flow-step critical">Fastify 路由器解码一次</span>
+                        <span class="flow-step critical">Express 中间件解码两次</span>
+                        <span class="flow-step critical">两条路径对不上</span>
+                        <span class="flow-step critical">中间件不匹配 被静默跳过</span>
+                        <span class="flow-step">处理器照常执行</span>
+                        <span class="flow-step critical">未认证到达受保护路由</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">官方只写 critical 未给分 · 代码可追到 1.18.0</span>
+                    <h3 class="article-title">一个超长用户名，两次释放</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-129975 · T8557 · GPGME 2.3.1 / Gpg4win 5.1.2 / 老分支 1.24.4 · 2026-11-20 公告</span>
+                        <span class="cvss-score">read_status 与 read_colon_line · 静态链接需重编译 · 无 workaround</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 20 日晚，GnuPG 发布 GPGME 2.3.1，修一个内部编号 T8557、CVE 编号 CVE-2026-129975 的 double free。同一批放出 Gpg4win 5.1.2，老分支给了 1.24.4。</p>
+                        <p>问题在 src/engine-gpg.c 的两个函数：read_status() 与 read_colon_line()，负责解析 gpg 进程返回的状态行与冒号分隔的密钥列表。两个函数都从 1024 字节的缓冲区起步，行太长就 realloc 换更大的块。问题出在换完之后：新地址只在函数正常走到结尾时才写回 engine context，中途因为读错误提前返回，context 里留的还是那个已经被释放的旧指针。等到 context 销毁，同一块内存被释放第二次。因为两次释放之间还有别的分配，分配器常见的 double free 检查可能不会响。</p>
+                        <p>GnuPG 自己的措辞是：这个洞可以被用来从应用里把数据带走，例如通过发送签名数据；远程代码执行"不能排除"。公告没说 RCE 已被验证，也没说观察到在野利用。</p>
+                        <p>时间线值得单独看一眼。漏洞由 Johan Carlsson 发现，GitLab 在 11 月 12 日转给 GnuPG，原本约定的披露日是 11 月 25 日。因为 Ruby2Shell 那条要提前发版，GPGME 这条跟着提前到了 11 月 20 日。<strong>一个洞的披露日期，被另一个洞的补丁节奏推着走了。</strong></p>
+                        <p><strong>受影响组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>组件</th><th>状态</th><th>处置</th></tr>
+                            <tr><td>Gpg4win</td><td class="risk-high">低于 5.1.2</td><td>升 5.1.2</td></tr>
+                            <tr><td>GnuPG Desktop 与 VS-Desktop</td><td class="risk-high">随包 GPGME 低于 2.3.1</td><td>升级对应版本</td></tr>
+                            <tr><td>多数邮件客户端</td><td class="risk-high">随包或系统库</td><td>跟发行版安全更新</td></tr>
+                            <tr><td>许多 XMPP 客户端</td><td class="risk-high">随包或系统库</td><td>跟随更新</td></tr>
+                            <tr><td>Samba</td><td class="risk-high">系统库</td><td>跟发行版</td></tr>
+                            <tr><td>Flatpak 应用</td><td class="risk-high">运行时自带</td><td>重装运行时</td></tr>
+                            <tr><td>静态链接的二进制</td><td class="risk-high">升系统库无效</td><td>用 2.3.1 重编译</td></tr>
+                            <tr><td>GPGMEPP 与 GPGMEQT</td><td class="risk-medium">无需更新</td><td>跟随主库即可</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>官方只说 critical，没给分数。</strong>公告里没有 CVSS。第三方站点上流传的 9.8 是自评，不是 GnuPG 给的口径。这类情况处置优先级不能靠分数推，得靠影响面有多宽。</li>
+                            <li><strong>影响面是一张隐形清单。</strong>这些软件没人主动装 GPGME，它是跟着别的软件进来的，所以资产台账上不会有它。而"清单之外的东西"恰恰是最难打补丁的。</li>
+                            <li><strong>静态链接的版本升级系统库也救不了。</strong>公告明确写：作为共享库、DLL 还是静态链接，全在影响范围内。静态链接必须用 2.3.1 重新编译，系统包管理器升到最新也白搭。</li>
+                            <li><strong>触发不需要用户点任何东西。</strong>导入或者仅仅列出一个密钥，是邮件客户端自动取密钥、聊天客户端校验联系人时的日常动作。攻击者只要把那个密钥递过来。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">一封带恶意 OpenPGP 密钥的签名数据</span>
+                        <span class="flow-step critical">密钥里的用户名超长</span>
+                        <span class="flow-step">read_status 或 read_colon_line</span>
+                        <span class="flow-step critical">1,024 字节不够 触发 realloc</span>
+                        <span class="flow-step critical">新指针只在正常返回时写回</span>
+                        <span class="flow-step critical">中途读错误 提前返回</span>
+                        <span class="flow-step critical">context 留着已释放的旧指针</span>
+                        <span class="flow-step critical">销毁时同一块内存再释放一次</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">8.6 · 没有补丁 · 维护方未回应协调</span>
+                    <h3 class="article-title">工控库里没人接这通电话</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-125132 · CISA ICSA-26-323-03 · libumqtt 1.1.1 及以前 · 2026-11-19 发布</span>
+                        <span class="cvss-score">整数下溢 · 关键制造 / 能源 / 信息技术 / 交通 / 水处理 · 无在野报告</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 19 日，CISA 发了 ICSA-26-323-03：libumqtt 1.1.1 及以前所有版本存在整数下溢（CVE-2026-125132），CVSS 3.1 记 8.6，远程攻击者可以让设备拒绝服务、内存损坏或信息泄露。</p>
+                        <p>libumqtt 是个轻量 MQTT 客户端库，嵌在低功耗设备、IoT 网关与 SCADA 系统里。CISA 列的受影响行业是关键制造、能源、信息技术、交通、水处理。</p>
+                        <p>真正扎眼的一句是：<strong>维护方没有回应 CISA 的协调请求，因此至今没有补丁。</strong>通告里也没有"更新到修复版本"这一行，只有网络隔离、关掉公网暴露、把 MQTT 端口挡在防火墙外这些防御性建议。目前没有在野利用报告。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>这不是"还没修"，是"没人修"。</strong>大部分漏洞通告的最后一步是升级版本，这一条没有。工控设备的固件周期以年计，一个上游库没补丁，意味着下游几百个型号都不会有。</li>
+                            <li><strong>MQTT 的默认部署方式就是把这东西暴露出来。</strong>1883 端口、无认证、订阅全通配符，在物联网里是常态。整数下溢这类洞在畸形报文就能触发，而 MQTT 的报文长度字段本来就是攻击面。</li>
+                            <li><strong>CISA 的 ICS 通告给的是防守动作，不是补丁。</strong>这类通告要当资产排查清单用：先确认自己哪些设备或网关链接了 libumqtt，再做网段隔离。指望厂商出固件，时间上不现实。</li>
+                            <li><strong>开源依赖的"电话没人接"是结构性问题。</strong>同一天 NVD 里还有充电桩、家用路由器这类没有修复版本的条目。上游库的维护者是一个人，下游用户是一个行业，中间没有合同关系。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">设备或网关静态链接 libumqtt</span>
+                        <span class="flow-step critical">MQTT 报文构造畸形长度字段</span>
+                        <span class="flow-step critical">整数下溢 变成巨大的正数</span>
+                        <span class="flow-step critical">内存分配与边界处理失控</span>
+                        <span class="flow-step">拒绝服务 内存损坏 信息泄露</span>
+                        <span class="flow-step critical">上游无补丁 下游全无固件</span>
+                        <span class="flow-step">只剩网络隔离与端口收敛</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-medium">蜜罐收到作战日志 · 十万级密钥目标 · 无 CVE</span>
+                    <h3 class="article-title">智能体把战果直接发给了蜜罐</h3>
+                    <div class="article-meta">
+                        <span>亚马逊 MadPot 诱捕传感器 · 捕获窗口 10-03 至 11-05 · ARTEX 框架的两条活动</span>
+                        <span class="cvss-score">密钥分级 L1 / L2 / L3 · 深度伪造过 KYC · 本文不转述归因结论</span>
+                    </div>
+                    <div class="article-body">
+                        <p>亚马逊威胁情报团队本周公开的一份复盘讲了一件此前没发生过的事：他们部署的 MadPot 诱捕传感器伪装成主流大模型的推理 API，结果收到的不只是扫描流量，而是攻击智能体自己完整的会话记录。</p>
+                        <p>原因是智能体的架构。ARTEX 这类框架会把整段对话历史随每次请求一起发出去——系统提示、工具调用记录、知识图谱状态、已确认的发现。当它把诱捕端点当成一个真的模型后端时，这些内容就一起送到了对端。捕获窗口是 10 月 3 日到 11 月 5 日。</p>
+                        <p>报告拆出两条活动。第一条是模型 API 密钥的自我循环：用偷来的密钥去调模型，用模型带着去偷更多密钥。目标清单覆盖 LLM 网关（One API、New API、Veloza、Sub2API、LiteLLM）与 AI 应用搭建平台（Dify、FastGPT、Langflow、RAGFlow、Open WebUI、LobeChat、Ollama），每个指纹对应一条已知攻击链：未初始化的实例可以被任何人接管、管理接口不设认证、默认管理员密钥、Langflow 的 CVE-2025-3248、RAGFlow 的 CVE-2026-28797、One API 系用 isCliRequest 头绕过认证、URL 抓取功能打云元数据。凭据还按可用度分级：L1 是线索，L2 是能调通，L3 是能量化影响；公开暴露超过 30 天的密钥直接判为低价值。</p>
+                        <p>第二条是两家加密货币交易所的 KYC 绕过，用智能体实时生成深度伪造视频去过活体自拍检测，再用伪造的证件照过文档核验，其中至少一家厂商的活体检测机制被反向分析过。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"对话历史随请求外发"是个新的泄露面。</strong>智能体为了保持上下文，会把整段作战记录塞进每一次请求。对防守方这是情报富矿，对攻击方这是自带日志外泄。你自己跑的内部智能体如果调第三方端点，同样的问题成立，只是收件方不同。</li>
+                            <li><strong>报告给了归因判断，本文不转述。</strong>技术事实是清楚的：扁平化的目标清单、固定的国家顺序、分级评分、代理出口。这些是工程特征，不是身份。</li>
+                            <li><strong>偷密钥的收益已经可以自我融资。</strong>用偷来的额度跑推理，用推理去找下一个密钥，这个循环不需要外部资金。前面提到的"黑十月"里九家 AI 开发平台接连出事，就是这条产业链的供给端。</li>
+                            <li><strong>防御的落点在默认值上。</strong>三十天的暴露窗口、未初始化的实例、默认管理密钥、开着的不认证管理接口。这四条没有一个需要零日。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">智能体把诱捕端点当成真实模型后端</span>
+                        <span class="flow-step critical">整段对话历史随请求外发</span>
+                        <span class="flow-step">系统提示 工具历史 知识图谱一起送出</span>
+                        <span class="flow-step critical">偷来的密钥调模型 模型再去找密钥</span>
+                        <span class="flow-step">未初始化实例 默认管理密钥 不认证接口</span>
+                        <span class="flow-step critical">凭据按 L1 L2 L3 分级</span>
+                        <span class="flow-step">深度伪造过活体自拍与证件核验</span>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Java4Shell 有了官方预警，两个 JVM 参数值得记</h4>
+                    <p>11 月 21 日，国家网络与信息安全信息通报中心就 <strong>CVE-2026-114938</strong> 发预警。核心事实本刊 11 月 18 日已写过（64 个 A 加一个等号触发约 62 字节越界写，走 AVX-512 VBMI 路径，Calif 用约一小时定位、两小时写出利用）。这里只补新增的运维细节：修复版本是 17.0.21.1、21.0.13.1、25.0.5.1、27.0.1.1，Oracle Java 8 performance pack 升到 8u513-perf；暂时升不了的在 x86 上加 -XX:-UseBASE64Intrinsics 或 -XX:UseAVX=2 两个启动参数，<strong>ARM64 原生 JVM 不认 -XX:UseAVX=2，传进去 JVM 直接起不来</strong>，只能在 x86 上用。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. 充电桩的固件升级接口，越界写且没有修复版本</h4>
+                    <p><strong>CVE-2026-131813</strong>，CVSS 7.5，United Chargers Grizzl-E Smart 40A。OCPP 的 UpdateFirmware 处理存在越界写，网络相邻的未认证攻击者可以在充电桩上执行代码。ZDI 把它标为零日，未提供修复版本，也没有在野利用记录。家用与商用充电桩的 OCPP 端口通常直接放在局域网里，没有分段。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. SurrealDB 9.8：内嵌 JS 引擎绕过能力检查</h4>
+                    <p><strong>CVE-2026-134292</strong>，1.0.0 至 4.0.0 之前。surrealdb.functions 桥在调用内部 fnc::synchronous() 与 fnc::asynchronous() 调度器时没有强制函数级 capability 检查，低权限会话可以直接调到本不该开放的函数。这是本期 NVD 窗口里除 D-Link DIR-600L（10.0，gena.cgi 的 service 参数栈溢出）之外最高的两条之一。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Frappe Framework 8.5：任何登录用户都能用你的域名发信</h4>
+                    <p><strong>GHSA-vwqr-4mjv-ffrm</strong>，CVSS 3.1 记 8.5。邮件相关端点缺少授权校验，任何已认证用户（包括只有 Website User 角色的）都能以别人的身份通过站点配置的邮箱发信，还可能读到本无权限的文件。修在 15.127.1 与 16.60.1，没有 workaround。ERPNext 系部署要按框架版本查，不是按应用版本查。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. AMD Zeppelin 9.4：改 SPI flash 就能绕过安全启动</h4>
+                    <p><strong>CVE-2026-74127</strong>，CVSS 9.4，Zen1 与 Zen+ 的 PSP Boot ROM 对密码学签名校验不当。能物理接触并改写 SPI flash 的攻击者可以绕过安全启动认证，执行未签名代码。前提是本地访问，所以远程攻击面为零；它的意义在供应链与二手设备场景——一台看起来正常的机器，固件层已经不是你以为了。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. KEV 停在 1,790 条，明天是四条整改期限</h4>
+                    <p>CISA 目录仍是 2026.11.20 版、<strong>1,790 条</strong>，11-21 与 11-22 都没有新增，其中 361 条标注与勒索软件相关。11 月 20 日那批四条——vCenter 的 CVE-2026-123890、Cisco Expressway 的 CVE-2026-76466、Apache Roller 的 CVE-2026-129448、SAP NetWeaver 的 CVE-2025-42884——整改期限是 11 月 23 日。顺带记一句：Chainflip 与 Cyber 这两条都不在任何漏洞库里有编号，因为它们不是 CVE。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 现实可利用度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日重点：严重性 × 现实可利用度
+    x-axis "需要前提或仅研究演示" --> "已在野或已公开 PoC"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Chainflip 有效签名": [0.96, 0.95]
+    "Cyber 桥无源消息": [0.92, 0.88]
+    "Java4Shell 官方预警": [0.88, 0.90]
+    "GPGME 静态链接": [0.46, 0.82]
+    "fastify 五连号": [0.58, 0.86]
+    "MadPot 日志外泄": [0.72, 0.70]
+    "libumqtt 无补丁": [0.34, 0.84]
+    "SurrealDB 9.8": [0.30, 0.86]
+    "AMD 安全启动绕过": [0.24, 0.74]
+    "Grizzl-E 充电桩": [0.40, 0.66]
+    "Frappe 冒充发信": [0.62, 0.60]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日失败点分布</div>
+                    <div class="mermaid">
+pie title 今日六条主线卡在哪一步
+    "签名有效所以合约照付": 24
+    "跨链消息没人对过源链": 20
+    "中间件和路由各读各的路径": 19
+    "重分配后指针没写回": 15
+    "维护方不回协调邮件": 12
+    "智能体把日志当成了模型": 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年11月11日至11月23日
+    11月11日 : 打给恶意验证者的资金经 Tornado 进入
+    11月18日 : Chainflip 按计划轮换聚合签名密钥
+    11月19日 : CISA 发布 libumqtt 工控通告
+    11月20日 : GPGME 2.3.1 提前一天抢发
+    11月20日 : 一个恶意验证者账号完成注册
+    11月20日 : KEV 一次收四条到 1790
+    11月21日 : 07时10分 Chainflip 金库被一笔交易取空
+    11月21日 : 08时53分 验证者换掉聚合密钥
+    11月21日 : 11时23分 新密钥下再没有签名被接受
+    11月21日 : 16时13分 Solana 铸出 521.3 万枚 CYBER
+    11月21日 : 16时15分 以太坊锁仓适配器释放同数量
+    11月21日 : 17时08分 Upbit 停掉 CYBER 充提
+    11月21日 : 18时25分 Cyber 首次公开回应
+    11月22日 : Bitquery 修订链上复盘
+    11月22日 : NVD 窗口只有 301 条新记录
+    11月23日 : Chainflip 悬赏截止与四条 KEV 到期
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Bitquery 链上复盘（299,677 个签名、39 位 nonce、38 笔进 Tornado 的分钟级记录）</span>
+                        <a href="https://www.cryptocompass.com/articles/chainflip-loses-4-86m-as-rogue-signature-exposes-vault-risk">cryptocompass.com · Chainflip 签名复盘</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Block 首发报道（4.86 百万美元口径、FLIP 跌 34%）</span>
+                        <a href="https://theblock.co/news/defi/2026-11-21-chainflips-flip-drops-34-after-attacker-drains-4-86-million-from-vault-with-suspected-key-compromise-444804">theblock.co</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Blockchain Breaches 事件总表（全口径 1,200 万美元、11-20 注册的验证者、悬赏条款）</span>
+                        <a href="https://www.blockchainbreaches.com/en/breaches/chainflip-november-2026">blockchainbreaches.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">逐分钟时间线与 08:53 UTC 换钥、密钥三天一轮的说明</span>
+                        <a href="https://crypto-jazz.com/defi/2026/11/21/chainflip-halts-swaps-4-86-million-ethereum-vault-drain">crypto-jazz.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CryptoJazz：Cyber 桥 16:13:24 铸币与 16:15:11 释放、区块 26,464,606</span>
+                        <a href="https://crypto-jazz.com/blockchain/2026/11/22/cyber-5-21-million-mint-upbit-bithumb-freeze">crypto-jazz.com · Cyber 桥</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Crypto Briefing：575 ETH 变现、Upbit 与 Bithumb 冻结、援引法条</span>
+                        <a href="https://cryptobriefing.com/cyber-bridge-exploit-upbit-bithumb-freeze/">cryptobriefing.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Crypto Watch Desk：地址清单、20:51 UTC 适配器余额、交易所公告时间</span>
+                        <a href="https://cryptowatchdesk.com/news/security-alert-cyber-bridge-5-21-million-cyber-minted-solana-released-ethereum-lockbox-upbit-bithumb-suspend">cryptowatchdesk.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GHSA-w877-hjcp-88rc：@fastify/express 公告，修在 4.0.10</span>
+                        <a href="https://github.com/fastify/fastify-express/security/advisories/GHSA-w877-hjcp-88rc">github.com/fastify</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GHSA-gcf6-j9m3-p97x：@fastify/middie 公告，修在 9.3.8</span>
+                        <a href="https://github.com/fastify/middie/security/advisories/GHSA-gcf6-j9m3-p97x">github.com/fastify</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-129504 记录（前缀拼接与缺前导斜杠，关联同批五个 CVE）</span>
+                        <a href="https://static.rdintel.com/cve/CVE-2026-129504">static.rdintel.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-133120 记录（CWE-174 重复解码与完整 CVSS 向量）</span>
+                        <a href="https://radar.offseq.com/threat/cve-2026-133120-cwe-174-double-decoding-of-the-same-data-in-fastifyexpress-73cd52237148cdec">radar.offseq.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-2026-133250 记录（middie 空参数、无前导斜杠、字面百分号）</span>
+                        <a href="https://hackerfeeds.com/cve/CVE-2026-133250">hackerfeeds.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GnuPG 官方公告（T8557，披露日因 Ruby2Shell 从 11-25 提前到 11-20）</span>
+                        <a href="https://lists.gnupg.org/pipermail/gnupg-announce/2026q4/000517.html">lists.gnupg.org</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">追踪单 T8557（realloc 后 stale pointer 与提前返回的完整解释）</span>
+                        <a href="https://dev.gnupg.org/T8557">dev.gnupg.org</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">技术拆解（src/engine-gpg.c 两个函数、缺陷代码可追到 1.18.0）</span>
+                        <a href="https://secnews.co.uk/2026/11/gpgme-double-free-cve-2026-129975-gpg4win-openpgp-key">secnews.co.uk</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">静态链接副本的排查方法（ldconfig 与 strings 找 gpgme_get_engine_info）</span>
+                        <a href="http://threatseye.io/blog/gpgme-double-free-bug-cve-2026-129975-patch-to-2-3-1-before-a-malicious-openpgp">threatseye.io</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA ICSA-26-323-03：libumqtt 8.6、受影响行业、无修复版本</span>
+                        <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-03">cisa.gov · ICSA-26-323-03</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">通告摘要与"维护方未回应协调请求"的原文表述</span>
+                        <a href="http://securitydaily.news/article/3738">securitydaily.news</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">libumqtt 上游仓库（截至发稿仍无安全公告）</span>
+                        <a href="https://github.com/zhaojh329/libumqtt">github.com/zhaojh329/libumqtt</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">同期 ICS 通告清单（Elecbrakes、OpenPLC、Siemens meta-iot2050）</span>
+                        <a href="http://www.ervik.as/ot-security">ervik.as · OT 与 ICS 通告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MadPot 诱捕传感器收到完整会话记录（10-03 至 11-05 窗口、ARTEX 两条活动）</span>
+                        <a href="https://www.thenextgentechinsider.com/pulse/amazon-decoy-sensors-intercept-complete-logs-from-agentic-ai-attack-frameworks">thenextgentechinsider.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">"黑十月"九家 AI 开发平台被入侵的损失口径与归因边界</span>
+                        <a href="https://morok.ink/en/privacy/black-october-ai-developer-platform-breaches">morok.ink</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">国家网络与信息安全信息通报中心 Java4Shell 预警（修复版本与两个 JVM 参数）</span>
+                        <a href="http://mp.weixin.qq.com/s?__biz=MzA3ODcyNzk3NA==&amp;mid=2650287172&amp;idx=1&amp;sn=9b5a6e69ca5eda45ec75d1e539e7cd79">公安部网安局 · 转通报中心预警</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Java4Shell 技术细节（50 字节结果数组、62 字节越界、JIT 预热与客户端利用）</span>
+                        <a href="https://dev.to/echakiri/java4shell-turns-an-openjdk-base64-decoder-into-a-remote-code-execution-path-1jgj">dev.to</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Grizzl-E 充电桩 CVE-2026-131813（OCPP UpdateFirmware 越界写、零日无补丁）</span>
+                        <a href="https://churchofmalware.org/news/2026-11-21-cisco-expressway-and-vcenter-zero-days">churchofmalware.org</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Frappe Framework GHSA-vwqr-4mjv-ffrm（8.5、无 workaround、影响 ERPNext 系）</span>
+                        <a href="https://www.spirityenterprise.com/cve/ghsa-vwqr-4mjv-ffrm-frappe-framework-email-endpoints-unauthorised-sender-spoofing">spirityenterprise.com</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA 已知被利用漏洞目录 JSON（2026.11.20 版，1,790 条，361 条勒索相关）</span>
+                        <a href="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json">cisa.gov · KEV JSON</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA 11-20 KEV 新增四条的通告与整改期限</span>
+                        <a href="https://www.cisa.gov/news-events/alerts/2026/11/20/cisa-adds-four-known-exploited-vulnerabilities-catalog">cisa.gov · 11-20 KEV 通告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0（本期窗口 301 条、9.0 以上 9 条、10.0 一条，本刊一手统计）</span>
+                        <a href="https://services.nvd.nist.gov/rest/json/cves/2.0">services.nvd.nist.gov</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注口径或直接指出差异。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年11月22日
+            </p>
+        </footer>
+
+        </div>
+
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
