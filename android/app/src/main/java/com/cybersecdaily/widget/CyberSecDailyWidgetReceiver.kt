@@ -18,131 +18,109 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 
-private const val BASE_URL = "https://unclecheng-li.github.io/cybersecurity-daily"
 const val ACTION_REFRESH = "com.cybersecdaily.widget.ACTION_REFRESH"
 
 class CyberSecDailyWidgetReceiver : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ACTION_REFRESH) {
-            showRefreshProgress(context)
             triggerRefresh(context)
             return
         }
         super.onReceive(context, intent)
     }
 
-    override fun onUpdate(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
-    ) {
-        cancelLegacyGlanceWork(context)
-        updateLoading(context, appWidgetManager, appWidgetIds)
-        triggerRefresh(context)
-        schedulePeriodicRefresh(context)
+    override fun onUpdate(ctx: Context, awm: AppWidgetManager, ids: IntArray) {
+        cancelLegacyWork(ctx)
+        renderWidgets(ctx, awm, ids)
+        triggerRefresh(ctx)
+        schedulePeriodicRefresh(ctx)
     }
 
-    override fun onEnabled(context: Context) {
-        cancelLegacyGlanceWork(context)
-        triggerRefresh(context)
-        schedulePeriodicRefresh(context)
+    override fun onEnabled(ctx: Context) {
+        cancelLegacyWork(ctx)
+        triggerRefresh(ctx)
+        schedulePeriodicRefresh(ctx)
     }
 
-    override fun onDisabled(context: Context) {
-        val wm = WorkManager.getInstance(context)
+    override fun onDisabled(ctx: Context) {
+        val wm = WorkManager.getInstance(ctx)
         wm.cancelUniqueWork(PERIODIC_WORK_NAME)
         wm.cancelUniqueWork(IMMEDIATE_WORK_NAME)
-        wm.cancelUniqueWork(LEGACY_REFRESH_WORK_NAME)
-        wm.cancelAllWorkByTag(LEGACY_GLANCE_SESSION_TAG)
+        cancelLegacyWork(ctx)
     }
 
     companion object {
         private const val PERIODIC_WORK_NAME = "cybersec_daily_periodic_refresh"
-        private const val IMMEDIATE_WORK_NAME = "cybersec_daily_immediate_refresh"
+        private const val IMMEDIATE_WORK_NAME = "cybersec_daily_widget_refresh"
+        private const val LEGACY_IMMEDIATE_WORK_NAME = "cybersec_daily_immediate_refresh"
         private const val LEGACY_REFRESH_WORK_NAME = "cybersec_daily_refresh"
         private const val LEGACY_GLANCE_SESSION_TAG = "androidx.glance.session.SessionWorker"
 
-        fun triggerRefresh(context: Context) {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
+        fun triggerRefresh(ctx: Context) {
             val request = OneTimeWorkRequestBuilder<WidgetUpdateWorker>()
-                .setConstraints(constraints)
                 .addTag("immediate")
                 .build()
-            WorkManager.getInstance(context).enqueueUniqueWork(
-                IMMEDIATE_WORK_NAME, ExistingWorkPolicy.REPLACE, request
+            WorkManager.getInstance(ctx).enqueueUniqueWork(
+                IMMEDIATE_WORK_NAME, ExistingWorkPolicy.KEEP, request
             )
         }
 
-        private fun showRefreshProgress(context: Context) {
-            val awm = AppWidgetManager.getInstance(context)
-            val ids = awm.getAppWidgetIds(ComponentName(context, CyberSecDailyWidgetReceiver::class.java))
+        fun updateWidgets(ctx: Context, report: DailyReport? = null, refreshFailed: Boolean = false) {
+            val awm = AppWidgetManager.getInstance(ctx)
+            val ids = awm.getAppWidgetIds(ComponentName(ctx, CyberSecDailyWidgetReceiver::class.java))
             if (ids.isEmpty()) return
-            val views = RemoteViews(context.packageName, R.layout.widget_layout)
-            views.setViewVisibility(R.id.widget_refresh_progress, android.view.View.VISIBLE)
-            views.setViewVisibility(R.id.widget_refresh, android.view.View.GONE)
-            for (id in ids) awm.partiallyUpdateAppWidget(id, views)
+            renderWidgets(ctx, awm, ids, report, refreshFailed)
         }
 
-        fun updateWidgets(context: Context, report: DailyReport) {
-            val awm = AppWidgetManager.getInstance(context)
-            val ids = awm.getAppWidgetIds(ComponentName(context, CyberSecDailyWidgetReceiver::class.java))
-            if (ids.isEmpty()) return
+        @Synchronized
+        private fun renderWidgets(
+            ctx: Context,
+            awm: AppWidgetManager,
+            ids: IntArray,
+            newReport: DailyReport? = null,
+            refreshFailed: Boolean = false
+        ) {
+            SettingsManager.init(ctx)
+            if (newReport != null) DataHolder.currentReport = newReport
+            val report = DataHolder.currentReport
+            val date = (report?.date ?: SettingsManager.lastKnownDate)
+                .takeIf(ReportFetcher::isReportDate).orEmpty()
+            val url = ReportFetcher.reportUrl(date)
 
-            // Store data for ListView adapter
-            SettingsManager.init(context)
-            val allArticles = report.articles.filter { it.title.isNotBlank() }
-            val showSev = SettingsManager.showSeverity.value
-            val filtered = if (showSev && report.error == null) {
-                allArticles.filter { SettingsManager.isSeverityVisible(it.severity) }
-            } else allArticles
-
-            val maxCount = SettingsManager.headlineCount.value
-            DataHolder.currentArticles = filtered.take(maxCount)
-            DataHolder.currentReport = report
-
-            val views = createViews(context, report)
             for (id in ids) {
-                // Set ListView adapter
-                val svcIntent = Intent(context, WidgetDataService::class.java).apply {
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
-                    data = Uri.parse(this.toUri(Intent.URI_INTENT_SCHEME))
-                }
-                views.setRemoteAdapter(R.id.widget_article_list, svcIntent)
-
+                val views = createViews(ctx, report, date, url, refreshFailed)
+                applyListAdapter(ctx, views, id, url)
                 awm.updateAppWidget(id, views)
                 awm.notifyAppWidgetViewDataChanged(id, R.id.widget_article_list)
             }
         }
 
-        private fun updateLoading(ctx: Context, awm: AppWidgetManager, ids: IntArray) {
-            DataHolder.currentArticles = listOf(ArticleItem("Fetching latest report..."))
-            DataHolder.currentReport = DailyReport(date = "Loading", keywords = "Fetching latest security news...")
-            val views = createViews(ctx, DataHolder.currentReport!!)
-            for (id in ids) {
-                val svcIntent = Intent(ctx, WidgetDataService::class.java).apply {
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
-                    data = Uri.parse(this.toUri(Intent.URI_INTENT_SCHEME))
-                }
-                views.setRemoteAdapter(R.id.widget_article_list, svcIntent)
-                awm.updateAppWidget(id, views)
+        private fun applyListAdapter(ctx: Context, views: RemoteViews, widgetId: Int, url: String) {
+            val svcIntent = Intent(ctx, WidgetDataService::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+                data = Uri.parse(this.toUri(Intent.URI_INTENT_SCHEME))
             }
+            views.setRemoteAdapter(R.id.widget_article_list, svcIntent)
+
+            val itemPI = PendingIntent.getActivity(ctx, widgetId * 1000 + 1,
+                Intent(Intent.ACTION_VIEW, Uri.parse(url)),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            views.setPendingIntentTemplate(R.id.widget_article_list, itemPI)
         }
 
-        private fun cancelLegacyGlanceWork(ctx: Context) {
+        private fun cancelLegacyWork(ctx: Context) {
             val wm = WorkManager.getInstance(ctx)
+            wm.cancelUniqueWork(LEGACY_IMMEDIATE_WORK_NAME)
             wm.cancelUniqueWork(LEGACY_REFRESH_WORK_NAME)
             wm.cancelAllWorkByTag(LEGACY_GLANCE_SESSION_TAG)
         }
 
         private fun schedulePeriodicRefresh(ctx: Context) {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-            val request = PeriodicWorkRequestBuilder<WidgetUpdateWorker>(15, TimeUnit.MINUTES, 5, TimeUnit.MINUTES)
-                .setConstraints(constraints)
+            val request = PeriodicWorkRequestBuilder<WidgetUpdateWorker>(
+                30, TimeUnit.MINUTES, 15, TimeUnit.MINUTES
+            )
+                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
                 .addTag("periodic")
                 .build()
             WorkManager.getInstance(ctx).enqueueUniquePeriodicWork(
@@ -150,74 +128,82 @@ class CyberSecDailyWidgetReceiver : AppWidgetProvider() {
             )
         }
 
-        private fun createViews(context: Context, report: DailyReport): RemoteViews {
-            SettingsManager.init(context)
+        private fun createViews(
+            ctx: Context,
+            report: DailyReport?,
+            date: String,
+            url: String,
+            refreshFailed: Boolean
+        ): RemoteViews {
             val showCharts = SettingsManager.showCharts.value
             val showQuadrant = SettingsManager.showQuadrantChart.value
             val showPie = SettingsManager.showPieChart.value
 
-            val views = RemoteViews(context.packageName, R.layout.widget_layout)
-            val hasError = report.error != null
-
-            // Progress off, refresh on
+            val views = RemoteViews(ctx.packageName, R.layout.widget_layout)
             views.setViewVisibility(R.id.widget_refresh_progress, android.view.View.GONE)
             views.setViewVisibility(R.id.widget_refresh, android.view.View.VISIBLE)
 
-            views.setTextViewText(R.id.widget_date, report.date.ifBlank { "Latest" })
-            views.setTextViewText(
-                R.id.widget_keywords,
-                if (hasError) "Update failed"
-                else "\u4eca\u65e5\u5173\u952e\u8bcd\uff1a" + report.keywords.ifBlank { "Daily security highlights" }
-            )
+            views.setTextViewText(R.id.widget_date, date.ifBlank { "Latest" })
+            val keywords = when {
+                report != null -> "\u4eca\u65e5\u5173\u952e\u8bcd\uff1a" +
+                    report.keywords.ifBlank { "Daily security highlights" }
+                refreshFailed -> "Update failed. Tap refresh to retry."
+                else -> "Tap refresh to load the latest report."
+            }
+            views.setTextViewText(R.id.widget_keywords, keywords)
 
-            // Refresh click
-            val ri = Intent(context, CyberSecDailyWidgetReceiver::class.java).apply { action = ACTION_REFRESH }
+            val ri = Intent(ctx, CyberSecDailyWidgetReceiver::class.java).apply { action = ACTION_REFRESH }
             views.setOnClickPendingIntent(R.id.widget_refresh, PendingIntent.getBroadcast(
-                context, 0, ri, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                ctx, 0, ri, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             ))
 
-            // Settings gear click
-            val settingsIntent = Intent(context, MainActivity::class.java).apply {
+            val settingsIntent = Intent(ctx, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
             views.setOnClickPendingIntent(R.id.widget_settings, PendingIntent.getActivity(
-                context, 1, settingsIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                ctx, 100, settingsIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             ))
 
-            // Charts
-            val cw = 500; val ch = 220
-            val showAny = showCharts && !hasError && report.charts.isNotEmpty()
-            val c0 = report.charts.getOrNull(0); val c1 = report.charts.getOrNull(1)
-            val s0 = showAny && showQuadrant && c0 != null
-            val s1 = showAny && showPie && c1 != null
-            if (s0 || s1) {
-                views.setViewVisibility(R.id.widget_charts_section, android.view.View.VISIBLE)
-                if (s0) {
-                    renderChart(c0!!, cw, ch)?.let { BitmapFactory.decodeByteArray(it, 0, it.size)?.let { b -> views.setImageViewBitmap(R.id.widget_chart_img_1, b) } }
-                    views.setViewVisibility(R.id.widget_chart_img_1, android.view.View.VISIBLE)
-                } else views.setViewVisibility(R.id.widget_chart_img_1, android.view.View.GONE)
-                if (s1) {
-                    renderChart(c1!!, cw, ch)?.let { BitmapFactory.decodeByteArray(it, 0, it.size)?.let { b -> views.setImageViewBitmap(R.id.widget_chart_img_2, b) } }
-                    views.setViewVisibility(R.id.widget_chart_img_2, android.view.View.VISIBLE)
-                } else views.setViewVisibility(R.id.widget_chart_img_2, android.view.View.GONE)
-            } else views.setViewVisibility(R.id.widget_charts_section, android.view.View.GONE)
+            if (report != null) {
+                try {
+                    val showAny = showCharts && report.charts.isNotEmpty()
+                    val c0 = report.charts.getOrNull(0); val c1 = report.charts.getOrNull(1)
+                    val s0 = showAny && showQuadrant && c0 != null
+                    val s1 = showAny && showPie && c1 != null
+                    if (s0 || s1) {
+                        views.setViewVisibility(R.id.widget_charts_section, android.view.View.VISIBLE)
+                        if (s0) {
+                            renderChart(c0!!, 400, 180)?.let {
+                                BitmapFactory.decodeByteArray(it, 0, it.size)?.let { views.setImageViewBitmap(R.id.widget_chart_img_1, it) }
+                            }
+                            views.setViewVisibility(R.id.widget_chart_img_1, android.view.View.VISIBLE)
+                        } else views.setViewVisibility(R.id.widget_chart_img_1, android.view.View.GONE)
+                        if (s1) {
+                            renderChart(c1!!, 400, 180)?.let {
+                                BitmapFactory.decodeByteArray(it, 0, it.size)?.let { views.setImageViewBitmap(R.id.widget_chart_img_2, it) }
+                            }
+                            views.setViewVisibility(R.id.widget_chart_img_2, android.view.View.VISIBLE)
+                        } else views.setViewVisibility(R.id.widget_chart_img_2, android.view.View.GONE)
+                    } else views.setViewVisibility(R.id.widget_charts_section, android.view.View.GONE)
+                } catch (_: Exception) {
+                    views.setViewVisibility(R.id.widget_charts_section, android.view.View.GONE)
+                }
+            } else {
+                views.setViewVisibility(R.id.widget_charts_section, android.view.View.GONE)
+            }
 
-            views.setTextViewText(R.id.widget_footer, if (hasError) "Retrying later" else "Tap to read full report")
-
-            // Root click
-            val url = if (!hasError && report.date.isNotBlank()) "$BASE_URL/daily/${report.date}.html" else BASE_URL
-            views.setOnClickPendingIntent(R.id.widget_root, PendingIntent.getActivity(
-                context, url.hashCode(), Intent(Intent.ACTION_VIEW, Uri.parse(url)),
+            val footer = when {
+                date.isBlank() -> "Tap to open report archive"
+                refreshFailed && report != null -> "Update failed · Tap to read saved report"
+                else -> "Tap to read full report"
+            }
+            views.setTextViewText(R.id.widget_footer, footer)
+            val openReport = PendingIntent.getActivity(
+                ctx, url.hashCode(), Intent(Intent.ACTION_VIEW, Uri.parse(url)),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            ))
-
-            // PendingIntent template for ListView item clicks
-            val itemClickIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            views.setPendingIntentTemplate(R.id.widget_article_list, PendingIntent.getActivity(
-                context, url.hashCode(), itemClickIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            ))
+            )
+            views.setOnClickPendingIntent(R.id.widget_root, openReport)
+            views.setOnClickPendingIntent(R.id.widget_footer, openReport)
 
             return views
         }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <!-- Title bar with refresh and settings -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +32,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="\u52a0\u8f7d\u4e2d"
+            android:text="Latest"
             android:textColor="@color/accent_gold"
             android:textSize="13sp" />
 
@@ -67,7 +66,6 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <!-- Keywords -->
     <TextView
         android:id="@+id/widget_keywords"
         android:layout_width="match_parent"
@@ -78,22 +76,10 @@
         android:maxLines="1"
         android:paddingHorizontal="8dp"
         android:paddingVertical="3dp"
-        android:text="\u6b63\u5728\u83b7\u53d6\u6700\u65b0\u5b89\u5168\u8981\u95fb..."
+        android:text="Tap refresh to load the latest report."
         android:textColor="@android:color/white"
         android:textSize="11sp" />
 
-    <!-- Scrollable article list -->
-    <ListView
-        android:id="@+id/widget_article_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="4dp"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent" />
-
-    <!-- Chart images section -->
     <LinearLayout
         android:id="@+id/widget_charts_section"
         android:layout_width="match_parent"
@@ -106,21 +92,30 @@
         <ImageView
             android:id="@+id/widget_chart_img_1"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="96dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
 
         <ImageView
             android:id="@+id/widget_chart_img_2"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="96dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
     </LinearLayout>
 
-    <!-- Footer -->
+    <ListView
+        android:id="@+id/widget_article_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent" />
+
     <TextView
         android:id="@+id/widget_footer"
         android:layout_width="match_parent"
