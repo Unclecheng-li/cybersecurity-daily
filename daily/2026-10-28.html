@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年10月28日（第200期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年10月28日 星期三</span>
+            <span class="edition-number">第 200 期 | 总第 200 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>七月的补丁十月才进KEV · 内核SMB两枚9.0仍然无补丁 · 拒付五千万美元后数据照发 · 备份服务器未认证就能绕过授权 · 固定挑战应答等于所有人都能进 · 客户资料并不在自己系统里
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">修好的没人装，没修的没法装，装不了的是别人的平台</h2>
+                <p class="sub-headline">补丁的三种状态今天同时到齐。Magento 的洞七月十四日就修了，十月二十七日才进 KEV——中间隔着一百零五天和一次 953 家店铺的感染潮；Linux 内核那两枚 9.0 至今没有编号也没有补丁，而同批那枚本地提权已经有了公开的 root 利用清单，覆盖六个发行版家族；Veeam 一次发了五个洞，最高那枚是"未认证就能绕过授权"，此刻还没人利用；三菱电机三条老产品线直接宣布不修，建议换掉；日本 GMO 拒付五千万美元赎金，客户的交易凭据照样被挂到网上；一所州立医院的创伤中心因为勒索事件把救护车改道两小时；法国 ENGIE 内网完好无损，客户资料是从合作方的营销工具里被拿走的。七件事里只有一件是"补丁没打"，其余六件分别卡在编号、分发、产品寿命、托管边界、应急响应和资产台账上。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Adobe Commerce CVE-2026-48356 进 KEV：七月十四日修的洞，十月二十七日才被承认在野</h3>
+                    <div class="article-meta">
+                        <span>CISA KEV · 10-27 18:57 UTC 收录 · 联邦限期 11-10</span>
+                        <span class="cvss-score">CVSS 9.3 · PR:N · 游客接口 · 补丁滞后 105 天</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这枚洞的补丁叫 <code>APSB26-73</code>，发布于 <strong>7 月 14 日</strong>。KEV 收录是 <strong>10 月 27 日</strong>。中间 <strong>105 天</strong>。</p>
+                        <p><strong>它长什么样。</strong>Adobe Commerce 与 Magento Open Source 的游客购物车 REST 接口 <code>/rest/default/V1/guest-carts/{cartId}/items</code>，自定义选项里那个 <code>file</code> 类型字段接受上传。校验只用 <code>getimagesizefromstring</code> 看文件头——<strong>一个 <code>GIF89a</code> 开头的多语言文件既满足"是图片"，又保留 <code>.php</code> 扩展名</strong>。落盘位置 <code>pub/media/custom_options/quote/</code>，Web 可访问，PHP 直接执行。无需登录，向量 <code>AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N</code>，NVD 记 <strong>9.3</strong>（Adobe 公告标 critical，另一处口径记 9.6，两处不一致，以 NVD 为准）。</p>
+                        <table class="affected-table">
+                            <tr><th>分支</th><th>受影响上限</th><th>修复</th></tr>
+                            <tr><td>2.4.9</td><td class="risk-high">2.4.9 本体</td><td>APSB26-73 对应补丁级别</td></tr>
+                            <tr><td>2.4.8</td><td class="risk-high">2.4.8-p5 及更早</td><td>2.4.8-2026-jul 及更高</td></tr>
+                            <tr><td>2.4.7</td><td class="risk-high">2.4.7-p10 及更早</td><td>2.4.7-2026-jul 及更高</td></tr>
+                            <tr><td>2.4.6 / 2.4.5 / 2.4.4</td><td class="risk-high">p15 / p17 / p18 及更早</td><td>各分支 2026-jul 版本</td></tr>
+                            <tr><td>Commerce B2B</td><td class="risk-high">1.3.3 – 1.5.3</td><td>1.x-2026-jul</td></tr>
+                        </table>
+                        <p><strong>为什么"三个月前修了"和"今天才进 KEV"能同时成立。</strong>三件事叠在一起：一，<strong>这枚洞三月就被大规模利用了</strong>——Sansec 的记录是，三月某一小时内，操作者通过 PolyShell 上传的 webshell 在 <strong>471 家店铺</strong>里一次性种下加载器，接近整场战役总量的一半，<strong>补丁发布前四个月利用就已经在跑</strong>。二，KEV 是"确认在野"的滞后指标，不是"风险开始"的起点；Adobe 七月公告写的是 priority 2、"未发现在野利用"，当时读到这句话就把工单关掉的店铺，那个判断在今天正式失效。三，<strong>补丁修不了已经在里面的人</strong>。</p>
+                        <p><strong>已经在里面的人有多难清。</strong>Sansec 在 169 台缺核心补丁的 Magento 2 安装里，发现 <strong>102 台（60%）</strong>同时有通过 PolyShell 或 SessionReaper（<code>CVE-2025-54236</code>）上传的文件；作为对照，另一批 3,024 台被不同 skimmer 感染的店铺里这个比例是 <strong>32%</strong>。更直接的例子：一台<strong>跑着 2.4.7-p10、核心补丁一个不缺</strong>的店铺，10 月 23 日 16:46 UTC 拿到新版加载器——<strong>就在一小时前它刚通过一次干净扫描</strong>。eComscan 早在 9 月 16 日就在这台机器上发现了可疑管理员账号，9 月 24 日发现了 GSocket 后门。</p>
+                        <p><strong>加载器为什么扫不到。</strong>十月的版本把指纹采集做进了加载器：检查自动化痕迹，收集硬件信息、屏幕尺寸、时区、语言，再由服务端决定返回什么。urlscan.io 用自动化浏览器打开被感染的店铺，<strong>页面里没有任何注入内容</strong>。它还会把代码存进浏览器 localStorage，域名挂了或被墙了，下次访问照样重放。</p>
+                        <p><strong>自查要查数据库和文件系统，不是页面。</strong><code>cms_block</code> 与 <code>cms_page</code> 两张表搜 <code>fpCode</code>、<code>se_referrer</code>、<code>localStorage.getItem</code>；文件系统查 <code>pub/media/custom_options/</code> 与 <code>pub/media/customer_address/</code> 下除 <code>.htaccess</code> 以外的文件，以及全站搜 <code>accesson.php</code>。清完脚本还要改<strong>数据库、管理员、API 集成</strong>三处口令——删脚本不会删掉攻击者对数据库的写权限。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>105 天不是异常值</strong>。"厂商修了"和"我修了"之间隔着一个组织自己的补丁日历；"我修了"和"攻击者停了"之间还隔着一层后门清理。三段都要走完，KEV 才算处理完。</p>
+                        <p>第二，<strong>电商没有"缩到内网"这条退路</strong>。店铺首页必须对全世界开放，游客购物车接口不能只对内网开。这类漏洞只能升级，或在上游把路径拦掉。</p>
+                        <p>第三，<strong>扫描器会给你假的安全感</strong>。这次的加载器专门做了反扫描，而"扫一遍干净"是绝大多数店铺唯一的日常检测手段。</p>
+                        <p>第四，<strong>公开工具已经在了</strong>。10 月 27 日以 Magento 与 PolyShell 为关键词在 GitHub 搜索返回 14 个仓库，其中至少三个自称提供利用代码，最早的一个建于 4 月 8 日，README 直接写着"通过 REST API 购物车未认证上传"。</p>
+                        <div class="attack-flow">
+                            <div class="flow-step">游客购物车接口<br/>接受 file 类型上传</div>
+                            <div class="flow-step">getimagesizefromstring<br/>只看文件头</div>
+                            <div class="flow-step critical">GIF89a 多语言文件<br/>保留 .php 扩展名</div>
+                            <div class="flow-step critical">落盘 media 目录<br/>Web 可访问直接执行</div>
+                            <div class="flow-step critical">CMS 块注入加载器<br/>反扫描 加 localStorage 持久化</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">新团伙 Byod 认领 UNM Health：声称 36,000 台，官方只说"终端设备"</h3>
+                    <div class="article-meta">
+                        <span>BleepingComputer · 10-26 11:00 发现 · 14:30 起分阶段恢复</span>
+                        <span class="cvss-score">36,000 台(自述) · 救护车改道 · 30 多家诊所停诊</span>
+                    </div>
+                    <div class="article-body">
+                        <p>新墨西哥大学健康科学中心（UNM Health）是全州专科医疗的主要提供方，年就诊量 <strong>100 万次以上</strong>，旗舰 UNM Hospital 拥有新墨西哥州<strong>唯一的一级创伤中心</strong>。10 月 26 日约 <strong>11:00</strong> 发现异常，随即启动遏制、通知州与联邦执法、引入外部伙伴。</p>
+                        <table class="affected-table">
+                            <tr><th>时间（10-26）</th><th>事件</th></tr>
+                            <tr><td>约 11:00</td><td>发现并开始遏制，通知执法</td></tr>
+                            <tr><td>12:30 – 14:30</td><td class="risk-high">限制新收病人，<strong>救护车改道</strong>往阿尔伯克基与圣菲的其他医院</td></tr>
+                            <tr><td>14:30 起</td><td>系统分阶段恢复</td></tr>
+                            <tr><td>当日</td><td class="risk-high">30 多家诊所的门诊手术与预约停摆；四所健康科学学院课程取消两天，非必要员工回家</td></tr>
+                            <tr><td>10-27</td><td>两家医院正常开放，诊所恢复预约；UNM 称<strong>关键电子系统全部回线</strong></td></tr>
+                        </table>
+                        <p><strong>官方口径很克制。</strong>UNM 只说"网络安全事件"，<strong>没有使用勒索一词</strong>，也没说原因；评估结论是<strong>影响了部分终端设备，未穿透核心系统与服务器</strong>，能在约一天内恢复是因为 IT 团队与外部伙伴一起把网络重新锁了一遍。</p>
+                        <p><strong>攻击者口径完全是另一个量级。</strong>上月才出现的团伙 <strong>Byod</strong> 在泄漏站声称拿下 <strong>36,000 台</strong>、两个 Active Directory 林、组策略基础设施、<strong>整个 Microsoft Entra 租户</strong>、两个 Oracle 数据库，以及含 SSN 的学生与员工数据、HR／薪酬、Banner 学籍、内部邮件、研究数据、Cerner EHR 名册。它还向医院员工的电脑推送了一段语音，用合成声音宣称"拿到了你的数据"。</p>
+                        <p><strong>然后是那句最值得记下来的话。</strong>Byod 宣布给医疗机构<strong>免费的解密密钥</strong>、每名受影响患者最高补偿 <strong>2,500 美元</strong>，同时<strong>保留全部窃得数据</strong>，原话是"我们有道德，也有心，我们不是坏人，但我们仍会继续让公司为其糟糕的安全负责"。它在 FAQ 里把自己的行为称作"渗透测试"。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"攻击者说的数字"和"受害者能确认的数字"这次差了三个数量级</strong>。36,000 台与"部分终端设备"之间，差的不是统计口径，而是<strong>调查还没做完</strong>。这类事件在头两天唯一可信的结论是"还在查"。</p>
+                        <p>第二，<strong>医疗机构的停机代价不在系统里，在救护车路线里</strong>。两小时的改道会外溢到邻近医院的急诊排队，这类连锁反应在任何 SLA 里都不体现。</p>
+                        <p>第三，<strong>"有道德的勒索"是话术工程</strong>。免费解密 + 保留数据，等于把"加密"这层压力去掉，只留"公开"这层压力——<strong>对医院来说，真正付钱的动机从来不是解锁，是不上新闻</strong>。这套话术正是冲着这一点设计的。</p>
+                        <p>第四，<strong>UNM 不是第一次</strong>。2021 年那次，未授权方 5 月 2 日进入网络，直到 6 月 4 日才发现，影响 <strong>637,252 名患者</strong>。同一个机构、同一类边界问题，隔了五年。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GMO 拒付八十亿日元之后：两万六千台交易桌面，客户数据照发</h3>
+                    <div class="article-meta">
+                        <span>GMO インターネットグループ · 10-27 12:30 JST 确认数据公开</span>
+                        <span class="cvss-score">26,739 台 · 80 亿日元(约 5,000 万美元) · MT4/MT5 凭据</span>
+                    </div>
+                    <div class="article-body">
+                        <p>（前情：本刊 10-27 期速览提过这起事件"拒付 + 请求政府动用主动网络防御权限"。今天补上完整事实与结局。）</p>
+                        <p><code>お名前.com デスクトップクラウド</code> 是一台台<strong>租给散户跑 MT4/MT5 自动交易</strong>的云端 Windows 桌面。客户把交易账户密码、券商登录信息、自动化脚本全放在这台机器上——<strong>它被攻破，等于把一堆人的券商账户交出去</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>时间（JST）</th><th>事件</th></tr>
+                            <tr><td>10-19</td><td>客户反映异常，开始调查</td></tr>
+                            <tr><td>10-20</td><td>确认部分客户服务器环境被安装恶意程序；<strong>可能受影响 26,739 台</strong></td></tr>
+                            <tr><td>10-21 约 04:00</td><td class="risk-high">所有方案服务器陆续停机，新申请与控制面板访问暂停</td></tr>
+                            <tr><td>10-21 前后</td><td class="risk-high">收到约 <strong>80 亿日元（约 5,000 万美元）</strong>赎金要求，要求 BTC 或 ETH，期限 10-27 正午</td></tr>
+                            <tr><td>10-22</td><td>向警方报案</td></tr>
+                            <tr><td>10-24</td><td>第 4 次通报：确认客户信息被带出外部；<strong>70 家以上证券／FX 公司</strong>客户反映出现非本人交易</td></tr>
+                            <tr><td>10-26</td><td>预警：攻击者计划公开信息并触发预置勒索软件</td></tr>
+                            <tr><td class="risk-high">10-27 12:30</td><td class="risk-high"><strong>确认公司与客户数据已被公开上网</strong>；要求客户断网、关机、拔掉所有线缆</td></tr>
+                            <tr><td>10-27 下午</td><td>说明预置的勒索软件<strong>始终没有被激活</strong>；威胁对传播泄露数据者采取法律行动</td></tr>
+                        </table>
+                        <p><strong>处置与代价。</strong>每名受影响客户补偿 <strong>5,000 日元（约 30 美元）</strong>，与 Trend Micro 合作扫描客户系统、为受损客户提供同等配置的替代机。<strong>支付信息未泄露，但 MT4/MT5 凭据与交易账户信息可能已泄露</strong>，要求客户改密并终止活动会话。单笔交易损失有报道称在 <strong>55 万到 600 万日元</strong>之间（用户自述与单一来源，未经官方确认）。勒索要求中途还出现过一次"降到约 100 万美元"的说法，同样只有单一日本来源。<strong>入侵路径与恶意软件类型，GMO 至今未披露。</strong></p>
+                        <p><strong>只有单一来源、置信度低的部分</strong>（来自一位分析者的记录，不是 GMO 官方）：跨客户 VPS 环境的<strong>共享管理凭据与 Active Directory 配置错误</strong>；分发的 <code>.rdp</code> 配置文件里<strong>默认开启的驱动器重定向</strong>被滥用，从客户的云端机器一路摸到客户本地的 PC，窃取浏览器缓存口令与联系人并植入后门。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"云端那台机器"是信任的最后一环</strong>。券商侧看到的是来自客户常用 IP 的正常登录，二次验证也在同一台机器上。<strong>托管方被攻破，等于所有租户的 MFA 一起失效</strong>。这类共享宿主的业务，隔离边界不能靠"每台 VM 一个 IP"来做。</p>
+                        <p>第二，<strong>拒付的代价由客户承担</strong>。拒付在原则上是对的，但数据已经在别人手里，公开只是时间问题。赎金谈判里没有"零成本"选项，只有"谁付"的区别。</p>
+                        <p>第三，<strong>威胁声明不必为真，也必须按真处理</strong>。"要不要让两万六千台机器同时断网关机"这个决定，是在<strong>无法验证</strong>的前提下做出的。预案里没有这一条，现场就只能靠公告催。</p>
+                        <p>第四，<code>.rdp</code> 的驱动器重定向是个老配置项，配在新业务上。它在远程桌面场景里默认开启、很多人不知道它把本地磁盘映射进了会话。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">Veeam 一次五个洞：最高那枚是"未认证就能绕过授权"</h3>
+                    <div class="article-meta">
+                        <span>Veeam KB4948 / KB4951 · 10-27 发布 · HackerOne 报送</span>
+                        <span class="cvss-score">9.1 未认证 · 8.5 全局关 MFA · 仅 13.x</span>
+                    </div>
+                    <div class="article-body">
+                        <p>备份服务器是勒索软件的第一优先目标，所以这类公告的处置优先级不看"有没有在野"，看"它守的是什么"。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>评分</th><th>问题</th><th>修复</th></tr>
+                            <tr><td class="risk-high">CVE-2026-108142</td><td class="risk-high">9.1</td><td>CDP Coordinator Service <strong>未认证绕过授权检查</strong>，Windows 与 Veeam Software Appliance 部署均受影响</td><td>VBR 13.1.2 / 13.0.3</td></tr>
+                            <tr><td>CVE-2026-107671</td><td>8.5</td><td>Veeam ONE：持有效管理员凭据者可在<strong>完成 MFA 校验之前全局关闭 MFA</strong></td><td>Veeam ONE 13.1 P1</td></tr>
+                            <tr><td>CVE-2026-105477</td><td>7.3</td><td>Veeam Agent for Linux 被 VBR 管理时的本地提权</td><td>Agent 13.1.2</td></tr>
+                            <tr><td>CVE-2026-108140 / 108141</td><td>5.9</td><td>控制被备份 NAS 共享的 Restore Operator 可通过相对路径穿越<strong>向备份服务器写任意文件</strong></td><td>13.1.2 / 13.0.3</td></tr>
+                        </table>
+                        <p><strong>只影响 13.x，12.x 与 6.x 分支不受影响</strong>——这点很重要，因为大量环境的迁移还没做完，这次不用为了五个洞紧急跨大版本。受影响上限：VBR 13.1.1.18 及更早的 13.1 构建、13.0.2.29 及更早的 13.0 构建；Agent for Linux 13.1.1.4 及更早；Veeam ONE 13.1.0.7233 及更早。五个洞全部通过 <strong>HackerOne</strong> 报送，目前<strong>无公开 PoC，无在野确认</strong>。Veeam 自称覆盖 <strong>55 万家以上</strong>组织。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>9.1 那枚是"未认证绕过授权"</strong>。不是"低权限用户能做什么"，而是<strong>连登录都不需要</strong>就能进 CDP 协调服务。这种描述在备份产品上出现，等于把"最后一层恢复能力"的门直接打开。</p>
+                        <p>第二，<strong>8.5 那枚把 MFA 做成了单点</strong>。能关掉全局 MFA 的功能本来是给管理员用的，问题在于<strong>它在校验完成之前就生效</strong>——攻击者只要有一个管理员凭据，就能把整个租户的 MFA 一次性关掉。</p>
+                        <p>第三，<strong>5.9 的两枚不该被忽略</strong>。Restore Operator 是个"只管恢复"的低权角色，但它能往备份服务器的文件系统写文件。<strong>备份服务器的文件系统写权限，等价于下一次恢复时投毒的能力。</strong></p>
+                        <p>第四，<strong>"暂无在野"是最适合打补丁的时刻</strong>。备份产品一旦被利用，处置成本是重装加重建信任链，不是打一个补丁。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">三菱电机四洞：固定挑战应答，等于所有人的钥匙是同一把</h3>
+                    <div class="article-meta">
+                        <span>ICS 公告 · 10-27 · 覆盖十款产品线</span>
+                        <span class="cvss-score">综合 9.1 · 三条产品线无修复计划</span>
+                    </div>
+                    <div class="article-body">
+                        <p>四枚缺陷里最要命的那枚不是内存问题，是<strong>逻辑上根本没有"每个用户不同"这个概念</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>问题</th></tr>
+                            <tr><td class="risk-high">CVE-2026-16436</td><td class="risk-high"><strong>口令找回用了固定的挑战应答，所有用户共用同一个答案</strong>——远程攻击者无需有效凭据即可解锁系统</td></tr>
+                            <tr><td>CVE-2023-4863</td><td>导入构造文件触发 libwebp 堆越界写（需已认证本地用户），GENESIS64 / ICONICS Suite 受影响</td></tr>
+                            <tr><td>CVE-2026-16437</td><td>已认证的本地管理员可通过篡改保存挑战应答的管理文件来解锁系统</td></tr>
+                            <tr><td>CVE-2026-16438</td><td>权限分配错误，导致本不该有的任意操作</td></tr>
+                        </table>
+                        <p><strong>受影响与修复：</strong>GENESIS64 / ICONICS Suite 10.97 – 10.97.2 → <strong>10.97.3 或更高</strong>；GENESIS ≤ 11.03 → <strong>11.04 或更高</strong>；Hyper Historian / AnalytiX / MobileHMI ≤ 10.97.3 随 10.97.3 线；IoTWorX ≤ 10.97.3 → <strong>10.98 或更高</strong>（Docker Hub 拉取）。<strong>MC Works64 / GENESIS32 / BizViz 全版本，无修复计划，厂商建议替换。</strong></p>
+                        <p><strong>临时缓解只有一条，但要求很具体：</strong>删除并重建 <code>ClientChallengeTable.dat</code>（或 <code>SecurityChallenges.dat</code>），并给新文件设置受限 ACL。这不是"打个配置就行"——<strong>这个文件本身就是那枚万能钥匙的存放处</strong>，重建之后旧的挑战应答才失效。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这是把"找回密码"做成了后门</strong>。固定挑战应答的设计目的通常是"现场工程师忘了密码也能进"，代价是<strong>任何知道这个固定值的人都能进</strong>。SCADA/HMI 的物理隔离假设正在失效，这条前提就不成立了。</p>
+                        <p>第二，<strong>"不修了，换掉"是这次真正的结论</strong>。三条线直接宣布没有修复计划。对还在跑这三条线的工厂，今天要做的不是打补丁，是排迁移预算——而这类系统的迁移周期以年计。</p>
+                        <p>第三，<strong>和 CVE-2023-4863 打包发布，说明依赖树还没换</strong>。libwebp 那枚 2023 年的洞出现在 2026 年的公告里，意味着产品仍链着老版本解码库。这类"顺带修"的条目，通常是产品线维护投入的直接读数。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-medium">中</span>
+                    <h3 class="article-title">ENGIE：内网完好，客户资料是从合作方的营销工具里被拿走的</h3>
+                    <div class="article-meta">
+                        <span>ENGIE · 10-27 公开 · 30 国运营 · 去年营收 719 亿欧元</span>
+                        <span class="cvss-score">仅法国客户 · 含 PDL / PCE · 不含银行数据</span>
+                    </div>
+                    <div class="article-body">
+                        <p>ENGIE 在 30 个国家运营、9 万余人。10 月 27 日它确认：攻击者攻破了<strong>业务合作方使用的一个营销／获客平台</strong>，客户数据由此被拿走。<strong>"我们的内部 IT 系统没有被攻破"这句话是真的</strong>，公司也已切断攻击者对该平台的访问。</p>
+                        <p><strong>被拿走的字段，组合起来就是一套定向诈骗材料：</strong>姓名、邮寄地址、电子邮件、电话、客户编号、合同编号，以及能源行业特有的<strong>交付点编号（PDL）或计量估算点编号（PCE）</strong>。范围仅限<strong>法国客户</strong>；<strong>不含银行数据</strong>；已通知法国 CNIL 并逐户告知，提醒防范欺诈与钓鱼。ENGIE 未做归因，到发稿时没有勒索或窃密团伙认领。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"内部系统没事"和"客户数据被拿走"可以同时为真</strong>。这句话回答的是"我的边界牢不牢"，而客户资料并不只存在自己的系统里——它也在合作方用于获客和营销的工具里，<strong>而那一层通常不在安全团队维护的资产台账上</strong>。营销工具往往由业务部门直接采购，和核心系统不在同一份清单里。</p>
+                        <p>第二，<strong>PDL / PCE 把一份名单变成了"能对应到具体用能位置"的名单</strong>。这大幅提高后续电话与邮件诈骗的可信度——对方能说出你家表计编号。</p>
+                        <p>第三，<strong>这是一年多里的第二次，走的是同一条路</strong>。一年前，Scattered LAPSUS$ Hunters 曾泄露一批据称来自 ENGIE 北美零售子公司 Engie Records 一个 Salesforce 实例的记录。同一个失效点重复出现，说明问题在"外部平台"这一层的持续清点，而不是边界强度。</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-section">
+                <div class="quick-item">
+                    <h4>7. KSMBD 两枚 9.0 的增量：公开 PoC 已在六个发行版家族拿到 root（前情见 10-23 期）</h4>
+                    <p>10-23 期报过的部分是：六份报告、全部抄送公开列表、无一附补丁、两枚 KSMBD 各 9.0、没有 CVE 编号、主线与 linux-next 均无已命名修复、Greg Kroah-Hartman 逐条回复指出未附补丁。<strong>今天的新增事实有三条</strong>。一，同批里那枚本地提权 <code>ZDI-CAN-33367</code>（7.8）<strong>已有公开 PoC</strong>，TuxCare 用它拿到 root 的清单是 <strong>AlmaLinux 8 到 10、CloudLinux 9 与 10、Debian 12 与 13、Ubuntu 24.04 与 26.04</strong>——这不是理论风险，是可复现的清单。二，<strong>这条路径不在 Dirty Frag 页缓存缺陷的修复覆盖范围内</strong>，回移植过 Dirty Frag 补丁的发行版不会自动免疫；Sysdig 提的缓解是关闭非特权 user namespace，但 rootless 容器建在这上面，且 TuxCare 未验证有效。三，修复状态更具体了：<code>ksmbd</code> 竞态修复<strong>已在维护者 Namjae Jeon 的树里</strong>，SMB Direct 下溢预计随<strong>面向 7.5 的重构</strong>覆盖；截至 10-23 AlmaLinux 的修复内核只在 testing 通道，<strong>按修复版本号判断的扫描器会把生产机读成"未受影响"</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Apple 把 CVE-2026-86950 回移植到 iPhone XS / XR 一代</h4>
+                    <p>10 月 26 日发布的 <strong>iOS / iPadOS 18.7.11</strong> 把 CoreGraphics 越界写（<code>CVE-2026-86950</code>，CWE-787，Meta Product Security 报送）的修复带到 <strong>iPhone XS / XS Max / XR、iPad 第 7 代、iPad Air 第 4 代及以后、iPad 第 9 代及以后、iPad mini 第 6 代及以后</strong>。这枚洞九月已在 26.7.1 / macOS Tahoe 26.7.1 / Sequoia 15.8.1 修过，KEV 9 月 29 日收录、联邦限期 10 月 2 日（前情见本刊 9 月底至 10 月初各期）。同期 <strong>27.2 一次修了 286 个问题</strong>（iOS/iPadOS 163、macOS 263，约 140 个重叠），其中 <code>CVE-2026-86990</code> 是恶意 App 未经许可调用相机，<code>CVE-2026-65339</code> 是逻辑问题导致敏感信息泄露。<strong>关键点是那条时间差</strong>：新系统先拿到补丁，旧机型等了约一个月——在攻击者眼里，"官方仍支持"和"已打补丁"是两件事。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Whitearmor 挂上 Echo Global Logistics，开价 1,000 万美元</h4>
+                    <p>10 月 28 日上架，索要 <strong>1,000 万美元等值 BTC</strong>。自称持有：<strong>206 万条理赔记录、153,727 条货运单、261,440 条报价（7.05 亿美元采购量）、136,273 条投标、59,607 条轨迹记录、3,890 条含邮箱的员工身份映射、2,418 家客户、9,122 家承运商</strong>，以及仓库地理数据。这些数字都是<strong>攻击者自述</strong>，未经独立核实。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Warp：第三方供应商被入侵，泄露的是 agent 的决策日志</h4>
+                    <p>agentic 开发环境 Warp 披露，其基础设施中一家第三方供应商被入侵，<strong>泄露了用户的 agent 决策日志与遥测数据</strong>。对用 agent 写代码的团队，这比"代码泄露"更难评估——<strong>决策日志里通常包含被读取的仓库路径、被调用的工具、被拒绝的操作，以及模型为完成任务尝试过的全部中间步骤</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. PHP2Shell：欧盟四方联合声明，明天是联邦死线</h4>
+                    <p>ENISA 联合欧盟委员会、CERT-EU、欧洲刑警组织发布声明，要求立即排查受影响系统并部署更新；加拿大网络安全中心、荷兰国家网络安全中心同步预警。CISA 的 KEV 死线是 <strong>10 月 29 日</strong>（前情见本刊 10-21 至 10-27 各期）。CYFIRMA 记录了 <strong>216 台</strong>被筛选的目标主机，集中在政府、金融、制造、物流，慢速低频、一遇阻断即轮换。<strong>OpenAI 与 Wiz 各自独立发现</strong>了相关缺陷——这枚洞从发现到补丁再到在野全程有 AI 参与，这一点比漏洞本身更值得记一笔。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. DreamHost 强制重置部分邮箱与 SFTP 口令</h4>
+                    <p>主机商 DreamHost 在安全事件后<strong>强制重置了部分邮箱与 FTP／SFTP 账号的口令</strong>，受影响范围包括 File Manager 与 webmail。浏览器版 File Manager 已于 10 月 26 日恢复，但受影响用户需由账号所有者重新下发凭据才能登录。<strong>事件性质与受影响账号数量均未披露</strong>——对托管商而言，"不说数量"本身就是一种表态。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>13. CISA 发布 CISA 2030 战略</h4>
+                    <p>10 月 26 日发布《CISA 2030: Defend, Harden, Prevail》，三大支柱，承诺 <strong>180 天内</strong>拿出实施计划。对防守方的实际影响要等实施计划落地，但它确定了未来几年美国关键基础设施侧的资源投向。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或未发生" --> "已在野或已发生"
+    y-axis "低影响" --> "严重影响"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Magento 48356 进KEV": [0.95, 0.88]
+    "KSMBD 双9.0无补丁": [0.35, 0.92]
+    "ZDI-33367 公开root": [0.85, 0.72]
+    "GMO 数据已公开": [0.92, 0.80]
+    "Veeam 五洞未利用": [0.12, 0.78]
+    "三菱 16436 固定应答": [0.30, 0.85]
+    "ENGIE 合作方平台": [0.78, 0.45]
+    "Apple 86950 回移植": [0.70, 0.55]
+    "UNM Health Byod": [0.80, 0.68]
+    "Whitearmor Echo": [0.60, 0.40]
+    "Warp agent 日志": [0.65, 0.35]
+    "PHP2Shell 死线": [0.97, 0.94]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "补丁滞后与分发": 26
+    "无编号无补丁的内核缺陷": 22
+    "勒索与数据公开": 18
+    "外包与供应链边界": 14
+    "ICS 与关键基础设施": 12
+    "移动端补丁覆盖": 8
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年7月14日至10月28日
+    7月14日 : Adobe 发布 APSB26-73
+             : PolyShell 补丁上线
+    9月29日 : Apple 86950 进入 KEV
+    10月20日 : ZDI 向内核安全邮箱投递六份报告
+             : GMO 确认服务器被植入恶意程序
+    10月21日 : 报告细节在公开列表可见
+             : GMO 全部服务器停机
+    10月22日 : Greg KH 逐条回复指出未附补丁
+             : GMO 向警方报案
+    10月23日 : 953 店加载器改写为带指纹过滤
+    10月24日 : GMO 确认客户信息被带出外部
+    10月26日 : Apple 发布 iOS 18.7.11 回移植
+             : CISA 发布 2030 战略
+             : UNM Health 发现异常并分阶段恢复
+    10月27日 : Adobe Commerce 48356 进入 KEV
+             : Veeam 发布五洞公告
+             : 三菱电机 ICS 公告
+             : ENGIE 披露合作方平台泄露
+             : GMO 确认数据被公开
+    10月28日 : 本刊整理 联邦死线仍是明天
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Hunt（10-27 21:17 CET）— KEV 加入时间、APSB26-73 三个月差、版本矩阵、CISA 到期 11-10、勒索使用未知</span>
+                        <a href="https://zerohunt.ai/blog/adobe-commerce-cve-2026-48356-file-upload-kev">zerohunt.ai · 48356</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Sansec 原始研究 — 游客购物车接口、getimagesizefromstring 校验、落盘目录、加载器机制</span>
+                        <a href="https://sansec.io/research/magento-polyshell">sansec.io · polyshell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense — 60% 对照 32%、2.4.7-p10 一小时内复发、9 月可疑管理员与 GSocket、GitHub 14 仓库中三个含利用码</span>
+                        <a href="https://brandefense.io/security-news/magento-cms-block-loader-hides-from-scanners-953-stores">brandefense · magento</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PrivateDevOps — CMS 查询语句原文、accesson.php、上传目录排查命令、SessionReaper 对照</span>
+                        <a href="https://privatedevops.com/news/magento-cms-block-loader-953-stores">privatedevops · magento</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyfar / 加拿大网络安全中心（10-27 四份公告）— KEV 条目标注与联邦到期日</span>
+                        <a href="https://cyfar.ca/posts/cyber-centre-daily-advisory-digest-2026-10-27-4-advisories">cyfar.ca · 10-27</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecureFox — 两枚 9.0 机制、Red Hat 不受影响的确切理由、10-22 无修复、面向 7.5 的重构</span>
+                        <a href="https://cybersecurefox.com/en/ksmbd-linux-kernel-rce-zdi-can-33549-33774">cybersecurefox · ksmbd</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TECH VEDA（10-27）— 六份报告投递日期与名单、Greg KH 原话、ZDI 署名 TrendAI、7.4 移除 __get_user 旁证</span>
+                        <a href="https://www.techveda.live/2026/10/27/linux-7-4-removes-get-user">techveda · kernel</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">deniz.in — 33367 公开 PoC 打通的发行版清单、Dirty Frag 修复不覆盖、userns 缓解的代价、AlmaLinux testing 状态</span>
+                        <a href="https://deniz.in/public-root-exploit-surfaces-for-one-of-six-linux-kernel-flaws-still-without-cve">deniz.in · zdi</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">dev.to（10-26）— 30 秒自查命令、KSMBD 与 Samba 的区别、同批其余四枚的性质区分</span>
+                        <a href="https://dev.to/theglitchfixer/ksmbd-vulnerability-your-nas-runs-samba-but-is-it-the-kernel-one-4hhm">dev.to · ksmbd</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（10-27）— GMO 26,739 台、80 亿日元、断电拔线原话、5,000 日元补偿、勒索未激活、MT4/MT5 凭据</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/japans-gmo-urges-customers-to-shut-down-pcs-amid-ransomware-threat/">bleepingcomputer · gmo</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ATLABYTE（10-27）— 12:30 确认公开、Trend Micro 协作、免费替代机、赎金时间线</span>
+                        <a href="https://atlabyte.com/en/news/japan-s-gmo-group-urges-customers-to-power-down-pcs-after-ransomware-threat">atlabyte · gmo</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threadlinqs TL-2026-4580（10-28）— 逐日时间线、70 家以上券商、单笔损失、单源说法及其置信度标注</span>
+                        <a href="https://intel.threadlinqs.com/threat/TL-2026-4580">threadlinqs · TL-4580</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">搜狐（10-27）— 中文口径与业务背景（云端跑 MT4/MT5 自动交易）、10-19 至 10-21 处置节奏</span>
+                        <a href="https://www.sohu.com/a/1093536293_122255084">sohu · gmo</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityOnline（10-27）— Veeam 五枚 CVE 矩阵、KB4948 与 KB4951、受影响构建号、仅 13.x、HackerOne、无在野</span>
+                        <a href="https://securityonline.info/veeam-vulnerabilities-backup-replication-veeam-one">securityonline · veeam</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyfar（10-27）— 三菱四枚 CVE 与综合 9.1、固定挑战应答机制、十条产品线版本矩阵、无修复清单、缓解步骤</span>
+                        <a href="https://cyfar.ca/posts/mitsubishi-electric-genesis-genesis64-iconics-suite-hyper-historian-analytix-mobilehmi-iotworx-m">cyfar.ca · mitsubishi</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（10-27）— ENGIE 合作方营销平台、仅法国客户、字段含 PDL 与 PCE、无银行数据、一年前的 Salesforce 事件</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/energy-giant-engie-discloses-data-breach-affecting-customers/">bleepingcomputer · engie</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">网易号 Fnet 云网安（10-28）— 中文口径与"内部系统没事不等于客户数据没事"的分析角度</span>
+                        <a href="https://www.163.com/dy/article/LAAQPQB305384JSS.html">163.com · engie</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SQ Magazine（10-27）— iOS 18.7.11 覆盖机型、27.2 的 286 个修复、86990 与 65339 报告者、补丁时间差</span>
+                        <a href="https://sqmagazine.co.uk/apple-coregraphics-zero-day-old-iphones-ios/">sqmagazine · apple</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberMaterial 简报（10-27）— 286 个修复的拆分、KEV 收录日与联邦到期日、CISA 2030、DreamHost</span>
+                        <a href="https://www.cybermaterial.com/p/cyber-briefing-october-27-2026">cybermaterial · 10-27</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（10-27）— UNM Health 处置时间线、Byod 的 36,000 台与数据清单、免费解密与每患者 2,500 美元、官方口径</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/unm-health-ransomware-attack-disrupts-patient-care-surgeries/">bleepingcomputer · unm</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">nm.news（10-27）— 本地口径：救护车改道时间窗、30 多家诊所、四所学院停课、年就诊量背景</span>
+                        <a href="https://nm.news/2026/10/27/ransomware-group-claims-unm-hack-as-health-clinics-reopen/">nm.news · unm</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackerFeeds（10-28）— Whitearmor 对 Echo Global Logistics 的完整索价与数据条目清单</span>
+                        <a href="https://hackerfeeds.com/ransomware/echo-com-by-whitearmor-1fczn">hackerfeeds · echo</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity Tracker（10-28）— Warp 第三方供应商事件与 agent 决策日志的表述、PeopleSoft 35273 状态</span>
+                        <a href="https://cybersecuritytracker.ai/">cybersecuritytracker.ai</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">光明网经今日头条（10-28）— ENISA 四方联合声明、CYFIRMA 216 台、OpenAI 与 Wiz 各自独立发现</span>
+                        <a href="https://www.toutiao.com/article/7701548956576989734/">toutiao · php2shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻 / IT之家（10-28）— CISA 确认在野、三日修复要求、70% 网站依赖 PHP、历史处置背景</span>
+                        <a href="https://news.qq.com/rain/a/20261028A02RQE00">news.qq.com · php2shell</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。泄漏站声明与攻击者自我陈述均未经独立验证，文中已标注来源口径。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年10月28日
+            </p>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

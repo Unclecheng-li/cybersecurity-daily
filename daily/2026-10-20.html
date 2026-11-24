@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年10月20日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年10月20日 星期二</span>
+            <span class="edition-number">第 192 期 | 总第 192 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>Broadcom WPS 无CVE射频root · 六枚内核漏洞齐带利用代码 · Plex补丁74天后PoC一日被利用 · Drupal双RCE厂商称数小时被利用 · 日经第三次183万条
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">编号之外，补丁之后：一枚连 CVE 都拿不到的漏洞，和三个早就修好却照旧沦陷的系统</h2>
+                <p class="sub-headline">今天最值得看的事，都不发生在"某个业务系统出了洞"这个层面。Broadcom 的 WPS 缺陷存在了十六年，因为厂商拒绝提交 CVE，它至今不在任何扫描器里；六枚 Linux 内核漏洞带着可用利用代码一起公开，且刻意绕开了所有常见加固；Plex 的补丁 74 天前就发了，PoC 公开 24 小时就被打成矿机。漏洞的保质期，从来不由公告日期决定。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Broadcom WPS 溢出（WPSplinter）：射频距离上以 root 执行代码，却连一个 CVE 编号都没有</h3>
+                    <div class="article-meta">
+                        <span>2026-10-16 Hexacon 公开 · 截至 10-19 无 CVE 无补丁</span>
+                        <span class="cvss-score">无 CVE · 无 CVSS</span>
+                    </div>
+                    <div class="article-body">
+                        <p>安全研究员 <strong>Quentin Kaiser</strong> 在巴黎 <strong>Hexacon</strong> 会议（<strong>10-16</strong>）公开了 Broadcom 私有 Wi-Fi 栈中 WPS 实现的缓冲区溢出。攻击者只要在<strong>无线电距离内</strong>，<strong>不需要 Wi-Fi 密码</strong>、<strong>不需要按 WPS 按钮</strong>、<strong>不需要用户做任何事</strong>，就能在受影响的路由器上以 <strong>root</strong> 执行代码。截至 <strong>10-19</strong>：<strong>没有 CVE 编号，没有官方补丁，没有任何厂商安全公告</strong>。</p>
+                        <p><strong>技术成因：</strong>漏洞在 WPS 的 <strong>EAP 消息重组</strong>逻辑——把分片的 WPS setup 消息拼回完整报文时，长度与序号状态未被正确校验，构造的分片序列可以直接改写路由器内存。Kaiser 由此做出两个原语：<strong>任意内存读</strong>（把内存内容通过空口传回）与<strong>任意代码执行</strong>。前者在 <strong>Orange Belgium 的 Askey TCG3000</strong> 上直接读出了存储的 Wi-Fi PSK 并成功入网；后者在 <strong>Proximus 的 Sagemcom BBOX3V+</strong> 上开出一个<strong>完全承载在 Wi-Fi 帧里的反向 shell</strong>，不需要外部 C2 服务器。演示里那根贴近的天线只为实验室干净抓包，攻击在正常 Wi-Fi 覆盖范围内即可生效。</p>
+                        <p><strong>为什么它比多数满分 CVE 更麻烦：</strong></p>
+                        <ul>
+                            <li><strong>时间线长得离谱：</strong>缺陷代码至少可追到 <strong>2010 年</strong>；<strong>2018 年</strong> Broadcom 发过一个<strong>不完整的补丁</strong>，并建议客户改用开源 <code>hostapd</code> 栈来代替修自己的代码。<strong>2026 年 7 月</strong> Broadcom 又告知 Kaiser"已向制造商提供补丁"，但到 <strong>10-15</strong> 他复测的那批网关仍未修复</li>
+                            <li><strong>一部分芯片永远修不了：</strong>老 <strong>eCos</strong> 平台（BCM3380 / BCM3383 / BCM33834）没有可行修复路径，Kaiser 直接称其为 <strong>forever day</strong>；较新的 <strong>Linux</strong> 平台（BCM3390 / BCM65xx / BCM68xx）理论上可修，前提是各家 OEM 愿意换掉 Wi-Fi 栈</li>
+                            <li><strong>治理链条整条断了：</strong>Broadcom 拒绝登记 CVE、拒绝公开声明。CERT/CC 在收到报告的<strong>当天结案</strong>，理由是"CVE 编号权归 Broadcom 自己，而它不打算提交"。结果：<strong>资产清单、漏洞扫描器、补丁工单系统全都不会亮红灯</strong></li>
+                            <li><strong>影响面按"芯片家族"而不是"品牌"算：</strong>清单里既有 Cisco 小企业级 AP，也有华为、ARRIS 的设备，部分标注"已确认"、部分是自动化检测给出的"疑似受影响"。比利时三家 ISP（Proximus、Orange Belgium、VOO）每家粗估<strong>数十万台</strong>网关，Telenet 未能实测，全球量级以百万计</li>
+                            <li><strong>没有可用缓解：</strong>在路由器界面里<strong>关掉 WPS 并不构成经过验证的缓解</strong>（漏洞在 EAP 重组路径上）。Kaiser 放出 <strong>YARA 规则</strong>（扫固件）与一个<strong>监听脚本</strong>（对现网 AP 判可疑）作为分诊工具，两者都会误报，需人工复核；无法修补的设备，唯一现实方案是<strong>更换硬件</strong></li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong>这类漏洞的杀伤力不在 CVSS，而在<strong>可见性</strong>。它专门落在"近场攻击"这个现代企业几乎不设防的面上——大堂、会议室、停车场，一个带网卡的人就够了。而这次披露真正暴露的不是代码问题，是<strong>编号机制本身</strong>：当厂商既是编号的所有者又是风险的承担者，"不提交 CVE"就成了一种成本最低的处理方式。对防守方唯一可操作的结论是——<strong>别再把"扫描器没报"当成"设备是干净的"</strong>，尤其是那些插在墙上、三年没人登录过管理界面的接入点。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <div class="flow-step">射频范围内，无需密码 / 无需按 WPS 键</div>
+                        <div class="flow-step">发送构造分片的 WPS EAP setup 消息</div>
+                        <div class="flow-step">重组逻辑缺校验 → 路由器内存被改写</div>
+                        <div class="flow-step">内存读取出 PSK / 代码执行拿到 root</div>
+                        <div class="flow-step">Wi-Fi 帧承载反连 → 改固件持久化</div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Infinity Core：六枚 Linux 内核漏洞携带公开利用同时落地，容器逃逸与 Android 提权都在射程内</h3>
+                    <div class="article-meta">
+                        <span>2026-10-16 oss-security 公开 · 研究者 Hyunwoo Kim</span>
+                        <span class="cvss-score">最高 CVSS 7.8</span>
+                    </div>
+                    <div class="article-body">
+                        <p>研究员 <strong>Hyunwoo Kim</strong> 于 <strong>10-16</strong> 在 <code>oss-security</code> 邮件列表一次性公开六枚 Linux 内核漏洞（合称 <strong>Infinity Core</strong>），其中<strong>五枚已附带能拿到 root shell 的公开利用代码</strong>，自测环境为 <strong>Ubuntu 26.04（内核 7.0.0-30-generic）</strong>与 <strong>Arch Linux（7.2.4-arch1-2）</strong>。研究明确声称可用于 <strong>Linux 服务器本地提权、容器逃逸、Android 本地提权</strong>。</p>
+                        <p><strong>六枚的分布（子系统 / 类型 / 修复版本）：</strong>Timer <strong>CVE-2026-98260</strong>（POSIX CPU timer 清理 UAF → 6.6.158 / 6.12.112 / 6.18.54 / 7.2.8）；Signal <strong>CVE-2026-98256</strong>（待处理信号队列 UAF → 6.18.54 / 7.2.8）；Memory <strong>CVE-2026-89754</strong>（<code>mincore()</code> 背后页表遍历越界写 → 6.18.50 / 7.2.4）；Futex <strong>CVE-2026-80775</strong>（私有 futex 哈希初始化 UAF → 6.18.47 / 7.1.11 / 7.2.1）；Scheduler <strong>CVE-2026-98385</strong>（调度器缓存记账 UAF → 7.2.9）；SLAB <strong>CVE-2026-97941</strong>（SLUB 链表破坏 → 7.2.7）。</p>
+                        <ul>
+                            <li><strong>以 UAF 为主：</strong>内核释放了内存却继续使用，攻击者可把这块内存填成自己的数据；其中多枚还依赖竞态——timer 与 signal 两枚在多线程程序里 <code>exec()</code> 失败或被竞态打断时触发</li>
+                            <li><strong>Timer 那枚挖得最深：</strong>可回溯到 <strong>Linux 5.7</strong>，所以同时打到多个 LTS 分支，这也是 6.6 / 6.12 仍有修复版本的原因；Scheduler 与 SLAB 只影响 <strong>7.2</strong> 系列</li>
+                            <li><strong>SLAB 那枚暂时只能把内核打崩：</strong>仓库自述"LPE 链尚未写出"——<strong>这是六枚里唯一还没有 root 利用的一枚</strong>，别把"六枚全部可利用"当事实传播</li>
+                            <li><strong>Scheduler 那枚约束更窄：</strong>需编译期打开 <code>CONFIG_SCHED_CACHE</code> 且运行时开对应开关，利用代码还假设 4 个 vCPU</li>
+                            <li><strong>研究刻意跳过网络、BPF 以及"需要用户命名空间"的缺陷</strong>——这一点极关键：<strong>惯常加固（关掉非特权用户命名空间、关掉 BPF）对这六枚全部无效</strong></li>
+                            <li><strong>Android 也在射程内：</strong>timer 那枚在 <strong>三星 Galaxy S26 Ultra</strong> 上，从普通应用即可拿 root，"不需要任何额外应用权限"。但<strong>这份 Android 利用被扣住</strong>，要等三星修复或别人先放出才会公开；目前没有三星公告，也没有补丁时间表</li>
+                            <li><strong>披露流程合规：</strong>先私报 <code>linux-distros</code>，禁运期到期后公开；公开日（10-16）距 <strong>Linux 7.3 发布（10-18）</strong>只差两天。六枚均不在 CISA KEV，<strong>尚无在野利用</strong>，四枚评 High</li>
+                        </ul>
+                        <p><strong>处置要点：</strong>打上发行版最新内核<strong>并重启</strong>——不重启等于没打。发行版通常把修复回移进自己的版本号，所以<strong>按发行版公告里的 CVE 编号核对，别拿版本号硬比</strong>。优先级上先修最危险的机器：<strong>容器逃逸意味着一个容器里的代码可以接管整台宿主</strong>，Kubernetes 节点、共享构建机、CI runner 排最前，尤其是会跑陌生人 PR 的 runner。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Plex2Shell 在野：补丁 74 天前就发了，PoC 公开 24 小时内服务器变成矿机与代理节点</h3>
+                    <div class="article-meta">
+                        <span>2026-10-17 蜜罐记录成功利用 · 修复版 1.43.3.10861（8-03）</span>
+                        <span class="cvss-score">链上最高 8.6</span>
+                    </div>
+                    <div class="article-body">
+                        <p>四枚 Plex Media Server 漏洞串成一条<strong>未认证 RCE</strong> 链（合称 <strong>Plex2Shell</strong>）：<strong>CVE-2026-96652</strong>（5.3，未认证 SSRF，<code>/player/timeline/subscribe</code> 让 Plex 向任意地址发 POST）→ <strong>CVE-2026-96654</strong>（6.9，URL 值处理不当，调到其它插件函数拿到 owner 级 admin token）→ <strong>CVE-2026-96655</strong>（5.3，认证后 SSRF，经 transcode 路径拉载荷）→ <strong>CVE-2026-96656</strong>（8.6，路径穿越 + 任意共享对象加载，把恶意文件放进 <strong>Codecs 目录</strong>）。另有同批披露、同版本修复的 <strong>CVE-2026-96651</strong>（7.1）。</p>
+                        <p><strong>最后一步才是真正恶心的地方：</strong>Plex 加载共享库时<strong>不校验签名、不校验文件名、不要求可执行权限、也不要求特定符号</strong>。前面几级丢进 Codecs 目录的恶意库，在 Plex 加载时自动执行其构造函数，权限就是 <code>plex</code> 用户。</p>
+                        <ul>
+                            <li><strong>7-27</strong> 漏洞私报 Plex（研究者 Zach Main）；<strong>8-03</strong> 修复版 <strong>1.43.3.10861</strong> 发布；<strong>9-01</strong> Plex 发安全公告并提示 <strong>NAS 用户可能需手动更新</strong></li>
+                            <li><strong>10-16</strong> PoC 与技术细节公开；<strong>10-17</strong> 蜜罐记录到实际利用，起自 <strong>45.194.92[.]222</strong>，后续出现 <strong>91.92.40[.]202</strong>、<strong>176.65.139[.]228</strong>，载荷下载源 <strong>217.60.194[.]116</strong></li>
+                            <li>落地两样东西：<strong>mylovelyminer</strong>（XMRig 变种，矿池指向 <code>ota.proxystream[.]st</code>，该域名此前已关联 <strong>AISURU DDoS 与 proxyware 僵尸网络</strong>）与 <strong>myawesomeproxy</strong>（会弹提示"运行即表示同意他人使用本机网络流量"的反向代理，把受害主机变成别人的出口节点）</li>
+                            <li>10-18 之后，Reddit 上陆续有用户报告自己的实例里出现 <code>mylovelyminer</code> 进程</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong>这是"补丁差距"最干净的一份标本——<strong>补丁发了 74 天，武器化只用了 1 天</strong>。真正推动攻击者动手的从来不是 CVE 发布，而是<strong>利用代码公开</strong>。今天所有还暴露在公网、且因为"NAS 不自动更新"停在旧版本的 Plex，等于是<strong>坐在一个已知会炸的装置上，只是之前没人点火</strong>。处置只有一条是完整的：升到 <strong>1.43.3.10861 或更高</strong>；再查 Codecs 目录有无多余文件、进程树里有无 <code>mylovelyminer</code> / <code>myawesomeproxy</code>、以及对 <code>proxystream.st</code> 的出站连接。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <div class="flow-step">7-27 私报 → 8-03 修复版发布</div>
+                        <div class="flow-step">9-01 公告：NAS 需手动更新</div>
+                        <div class="flow-step">10-16 PoC 与细节公开</div>
+                        <div class="flow-step">10-17 SSRF → token → 落库 → 执行</div>
+                        <div class="flow-step">矿机 + 代理后门 24 小时内到位</div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Drupal 双核心 RCE：厂商自己说"数小时到数天内就会有利用"，而 NVD 里还查不到</h3>
+                    <div class="article-meta">
+                        <span>2026-10-14 至 10-16 陆续公告 · SA-CORE-2026-014</span>
+                        <span class="cvss-score">CVSS 9.8 · 风险 19/25</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Drupal 修复两枚<strong>未认证 RCE</strong>：核心 <strong>Field UI</strong> 模块的 <strong>CVE-2026-108097</strong>（风险评级 <strong>Critical 19/25</strong>，CVSS 9.8）与贡献模块 <strong>Entity List</strong> 的 <strong>CVE-2026-108099</strong>。公告在 <strong>10-14 至 10-16</strong> 之间陆续发出，Drupal 提前一周就发过预警，明确说"利用代码可能在<strong>数小时到数天内</strong>出现"。</p>
+                        <ul>
+                            <li><strong>核心本身不能直接触发：</strong>108097 位于管理字段与显示方式的 Field UI 功能，<strong>纯核心安装理论上不可直接利用</strong>；但多个贡献模块能拼出严重路径，<strong>其中至少一条不需要任何认证</strong>，站点自定义代码也可能把相关功能暴露出来。所以"跑的是受影响版本"不等于"匿名访客现在就能打进来"，反过来"要登录才能用"也不等于安全</li>
+                            <li><strong>受影响区间很宽：</strong>8.9.0 起至 <strong>10.6.19</strong> 之前、11.0.0 起至 <strong>11.3.19</strong> 之前、11.4.0 起至 <strong>11.4.10</strong> 之前，以及 12.0.0-alpha1 起至 <strong>12.0.0-beta2</strong> 之前的 12.x 预发布版。10.5.x 及更早、11.2.x 及更早、Drupal 8/9 已不在安全支持范围——这些站点面对的不是"打个补丁"，而是"升级到受支持分支，或先卸模块顶住"</li>
+                            <li><strong>唯一的官方 workaround 是"卸载"：</strong>Drupal 原话是<strong>卸载</strong>核心 <code>field_ui</code> 模块；<strong>把界面藏起来、限制菜单访问都不算</strong>。<strong>Drupal Steward</strong> 只覆盖部分已知攻击路径，官方明说"不覆盖全部"，订阅了也要升</li>
+                            <li><strong>数据链路缺位：</strong>截至今天，这两枚在 NVD / EPSS 里<strong>查不到有效记录</strong>——不是"风险低"，而是编号刚发布、库还没跟进。这正是今天最该记住的一条纪律：<strong>验证链缺位时以厂商公告为准，别等 CVSS 分数出来再动作</strong></li>
+                            <li><strong>Entity List 要单独升：</strong>模块修复独立于核心发布，升到 <strong>3.0.10</strong>；只升核心等于只补一半</li>
+                        </ul>
+                        <p><strong>处置顺序：</strong>先按分支确认版本（10.6.x → 10.6.19；11.3.x → 11.3.19；11.4.x → 11.4.10），把<strong>互联网可达的站点排在最前</strong>，当天升不完的立刻卸 <code>field_ui</code>。Drupal 全球装机超过一百万站点，政府、高校、非营利组织占比高——这类机构往往实例多、清单不全，而预警窗口只有几天。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-medium">中危</span>
+                    <h3 class="article-title">日经一个月内第三次事件：183 万条记录，靠的是偷来的凭据而不是漏洞</h3>
+                    <div class="article-meta">
+                        <span>2026-10-16 披露 · 10-07 凌晨入侵 · 10-11 报 PPC</span>
+                        <span class="cvss-score">183 万条记录</span>
+                    </div>
+                    <div class="article-body">
+                        <p>日本经济新闻（Nikkei Inc.，旗下拥有 Financial Times）在 <strong>10-16</strong> 披露约一个月内的<strong>第三起</strong>网络安全事件：攻击者用<strong>窃取的凭据</strong>在 <strong>10-07 凌晨</strong>进入其网络内的一套<strong>开发系统</strong>，访问到存放于云端的 <strong>183 万条</strong>记录。公司已撤销凭据并于 <strong>10-11</strong> 向日本个人信息保护委员会报告。</p>
+                        <p><strong>数据构成（分层很清楚，别被总数带偏）：</strong><strong>15 万条</strong>至少含一项个人信息（姓名、邮箱、住址、电话、出生日期）；其中 <strong>12 万条</strong>含邮箱地址；<strong>168 万条</strong>只含无法单独识别个人的标识符；<strong>不涉及信用卡信息</strong>。截至 10-16 未发现被访问信息被滥用或已扩散，也无服务中断或数据篡改。10-17 日经 BP 与日经 National Geographic 分别表示其服务用户信息<strong>可能包含在这批数据中</strong>——这是同一事件的延伸，不是新增的独立泄露。</p>
+                        <p><strong>三起事件的共同点比单起更有信息量：</strong>7 月下旬员工 <strong>Google Workspace</strong> 账号被入侵（员工与业务伙伴信息，约 <strong>1,646 人</strong>）；9 月员工 <strong>Microsoft 365</strong> 账号被劫持，借该账号发出约 <strong>9,000 封</strong>钓鱼邮件；10-07 云开发环境<strong>凭据</strong>被窃，<strong>183 万条</strong>记录被访问。<strong>三起全部是云服务上的账号/凭据问题，没有一起依赖精巧的漏洞利用</strong>；日经表示尚未确认三者存在关联，也未认定同一行为体。</p>
+                        <p><strong>值得关注的原因：</strong>一家有自有 IT 团队、年收入约 25 亿美元、1 万余名员工的大型媒体集团，30 天内被同一类手法打了三次。问题不在"有没有防护"，而在<strong>凭据生命周期的治理</strong>：开发环境往往沿用生产的高权限、却缺少同等级的监控与 MFA 强制；账号被接管后，钓鱼邮件借的是"已建立信任的通信渠道"，收件人几乎没有怀疑的理由。对国内使用 MSP / 外包开发通道的企业同样成立——<strong>第三方维护账号，是最容易绕开你自己登录策略的那扇门</strong>。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">GhostAction 换第三副皮：把窃密器做成"字体文件"，VS Code 打开文件夹就执行</h3>
+                    <div class="article-meta">
+                        <span>2026-10-15 载荷集中到位 · 94 个仓库 / 66 个所有者</span>
+                        <span class="cvss-score">供应链 / 开发者工具</span>
+                    </div>
+                    <div class="article-body">
+                        <p>供应链行动 <strong>GhostAction</strong> 在 GitHub 于 <strong>10-09</strong> 开始拦截其恶意 Actions 工作流后，<strong>六天内</strong>换了载体：把凭据窃取器伪装成 <code>public/fonts/fa-solid-400.woff2</code>，配合 <code>.vscode/tasks.json</code> 的 <code>runOn: folderOpen</code>，<strong>开发者用 VS Code 打开项目就触发</strong>。OpenSourceMalware 在 <strong>94 个 GitHub 仓库</strong>（66 个所有者）确认载荷，可分析的 <strong>79 个</strong>全部命中。这个文件名直接沿用了 <strong>2026 年 1 月朝鲜 PolinRider 行动</strong>用过的名字，但研究者未发现两者共享基础设施——<strong>只能当"借用手法"，不能当同源证据</strong>。</p>
+                        <p><strong>三文件持久化结构：</strong>① <code>.vscode/tasks.json</code>——触发器，任务名伪装成 <code>eslint-check</code>，用 <code>runOn: folderOpen</code> 在打开文件夹时请求执行，并把终端显示压掉；真正跑起来需工作区被标记为受信任、且允许自动任务。② <code>public/fonts/fa-solid-400.woff2</code>——载荷本体，<strong>38 行未混淆的 Node.js 代码</strong>。③ <code>.github/workflows/security-audit.yml</code> 等——<strong>兜底</strong>：若窃密器从未执行，复用原来那套恶意工作流，并多加一手，<strong>外发 POST 失败时把结果传到 secret gist</strong>；文件名都很无害（<code>lint.yml</code>、<code>ci-check.yml</code>、<code>audit.yml</code>、<code>code-review.yml</code>、<code>cache-cleanup.yml</code>）。</p>
+                        <ul>
+                            <li><strong>偷什么：</strong>用户名、主机名、选定环境变量，以及 <strong>AWS、npm、PyPI、Git、Kubernetes、Claude、Gemini</strong> 相关凭据文件；<strong>RSA 与 Ed25519 私钥完整读取</strong>，另外八类凭据文件只读前 3,000 字符；再递归扫家目录匹配凭据特征</li>
+                            <li><strong>往哪送：</strong><strong>HTTP POST 到 8080 端口</strong>，基础设施指向 <strong>193.32.204[.]199</strong>；在支持 cron 的系统上还装一条<strong>每 5 分钟</strong>执行的任务，标记 <code>#ghc2</code>，从按主机名区分的服务端路径拉脚本直接 <code>| bash</code>——<strong>删掉仓库里的恶意文件，这条持久化依然在</strong></li>
+                            <li><strong>人肉通道：</strong>行动方 <strong>10-09</strong> 注册 <code>my-github[.]com</code> 并指向同一 IP，当天即有伪装成"GitHub 安全提醒（莫斯科新登录）"的钓鱼邮件发给维护者。落地页是反向代理，边打字边收密码与 2FA，同时用 JS <strong>静默驱动 GitHub OAuth 设备流</strong>（自取 device code 与 user code、打开 <code>/login/device</code>、填入 user code、补 <code>authorize=1</code> 提交）——受害者<strong>从没输过验证码，也没点过批准</strong>，应用就拿到 <code>repo</code>、<code>workflow</code>、<code>read:org</code> 三个 scope，令牌回传 <code>my-github[.]com</code> 的 <strong>TCP/8443</strong></li>
+                            <li><strong>别低估另一面：</strong>94 个仓库里 <strong>15 个</strong>已被删除/改名/转私有，剩下大多荒废——有一个<strong>九年多没动过</strong>，<strong>65 个</strong>超过一年无提交；实现也粗糙（环境变量过滤漏掉大部分密钥、家目录搜索会超时丢结果、一个 IP 同时承担外发与钓鱼与扫描）。<strong>但这些都不影响结论</strong>：两个曾清理过恶意工作流的仓库所有者<strong>被二次感染</strong>，说明"清文件"没清掉访问权</li>
+                        </ul>
+                        <p><strong>正确顺序：先吊销被污染的 GitHub 访问权、再清理</strong>，然后在干净设备上轮换所有暴露过的凭据。</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-section">
+                <div class="quick-item">
+                    <h4>7. MITRE ATT&amp;CK v20 落地：提示注入与"AI 智能体被当枪使"正式成为编号技术</h4>
+                    <p>v20 是上周发布的版本，本周才被广泛解读，但影响是长期的：<strong>Enterprise 域新增 9 项技术/子技术</strong>，其中五项专攻 AI——<strong>T1699</strong> 直接提示注入（在 LLM 界面直接输入恶意提示）、<strong>T1698</strong> 间接提示注入（提示藏在网页/文档/邮件/工单/代码里等 AI 读到）、<strong>T1700</strong> AI 赋能外泄（用注入提示让企业自己的智能体经其工具连接把数据送出去）、<strong>T1608.007</strong> AI 结果污染（污染公开网页让 AI 搜索引用攻击者页面）、<strong>T1685.007</strong> 破坏自主防御（把提示嵌进恶意代码让 LLM 辅助分析失效）。此外新增 <strong>T1697</strong>（窃取应用专用密码绕过 MFA）、CAPTCHA 绕过相关技术，并把"受污染的依赖"子技术扩展到 <strong>IDE 与编码智能体的配置文件</strong>——这一条和今天的 GhostAction 正好对上。防守侧新增 <strong>15 项检测策略</strong>（Enterprise 6 / ICS 9）与 <strong>38 条分析</strong>，其中 ICS 新分析专门<strong>过滤正常工程与维护操作</strong>。ICS 另记录两起真实行动：<strong>明尼苏达 30 多家水务/污水公用事业暴露在互联网的 PLC 被攻击、运维被锁在系统外</strong>（MITRE 明确表示<strong>归因未确认</strong>），以及一起<strong>AI 辅助的墨西哥政府 IT/OT 双域入侵并触达市政水务</strong>。行为体侧新增 <strong>Nimbus Manticore</strong>（IRGC 关联）与勒索即服务团伙 <strong>The Gentlemen</strong>，APT38 条目改为反映其从金融盗窃转向软件供应链攻击。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Moody's：在野漏洞的中位修复时间是 87 天</h4>
+                    <p>10-19 发布的这份分析数据不算新（Bitsight 2026 年 2 月数据，覆盖前两年披露的漏洞），结论却足够刺眼：<strong>已被确认在野利用的漏洞，中位修复时间 87 天</strong>；没有已知利用证据的漏洞更慢，中位 <strong>107 天</strong>。对照今天的头条与第 3 条——<strong>Plex 补丁 74 天没人升、Drupal 公告出来几小时内就可能被利用、WPSplinter 的窗口是十六年</strong>——"缺口就是勒索的舒适区"在这个月的数据里是字面成立的。报告同时提醒，AI 智能体已能在数天内完成漏洞利用并拿下系统，开源权重模型与前沿模型的网络能力差距从 6–10 个月收窄到 <strong>4–7 个月</strong>；现阶段仍受算力成本与前沿模型准入限制，但报告判断这些壁垒"很可能是暂时的"。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Lorem Ipsum Loader：ClickFix 投递的加载器，用 260 个随机单词当解码字典</h4>
+                    <p>Forescout 披露 9 月底一起攻击的完整链路：<strong>ClickFix</strong> 社会工程诱导用户自行执行命令 → 投放 <strong>Lorem Ipsum Loader</strong>。攻击包很"正规"：一个<strong>合法签名程序</strong>、一个<strong>恶意 DLL</strong>、一个批处理脚本；脚本建注册表 Run 项与计划任务后启动那个合法程序，由 <strong>DLL 侧加载</strong>接管执行。恶意 DLL 把编码内容放在 <code>.cpoc</code> 节里，<strong>资源段里塞了 260 个随机五字母单词</strong>当解码字典，再经 XOR 还原出下载器 shellcode——用"看起来像占位符文本"的单词表做密钥材料，静态特征几乎抓不到。C2 侧，载荷伪装成 <strong>JPEG 上传</strong>向服务器注册，之后<strong>每 5 秒</strong>取一次任务；后续 Python 载荷用<strong>加密 WebSocket</strong> 建隧道，转发流量并访问内网资源。同一报告还对比了另一条通过木马化安装包 + 多阶段 PowerShell 的投递路径。这起事件在<strong>勒索软件部署前被处置</strong>——差别只在于有人看得见。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Next.js 紧急更新：两枚未认证 RCE</h4>
+                    <p><strong>10-14</strong> 发布 <strong>16.4.1 与 15.5.28</strong>，修两枚 Critical RCE 加一枚高危 DoS。第一枚影响 <strong>16.0.0–16.4.0</strong>：在启用 <strong>Cache Components</strong> 的 App Router 应用中，当 <code>use cache</code> 函数返回<strong>多个 typed array</strong> 时可触发未认证代码执行。第二枚 <strong>CVE-2026-96889</strong> 落在 Next.js 通过 <code>sharp</code> 调用的 <strong>librsvg</strong> 图像处理链上：向运行在 <strong>glibc Linux</strong> 上的应用提交特制 <strong>SVG</strong> 即可 RCE。第三项是 App Router 的 <strong>Server Actions</strong> 可被特制请求持续占用 CPU、阻塞同进程后续请求。对前端/全栈团队来说麻烦在于：<strong>它们常被当成"静态站点托管"而漏出补丁流程</strong>，而 App Router 的 Node 侧实际是有执行面的。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. CenterPoint Energy：106.2 万名得州居民，从"论坛上有人贴数据集"开始</h4>
+                    <p>向得州监管机构提交的文件显示，这家能源公司此前披露的泄露影响 <strong>1,062,060 名</strong>得州居民，涉及姓名、地址、<strong>社会安全号码</strong>信息与<strong>驾照号码</strong>。9-14 的文件称，公司在 9 月发现第三方在网络犯罪论坛发帖声称掌握其客户数据集（9-12 有人发布约 <strong>2.5GB</strong> 文件），随后确认<strong>未授权第三方通过一个面向外部的系统</strong>获取了部分客户个人信息；已启动响应、调查与系统加固，并向执法部门与部分监管机构报告。<strong>电力与天然气服务未受影响。</strong>这类事件的教训重复度极高：<strong>面向外部的系统 → 客户数据集 → 论坛叫卖</strong>，从"外部系统"到"核心身份数据"之间，通常只隔着一层不该有的权限。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. Claroty Team82：AI 用 28 分钟从公开漏洞重建出 Danfoss 控制器的可用利用</h4>
+                    <p>在 Moody's 说"修一个洞要 87 天"的同一周，Team82 给出另一侧的数字：<strong>用 AI 从已披露漏洞出发，28 分钟重建出针对 Danfoss 控制器的可用利用代码</strong>。这个数字的意义不在"AI 会不会写 exploit"，而在<strong>披露到武器化之间的窗口被压到了分钟级</strong>——而这类资产（互联网可达的 OT 控制器）恰恰是补丁最难快起来的一类：停机窗口要协调生产、固件由 OEM 控制、很多设备根本不给你升级路径。两条新闻放在一起看，就是今天真正的主线：<strong>攻击侧周期以小时计，防守侧周期以季度计，中间的差额就是所有事件的发生地。</strong></p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用" --> "已在野/已发生"
+    y-axis "低影响" --> "严重影响"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Broadcom WPS 无CVE": [0.72, 0.96]
+    "Infinity Core 六枚": [0.55, 0.94]
+    "Plex2Shell 在野": [0.95, 0.85]
+    "Drupal 108097": [0.40, 0.90]
+    "Nikkei 183万条": [0.98, 0.78]
+    "GhostAction 假字体": [0.86, 0.74]
+    "Next.js 双RCE": [0.28, 0.82]
+    "ATT&CK v20": [0.15, 0.55]
+    "Moody 87天": [0.10, 0.62]
+    "Claroty 28分钟": [0.30, 0.70]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "漏洞与公开利用" : 30
+    "供应链与开发者工具" : 24
+    "数据泄露与事件" : 20
+    "框架与治理" : 14
+    "OT 与近场攻击面" : 12
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月13日至20日
+    10月13日 : MITRE 发布 ATT&CK v20 新增 9 项 Enterprise 技术
+    10月14日 : Drupal 发布 SA-CORE-2026-014 修复 108097
+           : Next.js 发布 16.4.1 与 15.5.28
+    10月15日 : GhostAction 第二阶段载荷集中到位
+           : Broadcom 复测网关仍未修复
+    10月16日 : Infinity Core 六枚内核漏洞在 oss-security 公开
+           : Quentin Kaiser 在 Hexacon 公开 WPSplinter
+           : Plex2Shell PoC 与技术细节公开
+           : 日经披露第三次事件 183 万条
+    10月17日 : Plex2Shell 在野利用出现 蜜罐记录
+           : 日经 BP 等子公司称可能受影响
+    10月18日 : Linux 7.3 发布
+    10月19日 : Moody's 报告 在野漏洞中位修复 87 天
+           : WPSplinter 无 CVE 无补丁状态被广泛报道
+    10月20日 : Claroty Team82 称 AI 28 分钟重建 Danfoss 利用
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">DEV Community / TechAIWire — Infinity Core: six Linux kernel flaws with public exploits</span>
+                        <a href="https://dev.to/techaiwire/infinity-core-six-linux-kernel-flaws-with-public-exploits-4427">dev.to · infinity-core-six-linux-kernel-flaws</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity News — Plex 漏洞在野利用投放挖矿程序</span>
+                        <a href="https://cybersecuritynews.com/plex-vulnerabilities-exploited-in-wild/amp/">cybersecuritynews.com · plex-vulnerabilities-exploited-in-wild</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shield53 — Plex2Shell 补丁 74 天与武器化 24 小时</span>
+                        <a href="https://news.shield53.com/plex2shell-exploitation-why-patched-vulnerabilities-still-kill">shield53.com · plex2shell-exploitation</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Pid / Cyber Defense Magazine — Plex2Shell: The Patch Is Out, the Exploit Is Public</span>
+                        <a href="https://pid.co.il/plex-media-server-plex2shell-patch-now">pid.co.il · plex-media-server-plex2shell-patch-now</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber Warriors Middle East — 四个 CVE 编号与 CVSS 明细</span>
+                        <a href="https://cyberwarriorsmiddleeast.com/plex2shell-hackers-deploy-crypto-miners-backdoors">cyberwarriorsmiddleeast.com · plex2shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Drupal 官方公告 SA-CORE-2026-014</span>
+                        <a href="https://www.drupal.org/sa-core-2026-014">drupal.org · sa-core-2026-014</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review — Drupal 修补两枚严重 RCE 并警告利用将很快出现</span>
+                        <a href="https://dailysecurityreview.com/resources/drupal-patches-two-critical-rce-flaws-warns-exploits-could-follow">dailysecurityreview.com · drupal-patches-two-critical-rce-flaws</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GBHackers — Drupal 警告未认证 RCE 可致站点沦陷</span>
+                        <a href="https://gbhackers.com/drupal-warns-critical-rce-flaw-could-let-unauth-users-compromise-sites/">gbhackers.com · drupal-warns-critical-rce-flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernoz — 受影响版本区间与卸载 field_ui 的官方缓解口径</span>
+                        <a href="https://cybernoz.com/drupal-warns-critical-rce-flaw-could-let-unauthenticated-attackers-compromise-websites/">cybernoz.com · drupal-108097</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">aviatrix.ai Threat Research Center — 108097 与 108099 对照</span>
+                        <a href="https://aviatrix.ai/threat-research-center/drupal-patches-critical-rce-flaws-cve-2026-108097-cve-2026-108099-exploits-may-emerge-soon">aviatrix.ai · drupal-critical-rce</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer — 日经一个月内第三次数据泄露 180 万条</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/nikkei-discloses-third-data-breach-in-a-month-18m-records-exposed/">bleepingcomputer.com · nikkei-third-breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BreachNews — Nikkei 三起事件与 183 万条记录构成</span>
+                        <a href="https://breachnews.com/breaches/nikkei-suffers-third-cybersecurity-incident-as-1-83-million-records-exposed">breachnews.com · nikkei-1-83-million</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ATLABYTE — 记录分层与三起事件时间线</span>
+                        <a href="https://atlabyte.com/en/news/japan-s-nikkei-discloses-third-data-breach-in-a-month-1-83m-records-affected">atlabyte.com · nikkei-third-data-breach</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Mezha（中文）— Nikkei 称 183 万条个人信息记录暴露</span>
+                        <a href="https://mezha.net/ch/news/mezha-b2284eab9ad8465506ea5a8b_nikkei-says-breach-exposed-1-83/">mezha.net · nikkei-breach-exposed</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernoz — GhostAction 把窃密器藏进假字体，94 个仓库</span>
+                        <a href="https://cybernoz.com/ghostaction-hackers-hide-credential-stealing-malware-in-fake-font-files-across-94-github-repositories/">cybernoz.com · ghostaction-fake-font</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Random Chaos — tasks.json / cron #ghc2 / OAuth 设备流细节</span>
+                        <a href="https://randomchaos.us/articles/fake-font-steals-developer-credentials">randomchaos.us · fake-font-steals-developer-credentials</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">RedSide Security — GhostAction 从工作流注入转向人肉钓鱼</span>
+                        <a href="https://blog.redsidesecurity.com/post/ghostaction-attackers-hide-credential-stealer-inside-a-fake-font-across-94-github-repositories">redsidesecurity.com · ghostaction-fake-font</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechBeacon — GhostAction 扩大载体后的影响面</span>
+                        <a href="https://techbeacon.net/article/ghostaction-group-deploys-font-masquerading-credential-stealer-across-nearly-a-hundred-github-repos">techbeacon.net · ghostaction-font-stealer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Pid / Cyber Defense Magazine — 十六年前的 Broadcom Wi-Fi 缺陷至今敞开</span>
+                        <a href="https://pid.co.il/broadcom-wps-flaw">pid.co.il · broadcom-wps-flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ghost Protocol — 百万级路由器可被 root，补丁无期</span>
+                        <a href="https://ghost-protocol.app/news/broadcom-wi-fi-flaw-allows-root-access-on-millions-of-routers-no-patch-in-sight-1792433157">ghost-protocol.app · broadcom-wi-fi-flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BeyondMachines — 无认证 root 与受影响芯片家族</span>
+                        <a href="https://beyondmachines.net/event_details/unpatched-broadcom-wi-fi-flaw-allows-root-access-without-authentication-e-r-v-y-p">beyondmachines.net · broadcom-wifi-flaw</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rescana — WPSplinter 受影响设备清单与攻击面分析</span>
+                        <a href="https://www.rescana.com/post/active-exploitation-alert-unpatched-broadcom-wi-fi-wpsplinter-vulnerability-enables-remote-root-code-execution-on-millio">rescana.com · wpsplinter</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BugCore — 芯片家族划分与「为什么没有 CVE」</span>
+                        <a href="https://bugcore.org/article/unpatched-broadcom-wi-fi-flaw-millions-of-routers-vulnerable-to-root-rce">bugcore.org · broadcom-wifi-root-rce</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense — ATT&CK v20 新增 AI 技术编号对照</span>
+                        <a href="https://brandefense.io/security-news/mitre-attack-v20-ai-abuse-water-utility-attacks">brandefense.io · mitre-attack-v20</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberWorldOps — v20：AI 滥用、MFA 绕过与 ICS 攻击</span>
+                        <a href="https://cyberworldops.eu/en/mitre-attck-v20-adds-ai-abuse-mfa-bypass-and-water-system-intrusions">cyberworldops.eu · mitre-attck-v20</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetCyberBase — v20 更新要点汇总</span>
+                        <a href="https://netcyberbase.com/article/mitre-att-ck-v20-unveils-critical-updates-ai-abuse-mfa-bypass-and-water-utility--mvfakk1c">netcyberbase.com · att-ck-v20</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AI Governance Institute — 提示注入与智能体滥用成为正式类别</span>
+                        <a href="https://aigovernance.com/news/mitre-attck-v20-names-prompt-injection-and-ai-agent-abuse-as-formal-threat-categories">aigovernance.com · mitre-attck-v20-ai</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global — Moody's：在野漏洞中位修复 87 天</span>
+                        <a href="https://www.enigma-global.com/preview/news/45327">enigma-global.com · exploited-vulns-87-days</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Forescout — From ClickFix to C2：两种加载器对比分析</span>
+                        <a href="https://www.forescout.com/blog/from-clickfix-to-c2-comparative-analysis-of-two-malware-loaders/">forescout.com · clickfix-to-c2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Next.js 官方安全公告（2026-10-14）</span>
+                        <a href="https://nextjs.org/blog/nextjs-security-update-october-14-2026">nextjs.org · security-update-october-14-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">安天威胁情报中心 — 今日安全简讯（20261020）</span>
+                        <a href="http://ti.antiy.cn/">ti.antiy.cn · daily-20261020</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AI Security Digest — October 20, 2026（引 Claroty Team82 / Danfoss 报道）</span>
+                        <a href="https://deniskim1.com/writing/ai_security_digest__october_20_2026">deniskim1.com · ai-security-digest-2026-10-20</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber Resilience — Daily CVE Tracker（EPSS / KEV / 风险分）</span>
+                        <a href="https://security-resilience.ai/vulnerabilities.html">security-resilience.ai · daily-cve-tracker</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录（官方）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa.gov · known-exploited-vulnerabilities</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年10月20日
+            </p>
+        </footer>
+
+
+
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

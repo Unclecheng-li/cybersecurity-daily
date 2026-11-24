@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年10月19日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年10月19日 星期一</span>
+            <span class="edition-number">第 191 期 | 总第 191 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>SiteGuard106931防火墙变root · Zimbra五洞PoC两枚无补丁 · SAP 89111×10.0锁版本裸奔 · Mage最新版仍不安全 · n0n一泄露勒索38船公司
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">守门的人自己先倒下：一台 WAF 的统计图表，成了整台服务器的 root</h2>
+                <p class="sub-headline">今天最值得看的三件事，都不是"某个业务系统出了洞"——被穿透的是一台主机式 WAF、一条被版本锁死的依赖链、一家海运软件商的数据库。防线自己成了突破口，后面就没有第二道门了。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章（占2列，左侧） -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">SiteGuard Server Edition 命令注入 CVE-2026-106931 — 默认开启的统计功能，以 root 执行任意命令，已在野</h3>
+                    <div class="article-meta">
+                        <span>2026-10-18 JPCERT/CC 确认在野 · EG Secure Solutions</span>
+                        <span class="cvss-score">CVSS 4.0 8.5 / 3.0 7.8</span>
+                    </div>
+                    <div class="article-body">
+                        <p>日本厂商 <strong>EG Secure Solutions（e-guardian）</strong> 的主机式 Web 应用防火墙 <strong>SiteGuard Server Edition</strong> 存在 OS 命令注入，位置在<strong>统计功能</strong>——那个用来汇总"拦了多少、放了多少"的图表模块，<strong>默认开启</strong>。厂商与日本 <strong>JPCERT/CC</strong> 已共同确认：<strong>漏洞正在被利用</strong>（JVN#88474777）。两边都没有披露攻击者身份、受害组织和影响规模。</p>
+                        <p><strong>关键事实：</strong></p>
+                        <ul>
+                            <li><strong>后果是最高权限：</strong>Linux 上拿到 <strong>root</strong>，Windows 上拿到 <strong>NT AUTHORITY\SYSTEM</strong>。不是一个可以被绕过的过滤器，而是源站主机本身</li>
+                            <li><strong>受影响区间很长：</strong>Apache httpd / Nginx / IIS 版（FreeBSD 除外）<strong>2.20 及以后、8.00 Update 5 之前</strong>全部受影响；FreeBSD 上的 Apache / Nginx 版为 2.20 及以后、7.00 Update 6 之前。唯一例外是 IIS 版 <strong>3.10 至 4.00 Update 4</strong>（含）</li>
+                            <li><strong>公告发出时攻击已在跑：</strong>厂商早在 <strong>9-29</strong> 就通知了有直签支持合同的客户，公开公告是 <strong>10-14</strong>，JPCERT/CC 确认在野是 <strong>10-18</strong>。走经销商、没有支持合同的用户，真实暴露窗口早于自己读到公告那天</li>
+                            <li><strong>补丁会抹掉证据：</strong>厂商明确警告升级会覆盖统计处理文件，痕迹一起消失。正确顺序是<strong>先导出诊断包再打补丁</strong>：Web 管理界面 → Diagnostic information → Download diagnostic information，并保存到设备之外</li>
+                            <li><strong>连 EOL 版本都给补丁：</strong>无法升级的可安装替换统计处理文件的补丁，覆盖已停止支持的版本。厂商为 EOL 破例，本身就是对危害的判断</li>
+                        </ul>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>主机式 WAF 的位置决定了它的破坏力。</strong>它通常与应用装在同一台机器上才能解密流量做检测。WAF 进程一旦被拿到命令执行，防火墙、数据库、应用在同一台机器上，一个洞全塌；而攻击者还顺手获得了这台机器的完整流量视图</li>
+                            <li><strong>为可观测性写的代码，成了执行入口。</strong>这类"运维看图表"的模块长期不在安全评审视野里，却默认开启、几乎每个部署都在跑</li>
+                            <li><strong>评分与真实风险脱节。</strong>JVN 给的是 CVSS 4.0 <strong>8.5</strong>、CVSS 3.0 <strong>7.8</strong>，厂商自己标 critical。在边界设备上以 root 执行命令，这个分数明显偏保守</li>
+                            <li><strong>别搞混产品线：</strong>SiteGuard 还有一个 WordPress 插件（约 50 万装机量），常被混为一谈。本次公告<strong>只覆盖 Server Edition</strong>。厂商宣称整体保护超过 150 万个站点</li>
+                        </ul>
+                    </div>
+                    <!-- 攻击流程图 -->
+                    <div class="attack-flow">
+                        <span class="flow-step">构造统计接口请求</span>
+                        <span class="flow-step">参数未转义进命令</span>
+                        <span class="flow-step">WAF 进程执行</span>
+                        <span class="flow-step">root / SYSTEM</span>
+                        <span class="flow-step critical">同机应用与数据库直取</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Rapid7 放出 Zimbra 五个漏洞的 PoC — 一个普通账号，读写冒充全通，还有两枚至今无补丁</h3>
+                    <div class="article-meta">
+                        <span>2026-10-14 披露 · Jonah Burgess / Rapid7</span>
+                        <span class="cvss-score">5 枚 CVE · 2 枚无修复</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Rapid7 一次性披露 Zimbra Collaboration Suite（ZCS）<strong>五个漏洞</strong>，<strong>每一枚都附公开 PoC 脚本</strong>，系列文章《From One Account to Every Mailbox》Part 1。测试环境为 <strong>ZCS 10.1.16 Network Edition on Ubuntu 22.04</strong>。Rapid7 称这轮评估总共报了 <strong>80 多个漏洞</strong>，后面还有。</p>
+                        <p><strong>五个洞分别做什么：</strong></p>
+                        <ul>
+                            <li><strong>CVE-2026-10631（6.5，修 10.1.20）</strong> — EWS 的 FindItem 信任复合 folder ID 里的 owner ID。开过 EWS 的普通用户可读他人收件箱、已发送、草稿、联系人、日历，<strong>含原始 MIME 与附件</strong>，不需要共享或委派；目标自己不必开 EWS，<strong>跨集群服务器也生效</strong>。NVD 标记 10.1.0–10.1.19</li>
+                            <li><strong>CVE-2026-50055（6.5，修 10.1.20）</strong> — 管理员关掉转发后，Zimbra 只阻断 Sieve 的 <code>redirect</code>，<code>notify</code> 照样把邮件头与正文文本发到外部地址，规则还持久存在。Modern Filters 界面看不到，Classic 只显示规则名不显示目标</li>
+                            <li><strong>CVE-2026-73571（8.3，修 10.1.17；NVD 3.1 只给 4.3）</strong> — <code>SaveDraftRequest</code> 的委托发送路径让任何已认证用户以同服务器另一账号名义发信，<strong>不需要 send-as 权限</strong>，邮件走正常外发通道并落进受害者的"已发送"</li>
+                            <li><strong>CVE-2026-93635（5.3，<span style="color:#c41e3a;font-weight:700">无修复</span>）</strong> — 使用外部 LDAP search-filter 认证并开启 lazy provisioning 的域，登录处未转义的通配符变成目录用户的<strong>密码预言机</strong>；默认本地认证不受影响</li>
+                            <li><strong>CVE-2026-93637（3.7，<span style="color:#c41e3a;font-weight:700">无修复</span>）</strong> — 失败的 GraphQL 认证不计入每 IP 失败计数，alias 还能把大批猜测塞进一个请求。Rapid7 实测 <strong>10,000 个候选、每请求 100 个、不到两分钟</strong>跑完；与 93635 组合可同时绕开两套锁定计数</li>
+                        </ul>
+                        <p><strong>为什么值得关注：</strong>Zimbra 把"账号"当安全边界，这五个洞全在这条边界上打洞——<strong>一个普通账号能读、能冒充、能外带</strong>，两枚无补丁的洞负责让外部人先拿到那第一个账号。单看分数都很低，但 CVSS 算的是单个缺陷，攻击者算的是组合。邮件又是密码重置、合同确认、财务指令的凭据载体，这条链的实际杀伤远高于分数。</p>
+                        <p><strong>处置：</strong>先查 EWS 是否对外可用；<strong>直接读数据库里的 Sieve 脚本而不是看界面</strong>；把 10.1.20 设为底线版本；对 93635 / 93637 用网络层压掉登录接口的暴露面。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">SAP 十月补丁日四枚严重 — 最高的 10.0 不在 ABAP，在一个 Python 库，而且它八月就修好了</h3>
+                    <div class="article-meta">
+                        <span>2026-10-13 补丁日 · 22 项 · 4 枚 Critical</span>
+                        <span class="cvss-score">CVE-2026-89111 · 10.0</span>
+                    </div>
+                    <div class="article-body">
+                        <p>SAP 十月安全补丁日共 <strong>22 项</strong>（16 条新 note、4 条 GitHub 安全公告、2 条更新），<strong>4 枚 Critical</strong>。排第一的不是任何 ABAP 系统或门户，而是一个 PyPI 包。</p>
+                        <p><strong>四枚严重的分工：</strong></p>
+                        <ul>
+                            <li><strong>CVE-2026-89111（10.0）</strong> — SAP Cloud SDK for Python <strong>0.45.2 之前</strong>。多租户 BTP 应用里，SDK 会把配置好的令牌 URL 第一个 DNS 标签替换成租户子域；修复前不校验，于是任何能影响 <code>tenant_subdomain</code> 的输入（请求 Host、请求头、JWT claim、URL 参数）都能把<strong>带着 client credentials 的令牌请求</strong>指到攻击者服务器。CWE-918</li>
+                            <li><strong>CVE-2026-89110（9.9）</strong> — NetWeaver <strong>Visual Composer</strong>，VC70RUNTIME 7.50。权限校验不足（CWE-749），低权限用户可对预配置远程系统调用内部操作，<strong>Scope Changed</strong>，后果取决于那条远程连接有多高权限。<strong>这正是 2025 年 CVE-2025-31324（10.0 未认证上传，数日内被在野利用）的攻击入口组件</strong></li>
+                            <li><strong>CVE-2026-89107（9.9）</strong> — S/4HANA 的 Manage Substitution/Validation Rules，S4CORE 105–109。规则定义里的领域脚本被当 <strong>ABAP 代码</strong>解释执行（CWE-94），有对应业务权限的已认证用户可完全接管系统</li>
+                            <li><strong>CVE-2026-89108（9.1）</strong> — Manufacturing Integration and Intelligence，XMII 15.4 / 15.5。配置服务缺授权校验（CWE-862），MII 管理员能在底层 Java 应用服务器上造出高权限账号</li>
+                        </ul>
+                        <p><strong>时间差才是这条的重点：</strong>PyPI 上 <strong>0.45.2 早在 8-21 就已上传</strong>，公告到 <strong>10-13</strong> 才发。习惯随手升级依赖的团队早就修好了却不知道；把版本 pin 在旧版、等公告再动的团队，这一个多月完全裸奔，<strong>扫描器一句话都不会报</strong>。修复本身很朴素：按要求用 RFC 1123 DNS 标签规则校验子域。</p>
+                        <p>另有 <strong>CVE-2026-89113</strong>（Commerce Cloud SQL 注入，8.8）与 <strong>CVE-2026-58249</strong>（NetWeaver / Web Dispatcher 的 ICM 内存破坏，7.5），后者未认证请求即可打崩进程，影响 7.53、7.54、7.77、7.93、9.16 等多个内核版本——<strong>面向公网的 Web Dispatcher 应该排在高危项之前处理</strong>。目前无来源报告这些漏洞已被利用，也都不在 KEV。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Mage OSS 未认证会话伪造 9.8 — 报错了，但会话已经建好；而"最新版"其实没修</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-111823 · GHSA-93gm-r5p2-wxq7</span>
+                        <span class="cvss-score">0.9.80 仍不安全</span>
+                    </div>
+                    <div class="article-body">
+                        <p>数据管道编排工具 Mage OSS 存在严重认证绕过。<strong>机制简单到有点荒谬</strong>：OAuth 回调逻辑（<code>mage_ai/api/resources/OauthSessionResource.py</code>）在请求携带<strong>无法识别或空的 provider 名</strong>时，异常处理捕获了解析错误、写了日志，<strong>却没有终止流程</strong>——执行继续落入默认的会话令牌创建逻辑，请求里带的邮箱被用来查找甚至创建账号。身份根本没经过任何有效 OAuth 提供方验证，攻击者却拿到了有效会话。CWE-390（检测到错误状态却不采取动作）。</p>
+                        <p><strong>为什么危害被放大：</strong>Mage 是 ETL 编排器，手里握着 <strong>S3、Snowflake、Salesforce</strong> 这类数据源凭据，本身还能执行任意 Python。绕过认证等于直接站到生产数据湖和后端计算资源前面。</p>
+                        <p><strong>最容易踩的坑：</strong>修复在 commit <code>76c4f46</code>（PR #6204 / #6205），<strong>2026-10-16 才合并进主分支</strong>；CVE 是 10-17 发的；而 <strong>Releases 页面上最新的 0.9.80 早于合并</strong>。换句话说，<strong>装"最新 tag"并不能解决问题，只能从修好的主分支构建</strong>。私报时间是 6-12，从报告到合并四个月。</p>
+                        <p>另需注意 PR #6205 是限制版本控制 API 执行 Git 命令的<strong>另一处</strong>缺陷，与 CVE-2026-111823 不是同一个问题，只是来自同一份私报。PoC 状态目前有冲突：有来源引用公开利用材料，也有聚合源称无公开 PoC——在澄清前按"已有可利用细节"处理更稳妥。无在野确认，不在 KEV。</p>
+                        <p><strong>同日另外两枚 9.8，都是把默认值当成了信任：</strong></p>
+                        <ul>
+                            <li><strong>WebAlliance eCommerce（CVE-2026-108065，9.8，无补丁）</strong> — <code>/preapproval.asmx</code> 的 GetUser SOAP 方法未转义 <code>sUserID</code>，MSSQL 支持堆叠查询。Rapid7 自 8-28 起联系厂商 <strong>5 次</strong>，10-09 发最后通知，<strong>全程零回应</strong>。唯一缓解是<strong>封掉该端点</strong>。数据库账号若是 sysadmin 还能用 OLE Automation 上传文件；数据库与 Web 同机时，上传的 ASPX 可直接执行系统命令。注意 Rapid7 自己的文章有出入：正文用 <code>GetUser</code>/<code>sUserID</code>，curl PoC 用 <code>GetCustomer</code>/<code>sCustID</code>，自查两个都测</li>
+                            <li><strong>Vanus（CVE-2026-111998，9.8，无修复版本）</strong> — 事件网关 0.8.0–0.9.0 内嵌<strong>固定管理员 Bearer token</strong>（CWE-1392），未认证者发给 gateway 的 gRPC 代理端口即可管理命名空间、事件总线、用户、令牌、角色绑定并读写事件——等于 cluster-admin。没确认的修复版本，只能把端口收回内网。别以为端口没直接挂公网就安全：内网、VPN、容器网络、被攻陷的工作站都能到</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">一次上游泄露，被切成 38 份勒索单 — n0n 向 18 国海运企业索要 12.2 亿美元</h3>
+                    <div class="article-meta">
+                        <span>2026-10-12 上架 · 10-19 13:27 UTC 截止</span>
+                        <span class="cvss-score">38 家 / 18 国</span>
+                    </div>
+                    <div class="article-body">
+                        <p>勒索团伙 <strong>n0n</strong> 于 <strong>10-12</strong> 在暗网泄漏站<strong>一次性</strong>挂出 <strong>38 家海运相关组织</strong>，横跨 <strong>18 个国家</strong>——航运公司、码头运营商、物流企业、船舶管理公司。索要总额约 <strong>12.2 亿美元</strong>，单家 <strong>240 万至 1400 万美元</strong>（比特币），<strong>截止时间就在今天 13:27 UTC</strong>。</p>
+                        <p><strong>关键判断：这可能不是 38 次入侵。</strong>安全公司 <strong>Cydome</strong> 指出，38 家里<strong>至少 21 家</strong>是韩国海运软件与 IT 服务商 <strong>CyberLogitec</strong> 的已记录客户，初步分析认为 n0n 很可能把<strong>源自 CyberLogitec 的一次泄露</strong>按客户切片，做成了 38 份单独的勒索单。<strong>SOCRadar</strong> 的方向一致：多家受害者的数据集都很小、且高度集中于特定应用，更像共享同一个应用或同一个漏洞，而不是 38 次独立攻击。泄露内容据称含<strong>凭据、个人信息与 EDI 报文</strong>，部分数据已有数年历史——相关账号与对接配置可能早该轮换。</p>
+                        <p><strong>必须加的限定：</strong>被挂上泄漏站<strong>不等于</strong>该公司自己的系统被入侵。这几家截至 10-15 均未确认遭入侵。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>纯数据勒索比加密勒索更难防。</strong>n0n 2026 年 9 月才出现，不加密、没有解密钥匙、没有"付钱恢复系统"这条路，只有"付钱别公布"。备份做得再好也挡不住</li>
+                            <li><strong>信任一次上游，代价按客户名单倍增。</strong>海运业的 EDI、订舱、单证系统天然互联，一家软件商同时是几十家船公司与码头的接口方。攻击者成本是一次，收益是 38 份</li>
+                            <li><strong>截止时间就是今天。</strong>13:27 UTC 之后是否真的公布，是观察这个团伙"说到做到"比例的样本</li>
+                        </ul>
+                        <p><strong>当日勒索面快照：</strong>截至 10-19 01:50 UTC 的 24 小时内 <strong>23 家</strong>组织被 <strong>8 个</strong>团伙挂出（n0n 10 家、Qilin 6 家、Cloak 2 家）；前一日 23 家，7 日均值 <strong>46.0 家</strong>；<strong>10 月至今 645 家，2026 年累计 8,672 家</strong>。单日波动大，看趋势别看一天。</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-section">
+                <div class="quick-item">
+                    <h4>6. FortiSIEM 路径穿越（CVE-2026-106173，9.4）：厂商公告和 CVE 记录的受影响版本对不上</h4>
+                    <p>10-13 随 Fortinet 月度 PSIRT 发布，公告 <strong>FG-IR-26-180</strong>：gRPC 服务 <code>phQueryMaster</code> 存在任意文件写入，未认证攻击者可用特制报文执行任意代码或命令。<strong>问题在于公告只说 7.5.0 受影响，Fortinet 作为 CNA 提交的 CVE 记录却列了 7.5.0、7.4.0–7.4.2、7.3.0–7.3.5、7.2.0–7.2.7、7.1.0–7.1.9、7.0.0–7.0.4</strong>，且 7.0–7.4 各线都没给修复版本。公开信息无法判断哪个对。能确认的只有三条：7.6 不受影响；7.5.0 升到 <strong>7.5.1</strong>；<strong>封住 TCP 27918 能阻断该问题</strong>。CVSS 时间分项里利用代码成熟度为 <strong>High</strong>。SIEM 为了收日志通常对内网开很大的入站规则，这个 workaround 恰好要求把规则收紧——先做这件事。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>7. Metasploit 收录两枚本地提权：任何本地 shell 都能一键变 root</h4>
+                    <p>Rapid7 在 <strong>10-09</strong> 的 Metasploit 周报加入两个模块：<code>linux/local/dirtyclone_cve_2026_43503</code>（PR #21613）与 <code>linux/local/cve_2026_3888</code>（PR #21532）。<strong>DirtyClone（CVE-2026-43503）</strong> 是 Linux 内核缺陷，DirtyFrag 家族第四个成员；JFrog 的 Eddy Tsalolikhin 与 Or Peles 于 5-19 独立发现并报告，5-21 合入主线、5-23 发 CVE，首个修复 tag 为 <strong>v7.1-rc5</strong>，JFrog 6-25 发分析时保持 PoC 私有、当时无在野利用。<strong>CVE-2026-3888</strong> 是 Ubuntu snapd 竞态：<code>snap-confine</code> 建沙箱依赖 <code>/tmp/.snap</code>，而 <code>systemd-tmpfiles</code> 会周期性清理这个目录；时间点可预测时攻击者能抢先重建目录并放入载荷，下一次沙箱初始化时 bind mount 就把文件暴露到 root 上下文，清理周期带来 <strong>10–30 天</strong>窗口。实际意义很直接：<strong>Web shell、被偷的低权限登录、被攻陷的容器用户，这些"半只脚"如今有现成的 shell→root 路径</strong>。打了补丁没重启内核的机器仍然中招。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Gitea 28.2.0 批量披露：OpenID 2.0 的无请求断言可以绑到你头上</h4>
+                    <p><strong>CVE-2026-104627</strong>：安全设置里的 OpenID 关联回调<strong>接受未经验证的 OpenID 2.0 正向断言</strong>，不检查当前登录用户是否发起过这次关联。因为 OpenID 2.0 允许"未被请求的断言"，攻击者控制的提供方可以把<strong>攻击者身份绑到受害者账号</strong>，之后通过 OpenID 登录以受害者身份进入，<strong>且这条路径不经过本地 TOTP 或 WebAuthn 校验</strong>；修复后要求带时效、绑定用户的 state 值。<strong>CVE-2026-97859</strong>：<code>/api/v1/users/{username}</code> 下 7 条路由（followers、following、starred、subscriptions、keys、gpg_keys 等）漏挂 <code>individualPermsChecker</code>，已认证用户可读受限或私有可见性用户的关注/粉丝、星标仓库、公开 SSH 与 GPG 公钥，修复于 1.27.3 与 28.0.0。<strong>CVE-2026-110324</strong>：档案可见性校验只加在 GET，<code>POST /{username}</code>（关注/取关）只校验登录，可拿到私有档案用户的全名、所在地、网站与简介，修复于 28.1.0。三条合起来是一个熟悉的形状：<strong>双因素认证做得很认真，绕过去的那条旁路没人看</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 英国 NCSC 更新 TLS 指南，正式纳入后量子配置</h4>
+                    <p>10-15 发布，跟进 IETF 的 <strong>RFC 10024</strong>（TLS 1.3 的后量子与传统混合密钥协商）。要点：<strong>TLS 1.3 是唯一会支持后量子的版本</strong>，TLS 1.2 及更早不会被升级补齐，还在跑旧版本的应立即迁移；<strong>混合式与纯后量子</strong>两类密码套件都推荐；时间表沿用既有口径——<strong>2028 年</strong>完成目标定义、发现与初步计划，<strong>2031 年前</strong>完成最高优先级迁移，<strong>2035 年</strong>完成全部。NCSC 表示待相关 RFC 定稿后还会更新 IPsec 指南并补充 TLS 后量子认证建议。对普通团队最实际的落地动作只有一条：<strong>先做密码学资产清单</strong>，尤其是需要保密十年以上的数据通道。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. 澳大利亚 ACSC 就海外制冷系统攻击发布 OT / 边缘设备告警</h4>
+                    <p>澳大利亚信号局的 ACSC 针对运行<strong>联网运营技术（OT）</strong>（含商用制冷系统）的组织发告警，背景是海外发生的同类攻击（10-14 法国数百家超市冷库被远程加热事件）。ACSC 表示<strong>尚未观察到澳大利亚基础设施被主动针对</strong>，但建议立即评估暴露面：<strong>把 OT 接口与边缘设备从公网直接暴露中撤出</strong>、启用强认证与网络分段、及时打补丁、监控异常自动化动作。这条尤其适用于托管服务商、设施运营商，以及那些<strong>从承包商手里继承了远程访问通道、却没有完整资产清单</strong>的组织。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 今天到期的两个 KEV：都带"取证排查"标记</h4>
+                    <p>CISA 于 10-16 把两条边缘设备漏洞加入 KEV，联邦修复期限均为 <strong>2026-10-19</strong>，且都标注 forensic triage——<strong>不是打完补丁就算完，还得查有没有已经被打</strong>。<strong>CVE-2026-102764</strong>（BeyondTrust Remote Support，认证绕过/欺骗）被 Mandiant 关联到威胁集群的零日利用；<strong>CVE-2025-61624</strong>（FortiOS / FortiPAM / FortiProxy / FortiSwitchManager，CLI 路径穿越，读写权限管理员可写删任意文件）被 Unit 42 关联到 FortiGate 植入体。对非联邦机构而言这个日期没有强制力，但含义明确：<strong>利用代码已经在流通</strong>，而这两类资产都在边界上。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用" --> "已在野/已发生"
+    y-axis "低影响" --> "严重影响"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "SiteGuard 106931": [0.93, 0.95]
+    "n0n 38家海运": [0.90, 0.88]
+    "Zimbra 组合链": [0.60, 0.86]
+    "Mage 111823": [0.35, 0.90]
+    "SAP 89111": [0.28, 0.92]
+    "SAP 89110": [0.30, 0.90]
+    "WebAlliance 108065": [0.45, 0.82]
+    "Vanus 111998": [0.32, 0.85]
+    "FortiSIEM 106173": [0.25, 0.80]
+    "Gitea 104627": [0.20, 0.70]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "安全产品自身失守" : 26
+    "数据勒索与供应链" : 24
+    "企业应用漏洞" : 22
+    "身份与认证旁路" : 16
+    "本地提权与工具链" : 8
+    "标准与政策" : 4
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 本周时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月13日至19日
+    10月13日 : SAP 十月补丁日 22 项含四枚严重
+           : Fortinet 发布 FG-IR-26-180
+    10月14日 : Rapid7 披露 Zimbra 五个漏洞并放出 PoC
+           : 厂商公开 SiteGuard 公告
+           : WebAlliance 108065 公开且无补丁
+    10月15日 : NCSC 更新 TLS 指南纳入后量子
+           : CISA 把 BeyondTrust 与 Fortinet 加入 KEV
+    10月16日 : Mage OSS 修复合并进主分支
+           : CISA 给出 10-19 联邦修复期限
+    10月17日 : Mage OSS CVE-2026-111823 发布
+           : Vanus 111998 计入数据库
+    10月18日 : JPCERT/CC 确认 SiteGuard 在野利用
+           : n0n 勒索进入最后 24 小时
+    10月19日 : KEV 两条到期 需取证排查
+           : n0n 13:27 UTC 截止
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Protect.Computer — SiteGuard 命令注入被用于获取 root</span>
+                        <a href="https://protect.computer/news/2026-10-18-siteguard-waf-command-injection">protect.computer · siteguard-waf-command-injection</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ETTAYEB — 主机式 WAF 的结构性风险与证据保全</span>
+                        <a href="https://ettayeb.fr/en/security/siteguard-waf-command-injection-cve-2026-106931">ettayeb.fr · siteguard-cve-2026-106931</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DEV Community — 统计功能以 root 执行攻击者命令</span>
+                        <a href="https://dev.to/randomchaos/siteguards-statistics-feature-runs-attacker-commands-as-root-5go7">dev.to · siteguards-statistics-feature</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ATLABYTE — JPCERT/CC 确认在野与受影响版本</span>
+                        <a href="https://atlabyte.com/en/news/hackers-exploit-cve-2026-106931-in-japan-s-siteguard-waf-to-run-commands-as-system-and-root">atlabyte.com · siteguard-cve-2026-106931</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GoKawiil — BleepingComputer 报道摘要与受影响量级</span>
+                        <a href="https://gokawiil.com/article/356749">gokawiil.com · siteguard-waf-article</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatFrontier — Zimbra 五个 CVE 明细与两枚未修复</span>
+                        <a href="https://threatfrontier.com/articles/zimbra-rapid7-five-cves-public-poc-two-unpatched">threatfrontier.com · zimbra-five-cves</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">secnews.in — Zimbra 在野利用后的后渗透手法（背景）</span>
+                        <a href="https://secnews.in/article/article-zimbra-cve-2026-73570-rce-active-exploitation">secnews.in · zimbra-cve-2026-73570</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatFrontier — SAP Visual Composer 9.9 与四枚严重</span>
+                        <a href="https://threatfrontier.com/articles/sap-visual-composer-cve-2026-89110-october-2026-patch-day">threatfrontier.com · sap-visual-composer-89110</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">about InfoSec — 补丁日分级与处置顺序</span>
+                        <a href="https://aboutinfosec.com/2026/10/18/sap-october-2026-security-patch-day">aboutinfosec.com · sap-october-2026-patch-day</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Safeguard — CVE-2026-89111（10.0）SSRF 细节与自查命令</span>
+                        <a href="https://safeguard.sh/resources/blog/sap-cloud-sdk-python-cve-2026-89111-oauth2-ssrf">safeguard.sh · cve-2026-89111-oauth2-ssrf</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Forkast — Mage 错误处理不终止流程的机制与十连发背景</span>
+                        <a href="https://forkast.news/mage-oss-ships-an-oauth-bypass-that-creates-sessions-from-unrecognized-providers-the-tenth-trust-through-defaults-incident-in-twenty-one-days/">forkast.news · mage-oss-oauth-bypass</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecNews.gr — 0.9.80 仍非安全版本、修复 commit 76c4f46</span>
+                        <a href="https://www.secnews.gr/en/741169/cve-2026-111823-mage-oss-oauth/">secnews.gr · cve-2026-111823</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatCluster — Mage 时间线与 PoC 状态</span>
+                        <a href="https://threatcluster.io/cluster/critical-oauth-bypass-vulnerability-in-mage-oss-disclosed-4ea6f087">threatcluster.io · mage-oss-111823</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurity Today — Mage 影响面与利用后可达资产</span>
+                        <a href="https://cybersecuretoday.com/article/mage-oss-oauth-session-bypass-flaw-cve-2026-111823">cybersecuretoday.com · mage-oss-111823</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatFrontier — WebAlliance CVE-2026-108065 无补丁与披露时间线</span>
+                        <a href="https://threatfrontier.com/articles/wealliance-ecommerce-cve-2026-108065-unpatched-sql-injection">threatfrontier.com · weballiance-108065</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">East Bay Cyber — Vanus CVE-2026-111998 硬编码令牌与缓解</span>
+                        <a href="https://eastbaycyber.com/content/cve-2026-111998">eastbaycyber.com · cve-2026-111998</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OffSeq Threat Radar — CVE-2026-111998 向量与 CWE</span>
+                        <a href="https://radar.offseq.com/threat/vanus-080-through-090-contains-a-default-credentials-vulnerability-that-allows-unauthenticated-remote-2cecdef85568fa98">radar.offseq.com · vanus-111998</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Maritime Briefs — 38 家、18 国、12.2 亿美元与 CyberLogitec 关联</span>
+                        <a href="https://maritimebriefs.com/cyber-extortion-group-n0n-targets-38-maritime-companies-worldwide">maritimebriefs.com · n0n-38-maritime</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The CODEW — 单家赎金区间与 SOCRadar 判断</span>
+                        <a href="https://www.thecodew.com/2026/10/daily-news-coverage-october-19.html">thecodew.com · daily-coverage-oct-19</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ransomnews — 10-19 勒索面快照</span>
+                        <a href="https://ransomnews.com/ransomware-attacks-today">ransomnews.com · ransomware-attacks-today</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Safeguard — FortiSIEM CVE-2026-106173 版本口径冲突与 27918 缓解</span>
+                        <a href="https://safeguard.sh/resources/blog/fortisiem-cve-2026-106173-port-27918-path-traversal">safeguard.sh · fortisiem-106173</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatFrontier — Metasploit 收录 DirtyClone 与 snap-confine 模块</span>
+                        <a href="https://threatfrontier.com/articles/dirtyclone-cve-2026-43503-snap-confine-cve-2026-3888-metasploit">threatfrontier.com · dirtyclone-snapconfine-metasploit</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatMonitor — Gitea CVE-2026-104627（OpenID 无请求断言）</span>
+                        <a href="https://threatmonitor.io/cve/CVE-2026-104627">threatmonitor.io · CVE-2026-104627</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatMonitor — Gitea CVE-2026-97859（权限校验缺失）</span>
+                        <a href="https://threatmonitor.io/cve/CVE-2026-97859">threatmonitor.io · CVE-2026-97859</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatMonitor — Gitea CVE-2026-110324（私有档案泄露）</span>
+                        <a href="https://threatmonitor.io/cve/CVE-2026-110324">threatmonitor.io · CVE-2026-110324</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Intelligent — NCSC 更新 TLS 指南纳入后量子（10-15）</span>
+                        <a href="https://theintelligent.co.uk/technology/2026/national-cyber-security-centre-publishes-updated-tls-guidance-incorporating-post">theintelligent.co.uk · ncsc-tls-pqc</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVETodo — 第 42 周综述（ACSC OT 告警、KEV 增补、NCSC 指南）</span>
+                        <a href="https://cvetodo.com/newsletters/weekly/weekly-cyber-update-2026-week-42">cvetodo.com · weekly-2026-w42</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录（官方）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa.gov · known-exploited-vulnerabilities</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年10月19日
+            </p>
+        </footer>
+
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月13日（第215期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月13日 星期五</span>
+            <span class="edition-number">第 215 期 | 总第 215 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>这个洞是扫描器先一步发现的 · 公告里写着这些洞是模型找的 · 官方说读文件研究员说能执行 · 微软加的校验反过来成了入口 · 后门密码写在产品里补丁不会来 · 一个下划线就捞到别人的令牌
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">AI 找出来的洞，修复那一栏是空的</h2>
+                <p class="sub-headline">Apache HTTP/2 那个 9.8，是 Anthropic 的扫描器在 10 月 26 日先报的，Google Cloud 的两位研究员在 11 月 3 日独立报了同一个问题，修复版等到 11 月 11 日才发。Fortinet 一天发 89 份公告、近 100 个漏洞，公告里自己写着"用了前沿 AI 模型"，同时说提前发是因为 AI 把从披露到攻击的窗口压短了。群晖一次修 27 条，最高那条 9.8 在登录接口上，公告明说没有变通方案；至于它到底是"读写任意文件"还是"零点击 RCE"，厂商和发现方各写一套。微软一年前给 CLFS 加的完整性校验，被一个没有 CVE 编号的 PoC 反过来用成了 SYSTEM 提权路径。有个产品三月就停止服务了，今天公开的三条 9.8 永远不会修，其中一条是写在代码里的后门密码。Red Hat Quay 里，你只要在命名空间名字里放一个下划线，就能捞到别人租户的机器人账号令牌。六条里两条明确写着发现者是 AI，两条写着修复版本不存在，三条的两份官方说法互相打架——这不是巧合，是同一件事的不同侧面。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">9.8 竞争条件</span>
+                    <h3 class="article-title">没有请求体的那个请求，让两个线程拿到同一块内存</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-119618 · 2.4.55–2.4.70 与 mod_h2 2.0.8–2.0.42 · CWE-362 · 修复版 2.4.71（11-11 发布）</span>
+                        <span class="cvss-score">CVSS 3.1 9.8（Red Hat 评）· 无在野 · PoC 只到堆破坏</span>
+                    </div>
+                    <div class="article-body">
+                        <p>2026 年 11 月 11 日，Apache 发布 HTTP Server <strong>2.4.71</strong>，修了三个漏洞。最重的那个在 <code>mod_http2</code> 里，Red Hat 给的向量是 <code>AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</code>，<strong>9.8</strong>。</p>
+                        <p>触发条件写得非常具体，具体到可以直接拿去写检测规则：<strong>一个没有请求体、带 <code>Content-Type</code>、但没有 <code>Content-Length</code> 的请求，在请求头表已经写满的时候到达</strong>。这种情况下，<code>assign_headers()</code> 里的工作线程会往<strong>共享的 stream 表</strong>里补写一个合成的 <code>Content-Length: 0</code>——而按 mod_http2 的设计，工作线程本来只用自己私有的分配器，共享的那个归连接线程。这一笔写下去，就和连接线程在无锁空闲链表上撞了车，两个线程可能拿到同一个内存节点。</p>
+                        <p>堆被破坏之后能走到哪一步，各家的说法分层得很清楚：Apache 与 Red Hat 承认"可导致远程代码执行"；Red Hat 的公告说已公开的研究在<strong>标准的、启用了 mod_http2 的服务器配置</strong>上演示了可靠的攻击手法，但公告里既没有细节也没有引用；GitHub 上有一份 PoC 复现了内存破坏和 Apache 子进程崩溃；<strong>公开材料里还没有人演示任意代码执行</strong>。Wiz 在 11 月 11 日写分析时也说自己没看到完整的公开利用。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>受影响</td><td>Apache HTTP Server 2.4.55–2.4.70；独立 mod_h2 2.0.8–2.0.42，且 <code>Protocols</code> 里含 <code>h2</code> 或 <code>h2c</code></td></tr>
+                            <tr><td>不受影响</td><td>只跑 HTTP/1.1 的服务器（Apache 默认就是 HTTP/1.1）；RHEL 6/7/8 不含该模块代码</td></tr>
+                            <tr><td>同批修复</td><td>CVE-2026-106023（mod_md 空指针解引用）、CVE-2026-109163（mod_vhost_alias 单字节栈溢出）</td></tr>
+                            <tr><td>已发补丁</td><td>RHEL 9：<code>mod_http2-2.0.26-7.el9_9.1</code>（RHSA-2026:98981）；RHEL 10：<code>mod_http2-2.0.29-5.el10_3.1</code>（RHSA-2026:98978）；Debian sid 2.4.71-1</td></tr>
+                            <tr><td>未修</td><td>Debian bookworm / trixie / forky 仍无修复；Amazon Linux 全部 pending；JBoss Core Services 与 Hardened Images 列出受影响但无修复</td></tr>
+                            <tr><td>暴露面（Wiz）</td><td>观察到的云环境里 <strong>64%</strong> 含受影响版本，<strong>51%</strong> 有对公网暴露的实例（不含"是否真的开了 HTTP/2"这一层）</td></tr>
+                        </table>
+                        <p><strong>发现过程本身是今天最值得记的一笔。</strong>Apache 的致谢名单里，第一个报告方是 <strong>Anthropic 的 OSS Scanner，10 月 26 日</strong>；第二个是 Google Cloud 漏洞研究团队的 <strong>Anthony Weems 与 Simon Scannell，11 月 3 日</strong>，独立报同一个问题。两个机构、相隔八天、互相不知道，最后指向同一行函数。</p>
+                        <p><strong>为什么 9.8 在 RHEL 上只有 Important。</strong>这条容易被误读成"Red Hat 在压分"。Red Hat 的说法是：RHEL 9 和 10 的 <code>mod_http2</code> 包给每个 HTTP/2 流单独分配内存，而这个漏洞依赖的是<strong>线程间共享</strong>的那块内存，所以利用难度实质变高——分数降到 Important 是结果，不是动机。判断这条对自家环境的风险，真正要回答的是三个问题：<code>mod_http2</code> 有没有加载、<code>Protocols</code> 里有没有 <code>h2</code>/<code>h2c</code>（包括每一个 VirtualHost）、以及<strong>你前面那层 CDN 或负载均衡是不是把 HTTP/2 终结掉了</strong>。第三种最容易被漏——浏览器走 HTTP/2，回源是 HTTP/1.1，你的 Apache 根本不走那条代码路径。AWS ALB 默认就是 HTTP/1.1 回源。</p>
+                        <p>还有一个坑：<strong>已经为 CVE-2026-23918 升到 2.4.67 的服务器并不安全</strong>，2.4.67–2.4.70 全在这条的影响范围里。11 月 11 日之前构建的容器镜像，全都带着有问题的版本。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">无请求体 带 Content-Type 不带 Content-Length</span>
+                        <span class="flow-step critical">请求头表恰好已满</span>
+                        <span class="flow-step">工作线程补写合成的 Content-Length 零</span>
+                        <span class="flow-step critical">写进共享表 而不是私有分配器</span>
+                        <span class="flow-step">与连接线程在无锁链表上竞争</span>
+                        <span class="flow-step critical">两个线程拿到同一节点 堆被破坏</span>
+                        <span class="flow-step">公开 PoC 到此为止 子进程崩溃</span>
+                    </div>
+                </article>
+
+                <!-- 文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">89 份公告</span>
+                    <h3 class="article-title">公告里写着，这些洞是 AI 帮忙找的</h3>
+                    <div class="article-meta">
+                        <span>Fortinet 11-10 批次 · 89 份公告 / 98 个 CVE（18 critical）· 无在野 · FortiOS 126259 未认证超管</span>
+                        <span class="cvss-score">公告致谢原文：with the use of the frontier AI model</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Fortinet 在 11 月 10 日一次性发了 <strong>89 份安全公告</strong>，覆盖 FortiOS、FortiMail、FortiAuthenticator、FortiManager、FortiAnalyzer、FortiClient 六个产品线。数量本身已经够上头条，但更值得看的是两句话。</p>
+                        <p>第一句在公告的致谢里：多条 critical 由 Fortinet 产品安全团队<strong>"with the use of the frontier AI model: Claude Mythos"</strong> 发现。第二句来自 Fortinet 自己对媒体解释发布时间：<strong>提前发，是因为 AI 缩短了从披露到被攻击之间的间隔</strong>。这两句放在一起，就是今天这一期的主线——找洞这一侧已经上了 AI，修洞那一侧没有。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>产品</th><th>分数</th><th>一句话</th><th>修在哪</th></tr>
+                            <tr><td><strong>126259</strong></td><td>FortiOS</td><td>9.8（NVD）/ 9.0（另一口径）</td><td>走 HA 的 <strong>FGSP + standalone-config-sync</strong> 或 autoscale 的部署，构造 HA 包即可<strong>以 super admin 执行命令</strong>，不需要认证</td><td>8.0.1 / 7.6.8 / 7.4.13 / 7.2.14；FortiManager FMWP 数据库 <strong>26.082</strong> 有虚拟补丁</td></tr>
+                            <tr><td><strong>126147</strong></td><td>FortiMail</td><td>9.8</td><td>路径穿越到代码执行，<strong>不需要认证</strong></td><td>8.0.2 / 7.6.7 / 7.4.9；<strong>7.2 分支公告没写修复版本</strong></td></tr>
+                            <tr><td><strong>121529</strong></td><td>FortiClient</td><td>9.1</td><td>恶意网页与本地 FortiClient 服务通信即可执行代码，发现者起名 <strong>Fortinet2Shell</strong></td><td>7.4.8 / 7.2.15</td></tr>
+                        </table>
+                        <p><strong>FortiMail 这一批要单独点出来。</strong>八条 critical 里<strong>七条不需要认证</strong>——126147 路径穿越、126148 HA join-request 包里的 OS 命令注入、126164 与 126263 SQL 注入，全部网络可达、无需用户交互。FortiMail Cloud 在 10 月 5 日就已经在云端修完，但从公告日期反推，用户端的 7.2 分支到现在还挂着 Not stated。这是邮件网关，位置在边界上，收信就是它的本职工作。</p>
+                        <p>还有几条不在头部但该记：<strong>126253</strong>（FortiOS / FortiSASE 的 OSPF，9.3，未认证攻击者可以广播 LSA 注入路由，修在 8.0.2 / 7.6.8 / 7.4.13 / 7.2.14，7.0 用户必须跨分支迁移）、<strong>126257</strong>（FortiAuthenticator 硬编码密码，9.0，未认证绕过凭据校验，但 Fortinet 自己加了一句"在攻击者控制之外的某些情况下"）、<strong>126229</strong>（FortiManager / FortiAnalyzer 的 dmserver，9.1，已认证管理员可越 VDOM）。</p>
+                        <p><strong>数字对不上这件事，这期有四套。</strong>89 份公告（SANS 与 CyberExperts 一致）；98 个 CVE、18 critical + 76 high（OpenAdvisories 逐条统计）；17 个 critical（SANS）；"twelve vulnerabilities、four rated critical"（另一家）。差异不是谁抄错了——"公告数"和"CVE 数"本来就是两个量（一份公告可以覆盖多个 CVE，也可以只覆盖一个），再加上是否把 FortiSASE 云端版、FortiCloud 同源条目算进来。<strong>对外报数时选哪套，取决于你要说服谁；判断要不要今天打补丁时，只用一套：厂商公告里的 Fixed in。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">一天发出八十九份公告</span>
+                        <span class="flow-step critical">致谢里写明 用了前沿 AI 模型</span>
+                        <span class="flow-step">厂商自述 提前发是因为窗口被压短</span>
+                        <span class="flow-step critical">八条 FortiMail 里七条免认证</span>
+                        <span class="flow-step">7.2 分支写着 Not stated</span>
+                        <span class="flow-step critical">同一批数据 四套计数</span>
+                        <span class="flow-step">判断只用一行 厂商的 Fixed in</span>
+                    </div>
+                </article>
+
+                <!-- 文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">预认证 9.8</span>
+                    <h3 class="article-title">厂商写的是读写文件，研究员说的是零点击 RCE</h3>
+                    <div class="article-meta">
+                        <span>Synology-SA-26:19 + SA-26:18 · 27 个 CVE（1 critical / 9 high / 17 medium）· 四个分支各有修复构建号</span>
+                        <span class="cvss-score">CVE-2026-76954 · 9.8 · 官方明写无变通方案</span>
+                    </div>
+                    <div class="article-body">
+                        <p>群晖在 11 月 10 日 17:06（UTC+8）发了两份公告，一共 27 条。最重的是 <strong>CVE-2026-76954</strong>，CWE-89，位置在 <strong>DSM 的 Auth API</strong>——也就是登录那条路上，<code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</code>，<strong>9.8</strong>。</p>
+                        <p>厂商原文的影响描述是：远程攻击者可以<strong>读取或写入任意文件</strong>，并造成拒绝服务。发现方是 Viettel Cyber Security 研究实验室的 Nguyễn Bá Nam Dũng（@greengrass19000）与 Hà Thế Long（@vcslab），他们对外把这条描述成<strong>预认证、零点击的远程代码执行</strong>。</p>
+                        <p><strong>这两句话不矛盾，但也不是同一句话。</strong>"读写任意文件"是可验证的行为，"零点击 RCE"是从这个行为推出来的结论——写文件写在能被执行的位置就是代码执行，写在别处就不是。NVD 记录里只有前者，后者是研究者的定性。写文案、做通报的时候要分清哪句有出处。</p>
+                        <table class="affected-table">
+                            <tr><th>类别</th><th>内容</th></tr>
+                            <tr><td>仅有的 critical</td><td><strong>CVE-2026-76954</strong>（Auth API，SQL 注入，9.8，预认证，读写任意文件 + DoS）</td></tr>
+                            <tr><td>第二个值得单独看</td><td><strong>CVE-2026-85101</strong>（rsync 认证绕过，8.6，<code>CWE-288</code> 备用路径，读特定文件、写任意文件、有限 DoS）</td></tr>
+                            <tr><td>三个 8.8</td><td>CVE-2026-13672（SSOAuth 授权绕过）、CVE-2026-18792（Sharing API 路径穿越）、CVE-2026-74857（Auth API 缺认证步骤）</td></tr>
+                            <tr><td>绕过二次验证那条</td><td><strong>CVE-2026-18596</strong>（OTP 绕过，8.1）—— 专打"我给密码加了动态码"这个补救措施</td></tr>
+                            <tr><td>修复构建号</td><td>7.2.1-<strong>69057-13</strong> / 7.2.2-<strong>72806-10</strong> / 7.3.2-<strong>86009-5</strong> / 7.4.1-<strong>90080-1</strong></td></tr>
+                            <tr><td>变通方案</td><td><strong>无</strong>。群晖公告的 mitigation 一栏写的是 None</td></tr>
+                            <tr><td>时间细节</td><td>公告 11-10 17:06:42（+8）首发；CVE 记录由群晖作为 CNA 在 <strong>11-12 03:40 与 03:41 UTC</strong> 才填完</td></tr>
+                        </table>
+                        <p><strong>要注意"升了不等于升对"。</strong>DSM 的更新通知和实际构建号是两件事，公告给的是<strong>构建号</strong>（<code>7.4.1-90080-1</code> 而不是 <code>7.4.1</code>）。核对更新是否生效，看控制面板里的完整构建号，不要看那条"已是最新版本"的提示。</p>
+                        <p><strong>前情不能省。</strong>这次不是孤立事件。11 月上旬群晖刚发过紧急警告：部分 NAS 被 <strong>C3RB3R</strong> 勒索软件加密，攻击者用的是 <strong>2024 年 12 月就已修复</strong>的漏洞，受害机器全是没升级的旧版 DSM。十几天后又是 27 条，其中一条在登录接口上。这两批是不同的漏洞，但指向同一个事实：<strong>NAS 的价值不在它能存多少，在于它往往是某些小团队唯一那份备份。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">两份公告 共二十七条</span>
+                        <span class="flow-step critical">登录接口上的 SQL 注入 不需要账号</span>
+                        <span class="flow-step">厂商写 读写任意文件</span>
+                        <span class="flow-step critical">发现方写 预认证零点击</span>
+                        <span class="flow-step">公告 mitigation 一栏写 None</span>
+                        <span class="flow-step critical">只能升四个分支的构建号</span>
+                        <span class="flow-step">十几天前刚有 C3RB3R 勒索</span>
+                    </div>
+                </article>
+
+                <!-- 文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-medium">没有编号</span>
+                    <h3 class="article-title">微软自己加的那道校验，成了提权的入口</h3>
+                    <div class="article-meta">
+                        <span>SignDrop · 无 CVE 无公告无补丁 · PoC 11-10 19:20 UTC 上架 · Win11 26H2 / Server 2025</span>
+                        <span class="cvss-score">本地提权到 SYSTEM · 微软未确认 · 独立测试：能跑，但不够稳</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 10 日，微软发十一月补丁的那一天，研究者 Nightmare Eclipse（GitHub 账号 <strong>MSNightmare</strong>）在 <strong>19:20 UTC</strong> 建了个仓库，四个半小时后最后一次改动，23:53 UTC。仓库里是一个叫 <strong>SignDrop</strong> 的本地提权 PoC，和一个写得很细的说明。</p>
+                        <p>它打的东西很有意思：<strong>不是漏洞，是微软一年前为了防漏洞加的那道校验。</strong></p>
+                        <p>2025 年 10 月的更新里，微软给 CLFS（通用日志文件系统）的日志文件加了 <strong>HMAC 认证</strong>——用日志数据和每台机器独有的密钥算校验码，驱动只解析自己写过校验码的日志。实现方式是每条日志旁边多一个 <code>.cnpf</code> 伴生文件，存恢复数据，创建时<strong>继承原日志的安全属性</strong>。SignDrop 打的就是这个"创建伴生文件"的动作。</p>
+                        <p>流程是：普通用户在自己能控制的目录里准备一个 CLFS 日志和容器，用对象管理器符号链接把后续的创建动作指向别处，然后诱导一个特权进程去打开这份日志（公开代码里用的是 Defender，通过本地 RPC 的 <code>ServerMpUpdateEngineSignature</code>）。<code>clfs.sys</code> 这时会在<strong>特权进程的安全上下文里</strong>创建伴生文件，而文件继承的是那份原日志的 DACL——原日志是普通用户的——于是得到一个 <strong>SYSTEM 创建、但普通用户可写</strong>的文件，再接一步就链到 SYSTEM shell。</p>
+                        <p>研究者的自我评价是那句最值得抄下来的话：<strong>"微软这里每一步都做对了，是逻辑本身可以被滥用。"</strong>校验是真的、HMAC 是真的、继承 DACL 也是设计如此，问题在于"继承谁的 DACL"这件事，在一个由普通用户准备好、由 SYSTEM 打开的日志上，结论是可被利用的。</p>
+                        <table class="affected-table">
+                            <tr><th>边界</th><th>说清楚</th></tr>
+                            <tr><td>性质</td><td><strong>本地提权</strong>。攻击者必须先在那台机器上跑代码，不能从外网打进来</td></tr>
+                            <tr><td>生效范围</td><td>注册表 <code>HKLM\SYSTEM\CurrentControlSet\Services\CLFS\Authentication</code> 下 <code>Mode</code> 为 <strong>0（强制）或 1（学习）</strong>；新系统从学习模式开始，<strong>90 天后自动转强制</strong>，所以装了很久的机器默认在范围内</td></tr>
+                            <tr><td>别做的事</td><td><strong>不要为了躲它把缓解关掉</strong>。改成 2 或 3 会让 CLFS 重新解析任意日志文件，把这层保护本来要防的内存破坏漏洞全部放回来</td></tr>
+                            <tr><td>独立验证</td><td>只有一份：韩国 78researchlab 的 Heewon Song（PurpleHound）确认能跑通，但判断<strong>可靠性不足以实战</strong>；跑起来每个 UAC 弹窗会同时开出普通与 SYSTEM 两个 shell，机器前有人就会看出来</td></tr>
+                            <tr><td>80% 这个数</td><td>研究者自己的猜测，没有样本没有方法，<strong>别当数据用</strong></td></tr>
+                            <tr><td>厂商状态</td><td>微软未确认、未分配 CVE、十一月更新里没有修；CISA KEV（版本 2026.11.10 / 1,779 条）里也没有</td></tr>
+                        </table>
+                        <p><strong>今天能做的两件事都不需要等补丁</strong>：查上面那个注册表值确认 <code>Mode</code> 是 0 还是 1；给"<strong><code>MsMpEng.exe</code> 在 <code>C:\Program Files\Common Files\microsoft shared\ink</code> 下创建 <code>hid.dll</code></strong>"这条加告警——这是公开 PoC 里普通用户变 SYSTEM 的那一步，也是目前最干净的检测点。顺带留意异常的 CLFS 错误码，比如 <code>ERROR_LOG_METADATA_CORRUPT</code>。</p>
+                        <p>同一位研究者今年已经交过一串：4 月的 RoguePlanet（微软 6 月确认为 <strong>CVE-2026-50656</strong>，7 月修）、8 月的 ShieldBreak（<strong>CVE-2026-69414</strong>），其中三个 Defender 漏洞被实际利用过。他交的东西历来先在 GitHub 上放代码，再等厂商追认。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">在自己控制的目录里备好 CLFS 日志</span>
+                        <span class="flow-step critical">用符号链接把创建动作指走</span>
+                        <span class="flow-step">诱导 Defender 打开这份日志</span>
+                        <span class="flow-step critical">clfs.sys 以 SYSTEM 身份建伴生文件</span>
+                        <span class="flow-step">伴生文件继承的却是普通用户 DACL</span>
+                        <span class="flow-step critical">得到 SYSTEM 创建 我能写的文件</span>
+                        <span class="flow-step">狩猎点 Defender 往 ink 目录写 hid dll</span>
+                    </div>
+                </article>
+
+                <!-- 文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">永不修复</span>
+                    <h3 class="article-title">后门密码写在产品里，而这条产品线三月就停止服务了</h3>
+                    <div class="article-meta">
+                        <span>XWEB EVO · VulnCheck 作为 CNA 一次公开 14 条 · 三条 9.8 · 全部 Deferred</span>
+                        <span class="cvss-score">产品线 2026 年 3 月 EOL · 无修复版本</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 12 日，VulnCheck 把一批 XWEB EVO 的漏洞填进 NVD，一共 14 条，其中最刺眼的三条都是 9.8，而且都是<strong>不需要认证、直接拿到 root 或管理员</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>弱点</th><th>内容</th><th>分数</th></tr>
+                            <tr><td><strong>124004</strong></td><td>CWE-798 硬编码凭据</td><td>内置 Administrator 账号有一个<strong>写在产品里的密码</strong>，一个请求就能拿到完整管理员会话</td><td>9.8 / 9.3</td></tr>
+                            <tr><td><strong>124002</strong></td><td>CWE-78 + CWE-306</td><td><code>login.lua</code>、<code>cleanout.lua</code>、<code>api.lua</code> 的<strong>用户名字段</strong>在密码校验之前就进了 shell；配合 <strong>setuid-root 的 wlua 解释器</strong>直接是 root</td><td>9.8 / 9.3</td></tr>
+                            <tr><td><strong>124010</strong></td><td>CWE-78 + CWE-250</td><td>setuid-root 的 <code>xwconsole.cgi</code>，<code>sh</code> 参数未净化就进了 <code>popen()</code></td><td>9.8 / 9.3</td></tr>
+                        </table>
+                        <p>三条的影响版本分别是"5.7.0 之前"和"5.6.2 之前"，而 VulnCheck 在每一条的描述末尾都补了同一句话：<strong>"This product line reached its end of service date in March 2026."</strong></p>
+                        <p><strong>这句话就是今天最锋利的地方。</strong>常规漏洞通告的结尾是"升级到 X 版本"；这一批的结尾是"升级到不存在"。你把资产清单翻三遍，能找到的答案只有两个：换产品，或者把设备从网络上摘下来。</p>
+                        <p>CWE-798 那条更值得单独说。它不是实现失误，是一个<strong>刻意的产品设计残留</strong>——为了售后能进客户环境，在代码里留了一个万能口令。这类东西在工控、在带外管理、在各种"智能"设备的管理后台里出现过太多次，每次被发现时的措辞都差不多："用于维护的诊断账号"。</p>
+                        <p>分数也确实两套：<strong>CVSS 3.1 给 9.8，CVSS 4.0 给 9.3</strong>。差的不是严重性判断——4.0 把"后续影响"（<code>SC/SI/SA</code>）拆开单独评估，而这一批只填了 <code>N</code>。三个 CVE 的 4.0 向量里 <code>E</code>（可利用性）全是 <code>X</code>（未评估），<strong>是厂商没评，不是"不容易利用"</strong>。<code>vulnStatus</code> 全部 <code>Deferred</code>，意思是 NVD 明确表示不会再去分析这一批。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">VulnCheck 一次填十四条</span>
+                        <span class="flow-step critical">三条 9.8 都免认证</span>
+                        <span class="flow-step">一条是写在代码里的万能口令</span>
+                        <span class="flow-step critical">一条在密码校验前就把用户名塞进 shell</span>
+                        <span class="flow-step">配合 setuid 解释器 直接 root</span>
+                        <span class="flow-step critical">产品线三月已 EOL 补丁不会来</span>
+                        <span class="flow-step">能做的只有 换掉 或者摘网</span>
+                    </div>
+                </article>
+
+                <!-- 文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-critical">跨租户</span>
+                    <h3 class="article-title">一个下划线，捞到别的租户的令牌</h3>
+                    <div class="article-meta">
+                        <span>Red Hat Quay · CVE-2026-110697（9.9）+ CVE-2026-123710（9.8）· 均 Awaiting Analysis</span>
+                        <span class="cvss-score">一条要低权限 · 一条什么都不需要</span>
+                    </div>
+                    <div class="article-body">
+                        <p>同一天（11-11）Red Hat 放出两条 Quay 的，性质完全不同，但都能把镜像仓库翻个底朝天。</p>
+                        <p><strong>第一条：110697，9.9。</strong>机器人账号的<strong>列表函数</strong>把用户控制的命名空间名字直接拼进 SQL 的 <code>LIKE</code> 模式里，<strong>没有转义通配符</strong>。<code>LIKE</code> 里 <code>_</code> 匹配任意单个字符，<code>%</code> 匹配任意串。攻击者只要<strong>把自己命名空间的名字里放一个下划线</strong>，那条查询就会匹配到别人租户的命名空间，把对方的机器人账号<strong>以及解密后的认证令牌</strong>一起返回。向量是 <code>PR:L</code> 但 <code>S:C</code>——低权限进来，影响跨出安全边界，所以分比 9.8 还高。</p>
+                        <p><strong>第二条：123710，9.8，<code>PR:N</code>。</strong>这条不需要任何账号：拿一个匿名 registry token，把 <code>audience</code> 设成自己控制的；把这个令牌提交给<strong>服务密钥轮换端点</strong>；Quay 接受，并允许安装攻击者的签名密钥且不带过期时间；接下来用自己私钥签一个任意仓库、任意权限的令牌，验证会通过——因为那正是它刚装上去的公钥。</p>
+                        <p><strong>为什么这条比 9.9 那条更该紧张。</strong>9.9 那条要一个账号；9.8 这条什么都不需要，而且拿到的是<strong>签发权</strong>——不是某一张令牌，是所有令牌的伪造能力。装进去的那把签名密钥<strong>没有过期时间</strong>，也就意味着"改密码、吊销令牌"这套常规处置动作对它无效。供应链场景下这最要命：你能换 tag，就能把别人 CI 里拉的那个镜像换成一个长得一样的东西。</p>
+                        <p>Red Hat 的处置建议很短：<strong>把可能暴露过的机器人账号凭据、registry 凭据、签名密钥全部当成已泄露</strong>，然后核对 tag 与 digest 是否对得上、翻 token 签发记录里有没有陌生 IP 或 UA、看签名密钥轮换事件有没有不是自己做的。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">命名空间名字里放一个下划线</span>
+                        <span class="flow-step critical">拼进 LIKE 变成通配符</span>
+                        <span class="flow-step">查回别的租户机器人账号</span>
+                        <span class="flow-step critical">连解密后的令牌一起返回</span>
+                        <span class="flow-step">另一条 拿匿名令牌打轮换端点</span>
+                        <span class="flow-step critical">装上自己的签名密钥 不过期</span>
+                        <span class="flow-step">从此任意仓库可读可写 可换 tag</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. ScreenConnect 六个 MSP 被打穿，恶意客户端反手劫持技术员工位</h4>
+                    <p>Huntress 在 11 月 11 日 <strong>17:47 UTC</strong> 首次检测到。入口是第三方扩展 <strong>RMM+ 1.0.31 / 1.0.32 的共享访问密钥为空时会被直接放行</strong>，绕过 ScreenConnect 自己的账号、角色和 MFA。进来之后用 Run Command 给客户终端批量装未授权客户端，再投一套叫 <strong>SCKit</strong> 的工具包，其中 <strong>RelayTrap</strong> 会在技术员连上去的一瞬间劫持他的工位、偷浏览器与 ScreenConnect 会话 cookie，然后顺着他的管理面横到所有他管的客户。数一下口径：<strong>6 家 MSP、47 家下游机构、286 个端点</strong>（另一份写 48 家 / 288 个 / 90 分钟内）。ConnectWise 已停用五个第三方扩展（Labtech Plus、RMM Plus、RMM+、RMM Plus Password Link、RMM+ Password Link），<strong>本地部署的客户要自己手动关</strong>。IOC：<code>185.99.255.28</code>（中继）、<code>155.94.150.39</code>、<code>ns[.]mo7sen[.]dev</code>。最实用的一条建议是反直觉的：<strong>别用 ScreenConnect 去连疑似中招的机器</strong>，因为它的传播路径就是会话本身。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. KEV 三天没动，而这三天正好堆着六条死线</h4>
+                    <p>今天拉下来核对：<code>catalogVersion</code> 还是 <strong>2026.11.10</strong>，总数 <strong>1,779</strong> 条，<strong>11-11、11-12 都没有新增</strong>。上一次更新是 11-10 加的六条（Outlook 124194、Openwave 111793、Cisco BroadWorks 20320、Chromium 125350、Barracuda 111560 与 116606）。而按已公布的整改截止日：11-12 是 GPUStack 102895、OpenSSH 123158、FreeSWITCH 116779、Aspera 123218 四条；<strong>11-13 是 Barracuda 那两条</strong>。目录不动，不代表这两天没有新披露——只代表"被确认在野"这个判断没更新。<strong>把 KEV 当成"今天有没有事"的仪表盘，会持续漏报。</strong></p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. eMudhra 再撤 8 张中间 CA，根因是一段自己写的 Python 脚本</h4>
+                    <p>11 月 11 日，这家证书机构公布调查结果：2025 年 4 月 30 日做 HSM 之间密钥迁移时，用脚本处理私钥。先披露的那 8 张 ECDSA 证书，<strong>私钥被脚本错误截断到只剩 1 字节</strong>——恢复成本几乎为零。这次新增撤销的 8 张 RSA 证书没有同样的弱化，但私钥<strong>曾被导入普通主机进程内存</strong>，无法证明符合 CA 密钥管理规范。8 张里 6 张用于 TLS 网站证书签发、2 张用于代码签名。这条的意义不在数量，在于它说明：<strong>HSM 保得住存储，保不住流程。</strong></p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. rubygem-safemode 9.6：沙箱白名单被"复合赋值"绕过</h4>
+                    <p>CVE-2026-107360，<code>CWE-183</code>（允许输入白名单过于宽松），<code>AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N</code>。safemode 是 Ruby 的模板沙箱，靠 Jail 白名单拦截方法调用；<strong>复合赋值表达式在求值时没有经过 Jail 中介</strong>，于是能对暴露给模板渲染器的对象调用任意无参方法——包括删主机、读出不在白名单里的对象状态。Red Hat Satellite 6.16.15 / 6.17.13 / 6.18.11 已修（RHSA-2026:99949 / 99950 / 99952）。补丁前的临时办法只有一个：<strong>只让可信管理员编辑模板</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Citrix NetScaler 9.5，但没人说得清它是什么</h4>
+                    <p>CVE-2026-107412，CVSS 4.0 <strong>9.5</strong>，描述全文两句话："NetScaler ADC 与 NetScaler Gateway 存在多个内存溢出漏洞，可导致不可预测或错误的行为以及拒绝服务。"<strong>没有 CWE、没有版本范围、没有修复版本、没有向量明细</strong>（<code>AT:P</code> 攻击前提为"存在"）。<code>vulnStatus</code> 是 <code>Received</code>，CNA 是一串 UUID 而不是机构名。NetScaler 是边界设备，历史上出过 CitrixBleed 那种级别的东西，所以"9.5 但没细节"这件事本身要跟进——<strong>分数先到了，信息还没到</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. Linksys EA8100 两条 10.0：公开利用已发布，厂商没回</h4>
+                    <p>CVE-2026-127275（JNAP API 的 <code>SetRemoteSetting</code> / <code>SetUnsecuredWiFiWarning</code>，参数 <code>isEnabled</code> 缺认证，<code>CWE-287</code> + <code>CWE-306</code>）与 CVE-2026-127277（<code>etc/init.d/service_smbd.sh</code> 的 <code>ANON_ACCESS</code> 参数，<code>CWE-665</code>），CVSS 3.1 <strong>10.0</strong>（<code>S:C</code>）、4.0 9.3（<code>E:P</code>）。两条描述都有同一句：<strong>"exploit has been publicly disclosed"</strong>，以及<strong>"厂商被提前联系过，完全没有回应"</strong>。这是 VulDB 作为 CNA 的典型批次——分给到满分，是因为它真的什么都不需要，而不是因为评估严谨。家用路由器，能刷就刷，不能刷就换。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "ApacheHTTP2竞争条件": [0.30, 0.94]
+    "Fortinet八十九条": [0.16, 0.90]
+    "群晖预认证注入": [0.22, 0.92]
+    "SignDrop无编号": [0.56, 0.80]
+    "XWEB三条九点八": [0.46, 0.88]
+    "Quay签名密钥": [0.28, 0.86]
+    "SCKit六家MSP": [0.93, 0.88]
+    "KEV三天未动": [0.10, 0.42]
+    "eMudhra十六张CA": [0.78, 0.68]
+    "Linksys两条满分": [0.86, 0.70]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "由AI工具发现或参与发现": 22
+    "官方口径互相矛盾": 21
+    "没有可升的修复版本": 19
+    "认证判断被绕过": 16
+    "PoC公开但未到在野": 14
+    "数量大但前置条件高": 8
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月26日至11月24日
+    10月26日 : Anthropic 的扫描器向 Apache 报告 HTTP2 竞争条件
+    11月03日 : 谷歌云两位研究员独立报同一个洞
+    11月10日 : 微软十一月补丁日 同日 SignDrop 代码上架
+    11月10日 : 群晖两份公告 共二十七条
+    11月10日 : Fortinet 八十九份公告 公告写明 AI 参与发现
+    11月10日 : KEV 加六条 目录版本停在今天
+    11月11日 : Apache 发 2.4.71 修复
+    11月11日 : ConnectWise 警告第三方扩展被滥用
+    11月11日 : 十七时四十七分 Huntress 首次检测到攻击
+    11月11日 : eMudhra 再撤八张中间 CA
+    11月11日 : Red Hat 公开 Quay 两条
+    11月12日 : 群晖 CVE 记录由 CNA 填完
+    11月12日 : VulnCheck 公开 XWEB 十四条
+    11月12日 : KEV 四条整改截止 目录无新增
+    11月13日 : Barracuda 两条整改截止 目录仍未动
+    11月24日 : KEV 四条整改截止
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Apache HTTP Server 官方安全页 — 2.4.71 与 CVE-2026-119618（受影响 2.4.55–2.4.70、mod_h2 2.0.8–2.0.42、assign_headers 竞争条件、同批 mod_md 与 mod_vhost_alias 两条）</span>
+                        <a href="https://httpd.apache.org/security/vulnerabilities_24.html">httpd · security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CovertSwarm — CVE-2026-119618 mod_http2 RCE（触发条件最精确的一份：无请求体 + Content-Type + 无 Content-Length + 请求头表已满 → 补写 Content-Length 0 到共享 stream 表、无锁空闲链表撞车、各分支 RHSA 号）</span>
+                        <a href="https://www.covertswarm.com/post/cve-2026-119618-apache-http2-rce">covert · http2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetSPI — Apache HTTP Server Critical RCE（Red Hat 的 9.8 向量、CWE-362、RHEL 9/10 在范围内、检测命令 apachectl -M 与 grep Protocols、发行版包可能版本号旧但已修复）</span>
+                        <a href="https://www.netspi.com/blog/executive-blog/critical-vulnerability/apache-http-server-critical-rce-vulnerability-cve-2026-119618">netspi · http2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IntelFusions — Critical Apache HTTP/2 bug（Anthropic OSS Scanner 10-26 先报、Google Cloud 的 Anthony Weems 与 Simon Scannell 11-03 独立报、Wiz 的 64% 与 51%、Docker 镜像需重建、ALB 默认 HTTP/1.1 回源）</span>
+                        <a href="https://www.intelfusions.com/news/apache-http2-rce-flaw-2-4-71">intelfusions · http2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">灯台 — CVE-2026-119618 的阶段核对（把"确认漏洞 / 复现内存破坏 / 演示攻击手法 / 演示 RCE / 在野利用"分成五个阶段，明确后两个在 11-11 未确认；RHEL 降为 Important 的原因）</span>
+                        <a href="https://joho-todai.com/en/apache-http-server-cve-2026-119618-remote-code-execution">todo · http2</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberExperts — Fortinet fixes 18 critical bugs（89 份公告、近 100 个漏洞、18 critical、126259 的 FGSP 前提、FortiManager FMWP 26.082 虚拟补丁、121529 被命名 Fortinet2Shell、"AI 缩短披露到攻击间隔"的厂商解释）</span>
+                        <a href="https://cyberexperts.com/2026-11-12-fortinet-november-fortios-fortimail-fixes">cyberexperts · fortinet</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IntelFusions — Fortinet patches critical FortiOS and FortiMail flaws（"twelve vulnerabilities、four critical"这套口径、公告致谢原文 with the use of the frontier AI model、126253 OSPF 9.3、126257 硬编码密码 9.0 与"攻击者控制之外"这句原话、126229 dmserver 9.1）</span>
+                        <a href="https://www.intelfusions.com/news/fortinet-november-2026-fortios-fortimail-critical">intelfusions · fortinet</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">InfraRunBook — FortiMail 八个 critical 逐条（126147 / 126148 / 126164 / 126263 / 126155 / 126156 / 126157 / 126150、七条免认证、7.2 分支 Not stated、修复 8.0.2 / 7.6.7 / 7.4.9）</span>
+                        <a href="https://infrarunbook.com/article/cve-2026-126147-fortinet-fortimail-multiple-critical-vulnerabilities">infrarunbook · fortimail</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SANS Stormcast 11-12 期（本期时间锚点：Apache mod_http2、Fortinet 17 critical、Ivanti EPM 121653 与 CSA 121683、Windows SignDrop、N-central HF2 三 CVE、Shadowserver 看到的 N-central 暴露数从 1,338 降到 148）</span>
+                        <a href="https://www.invisibleciso.com/146987534/sans-stormcast-thursday-november-12th-2026-apache-modhttp2-rce-cve-2026-119618-fortinet-fortimail-criticals-ivanti-epm-sqli-cve-2026-121653-windows-signdrop-clfs-n-able-n-central-hf2">sans · stormcast</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rescana — Synology DSM CVE-2026-76954（SA-26:19 首发 11-10 17:06:42 +8、CVE 记录由 CNA 在 11-12 03:40 与 03:41 UTC 填写、两位发现者署名、85101 的 CWE-288 与向量、mitigation 原文 None）</span>
+                        <a href="https://www.rescana.com/post/synology-dsm-cve-2026-76954-sql-injection-patch-now">rescana · synology</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatAft — Synology DSM 27 CVEs（SA-26:19 两条 + SA-26:18 二十五条的拆分、三个 8.8 与 18596 OTP 绕过、75785 VPN API、Viettel 把 76954 描述成预认证零点击 RCE 而厂商只写读写文件）</span>
+                        <a href="https://threataft.com/articles/synology-dsm-mass-disclosure-27-cves-november-2026">threataft · synology</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review — Synology patches 27 DSM flaws（1 critical / 9 high / 17 medium 的分布、四个修复构建号、无公开利用）</span>
+                        <a href="https://dailysecurityreview.com/resources/synology-patches-27-dsm-flaws-including-cvss-9-8-sql-injection">dsr · synology</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">小众软件 — 群晖 27 个 DSM 漏洞（C3RB3R 勒索前情：11 月上旬群晖紧急警告、攻击者用的是 2024 年 12 月已修复的漏洞、受害设备均未更新；CERT-FR 与 HKCERT 跟进）</span>
+                        <a href="https://www.appinn.com/synology-dsm-27-security-vulnerabilities-2026/">appinn · synology</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — New SignDrop zero-day exploit（仓库创建时间、CLFS 认证机制的 90 天学习期、Mode 0/1 的范围、微软未确认未分配 CVE、80% 是研究者猜测）</span>
+                        <a href="https://thehackernews.com/2026/11/new-signdrop-zero-day-exploit-turns.html">thn · signdrop</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DugganUSA — SignDrop 狩猎指南（GitHub API 看到的建仓与改动时间、ServerMpUpdateEngineSignature、MsMpEng 往 shared 的 ink 目录写 hid.dll 这个检测点、明确反对关闭缓解的理由）</span>
+                        <a href="https://www.dugganusa.com/post/signdrop-clfs-zero-day-hunt-defender-writing-hid-dll">duggan · signdrop</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber Security News — Windows SignDrop 0-Day（同一研究者前史：RoguePlanet 被确认为 CVE-2026-50656、ShieldBreak 为 CVE-2026-69414、其中三个 Defender 漏洞被在野利用；CLFS 历史：10 条在 KEV、CVE-2025-29824 被 Storm-2460 用于投勒索）</span>
+                        <a href="https://cybersecuritynews.com/windows-signdrop-zero-day-exploit/">csn · signdrop</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — 124004 / 124002 / 124010 / 127275 / 127277 / 107412 / 107360 / 110697 / 123710 / 126259 / 76954（本期向量、CVSS 4.0 与 3.1 双分数、vulnStatus、CNA 与 CWE 逐一核对；XWEB 三条描述末尾的 EOL 原句）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-124004">nvd · xweb</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0 — 11-11 至 11-13 收录 1,092 条（按 CVSS 降序与描述前缀聚类：Fortinet 93、Chromium 85、WordPress 110、PostgreSQL 63、Synology 27、XWEB 14、Citrix 13、ManageEngine 10）</span>
+                        <a href="https://nvd.nist.gov/developers/vulnerabilities">nvd · api</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA — Known Exploited Vulnerabilities Catalog（今日核对：catalogVersion 2026.11.10、总数 1,779、11-11 与 11-12 均无新增；11-10 六条与各自死线；11-12 与 11-13 是六条整改截止日）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">eSentire — Ongoing Attacks Targeting ScreenConnect Extensions（ConnectWise 11-11 公告、五个被停用的第三方扩展点名、RMM+ 1.0.31/1.0.32 空访问密钥、本地部署需手动关、IOC 与处置清单、明确说别用 ScreenConnect 连疑似中招的设备）</span>
+                        <a href="https://www.esentire.com/security-advisories/ongoing-attacks-targeting-screenconnect-extensions">esentire · screenconnect</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix — ScreenConnect MSP 攻击路径（17:47 UTC 首检、6 MSP / 47 组织 / 286 端点、RelayTrap 反打技术员工位、7 月起的钓鱼前情、T1078 与 T1219 与 T1562.001 映射）</span>
+                        <a href="https://aviatrix.ai/threat-research-center/active-screenconnect-attacks-breach-msps-impact-dozens-of-organizations/">aviatrix · screenconnect</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">蚁景网安实验室 — 网络安全日报 2026年11月12日（中文侧交叉核对：ScreenConnect 6 家 MSP / 47 机构 / 286 台；eMudhra 再撤 8 张中间 CA 的完整叙述——HSM 迁移、自写 Python 脚本、ECDSA 私钥被截断到 1 字节、8 张 RSA 里 6 张 TLS 2 张代码签名）</span>
+                        <a href="https://www.yijinglab.com/industry/20261112094605">yijinglab · 1112</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SmartScope — Red Hat Satellite 6.16.15 / 6.17.13 / 6.18.11（CVE-2026-107360 的 9.6 向量、CWE-183、RHSA-2026:99949 与 99950 与 99952、两条临时缓解：限制模板编辑权限、不要把高权限 ActiveRecord 对象暴露给不可信模板作者）</span>
+                        <a href="https://smartscope.blog/en/blog/red-hat-satellite-6-16-15-6-17-2026">smartscope · satellite</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">East Bay Cyber — 11-12 威胁摘要（Quay 两条的处置清单与日志三元组：robot 枚举、异常 IP 的令牌签发、签名密钥轮换事件；GSocket 在 Linux 上的持久化排查项；eMudhra 与 Qilin 的旁证）</span>
+                        <a href="https://eastbaycyber.com/content/2026-11-12-digest-red-hat-quay-screenconnect-linux-persistence">ebc · 1112</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注两边口径（Fortinet 十一月批次 89 份公告 / 98 个 CVE / 17 critical / 12 个漏洞、FortiOS 126259 的 9.8 与 9.0、FortiMail 7.2 分支是否算"无修复"、群晖 76954 是"读写任意文件"还是"零点击 RCE"、Red Hat Quay 两条的 9.9 与 9.8、ScreenConnect 的 6 家 MSP / 47 家 286 台与 48 家 288 台）。CVE-2026-119618 的"可靠攻击手法已被演示"一句出自 Red Hat 公告，公告未附细节与引用，本期按原话转述并分层标注；SignDrop 的 80% 是研究者自估，独立验证只有一份且判断为"不足以实战"。XWEB EVO 的硬编码口令是 NVD 公开 CVE 记录里的原文事实，报告正文照录以便自查，不要用于未授权环境。涉华涉台归因类内容不予收录。
+                <br>
+                每日精选 · 值得关注 | 2026年11月13日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

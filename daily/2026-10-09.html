@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年10月9日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <div class="edition-info">
+            <span class="edition-date">2026年10月9日 星期五</span>
+            <span class="edition-number">第 181 期 | 总第 181 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>LMCache105192×9.8·CISA KEV五连·微软云96207×10·日本IDCF勒索495家·Tensorlake蠕虫·Gitea103059×9.1·Firefox16扩展</div>
+
+        <div class="content-wrapper">
+
+            <div class="headline-section">
+                <h2 class="main-headline">LMCache CVE-2026-105192：LLM 推理缓存用零认证 ZeroMQ 通道吃 pickle，未认证 RCE 且目前无补丁</h2>
+                <p class="sub-headline">2026-10-07 JFrog 安全研究团队披露 <strong>LMCache</strong> 一枚<strong>未认证远程代码执行</strong>漏洞 <strong>CVE-2026-105192</strong>，NVD 给出 CVSS 3.1 <strong>9.8</strong>（CWE-502 反序列化不可信数据 + CWE-306 缺失认证）。<strong>截至 10-08 无任何修复版本，项目方也未发布自己的安全公告</strong>。LMCache 是当前大模型推理栈里常见的 <strong>KV Cache 加速层</strong>，被广泛用在基于 <strong>vLLM</strong> 的生产推理集群中——它位于推理服务器与缓存之间，对支撑活跃推理任务的缓存状态有写权限。</p>
+            </div>
+
+            <div class="articles-grid">
+
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">头条事件</span>
+                    <h3 class="article-title">LMCache CVE-2026-105192（CVSS 9.8）：一条报文打穿 LLM 推理缓存，官方容器默认 root，无补丁（头条）</h3>
+                    <div class="article-meta">
+                        <span>LMCache v0.3.9 – v0.5.5 · v0.5.6-rc · dev 分支 · 仅 multiprocess 模式受影响</span>
+                        <span class="cvss-score">CVE-2026-105192 CVSS 3.1 = 9.8 · CWE-502 / CWE-306 · JFrog 研究员 Yuval Moravchick · 关联 vLLM CVE-2026-105756 ×6.5</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>根因与利用链。</strong>漏洞位于 LMCache 的 <strong>multiprocess（多进程）模式</strong>：该模式下缓存作为<strong>独立服务</strong>运行，各 LLM worker 通过 <strong>ZeroMQ</strong> 套接字连接它、注册并共享 KV cache 块。这个 socket <strong>没有任何认证</strong>（无 CURVE、无 ZAP、无逐消息认证）；服务端在<strong>读取消息参数的阶段</strong>就用 Python 原生 <strong>pickle</strong> 对载荷反序列化，<strong>在任何"消息类型校验"之前</strong>就已触发执行。消息用 msgpack 编码，扩展码 <code>1</code> 注册给了 <code>DeviceIPCWrapper</code>，解码器一遇到该扩展码就对 payload 调 <code>pickle.loads</code>——因此<strong>一条精心构造的网络报文</strong>即可在 LMCache 进程权限下执行任意代码。</p>
+<p><strong>放大器：</strong>官方提供的容器镜像里，该进程<strong>默认以 root 运行</strong>——容器化部署一旦被打穿，攻击者直接拿到容器内 root；而 GPU 推理主机上通常放着<strong>模型权重、API Key 与云凭据</strong>。</p>
+<p><strong>是否暴露只取决于一个设置。</strong>JFrog 与 NVD 均指出，multiprocess 服务的<strong>默认绑定是 localhost:5555</strong>；只有当运维用 <code>--host</code> 传了<strong>可路由地址</strong>（JFrog 称这正是"文档化的多节点部署方式"）时，该缺陷才变为<strong>网络可达</strong>。因此 9.8 分对应对<strong>可路由配置</strong>；只在本机跑默认绑定的单机安装<strong>不被远端触达</strong>。但 LMCache <strong>官方示例 K8s DaemonSet 默认监听所有网卡</strong>——很多团队为先把推理跑起来直接照抄该示例。</p>
+<p><strong>无补丁下的处置（JFrog 建议）：</strong>不要把 multiprocess 服务绑定到可路由地址，把端口留在本机或可信集群网络内；防火墙限制谁能连到该端口<strong>可降低但不能消除</strong>风险（任何仍能连上的主机都能执行代码）；官方容器<strong>降权运行</strong>，不要用 root。长期修复方向（给维护者）：停止把网络数据喂给 pickle、换成安全序列化格式、给 ZeroMQ 传输加上认证（如 CURVE 或逐消息 HMAC），并要求<strong>未配置认证时拒绝绑定可路由地址</strong>。</p>
+<p><strong>关联项：</strong>vLLM 侧 <strong>CVE-2026-105756（6.5）</strong> 是另一枚相关缺陷——在 <strong>0.30.0（9-22 发布）之前</strong>，使用 LMCache multiprocess 连接器的部署收到<strong>畸形 <code>cache_salt</code> 值</strong>的单条请求即可让引擎核心抛未捕获异常，造成 <strong>DoS</strong>。vLLM 已修复；LMCache 的 pickle 问题<strong>仍无补丁</strong>。</p>
+<p><strong>为何值得关注：</strong></p>
+<ul>
+    <li><strong>"内部协调 socket + pickle + 默认信任网络"是 AI 推理栈的系统性病灶：</strong>2025-11 研究者把这族缺陷命名为 <strong>ShadowMQ</strong>，此后 LightLLM 的 config server（同为 pickle）、AutoAgent 的未认证 TCP socket、Langflow 的 MCP handler 接连中招——<strong>约七周内第 3 个开源 LLM/AI 工具链的未认证 RCE</strong></li>
+    <li><strong>代价最大的位置：</strong>LMCache 卡在推理服务器与 KV cache 之间，对<strong>支撑活跃推理任务的缓存状态有写权限</strong>，影响远超缓存服务本身</li>
+    <li><strong>无补丁 + 无检测手段：</strong>JFrog 的公告<strong>没有给运维"是否已被攻击"的判别方法</strong>，缓解完全落在操作者手上</li>
+</ul>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">KEV / 在野</span>
+                    <h3 class="article-title">CISA KEV 10-08 一次性纳入五枚"已在野"高危：全是 2015–2023 年的老编号，联邦大限仅 3 天</h3>
+                    <div class="article-meta">
+                        <span>CISA Known Exploited Vulnerabilities · 2026-10-08 纳入 · FCEB 修复大限 10-11</span>
+                        <span class="cvss-score">ProFTPD / ONLYOFFICE / Apache Struts / ISC BIND / Strapi（CVE-2023-22894 可串 CVE-2023-22621 至 RCE）· 另加日本 FileZen CVE-2026-25108</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-10-08，CISA 向 <strong>已知被利用漏洞（KEV）目录</strong>补入<strong>五枚正在被真实攻击利用</strong>的漏洞，联邦文职机构（FCEB）<strong>修复大限 10-11</strong>。值得注意的是：<strong>五枚 CVE 编号全部落在 2015–2023 年</strong>——"老漏洞、新在野"。</p>
+<p><strong>五枚概要：</strong></p>
+<ul>
+    <li><strong>CVE-2015-3306（ProFTPD 1.3.5，CVSS 10.0）：</strong><code>mod_copy</code> 的 <code>site cpfr</code> / <code>site cpto</code> 允许<strong>远程任意文件读/写</strong></li>
+    <li><strong>CVE-2021-3199（ONLYOFFICE Docs，CVSS 9.8）：</strong>使用 JWT 时 <code>/upload</code> 参数经 <code>/..</code> 序列造成<strong>路径穿越 → RCE</strong></li>
+    <li><strong>CVE-2016-3081（Apache Struts，CVSS 8.1）：</strong>开启 <strong>Dynamic Method Invocation</strong> 时，经 <code>method:</code> 前缀<strong>命令注入 → 代码执行</strong></li>
+    <li><strong>CVE-2015-5477（ISC BIND，CVSS 7.5）：</strong><strong>TKEY 查询</strong>可远程打崩 DNS 服务器（DoS，服务退出）</li>
+    <li><strong>CVE-2023-22894（Strapi）：</strong>敏感信息<strong>明文存储</strong>，拿到 admin 面板即可用<strong>查询过滤器</strong>推断高敏感用户数据（含口令哈希、重置令牌）</li>
+</ul>
+<p><strong>Strapi 是重点：</strong>CVE-2023-22894 单看只是"中危信息泄露"，但<strong>与 CVE-2023-22621 串联即可达成未认证 RCE</strong>（SSTI 写入 + 触发用户注册再跑 shell）。CISA 的 SSVC 决策为 exploitation:<strong>active</strong>、automatable:<strong>no</strong>、technical impact:<strong>total</strong>，指向"定向使用而非全网自动扫描"。CISA 亦明确提示部分受影响版本<strong>已停止支持（EOL/EoS）</strong>。</p>
+<p><strong>修复版本：</strong>ProFTPD <strong>1.3.5a</strong>；ONLYOFFICE <strong>5.6.3</strong>；Struts <strong>2.3.20.3 / 2.3.24.3 / 2.3.28.1</strong>；BIND <strong>9.9.7-P2 / 9.10.2-P3</strong>；Strapi <strong>4.8.0</strong>（注：Strapi 官方给的范围是 3.2.1–4.7.9，与 NVD 的"through 4.5.5"存在口径差异，<strong>以厂商公告为准</strong>）。<strong>同日另一枚 KEV</strong>：日本 <strong>Soliton Systems FileZen</strong> 文件传输产品的 <strong>CVE-2026-25108（OS 命令注入）</strong>。</p>
+<p><strong>为何值得关注：</strong>这一次 KEV 更新是一堂"<strong>CVSS 是标签、不是暴露度量</strong>"的公开课。Strapi 那枚主评 4.9–7.2 的"中危"，实际是<strong>未认证到 Super Admin、再到代码执行</strong>的路径，任何<strong>按 CVSS 排序</strong>的扫描器都不会把它排到队首。老编号 + EOL 产品 + 短大限，提醒：补丁队列不能只看分数，还要看<strong>能不能被串起来</strong>。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">云服务 / 满分 CVE</span>
+                    <h3 class="article-title">微软 10-08 云服务五连：Partner Center 证书校验被绕过，满分 10.0</h3>
+                    <div class="article-meta">
+                        <span>2026-10-08 微软云严重漏洞批（Partner Center / Bookings / Azure App Service / Dataverse / Azure SRE Agent）</span>
+                        <span class="cvss-score">CVE-2026-96207 ×10.0 证书校验不当 · 94510 ×9.9 授权绕过 · 77900 ×9.8 未认证 RCE · 88131 ×9.8 反序列化 RCE · 69435 ×9.6 缺失授权</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-10-08，微软发布一批<strong>云服务严重漏洞</strong>，<strong>五枚 CVSS 处于 9.6–10.0</strong>。与上月"仅 1 枚 Exchange 补丁"的冷清窗口形成对比。</p>
+<ul>
+    <li><strong>CVE-2026-96207（Partner Center，10.0，证书校验不当）：</strong>未授权攻击者可经网络<strong>提权</strong>——破坏了 Partner Center 管理功能的<strong>证书信任模型</strong>，攻击者用<strong>伪造或自签名证书</strong>即可通过校验</li>
+    <li><strong>CVE-2026-94510（Bookings，9.9，用户可控 Key 的授权绕过）：</strong>应用错误信任客户端提供的 key，绕过访问控制检查获得提权</li>
+    <li><strong>CVE-2026-77900（Azure App Service for Linux，9.8，缺失认证）：</strong><strong>未认证代码执行</strong></li>
+    <li><strong>CVE-2026-88131（Dataverse，9.8，反序列化不可信数据）：</strong>远程代码执行</li>
+    <li><strong>CVE-2026-69435（Azure SRE Agent，9.6，缺失授权）：</strong>提权</li>
+</ul>
+<p><strong>归口提醒：</strong>五枚<strong>全部只影响微软托管服务</strong>，微软负责后端修复；<strong>客户侧的配置与监控仍是自身责任</strong>。截至报道<strong>无公开 PoC、无在野利用报告、未入 CISA KEV</strong>。<strong>处置：</strong>核对租户配置、收敛管理界面暴露面、监控异常的<strong>证书与反序列化活动</strong>。</p>
+<p><strong>为何值得关注：</strong>这批漏洞说明"<strong>云托管 = 厂商替你打补丁</strong>"只在"厂商的服务端"这一层成立，<strong>租户侧的集成、密钥、API 与配置错误</strong>依旧是自己要守的阵地。满分证书校验绕过尤其要盯——它动摇的是"<strong>信任锚</strong>"，而非某个业务逻辑。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">勒索 / 数据泄露</span>
+                    <h3 class="article-title">日本网络安全"多线起火"：云商勒索波及 495 家，零售/餐饮千万级数据接连外泄</h3>
+                    <div class="article-meta">
+                        <span>IDC Frontier（SoftBank 旗下）IDCF Cloud · Nissui Logistics · Lawson · 第一興商（Big Echo）</span>
+                        <span class="cvss-score">495 家客户停服 · 攻击者称加密 3.6 PB / 239 hypervisor / 554,153 快照 · Lawson 215.5 万 · Big Echo 872.4 万</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>（一）云商被勒索。</strong><strong>SoftBank 旗下 IDC Frontier</strong> 的 <strong>IDCF Cloud</strong> 于 <strong>10-07 凌晨 03:40（JST）</strong>遭勒索攻击，<strong>"东日本 Region 1"</strong> 集群被迫<strong>整体断网停服</strong>；公司把<strong>所有区域</strong>的客户管理控制台一并停用以做核查。官方称该区域<strong>影响 495 家企业与地方政府</strong>，茨城县（含县警）等官网一度无法访问。</p>
+<p><strong>攻击者宣称</strong>（未经 IDC Frontier 独立核实）：<strong>7 分钟</strong>完成入侵，<strong>加密 225 个数据库 / 3.6 PB 数据</strong>，触及 <strong>239 台 hypervisor</strong>，封存 <strong>16,000 块虚拟机磁盘</strong>，清掉 <strong>554,153 个快照</strong>。</p>
+<p><strong>（二）物流供应链被波及。</strong><strong>Nissui（日水）</strong>旗下物流子公司 <strong>Nissui Logistics</strong> 使用同一 IDC Frontier 数据中心，系统故障导致<strong>全国 17 个站点</strong>出入库停摆，<strong>约 1,200 家</strong>零售商/餐饮/批发/食品生产商受影响，便利店与超市出现<strong>冷冻食品断供</strong>。</p>
+<p><strong>（三）零售数据外泄。</strong>便利店 <strong>Lawson（罗森）</strong> 10-09 披露 <strong>Lawson ID</strong> 会员信息外泄 <strong>2,155,345 条</strong>（约占会员 <strong>10%</strong>，含姓名/地址/电话）及 26 条关联应用记录。</p>
+<p><strong>（四）卡拉 OK 数据外泄。</strong><strong>第一興商（Big Echo）</strong> 10-09 披露约 <strong>872.4 万条</strong>个人信息<strong>可能</strong>泄露，源头指向<strong>外包商员工所用设备</strong>遭攻击。</p>
+<p><strong>（五）监管与执法侧。</strong>日本政府 <strong>10-09</strong> 跨部门会议宣布将<strong>要求企业强化网络安全措施</strong>；德国警方 10-08 亦称日本在计算机安全上"是世界上最脆弱的国家之一"，并披露 <strong>Qilin 勒索组织</strong>一名成员 2026-05 在大阪被捕后已引渡德国——该团伙四年间<strong>索要约 4,500 亿日元赎金、实付逾 63 亿日元</strong>，全球<strong>约 4,000 家企业/机构</strong>被瞄准。</p>
+<p><strong>为何值得关注：</strong>这一串事件把"<strong>单点故障如何级联</strong>"演示得非常直接——一家<strong>云服务商</strong>被勒索，代价却由<strong>495 家客户 + 物流链上的 1,200 家企业 + 货架上的冷冻食品</strong>共同承担。Macnica 研究员统计：<strong>今年已记录 119 起涉个人信息泄露/暴露事件，其中 83 起集中在 7-01 至 10-06</strong>（对比 2025 全年 84 起、2024 全年 62 起），并推测<strong>廉价而强大的 AI 工具普及</strong>正在改变攻击者"海量探站找弱点"的成本结构。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">供应链投毒 / AI 基础设施</span>
+                    <h3 class="article-title">Tensorlake npm 0.5.144 被植入 Shai-Hulud 蠕虫：带着"合法 build provenance"发出来的毒包</h3>
+                    <div class="article-meta">
+                        <span>tensorlake@0.5.144 · 2026-10-08 01:12:07 UTC 发布 · 01:23:10 被 Socket 标记（11 分钟后） · 周下载约 12,000</span>
+                        <span class="cvss-score">preinstall 钩子 · WORMTAG 蠕虫 · 以太坊合约 C2 · "人质令牌"抹除 · 修复包 0.5.145</span>
+                    </div>
+                    <div class="article-body">
+<p>2026-10-08 01:12:07 UTC，AI Agent 沙箱平台 <strong>Tensorlake</strong> 的官方 TypeScript SDK 在 npm 发布 <strong>tensorlake@0.5.144</strong>，<strong>11 分钟后（01:23:10 UTC）即被 Socket 引擎标记</strong>——该版本夹带了 <strong>Shai-Hulud 家族的自传播窃密蠕虫</strong>。</p>
+<p><strong>技术细节：</strong></p>
+<ul>
+    <li>攻击者在 manifest 里加了 <strong><code>preinstall</code> 钩子</strong>，跑 <code>node lib/setup.mjs</code>；npm 在<strong>安装前</strong>就自动执行它——<strong>无需 import、无需运行 agent</strong></li>
+    <li>载荷由<strong>两个混淆文件</strong>组成：小加载器 <code>lib/setup.mjs</code> 与约 <strong>856 KB</strong> 的大载荷 <code>lib/Math_Symbol.js</code>，内部标记 <strong><code>WORMTAG</code></strong>；加载器会先检测 CI 环境（<code>CI</code>、<code>GITHUB_ACTIONS</code>、<code>GITLAB_CI</code>、<code>RUNNER_ENVIRONMENT</code>）再拉二级载荷</li>
+    <li>结构上与 8 月 ChainDrop（污染 keyv、flat-cache 的变种）<strong>逐文件对应</strong>，但标记不同，判断为<strong>新一轮入侵而非旧僵尸复活</strong></li>
+    <li><strong>窃取目标是一份"现代 AI 开发者机器清单"</strong>：npm token、GitHub token、AWS 凭据（IMDS/ECS/Secrets Manager/SSM）、<strong>HashiCorp Vault（127.0.0.1:8200）</strong>、Kubernetes service-account token 与 kubeconfig、SSH 私钥、<code>.env</code>、加密钱包——以及<strong>显式针对 AI 编码工具的配置与 MCP 文件</strong>：<code>~/.claude</code>、<code>~/.cursor</code>、<code>~/.kiro</code>、<strong>Windsurf、Zed</strong></li>
+    <li><strong>传播：</strong>用窃来的 npm/GitHub token 枚举受害者名下<strong>其他包</strong>，<strong>签名并附上 Sigstore provenance 重新发布</strong>，把蠕虫铺开</li>
+    <li><strong>C2 抗打击：</strong><strong>无硬编码 C2 域名</strong>，而是通过<strong>以太坊智能合约跨约 30 个公共 RPC 端点</strong>解析端点、GitHub 作 fallback；另带<strong>"人质令牌"</strong>机制——一个以 ONLOGON 计划任务持久化的 PowerShell 监控程序轮询 <code>api.github.com/user</code>，<strong>若被盗 GitHub token 被吊销，可触发删除受害者家目录</strong></li>
+    <li><strong>根因：</strong>10-07 攻击者以<strong>维护者身份</strong>向 <code>tensorlakeai/tensorlake</code> 仓库提交恶意 commit（直接文件上传），再让<strong>项目自己的 GitHub Actions 流水线</strong>把毒包发布出去</li>
+</ul>
+<p><strong>处置：</strong>把 <code>tensorlake@0.5.144</code> 拉黑/回退到 <strong>0.5.143</strong>（干净版）；清掉 lockfile 与包缓存里的 0.5.144 再重装；<strong>只要装过就假定凭据已泄露</strong>，轮换 npm/GitHub/SSH/云密钥；审计 GitHub 与 npm 上的<strong>意外建仓、新 token、意外发布</strong>；可行环境用 <code>npm install --ignore-scripts</code>。<strong>注意：先禁用"人质令牌"监控再吊销凭据，否则可能触发抹除。</strong>修复包为 <strong>0.5.145</strong>。</p>
+<p><strong>为何值得关注：</strong><strong>"有合法 provenance"不等于"可安全安装"</strong>——provenance 只证明<strong>构建来自何处</strong>，不证明<strong>源码是干净的</strong>。攻击者先改主干，再借可信流水线出包，attestation 如实记录了一次<strong>敌意构建</strong>。这是 Shai-Hulud 首次明确<strong>跳到 AI 基础设施</strong>；而 Tensorlake 的产品恰是"<strong>运行不可信、AI 生成代码的隔离沙箱</strong>"——这次投毒<strong>颠覆了这个承诺</strong>：风险落在<strong>开发者工作站/构建机</strong>上，<strong>在任何生成代码进入沙箱之前</strong>，安装期代码就以<strong>安装进程的权限</strong>（连同部署凭据）执行了。</p>
+                    </div>
+                </article>
+
+            </div>
+<h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+
+                <div class="quick-item">
+                    <h4>6. Gitea 一口气修 27 个漏洞：内置 SSH 服务器认证绕过（9.1）+ 成群 SSRF</h4>
+                    <p>Gitea 发布 <strong>28.0.0（9-30）与 28.1.0</strong>，合计修 <strong>27 个漏洞</strong>（28.0.0 列出 20 个 CVE）。最突出的是 <strong>CVE-2026-103059（CVSS 9.1）</strong>：内置 <strong>SSH 服务器</strong>做公钥查找时用了 <strong>SQL LIKE</strong> 比较，在部分数据库（含默认 SQLite）<strong>忽略大小写</strong>，攻击者构造<strong>大小写变体的 RSA 公钥</strong>并推得对应私钥即可<strong>以受害者身份认证</strong>；Gitea 已改为<strong>按指纹</strong>识别公钥。同批还有一簇<strong>出站连接绕过/SSRF</strong>：CVE-2026-70357（<strong>主机名校验与真实 Git 连接之间的 DNS 重绑定窗口</strong>）、101027（已批准域名跳过目标 IP 校验）、101029（<strong>多 DNS 应答</strong>绕过出站白名单）、89430（push mirror 连内网 Git 主机→可能强推）；修复方式是把 Git 网络操作<strong>统一走内部代理</strong>在连接时执行出站规则。另有 <strong>Gitea Actions 审批绕过</strong>（104632 / 94205）。升级前须先看<strong>破坏性变更</strong>，deny-by-default 需设 <code>EGRESS_MODE = strict</code> 并显式白名单主机。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>7. CISA 发布 ICS 六通告：能源 OT 的 openPDC/openHistorian 五连严重（9.8），Docker 镜像永久不修</h4>
+                    <p>CISA 10-08 发布六份 ICS 通告。其中 <strong>ICSA-26-281-02</strong> 针对 <strong>Grid Protection Alliance</strong> 的 <strong>openPDC / openHistorian</strong>（同步相量数据架构核心，被电网、ISO、RTO 用于接收/处理/归档 PMU 数据，常横跨 IT 与 OT）：<strong>CVE-2026-100730</strong> 不可信数据 <strong>.NET 反序列化 → 未认证 RCE</strong>、<strong>104629</strong> 反序列化、<strong>105281</strong> 关键功能<strong>缺认证</strong>、<strong>85479</strong> SSRF、<strong>101022</strong> 硬编码凭据，另 <strong>CVE-2026-105278（Docker 专用）不安全反射</strong>。修复：openPDC <strong>&gt;=2.9.482</strong>、openHistorian <strong>&gt;=2.8.585</strong>；<strong>GPA 明确不推荐生产使用 Docker 镜像，该镜像也不会获得修复</strong>——仍在用容器版部署的组织应视为<strong>活跃暴露</strong>。同批还有 Red Lion Controls N-Tron 700 系列、Satel Netco、Lantronix EDS3000PS/EDS5000（Update B）、Pulsetto 迷走神经刺激器（Update A）、Hitachi Energy RTU500（Update A）。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>8. Cisco 十月加固第二波：NX-OS 五枚严重 + APIC 一枚 9.8</h4>
+                    <p>Cisco 为其 <strong>NX-OS</strong> 数据中心交换机 OS 发布公告，含 <strong>CVE-2026-76471 / 76485 / 76486 / 76501 / 76465</strong>：<strong>向 IP 接口发送特制报文</strong>即可<strong>以 root 执行任意代码</strong>，或令进程崩溃导致设备重载（DoS）；五枚<strong>均需至少开启一项功能</strong>（<code>NX-API</code> 默认关闭；<code>NGOAM</code>；<code>MPLS OAM</code> 默认关闭；76486 还需 SRv6 或 VXLAN 叠加且至少学到 1 个对端 VTEP；76501 仅在部分 Nexus 9000 支持段路由时成立）。<strong>Nexus 7000 与 ACI 模式下的 Nexus 9000 不受影响</strong>；带 Silicon One 的 Nexus 9000 不支持 MPLS OAM、不受 76465 影响。另有 <strong>APIC CVE-2026-76500（9.8）</strong>（CN 侧报道归类为 SQL 注入、部分英文源归为资源生命周期控制不佳，<strong>以 Cisco 公告为准</strong>）。<strong>无 workaround，但可临时用 Live Protect 盾</strong>；用不上相关功能时<strong>直接关掉 NGOAM / NX-API / MPLS OAM 就等于移除攻击面</strong>。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>9. 16 个恶意 Firefox 扩展冒充 Rabby / OKX 钱包，专偷助记词与私钥</h4>
+                    <p>Socket 研究员 Joseph Edwards 发现 <strong>16 个恶意 Mozilla Firefox 扩展</strong>，冒充 <strong>Rabby Wallet（4 个克隆）</strong>与 <strong>OKX Wallet（其余 12 个）</strong>：它们伪装成钱包门户、桌面工具与浏览器工具，<strong>在钱包导入流程中拦截 12/24 词助记词与 64 位十六进制私钥</strong>，并把机密<strong>直接塞进 URL 查询参数</strong>发往攻击者控制的 <strong>Cloudflare Workers</strong>（<code>*.icy-star-f45c.workers[.]dev</code>）。手法定型：<strong>轮换包名、版本号、扩展 ID 与描述，复用同一套钱包界面、凭据处理逻辑与回传域名</strong>——是 2026-08 那波活动的延续。<strong>截至 10-05 全部扩展已被下架</strong>，但下架<strong>不能</strong>挽回已输入的用户：<strong>输入过真实助记词/私钥的用户应假定完全沦陷</strong>，需在<strong>干净设备</strong>上建新钱包、迁移资产并撤销旧地址授权。所有 16 个扩展的 manifest 都声明"不收集数据"，与其凭据窃取代码直接矛盾。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>10. wolfSSH 1.6.0 修 5 个漏洞，含严重 SSH 认证绕过</h4>
+                    <p>wolfSSL 发布 <strong>wolfSSH 1.6.0</strong>，修复<strong>五个安全漏洞</strong>，其中包含一枚<strong>严重的 SSH 认证绕过</strong>。wolfSSH 被广泛嵌入在<strong>嵌入式/工控/IoT</strong> 设备的 SSH 服务端中，这类组件往往更新滞后、暴露面长期存在；跑在嵌入式栈上的 SSH 实现一旦出现认证绕过，等于<strong>直接开门</strong>。建议排查所有内嵌 wolfSSH 的设备并升级到 1.6.0。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>11. "午夜含羞草"（Midnight Mimosa）：廉价 Android 手机出厂即带广告欺诈/住宅代理木马</h4>
+                    <p>Bitdefender 披露 <strong>Midnight Mimosa</strong> 行动（10-08）：恶意代码<strong>预装在低端 Android 手机固件</strong>里，<strong>在用户第一次开机之前就在机上、且无法卸载</strong>。核心是一个<strong>平台签名、持久化的系统应用</strong>（首个样本 <code>com.android.system.lite</code>，同一内核还以 <code>com.android.sys.prot</code>、<code>com.android.sys.gmsprot</code>、<code>com.android.sys.bcprot</code> 等<strong>轮换的系统化包名</strong>出现）。它以<strong>系统级权限</strong>静默装/卸应用、授权限、<strong>远程加载任意代码</strong>，再由<strong>至少 32 个伪装应用</strong>（假 AppLock、天气、文件管理器、OCR、音频编辑器等）用<strong>真实广告 SDK</strong> 在<strong>不可见窗口</strong>里刷展示/点击赚取收益，还可把设备变成<strong>住宅代理中继节点</strong>。为规避 Play Protect，它在装载荷前<strong>临时禁用 Google Play Store</strong>、装完再恢复。约<strong>两年</strong>间波及<strong>150+ 国家</strong>、数千台设备，检出以<strong>墨西哥、法国、意大利</strong>居多，美国第四；受影响机型含 <strong>Doogee S200 X、Cubot KingKong X</strong>，以及冒充 Galaxy S24/S26 Ultra、iPhone 17 Pro Max 的<strong>山寨克隆机</strong>（正品三星不受影响）。另发现 <strong>13 个 Google Play 应用</strong>与同一基础设施通信。设备级预警信号：包名 <code>com.android.system.lite</code> 等 + <strong>MAC 前缀 <code>A0:53:94</code></strong>。普通卸载无效，<strong>实际出路是换机或退货</strong>。</p>
+                </div>
+
+            </div>
+<h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-10-09 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "LMCache105192×9.8": [0.35, 1.00]
+    "微软96207×10.0": [0.20, 0.99]
+    "微软77900×9.8": [0.22, 0.97]
+    "微软88131×9.8": [0.22, 0.96]
+    "CISA-Strapi22894链": [0.86, 0.80]
+    "CISA-ProFTPD3306×10": [0.60, 0.95]
+    "GPA-openPDC100730": [0.30, 0.94]
+    "Tensorlake蠕虫": [0.88, 0.88]
+    "日本IDCF勒索495家": [0.92, 0.90]
+    "Gitea103059×9.1": [0.25, 0.86]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-10-09 安全事件类型分布
+    "产品漏洞与严重 CVE": 32
+    "AI 与 Agent 基础设施风险": 22
+    "勒索与数据泄露": 18
+    "供应链投毒与恶意扩展": 16
+    "移动与终端安全": 12
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">LMCache CVE-2026-105192 攻击链（零认证 ZeroMQ → pickle → 容器 root）</div>
+                    <div class="mermaid">
+flowchart TD
+    A["攻击者探测到可路由的 LMCache multiprocess 端口 5555"] --> B["连接零认证 ZeroMQ socket"]
+    B --> C["发送 msgpack 消息 扩展码 1 DeviceIPCWrapper"]
+    C --> D["服务端在读参数阶段即 pickle.loads"]
+    D --> E["在消息类型校验之前触发任意 Python 执行"]
+    E --> F["以缓存进程权限运行代码"]
+    F --> G["官方容器默认 root 拿到容器 root"]
+    G --> H["提取模型权重 API Key 与云凭据"]
+    H --> I["处置 端口只留 localhost 降权运行 等补丁"]
+                    </div>
+                </div>
+
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+
+                <div class="mermaid">
+timeline
+    title 2026年10月1日至10月9日 网安事件时间线
+    10月1日 : Fortinet FortiMail 104286 在野入 KEV
+    10月5日 : Atlassian 带外公告 CVE-2026-21589 八产品 : Wikimedia 发布 rogue agent 自查结果
+    10月6日 : watchTowr 披露 21589 根因 :: 变 / : FBI 与 USSS 发布 FortiBleed 联合公告 : HPE ClearPass 28 CVE
+    10月7日 : JFrog 披露 LMCache CVE-2026-105192 无补丁 : Cisco NX-OS 五枚严重加固 : IDC Frontier IDCF Cloud 遭勒索 03:40 JST : Pwn2Own Ireland 首日 32 零日
+    10月8日 : CISA KEV 纳入五枚老编号在野漏洞 : 微软云服务五连 96207×10.0 : Tensorlake npm 0.5.144 植 Shai-Hulud 蠕虫被 11 分钟标记 : 网安日报第 181 期
+    10月9日 : Lawson 215.5 万会员泄露 : 第一興商 Big Echo 872.4 万 : 日本政府跨部门会议要求企业强化网安
+                </div>
+
+            </div>
+
+<!-- ===== 出处链接 ===== -->
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatFrontier — LMCache CVE-2026-105192 无补丁 pickle RCE 技术拆解与绑定设置判定</span>
+                        <a href="https://threatfrontier.com/articles/lmcache-pickle-rce-cve-2026-105192-no-fix">https://threatfrontier.com/articles/lmcache-pickle-rce-cve-2026-105192-no-fix</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NCIJ Network — LMCache 未认证 RCE 未修复（含 vLLM 关联 CVE-2026-105756）</span>
+                        <a href="https://ncijnetwork.com/unpatched-critical-lmcache-flaw-lets-unauthenticated-attackers-run-code-remotely">https://ncijnetwork.com/unpatched-critical-lmcache-flaw-lets-unauthenticated-attackers-run-code-remotely</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CodeYourCraft — LMCache 漏洞与 JFrog 处置建议（接口绑定 / 防火墙）</span>
+                        <a href="https://codeyourcraft.com/blog/lmcache-vulnerability-cve-2026-105192-unpatched-rce-vllm-jfrog">https://codeyourcraft.com/blog/lmcache-vulnerability-cve-2026-105192-unpatched-rce-vllm-jfrog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BeyondMachines — LMCache 与 vLLM 两枚缺陷对比与缓解</span>
+                        <a href="https://beyondmachines.net/event_details/unpatched-critical-rce-vulnerability-in-lmcache-exposes-llm-infrastructure-to-remote-takeover-u-2-9-i-r/gD2P6Ple2L">https://beyondmachines.net/event_details/unpatched-critical-rce-vulnerability-in-lmcache-exposes-llm-infrastructure-to-remote-takeover-u-2-9-i-r/gD2P6Ple2L</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">0dayNews — LMCache 缺陷定位与 AI 基础设施 RCE 复发脉络</span>
+                        <a href="https://0daynews.com/articles/2026-10-08-lmcache-cve-2026-105192-unpatched-rce">https://0daynews.com/articles/2026-10-08-lmcache-cve-2026-105192-unpatched-rce</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">World Cyber News — CISA KEV 10-08 纳入 Apache Struts / BIND / ProFTPD / Strapi / ONLYOFFICE Docs</span>
+                        <a href="https://www.worldcybernews.com/articles/1473">https://www.worldcybernews.com/articles/1473</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Hunt — Strapi CVE-2023-22894 与 CVE-2023-22621 串链未认证 RCE 详解</span>
+                        <a href="https://zerohunt.ai/blog/strapi-cve-2023-22894-kev-unauthenticated-rce">https://zerohunt.ai/blog/strapi-cve-2023-22894-kev-unauthenticated-rce</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FactualRisk — 10-08 KEV 五枚 CVSS/EPSS/在野状态一览</span>
+                        <a href="https://factualrisk.com/intelligence-cyber/briefing.html">https://factualrisk.com/intelligence-cyber/briefing.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ervik.as — 各 CVE 的 KEV 收录描述与产品影响（老编号在野）</span>
+                        <a href="http://www.ervik.as/zero-days">http://www.ervik.as/zero-days</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GBHackers — CISA 告警 FileZen CVE-2026-25108（OS 命令注入）入 KEV</span>
+                        <a href="https://gbhackers.com/cisa-alert-filezen-vulnerability/">https://gbhackers.com/cisa-alert-filezen-vulnerability/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatAft — 微软 10-08 云服务五连汇总</span>
+                        <a href="https://threataft.com/articles/microsoft-october-2026-bundle-partner-center-bookings-azure">https://threataft.com/articles/microsoft-october-2026-bundle-partner-center-bookings-azure</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TheHackerWire — CVE-2026-94510 Microsoft Bookings 授权绕过解析</span>
+                        <a href="https://www.thehackerwire.com/cve-2026-94510-microsoft-bookings-auth-bypass-enables-network-privilege-elevation">https://www.thehackerwire.com/cve-2026-94510-microsoft-bookings-auth-bypass-enables-network-privilege-elevation</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">朝日新闻（Asahi） — IDC Frontier 勒索致 495 客户停服、Nissui Logistics 受影响</span>
+                        <a href="https://www.asahi.com/ajw/articles/16950581">https://www.asahi.com/ajw/articles/16950581</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OSINTSights — IDCF Cloud 勒索时间线与攻击者所声称的 3.6 PB / 239 hypervisor</span>
+                        <a href="https://osintsights.com/ransomware-attack-targets-japans-idcf-cloud-disrupts-government-clients">https://osintsights.com/ransomware-attack-targets-japans-idcf-cloud-disrupts-government-clients</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetSecOps（STIX） — IDCF Cloud 事件的 ATT&CK 映射与影响评估</span>
+                        <a href="https://cyber.netsecops.io/stix-viz/japanese-cloud-provider-idcf-cloud-hit-by-crippling-ransomware-attack">https://cyber.netsecops.io/stix-viz/japanese-cloud-provider-idcf-cloud-hit-by-crippling-ransomware-attack</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">News On Japan — 日本连环事件汇总（IDC Frontier / Lawson 215.5 万 / 第一興商 872.4 万 / Qilin 成员引渡）</span>
+                        <a href="https://newsonjapan.com/article/150997.php">https://newsonjapan.com/article/150997.php</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（OpenText Hub） — IDCF Cloud 勒索官方声明与时间（03:40 JST）</span>
+                        <a href="https://community.opentextcybersecurity.com/threat-intel-hub-225">https://community.opentextcybersecurity.com/threat-intel-hub-225</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Register — Shai-Hulud 跳到 AI 基础设施：Tensorlake 0.5.144 投毒</span>
+                        <a href="https://www.theregister.com/security/2026/10/08/shai-hulud-worm-makes-jump-to-ai-infrastructure-with-tensorlake-compromise/5302054">https://www.theregister.com/security/2026/10/08/shai-hulud-worm-makes-jump-to-ai-infrastructure-with-tensorlake-compromise/5302054</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetSecOps — Tensorlake 蠕虫完整攻击链与 ATT&CK 映射</span>
+                        <a href="https://cyber.netsecops.io/articles/tensorlake-npm-package-compromised-by-shai-hulud-supply-chain-worm">https://cyber.netsecops.io/articles/tensorlake-npm-package-compromised-by-shai-hulud-supply-chain-worm</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AL-ICE — 合法 provenance 的毒包：Tensorlake 0.5.144 结构与 C2 解析机制</span>
+                        <a href="https://al-ice.ai/posts/2026/10/tensorlake-npm-0-5-144-shai-hulud-worm-valid-provenance">https://al-ice.ai/posts/2026/10/tensorlake-npm-0-5-144-shai-hulud-worm-valid-provenance</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatCluster — Tensorlake 蠕虫技术分析（preinstall / WORMTAG / 以太坊合约 C2 / IoC）</span>
+                        <a href="https://threatcluster.io/article/tensorlake-npm-package-compromised-with-shai-hulud-worm-2e05ac66">https://threatcluster.io/article/tensorlake-npm-package-compromised-with-shai-hulud-worm-2e05ac66</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernoz — Gitea 28.0.0 / 28.1.0 修 27 漏洞（SSH 认证绕过 + SSRF 簇）</span>
+                        <a href="https://cybernoz.com/gitea-patches-27-security-flaws-including-critical-ssh-authentication-bypass-and-ssrf/">https://cybernoz.com/gitea-patches-27-security-flaws-including-critical-ssh-authentication-bypass-and-ssrf/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shield53 — CISA ICSA-26-281-02：GPA openPDC/openHistorian 五连严重 RCE</span>
+                        <a href="https://news.shield53.com/critical-rce-flaws-in-grid-protection-alliance-software-threaten-energy-sector-ot-environments">https://news.shield53.com/critical-rce-flaws-in-grid-protection-alliance-software-threaten-energy-sector-ot-environments</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">网易（Fnet 云网安 261009） — Cisco NX-OS 五枚严重缺陷（含 76465）与功能前置条件</span>
+                        <a href="https://www.163.com/dy/article/L8PS8FHQ05384JSS.html">https://www.163.com/dy/article/L8PS8FHQ05384JSS.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TheHackerWire — Cisco APIC CVE-2026-76500（9.8）分析</span>
+                        <a href="https://www.thehackerwire.com/cve-2026-76500-cisco-apic-critical-resource-control-flaw-cve-2026-76500-analysis">https://www.thehackerwire.com/cve-2026-76500-cisco-apic-critical-resource-control-flaw-cve-2026-76500-analysis</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aviatrix — 16 个恶意 Firefox 扩展冒充 Rabby/OKX 钱包的杀伤链与合规映射</span>
+                        <a href="https://aviatrix.ai/threat-research-center/16-malicious-firefox-extensions-rabby-okx-wallet-stealers-2026">https://aviatrix.ai/threat-research-center/16-malicious-firefox-extensions-rabby-okx-wallet-stealers-2026</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ScyScan — 16 个恶意 Firefox 扩展清单与 Cloudflare Workers 回传域名</span>
+                        <a href="https://www.scyscan.com/news/16-malicious-firefox-extensions-pose-as-rabby-and-okx-wallets-to-steal-recovery-phrases">https://www.scyscan.com/news/16-malicious-firefox-extensions-pose-as-rabby-and-okx-wallets-to-steal-recovery-phrases</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shield53 — 假加密钱包扩展与浏览器供应链威胁分析</span>
+                        <a href="https://news.shield53.com/fake-crypto-wallet-extensions-signal-a-new-era-of-browser-borne-supply-chain-threats">https://news.shield53.com/fake-crypto-wallet-extensions-signal-a-new-era-of-browser-borne-supply-chain-threats</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GBHackers — wolfSSH 1.6.0 修 5 个漏洞含严重 SSH 认证绕过</span>
+                        <a href="https://gbhackers.com/cisa-publishes-ics-advisories/">https://gbhackers.com/cisa-publishes-ics-advisories/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Bitdefender — Midnight Mimosa 预装木马完整报告（官方实验室）</span>
+                        <a href="https://www.bitdefender.com/en-us/blog/labs/midnight-mimosa-malware">https://www.bitdefender.com/en-us/blog/labs/midnight-mimosa-malware</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global — Midnight Mimosa 覆盖范围、受影响机型与代理中继机制</span>
+                        <a href="https://www.enigma-global.com/preview/news/44115">https://www.enigma-global.com/preview/news/44115</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Record（fmisec 转载） — 廉价 Android 手机预装广告欺诈木马</span>
+                        <a href="https://news.fmisec.com/thousands-of-cheap-android-phones-shipped-with-ad-fraud-malware">https://news.fmisec.com/thousands-of-cheap-android-phones-shipped-with-ad-fraud-malware</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cuberk — 10-08 信息战趋势 feed（NVD / PoC-in-GitHub 聚合）</span>
+                        <a href="https://cuberk.com/infosec-trending">https://cuberk.com/infosec-trending</a>
+                    </div>
+                </div>
+            </div></div><!-- content-wrapper -->
+
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年10月9日
+            </p>
+        </footer>
+    </div>
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

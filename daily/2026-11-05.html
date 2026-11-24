@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月5日（第208期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月5日 星期四</span>
+            <span class="edition-number">第 208 期 | 总第 208 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>一次跑出九百四十八条提权路 · 签名验完了续传那一下换了个包 · 计数检查跑在复制后面那一格 · 租户写的策略拿集群的权限跑 · 洞全修好了可那台手机没升级 · 钱是从银行自己的账户转走的
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">一条流水线跑完，948 条通往 root 的路，单条 1,279 美元</h2>
+                <p class="sub-headline">今天六件事，共同点是"顺序"：OpenAI 的流水线里发现了 2,308 个候选、复现了 1,724 个、写出 948 条提权利用，但"这条利用用的到底是不是分配给他的那个洞"必须靠人复核，早期 200 条里就有 20 条走错了；APT 的签名校验在续传之前完成，续传之后没有再验一次；Zyxel 六月的补丁加了参数计数检查，检查跑在复制之后，读到的已经是攻击者改过的数字；Kyverno 让命名空间里的租户写策略，再用控制器的集群权限去执行；Sekoia 那条移动链上每个漏洞在攻击开始前就修好了，只有手机没升；Arkéa 那笔钱是从银行自己的账户转出去的，入口是一家服务商的平台。六件事都不缺措施，缺的是措施和危险之间的先后。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">2,308 个候选，1,724 个复现，948 条能拿 root；最贵的一段不是找洞</h3>
+                    <div class="article-meta">
+                        <span>11-04 OpenAI 官方研究发布 · 2026 年 10 月中旬跑的一轮</span>
+                        <span class="cvss-score">单条利用 1,279 美元 · 总花费 121.34 万美元 · 防护全开的常规桌面系统</span>
+                    </div>
+                    <div class="article-body">
+                        <p>OpenAI 的 Cyber 团队在 11 月 4 日公开了一次针对 Linux 内核的自动化研究。用的是一款<strong>尚未发布</strong>的网络安全模型，搭出的是五段流水线：发现、动态验证、可利用性评估、补丁生成、人工复核。</p>
+                        <p>数字先摆出来：<strong>2,308 个候选漏洞，动态复现 1,724 个</strong>（约 74.7%），生成 <strong>291 个信息泄露 PoC</strong> 和 <strong>1,169 个可用的本地提权利用</strong>，按根因去重后是 <strong>948 个不同的提权漏洞</strong>。整轮消耗 <strong>121.34 万美元</strong> API 额度，折算单条利用 <strong>1,279 美元</strong>。按 Pwn2Own 两万美元、TyphoonPWN 七万美元的历史赏金口径估算，这 948 条的理论价值在 <strong>1,890 万至 6,630 万美元</strong>之间，是流水线成本的 <strong>16 到 55 倍</strong>。</p>
+                        <p>各阶段的开销分布本身就有信息量。发现阶段先由 Scout 类智能体挑出低权限用户可达、且安全相关的代码，共 <strong>5,034 个审计目标、约 280 万行</strong>，相当于内核代码总量的 7%；分析智能体在 <strong>12 小时</strong>内产出 2,308 个去重候选，花掉 31.65 万美元。验证阶段把候选丢进隔离虚拟机逐个触发，<strong>30 小时</strong>跑出 74.7% 的复现率，剩下的多数卡在权限要求、竞态时序或特殊触发条件上，<strong>只有 3.1% 是模型分析错误</strong>，也就是假设了一个现实中不可能成立的前提。最贵的一段是<strong>利用开发，77.59 万美元</strong>，占总额六成多。</p>
+                        <p>最值得看的是目标环境。跑利用的虚拟机装的是<strong>常规发行版的桌面系统</strong>，不是削弱过的靶机，SMEP、SMAP、KASLR、HARDENED_USERCOPY 全开，威胁模型和 Pwn2Own、TyphoonPWN 那一套一致。防护全开的情况下拿到 root，才叫可利用。</p>
+                        <p>还有两个数字把"量变"说清楚了。第一，智能体在样本里用出<strong>至少 10 种此前没见过的利用技术</strong>，OpenAI 把细节同步给第三方内核利用专家，对方也确认这些手法是新的（技术细节按安全理由没有公开）。第二，在适配过的 kernelCTF 环境上跑了 <strong>112 小时、3.29 万美元</strong>，拿到 25 个信息泄露 PoC 和 21 个提权利用；而 kernelCTF 整个 2026 年到目前为止只收了 <strong>26 个确认的 0day 提权利用</strong>。一条流水线四天多的产出，接近一个公开悬赏项目全年的接收量。</p>
+                        <p>OpenAI 自己也写了一段不太好看的自我修正：早期一次运行里，利用阶段声称拿下 <strong>200 个 root 利用</strong>，人工复核发现其中 <strong>20 个</strong>是走了另一个 0day 才拿到 root 的，不是分配给它的那个漏洞。此后他们收紧任务规则、加了独立校验，确认每条利用用的确实是它该用的那个洞。</p>
+                        <p>到扫描加人工复核结束、共 10 天时，这批提权漏洞里 <strong>61 个已被上游修复、43 个有 staging 补丁、299 个正在公开讨论</strong>。OpenAI 说已按内核社区的建议优先提交严重的那批，目前提交了数百份报告与补丁。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"发现"这一段的瓶颈已经被搬走了。</strong>过去一年业内讨论 AI 找漏洞，卡点一直是"找出一大堆，判断不了哪个真"。这次 OpenAI 明确说，运营上的难点不是发现，而是确定哪些能复现、跨的是哪条安全边界、值不值得最早让维护者看。用动态复现当筛子，74.7% 的命中率把 2,308 压到 1,724，再压到 948。这是一条把"疑似"变成"证据"的产线，不是又一个扫描器。</li>
+                            <li><strong>单条 1,279 美元改变了攻防两侧的成本表。</strong>一个能稳定提权的内核利用，在黑市和赏金市场都在数万美元级。现在这个价格比一次人工评估的人力成本还低，而且可以批量下。"这个洞太小、不值得被利用"这个假设正式失效。</li>
+                            <li><strong>它同时暴露了 AI 的自评不可靠。</strong>200 个声称成功的利用里有 20 个走错了洞，比例 10%。如果没有人复核，那 20 条会被当成"这个洞可利用"的证据报给维护者，浪费的是上游最稀缺的注意力。OpenAI 加的那道独立校验，本质上和大公司里的双人复核一样古老。</li>
+                            <li><strong>补丁这一段才是真正的分水岭。</strong>报告里最扎眼的一句不是 948，而是"10 天内 61 个已被修复"。发现速度提到这个量级之后，能跟上节奏的只有自动生成补丁。未来比拼的不是谁找得多，是谁修得快。</li>
+                        </ul>
+                        <p>对运维来说，今天能做的事没变，只是更紧迫：内核版本要跟住发行版的回补号（不是看主版本号），暴露在外的多用户主机要重新评估"本地低权限账号"值多少钱，容器里那个 <code>nobody</code> 也不再是安全边界。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">筛出 7% 代码</span>
+                        <span class="flow-step">12 小时出 2308 个候选</span>
+                        <span class="flow-step">30 小时复现 1724 个</span>
+                        <span class="flow-step critical">1169 条提权利用</span>
+                        <span class="flow-step critical">人工复核才敢上报</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Debian 与 Ubuntu 的 APT：签名验过了，续传那一下把包换了</h3>
+                    <div class="article-meta">
+                        <span>11-04 DSA-6607-1 / DLA-4880-1 / USN-8996-1 同日发布 · 暂无在野报告</span>
+                        <span class="cvss-score">CVE-2026-109518 · Ubuntu CVSS 4.0 7.7 · Debian 定 critical · 默认配置就在风险里</span>
+                    </div>
+                    <div class="article-body">
+                        <p>APT 在装包前会核对签名，这一步一直是 Debian 系供应链信任的支点。这条漏洞动的是支点之后的那一小段：<strong>验完到装之间，文件可以被换掉</strong>。</p>
+                        <p>链条是这样。APT 遇到 HTTP 重定向，可能让两次不同的下载落到同一个地址上，于是把两份下载合并处理；随后的续传环节里，<strong>硬链接被不安全地复用</strong>，两个不同来源的文件指向同一份底层数据。结果是：签名校验发生在先，攻击者替换发生在后，最终装进系统的是没被验过的那一份。分类上同时命中 CWE-62（UNIX 硬链接）和 CWE-367（检查与使用之间的时序差），本质是一个 TOCTOU。</p>
+                        <p>触发条件很明确：<strong>APT 必须开启重试</strong>（<code>Acquire::Retries</code> 大于 0），且攻击者要能改动机器与包服务器之间的 HTTP 流量，恶意镜像、被劫持的代理、同网段的中间人都算。而 <code>Acquire::Retries</code> 的默认值从 APT 2.3.2 起就是 <strong>3</strong>，也就是 Debian 12 与 Ubuntu 22.04 及以后<strong>默认就在这个配置里</strong>。反过来，Debian 11、Ubuntu 20.04 在默认配置下不受影响，除非有人手工设过重试次数。</p>
+                        <p>发现者是 <strong>Max Justicz</strong>。2019 年那个让全世界 <code>apt</code> 都得临时关掉重定向的 CVE-2019-3462，也是他报的。七年之后，同一个位置又出了一次：<strong>重定向加重试，仍然是更新工具最脆的一段</strong>。当年的临时处置是 <code>-o Acquire::http::AllowRedirect=false</code>，这次的临时处置是 <code>Acquire::Retries=0</code>。</p>
+                        <table class="affected-table">
+                            <tr><th>发行版</th><th>脆弱版本</th><th>修复版本</th></tr>
+                            <tr><td>Debian 13 trixie</td><td class="risk-high">3.0.3 及更早</td><td>3.0.4（DSA-6607-1）</td></tr>
+                            <tr><td>Debian 12 bookworm</td><td class="risk-high">2.6.1 及更早</td><td>2.6.2（DLA-4880-1）</td></tr>
+                            <tr><td>Debian 11 bullseye</td><td class="risk-medium">2.2.4 及更早</td><td>2.2.5（LTS，8-31 结束常规支持）</td></tr>
+                            <tr><td>Ubuntu 22.04 LTS</td><td class="risk-high">2.4.14 及更早</td><td>2.4.15ubuntu0.1</td></tr>
+                            <tr><td>Ubuntu 24.04 LTS</td><td class="risk-high">2.8.3 及更早</td><td>2.8.4ubuntu0.1</td></tr>
+                            <tr><td>Ubuntu 26.04 LTS</td><td class="risk-high">3.2.0 及更早</td><td>3.2.1ubuntu0.1</td></tr>
+                            <tr><td>Ubuntu 26.10</td><td class="risk-high">3.3.2 及更早</td><td>3.3.3ubuntu0.1</td></tr>
+                        </table>
+                        <p>上游把根因解决在 APT <strong>3.3.6</strong>：下载方法改成<strong>独占方式打开目标文件</strong>，两次下载不可能再碰同一个文件。</p>
+                        <p>两个口径需要并列摆出。一是严重性：Debian 的维护者 Julian Andres Klode 在公告里定的是 <strong>critical</strong>，Ubuntu 定 <strong>high</strong>、CVSS 4.0 给 7.7。二是 HTTPS 是否安全：一个来源明确写"HTTPS 与 FTP 源、snap 包不受影响，攻击者必须能改明文 HTTP"，另一个来源指出<strong>公告本身没有明说</strong> HTTPS 源是否暴露。稳妥做法是照着"能换就换"去做，但别把 HTTPS 当成已经证明过的边界。</p>
+                        <p>还有一个披露当天的细节：Ubuntu 在 14:25 UTC 推送了四个发行版的修复，到 15:46 UTC，追踪页面上<strong>从 14.04 到 26.10 八个版本仍全部显示为受影响</strong>；Debian testing 在 14:58 UTC 还停在脆弱的 3.3.5 上。<strong>补丁"已发布"和"你的机器已经拿到"，中间隔着镜像同步和一次 <code>apt update</code>。</strong></p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>它打的是"已验证"这三个字。</strong>供应链安全的整套说辞都建立在"签名过了就等于内容对"上。这条不伪造签名、不攻破密钥，只是让验过的对象和装上去的对象不是同一个。凡是"先校验、后使用"的流程，都值得照这个思路自查一遍。</li>
+                            <li><strong>默认配置就在风险里。</strong>重试在弱网环境下几乎是必需的，它同时也是这条链的必要条件。安全默认值和可用性默认值在这里直接对冲，而 APT 选了可用性。这不是谁犯错，是这类设计取舍的固有代价。</li>
+                            <li><strong>修复顺序很容易做错。</strong>很多人会直接 <code>apt upgrade</code> 一把梭，那时升级动作本身还在旧的重试逻辑里跑，等于在窗口里自己走了一遍。正确做法是先用 <code>-o Acquire::Retries=0</code> 把 apt 自己升上去。</li>
+                        </ul>
+                        <p>另外别忘了两件容易漏的：容器基础镜像与金机镜像要重建，否则新机器开机就带着旧 apt；<code>sources.list</code> 里的 <code>http://</code> 该换 <code>https://</code>，换完要跑一次 <code>apt update</code> 验证，部分社区镜像不提供 HTTPS。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Zyxel GS1900：六月的补丁装了，检查跑在复制之后</h3>
+                    <div class="article-meta">
+                        <span>9-29 报告 · 10-11 确认独立漏洞 · 10-22 Patch 3 · 11-03 双方公告</span>
+                        <span class="cvss-score">CVE-2026-107441 · Zyxel 8.8 / Binarly 9.8 · 996 台 48 国 · 未进 KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>先说前情：本刊 9 月下旬写过 CVE-2026-7273 的在野与 KEV 收录。Zyxel 在 6 月 16 日发 2.90 Patch 2，修的就是 GS1900 网页管理界面里的一个缓冲区溢出；9 月 21 日 GreyNoise 公开了 48 个国家 996 台交换机被批量取走配置的活动，CISA 当天把 7273 收进 KEV，联邦死线 9 月 24 日。</p>
+                        <p>今天的新事实是：<strong>那个补丁没修干净，而且攻击者用的根本不是 7273。</strong></p>
+                        <p>Binarly 在 9 月 17 日从一台同时充当 JITTERLY 后门控制端的服务器上，在一个开放目录里翻到了一份混淆过的 Python 利用脚本。分析后发现两件事：脚本专门检查固件版本，<strong>目标是已经打过 7273 补丁的版本</strong>；并且在全部十款 Patch 2 固件上都能打通。9 月 28 日至 29 日确认，9 月 29 日报给 Zyxel PSIRT，10 月 11 日厂商确认这是一条<strong>独立漏洞</strong>，编号 107441，10 月 22 日发 Patch 3，11 月 3 日双方同天公告。</p>
+                        <p>技术根因值得逐字看，因为它太典型了。<code>dispatcher.cgi</code> 用一块固定大小的全局结构存请求参数，<strong>140 个槽位、每个 1,024 字节</strong>，而<strong>计数值就紧挨在这块内存后面</strong>。原始代码有两个缺陷：不检查单个参数的长度，Patch 2 之前也不检查已存了多少个。</p>
+                        <p>Patch 2 补的是后者，加了计数检查。问题在于检查的位置：<strong>利用脚本发来第 140 个超大参数，先把存储区写穿，顺手把计数值也改成了自己想要的值；检查这时才跑，读到的已经是攻击者写的数字，等于什么都没挡。</strong>下一个参数于是落到预期之外的内存上，函数指针被换掉，程序转而执行攻击者的命令。Patch 3 的改法是把计数检查挪到复制之前，并限制单个参数的大小。</p>
+                        <p>规模上，GreyNoise 记录的 996 台分布在 48 个国家，活动大约从 8 月 17 日开始；被下载的采集脚本会打包交换机配置、<strong>哈希后的 root 凭据</strong>和网络信息。这 996 台里有 <strong>564 台仍在用出厂默认口令</strong>，这是补丁之外的另一个问题。</p>
+                        <p>有一个时间差必须点出来：利用脚本在攻击者手上、并且在用，比厂商承认"第一次修得不彻底"<strong>早了大约六周</strong>；从最早观测到入侵到真正可用的固件出来，<strong>隔了十一周</strong>。CISA 的 KEV 目录里仍然只有 7273，107441 到 11 月 4 日还没进去。这不代表风险更低，只代表还没走完收录流程。Binarly 表示<strong>近期会公开一个精简版 PoC</strong>，公开之后，这条就从"有利用在野"变成"人人可复现"。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>"打了补丁"这个状态被证伪了一次。</strong>六月的补丁有公告、有固件、进了 KEV、有联邦死线，所有该有的流程都齐了，它仍然没关掉门。对资产台账来说，"版本号达标"和"漏洞已消除"是两件事，尤其当补丁是给某个具体 CVE 打的时候。</li>
+                            <li><strong>又是"检查位置错一行"。</strong>和今天 APT 那条一样，缺陷不在逻辑写错，而在顺序：检查必须在被污染之前执行。这类问题在代码评审里极难看出来，因为单看每一行都正确。</li>
+                            <li><strong>边缘网络设备的补丁周期要重新算。</strong>十款型号、十一周、近千台被取走配置和哈希口令。交换机不被当服务器来管，却能看到所有流量、持有全网设备的接入凭据。哈希过的 root 口令被拿走，等于给对方一张离线爆破的靶纸。</li>
+                        </ul>
+                        <p>自查三件事：确认十款型号的固件是否已到 Patch 3（GS1900-8 / 8HP / 10HP / 16 / 24 / 24E / 24EP / 24HPv2 / 48 / 48HPv2，逐型号对照公告版本表）；把这批设备上所有本地账号口令换掉；管理界面从公网收回内网。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">存储区 140 槽</span>
+                        <span class="flow-step">第 140 个超大参数</span>
+                        <span class="flow-step critical">写穿并改掉计数值</span>
+                        <span class="flow-step critical">检查读到假数字</span>
+                        <span class="flow-step critical">函数指针被换执行</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Kyverno 一次七个 9.9：租户写的策略，用的是集群的权限</h3>
+                    <div class="article-meta">
+                        <span>10-20 1.19.2 发布修复 · 11-05 七条见于 NVD · 同批另有 14 条</span>
+                        <span class="cvss-score">六个 9.8 至 9.9，一个 9.1 · 评分为 CNA VulnCheck，NVD 尚未自评</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Kyverno 是 Kubernetes 上最常见的策略引擎之一：策略本身就是 K8s 对象，用 YAML 写，被准入控制器调用。它的模型里有一个天然的不对称：<strong>策略是写的人写的，执行却是 Kyverno 自己的 ServiceAccount 在跑</strong>，而这个账号持有集群级权限。</p>
+                        <p>这次公开的七个严重问题，六个出在这个不对称上，第七个出在镜像签名校验的缓存上。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>受影响区间</th><th>CVSS 3.1</th><th>机制</th></tr>
+                            <tr><td>122302</td><td>1.19.2 之前</td><td class="risk-high">9.8</td><td>generaterules 检查的是控制器权限，不是策略作者权限</td></tr>
+                            <tr><td>122303</td><td>1.17.0 起</td><td class="risk-high">9.9</td><td>名称空间变更策略可伪造指向其他名称空间的目标</td></tr>
+                            <tr><td>122304</td><td>1.17.0 起</td><td class="risk-high">9.9</td><td>清理策略的 context 在无策略情况下被加载，可读 Secret</td></tr>
+                            <tr><td>122310</td><td>仅 1.19.1</td><td class="risk-high">9.9</td><td>urlPath 校验的是清洗后路径，执行的是原始路径</td></tr>
+                            <tr><td>122311</td><td>1.16.0 起</td><td class="risk-high">9.9</td><td>读取与写入资源的参数不校验路径段，两点直接逃出名称空间</td></tr>
+                            <tr><td>122313</td><td>1.17.0 起</td><td class="risk-high">9.9</td><td>变更策略可改别的租户的 RoleBinding</td></tr>
+                            <tr><td>122321</td><td>1.18.0 起</td><td class="risk-medium">9.1</td><td>镜像签名缓存用 tag 当键，不绑定 digest</td></tr>
+                        </table>
+                        <p>122311 的写法最能说明问题：有权限在命名空间里建策略的租户，只要在读取资源的参数里塞进 <code>..</code> 段，就能以<strong>准入控制器的 ServiceAccount</strong> 身份读写任意集群对象。路径穿越放在 Web 应用里是老掉牙，放在策略引擎里就变成"我给自己写了一条规则，规则帮我去读别人的东西"。</p>
+                        <p>122321 是另一种味道。签名校验结果被缓存，缓存的键是镜像引用（比如某个 tag），而不是校验过的 digest。能操作 tag 的人可以先拿一个<strong>签名过的</strong>镜像把缓存焐热，再把 tag 指向别的镜像，工作负载照样通过准入。修法不是改校验逻辑，是把键换成 digest，这也直接给出了运维侧的建议：<strong>生产清单里钉 digest，别钉 tag</strong>。</p>
+                        <p>还有两点要说明。一是<strong>同批还有 14 条</strong>，CVSS 3.1 在 6.2 到 8.5 之间，其中 5 条在 NVD 向量里不需要任何权限。有几条能让准入 webhook 崩溃或耗尽资源，描述里明确写了：在 <code>failurePolicy: Ignore</code> 配置下，崩溃可以变成策略绕过。这个设置值得现在就去翻一遍。二是<strong>时间线</strong>：1.19.2 是 10 月 20 日发的，这些编号 11 月 5 日才出现在 NVD。中间那半个月，补丁在，公告的依据不在。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>多租户 K8s 的边界被同时打了七个洞。</strong>共享集群的前提是"命名空间是隔离单位"。七个里有六个直接违背这个前提，而且都不需要集群管理员权限，只需要"能在自己命名空间里建策略"这一项常见授权。把 Kyverno 当多租户策略层用的集群，都该假设租户之间已经不再是信任边界。</li>
+                            <li><strong>策略引擎是提权面，不是纯防御组件。</strong>大家习惯把准入控制器当"守门的"，忘了守门的人手里有钥匙。任何"低权限用户写入、高权限进程执行"的架构都在同一个坑里：CI 里的流水线定义、监控里的采集脚本、工单系统里的自动化动作，全是这个形状。</li>
+                            <li><strong>修了半个月才公开，对防守方其实是好消息。</strong>只要 1.19.2 是在 10 月 20 日之后上的，就已经在保护里了。真正要查的是<strong>谁有权限创建策略类对象</strong>：按最小权限清一遍，然后把审计日志里近期的 RoleBinding、ClusterRoleBinding、准入 webhook 配置变更翻出来看，这几类对象正是这些漏洞能碰到的落点。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">租户有建策略权限</span>
+                        <span class="flow-step">策略里塞两点路径</span>
+                        <span class="flow-step critical">控制器代跑</span>
+                        <span class="flow-step critical">用集群权限读写</span>
+                        <span class="flow-step critical">跨租户接管</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">每个洞都修好了，只有手机没升：一场彻底的 n-day 水坑</h3>
+                    <div class="article-meta">
+                        <span>11-05 Sekoia 公开 · 8-27 至 9-03 经 Plerdy 追踪脚本投放 · 11-04 CISA 收录</span>
+                        <span class="cvss-score">Chrome CVE-2026-3910 + Adreno CVE-2025-27038 · Apple CVE-2024-27834 · 死线 11-18</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Sekoia 在 11 月 5 日公开了一场同时打 Android 和 iPhone 的水坑活动。三种投放路径：入侵正常网站、搭仿冒站、以及<strong>攻破一家乌克兰网页分析服务 Plerdy 的追踪脚本</strong>。8 月 27 日到 9 月 3 日之间，数千个主要位于乌克兰的站点加载了带毒的追踪代码，其中包括军方、特种部队与国防供应商的页面。两个仿冒域名克隆了 America250 和一个靠近英国国防部的伦敦酒店。</p>
+                        <p>Android 侧是两段接力。第一段用 Chrome 的 <strong>CVE-2026-3910</strong> 在渲染进程里拿到执行权，加载一段由 loader、stager 和共享库组成的 shellcode；共享库利用高通 Adreno GPU 驱动里的 <strong>CVE-2025-27038</strong> 逃出 Chrome 沙盒，再以更高权限起第二段 shellcode。受害者要做的只有一件事：在<strong>过旧版本的 Chrome</strong> 里打开那个页面。不需要点任何东西，不需要装应用，不需要授权。目标区间是 Chrome <strong>139 到 145，跳过了 143</strong>，Sekoia 说原因不明。</p>
+                        <p>第二段载荷被命名为 <strong>AndroSnitch</strong>，内部共享库只导出 16 个函数，功能极其单一：读 Chrome 的 Cookies、Login Data、History 三个文件，加上系统里两份 WifiConfigStore.xml，然后用 libcurl POST 到同一个 telemetry 接口，请求头里一个 Filename、一个硬编码的设备 ID。Wi-Fi 配置文件里有连过的所有网络口令，这一项在很多"浏览器数据窃取"的分析里被漏掉。有个细节很有意思：这段利用<strong>检测到设备是三星 Galaxy S25 Ultra 就直接中止</strong>。原因没公开，可能是研究者机型、可能是某个已知的环境标记。不管哪种，都说明对方在维护一份"不要碰"的名单。</p>
+                        <p>iPhone 侧两条链：iOS 16.7 上把 WebKit 的远程代码执行和 <strong>CVE-2024-27834</strong> 串起来偷 cookie；iOS 18.5 上换了 DarkSword 利用套件，拼的是五个漏洞，收的是短信、iMessage、WhatsApp、Telegram、Keychain 口令、定位、健康数据和照片。</p>
+                        <p><strong>关键在于：这条链上每一个漏洞，在攻击开始之前厂商就已经修好了。</strong>这不是 0day 战役，是彻底的 n-day 战役。也正因为如此，同一天 CISA 把 <strong>CVE-2024-27834</strong> 收进了 KEV，死线 11 月 18 日。这条是 2024 年 5 月修的（iOS 17.5、iOS 16.7.8、macOS Sonoma 14.5、Safari 17.5），2024 年 3 月 Pwn2Own 温哥华站上被当零日演示过，CVSS 只有 5.5，作用是绕过指针认证，单看分数一点都不起眼，放进一条完整链里就成了关键一环。</p>
+                        <p>载荷都<strong>不装持久化</strong>，重启就清。但下次再访问那个页面，照样中。对情报目标来说，"重启能清"和"安全"是两回事。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>n-day 的成本结构已经彻底变了。</strong>三个洞全是旧的，最老的一个是 2024 年 5 月修的。攻击方不需要买 0day，只需要等，然后按机型下发对应版本。Sekoia 的判断是这类做法降低了高级移动攻击的成本与门槛，这句话比"某组织又出手了"更值得记。</li>
+                            <li><strong>一个第三方追踪脚本，等于几千个站点的默认入口。</strong>Plerdy 那九天里，任何加载了它追踪代码的站点都把利用送到了访客门口，包括那些自己基础设施管得很严的国防供应商。这是 2024 年 6 月 polyfill 事件之后又一次同样的教材：你不控制的那段 script，就是你站点的一部分。</li>
+                            <li><strong>把 5.5 分的那条收进 KEV，是个正确的示范。</strong>单条评分衡量的是"这个洞自己有多严重"，KEV 衡量的是"有人正在用它"。两个指标回答两个问题，不能互相替代。反过来说，任何只看 CVSS 排序、不看 KEV 和 EPSS 的补丁优先级表，都会把 27834 这种"不起眼但是链条关键环"的漏洞排到最后。</li>
+                        </ul>
+                        <p>运维侧两句话：Chrome 版本要高于 145，Android 安全补丁级别要跟上（GPU 驱动的修复只走月度补丁，不走应用商店）。还有一层组织层面的：把"哪些第三方脚本能进生产站点"变成一个有人签字的白名单，而不是前端同学随手加一行。</p>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Arkéa：钱是从银行自己的账户转走的，入口是服务商的平台</h3>
+                    <div class="article-meta">
+                        <span>11-04 监管公告与补充 FAQ · 客户资产未受影响 · 部分资金已拦截</span>
+                        <span class="cvss-score">未确认具体金额，"只确认量级" · 链上追踪 1.088 亿美元 USDC · 部分换成 XMR</span>
+                    </div>
+                    <div class="article-body">
+                        <p>法国合作银行集团 Crédit Mutuel Arkéa 在 11 月 4 日发布监管公告，确认遭到网络攻击并产生<strong>欺诈性转账</strong>。措辞很克制：事件已受控、业务基本恢复、客户资产未受影响、部分转账出现延迟、已通报监管机构、正与警方合作。</p>
+                        <p>补充 FAQ 里有两句话是全部信息量所在。第一句：攻击者<strong>不是</strong>从它的网银子公司 Fortuneo 进来的，也不是从客户账户进来的，而是<strong>通过一家服务商的平台</strong>接触到银行本身。第二句：钱是从<strong>银行自己的账户</strong>转出去的，转给其他银行，之后可能经由专门平台换成加密货币。这两句把事件性质定死了：不是客户被骗，是银行的资金账户被人当成合法付款方用了。</p>
+                        <p>金额上出现了典型的多口径。链上调查者 ZachXBT 在 11 月 3 日点名该行，给出的数字超过 <strong>1.33 亿美元（约 1.18 亿欧元）</strong>，并称攻击"持续了数天"。银行不确认具体数字，只说"<strong>可以确认量级</strong>"，同时强调部分资金已被拦截、追回仍在进行，且金额不足以影响集团财务稳健。另有一份被引用的口径是集团总资产 2,115 亿欧元；而 ZachXBT 的说法是 2,350 亿美元，连最能核的一项都对不上 30 亿。</p>
+                        <p>链上侧是另一套数字，衡量的是另一件事。Bitquery 追踪到 <strong>1.088 亿美元 USDC</strong> 从它标记为 Kraken、Crypto.com、OKX 的地址转入 15 个地址，时间从 11 月 1 日 12:25 UTC 到 11 月 2 日 09:09 UTC，约 21 小时；其中两个地址是经中间钱包转来的，去掉它们只剩 <strong>9,570 万</strong>；到 11 月 4 日估计还有约 <strong>4,260 万美元</strong>留在以太坊上。Bitquery 明确说明自己看不到银行转账和交易所账户，<strong>无法独立证明"银行到交易所"这条路径</strong>，也无法识别收款地址的归属。</p>
+                        <p>The Block 补的兑换路径是：USDC 换成 ETH，走即时兑换平台，部分换成 XMR（门罗币），再跨链桥分散。换成 XMR 之后，公开追踪基本到头。</p>
+                        <p>还有一条是<strong>指控</strong>，不是事实：ZachXBT 批评银行披露太慢，说这个延迟让执法部门错过了冻结约 <strong>3,000 万美元</strong>的窗口。银行的公开材料里没有回应这一点，也没有说明攻击从什么时候开始、持续了多久、有没有数据被拿走。这些都是它自己承认"目前还说不清"的部分。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>被攻破的不是银行，是银行的供应商。</strong>钱庄自己的门锁得很好，但给维修工留的那扇门是别人在管。FAQ 里那句"不是人为失误、是外部高级攻击"，恰恰说明这类入口在防御模型里根本没被当成入口。</li>
+                            <li><strong>用银行自己的账户转账，是这套手法最狠的一点。</strong>收款行看到的是一笔来自正规金融机构、报文齐全、路径正常的付款，没有任何异常信号。所有做支付风控的团队都该问一句：判断一笔转账是否合法，依据是报文格式，还是发起这笔转账的那个会话本身？</li>
+                            <li><strong>金额争议本身就是新闻的一部分。</strong>银行说"量级"，调查者给到个位数，链上数据是第三个数字，而三者量的不是同一件事：一个是声称的被盗总额，一个是链上从交易所流出的稳定币，一个是扣掉已拦截与已追回后的净损失。这时候该做的是分别标注，不是挑一个最好看的加总。</li>
+                            <li><strong>披露时机正在变成独立的风险项。</strong>从发现到公告之间的每一个小时，都是资金继续往外走的时间。这次被公开批评"披露太慢"，无论最终是否成立，都会推动欧洲监管在事件通报时限上再收紧一档。</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. 法国血库的三处冷库，目标温度被改成 110 摄氏度</h4>
+                    <p>法国血液机构（EFS）11 月 3 日晚间证实，11 月 1 日夜至 2 日凌晨，三个地区站点的血浆冷库监控与控制系统遭远程入侵。攻击者把原本约<strong>零下 30 摄氏度</strong>的目标温度改成 <strong>110 摄氏度</strong>，同时抬高了除霜阈值。受影响冷库里存的是待配送的血液制品、供输血用的血浆，以及用于制药的血浆。EFS 说监控与报警系统及时触发，值班人员把库存转移到未接入受影响平台的设备上，<strong>未造成血液制品损失，采血与配送未中断</strong>。入口指向制冷设备维护服务商 <strong>Coolworld</strong>：它承认发生了网络安全事件，但把问题归到"由第三方供应商提供的、不在公司直接控制范围内的组件"。法国卫生部与 ANSSI 已介入，相关设备的远程访问功能已关闭。同期欧洲八国超市冷柜再遭同类攻击，Ahold Delhaize 11 月 4 日称这波攻击预计使其<strong>第四季度销售额减少 2.5 亿欧元</strong>。前情：本刊 10-14、11-02、11-03、11-04 期连续追踪过超市冷柜；本条是首次出现<strong>医疗冷链</strong>受害方，量级从"食品报废"变成"血浆"。值得记的是一句老话：设定值是一个 API 调用，物理后果是几小时。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. SonicWall GMS：9.1 分那条，官方明确说不修</h4>
+                    <p>SonicWall 在 11 月 3 日的公告里给了两条：<strong>CVE-2026-109593（CVSS 3.1 9.1）</strong>，未认证攻击者只要能访问到 GMS 实例，就能读取内部应用文件、拿到敏感信息；<strong>CVE-2026-109594（6.8）</strong>，高权限账号可经低复杂度攻击读写 GMS 数据库。影响 GMS <strong>9.5.2 及更早</strong>。最关键的是下一句：<strong>因为产品已停止支持，不会发布任何补丁或安全更新</strong>，公告里也没有变通方案。GMS 的时间表是 2025 年 5 月 5 日宣布 EOL、2025 年 10 月 1 日停售、2026 年 9 月 30 日结束支持，也就是今年 9 月底刚过完，一个月后就有新洞且永远不会修。继任者是 NSM，官方提供了迁移用的快照文件。要提的理由：GMS 是集中管理几十上百台防火墙的控制台，一个未认证文件读取就够把配置和密钥捞出来。CISA 四年里收过 <strong>19 个</strong> SonicWall 漏洞，其中 <strong>13 个</strong>被勒索团伙用过，这类设备的"不修"从来不是低风险。有 GMS 的单位现在就两件事：管理界面从公网彻底摘掉、限制到堡垒机；迁移排期别拖。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Cisco 三条：UCS Central 能执行命令，ISE 能拿终端证书</h4>
+                    <p>Cisco PSIRT 一次发了三条，都不带变通方案，都无已知利用。<strong>CVE-2026-76506（7.6）</strong>：UCS Central Web 门户的输入校验缺陷，已认证用户可执行任意命令、写文件、读数据；影响 2.0 及更早、以及 2.1 的 2.1(2c) 之前版本。UCS Central 是数据中心服务器机群的管理层，一个普通门户账号落在那里，能碰到的东西远比单台主机多。<strong>CVE-2026-20241（5.3）</strong>：ISE 与 ISE-PIC 的授权绕过，未认证远程攻击者可获取<strong>终端证书</strong>；3.1 至 3.5 全中，修复版本分别是 3.1 Patch 12、3.2 Patch 11、3.3 Patch 12、3.4 Patch 7、3.5 Patch 4。ISE-PIC 3.4 是该产品最后一个受支持版本，往后没有分支可升。<strong>CVE-2026-76419（6.1）</strong>：Unified CM 与 Unified CM SME 的 Web 界面 XSS，14 与 15（15SU5 之前）受影响。三条分数都不高，但落点都关键：数据中心管理面、网络准入的身份凭据、电话系统的管理界面。Cisco 给的唯一缓解是把管理门户限制到可信主机，这条几乎零成本，值得先做。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. 奇安信年中报告：新勒索组织一次冒出来四个</h4>
+                    <p>11 月 4 日发布，覆盖 2026 年上半年。几个观察点：<strong>银狐（UTG-Q-1000）</strong>活动最密集，覆盖境内及中国台湾、日本、东南亚多地；<strong>ShinyHunters、UNC3753</strong> 一类集群的焦点从"偷数据"转向 <strong>SaaS 身份盗窃与数据施压</strong>，拿到身份比拿到库更值钱，因为身份能一直用；<strong>TridentLocker、Sicarii、Osiris、The Gentlemen</strong> 四个新勒索组织同期涌现，报告判断国家背景组织与勒索团伙的<strong>合流在加深</strong>。技术侧的核心判断是 AI 正在实质改变威胁格局：从辅助木马编码、生成社工话术，到自动化漏洞利用工具开发，压缩的是<strong>攻击准备周期</strong>，降低的是<strong>参与门槛</strong>，抬高的是<strong>溯源难度</strong>。对策方向是从被动单点修补转向攻击面收敛与身份中心防御。选它的理由：这是少见的把"新组织涌现"和"AI 压缩准备周期"放在同一段因果里的表述。前两年新勒索组织出现是偶发，今年上半年一次四个，和准备成本下降是同一件事的两面。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. SEAL 周报：一周 99 起，签名那一段最贵</h4>
+                    <p>安全联盟 SEAL 公布 10 月 27 日至 11 月 3 日的一周数据：收到 <strong>99 起</strong>事件报告；不计币安，协议被攻破类损失约 <strong>5,700 万美元外加 2.4 BTC</strong>，其中一起交易所热钱包被盗 <strong>4,900 万美元</strong>、根因尚未公开，另有约 500 万美元的签名基础设施被盗、TON 上一处金库被利用约 115 万美元。<strong>基础设施类 7 起、约 219 万美元，全部是密钥或账号被盗，与合约漏洞无关</strong>，这三条最值得抄下来：一个长期有效的云密钥能读密钥库，导致 Solana 钱包被清空约 85.5 万美元；一台存放交易机器人密钥的服务器被入侵，损失约 99 万美元；还有一起是攻击者在<strong>负责签名的容器里执行代码</strong>，再用服务账号经云 KMS 解密预生成的私钥，<strong>关停系统也没能阻止</strong>。另外种子泄露约 362 万美元、冒充客服来电约 157 万美元。这条要和今天第 6 条对照着看：一个是银行自己的账户被拿去付款，一个是签名容器被拿去签别人的交易，共同点是<strong>权限是真的，用它的不是本人</strong>。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Zyxel996台在野": [0.93, 0.82]
+    "Arkea1.18亿欧元": [0.88, 0.74]
+    "Sekoia移动链": [0.78, 0.80]
+    "血库冷库110度": [0.72, 0.62]
+    "OpenAI948条提权路": [0.22, 0.95]
+    "Kyverno七个9.9": [0.30, 0.88]
+    "APT109518": [0.34, 0.84]
+    "SonicWallGMS不修": [0.42, 0.68]
+    "CiscoUCS命令执行": [0.18, 0.46]
+    "SEAL签名设施": [0.66, 0.52]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "AI与自动化挖掘": 24
+    "核心基础设施与包管理": 22
+    "云原生与多租户": 18
+    "移动与终端": 14
+    "金融与加密资产": 12
+    "工控与冷链": 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年8月17日至11月5日
+    8月17日 : 近千台Zyxel GS1900开始被批量取走配置
+    8月27日 : 乌克兰分析服务Plerdy的追踪脚本开始带毒
+    9月17日 : Binarly在后门服务器上找到针对已打补丁固件的利用
+    9月21日 : GreyNoise公开996台的活动，CISA收录7273
+    9月29日 : Binarly向Zyxel报告补丁没修干净
+    10月11日 : Zyxel确认这是一条独立漏洞107441
+    10月中旬 : OpenAI流水线跑完一轮，产出948个提权利用
+    10月20日 : Kyverno 1.19.2发布，一次修掉七个严重问题
+    10月22日 : Zyxel发布Patch 3固件
+    11月1日 : 银行账户开始出现未经授权的转账
+    11月1日夜 : 法国血库三处冷库参数被改到一百一十摄氏度
+    11月3日 : Zyxel与Binarly同日公告，SonicWall公告GMS不修
+    11月4日 : Debian与Ubuntu同日发布APT修复
+    11月4日 : CISA把苹果那条两年前修的漏洞收进KEV
+    11月5日 : Kyverno七条见于NVD，Sekoia公开移动水坑报告
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">OpenAI（11-04，官方博文）— A thousand fewer paths to root：2308 候选、1724 复现、948 条 LPE、121.34 万美元、单条 1279 美元、10 种新利用技术、早期 200 条里 20 条走错洞</span>
+                        <a href="https://openai.com/index/a-thousand-fewer-paths-to-root/">openai · 948 paths to root</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT之家（11-05）— 五阶段流水线细节：5034 个审计目标、280 万行、12 小时出候选、30 小时验证、291 泄露 + 1169 提权、各阶段成本拆分</span>
+                        <a href="https://www.ithome.com/1/022/476.htm">ithome · 流水线拆解</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Help Net Security（11-05）— kernelCTF 适配环境 112 小时 / 3.29 万美元 / 21 个提权、2026 年 kernelCTF 共收 26 个 0day、赏金估值区间</span>
+                        <a href="https://www.helpnetsecurity.com/2026/11/05/openai-linux-kernel-root-exploits/">hns · kernel root exploits</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">央广网 / 界面新闻（11-05）— 中文口径核对：948 个提权利用、121 万美元、平均 1279 美元、已按内核社区建议优先提交</span>
+                        <a href="https://www.cnr.cn/tech/gstj/20261105/t20261105_527863073.shtml">cnr · 948 个提权漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Debian 安全公告 DSA-6607-1（11-04）— APT 3.0.4 修复 trixie，同批修若干越界访问问题</span>
+                        <a href="https://lists.debian.org/debian-security-announce/2026/msg00526.html">debian · DSA-6607-1</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ubuntu USN-8996-1（11-04）— 四个发行版修复版本号、CVSS 4.0 7.7、HTTPS 源建议</span>
+                        <a href="https://ubuntu.com/security/notices/USN-8996-1">ubuntu · USN-8996-1</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Positive Technologies dbugs（11-05）— CVE-2026-109518 的 CWE-62 / CWE-367 归类、TOCTOU 与硬链接混用、参考清单</span>
+                        <a href="https://dbugs.ptsecurity.com/vulnerability/CVE-2026-109518">ptsecurity · 109518</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberExperts（11-05）— 修复优先顺序、Acquire::Retries=0 命令、容器镜像与金机镜像重建、HTTPS 验证</span>
+                        <a href="https://cyberexperts.com/2026-11-05-apt-package-swap-root-update">cyberexperts · APT 换包</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review（11-05）— Debian 定 critical 与 Ubuntu 定 high 的分歧、披露当天追踪页仍全绿的时间点、上游 3.3.6 独占打开</span>
+                        <a href="https://dailysecurityreview.com/resources/debian-ubuntu-patch-critical-apt-flaw-cve-2026-109518">dsr · APT 补丁</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BleepingComputer（11-04）— Zyxel 时间线、996 台 / 48 国、Binarly 发现过程、Patch 3 修复</span>
+                        <a href="https://www.bleepingcomputer.com/news/security/zyxel-fixes-zero-day-exploited-to-hack-nearly-1-000-network-switches/">bc · Zyxel GS1900</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">eSecurity Planet（11-05）— 140 槽乘 1024 字节的内存布局、Patch 2 检查位置错误、564 台仍用出厂口令</span>
+                        <a href="https://www.esecurityplanet.com/cybersecurity-threats/news-zyxel-gs1900-zero-day-cve-2026-107441">esp · 补丁为何没用</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shieldworkz（11-05）— 完整时间线（6-16 / 8-17 / 9-17 / 9-21 / 9-28 / 10-11 / 10-22 / 11-03）、十款型号清单</span>
+                        <a href="https://shieldworkz.com/ar/blogs/zyxel-gs1900-zero-day-cve-2026-107441-how-a-patched-switch-became-the-entry-point-for-996-compromises">shieldworkz · 996 台的入口</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-122311 等七条 Kyverno 记录、CVSS 向量与受影响版本区间</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-122311">nvd · CVE-2026-122311</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVEO（11-05）— Kyverno 七条对照表（CVE / 版本 / CVSS 3.1 与 4.0 / CWE / 机制）、NVD 尚未分析、评分为 CNA VulnCheck</span>
+                        <a href="https://cveo.tech/blog/kyverno-1-19-2-cve-2026-122302-122321-namespace-escape-en">cveo · 七个名称空间逃逸</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense（11-05）— 122321 缓存键机制、同批 14 条的分布、failurePolicy Ignore 的风险、运维检查清单</span>
+                        <a href="https://brandefense.io/security-news/kyverno-vulnerabilities-1-19-2-compared">brandefense · 谁能利用</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Android Authority（11-05）— 移动水坑三种投放路径、Chrome 139 至 145 跳过 143、Galaxy S25 Ultra 检测即停</span>
+                        <a href="https://www.androidauthority.com/hackers-chrome-snapdragon-gpu-flaws-android-zero-click-3731860/">androidauthority · 零点击链</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review（11-05）— CISA 收录 CVE-2024-27834、11-18 死线、CVSS 5.5、2024 年 5 月修复版本、Pwn2Own 温哥华演示</span>
+                        <a href="https://dailysecurityreview.com/resources/cisa-adds-apple-cve-2024-27834-to-kev-after-apt29-phone-attacks">dsr · Apple 进 KEV</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">微博长文（11-05，技术拆解）— AndroSnitch 共享库 16 个导出函数、三个 Chrome 文件加两份 WifiConfigStore、libcurl 外发与硬编码头</span>
+                        <a href="https://weibo.com/ttarticle/p/show?id=2309405361921045168179">weibo · 链条技术拆解</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录 JSON — 版本 2026.11.04、共 1768 条、11-04 唯一新增为 CVE-2024-27834、forensicTriage 为 No、死线 11-18</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · KEV catalog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TSNMedia（11-05）— Arkéa 监管公告与 FAQ 原文要点：服务商平台、银行自有账户、否认 Fortuneo、只确认量级</span>
+                        <a href="https://tsnmedia.org/arkea-cyberattack">tsn · Arkéa 公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Crypto Jazz（11-05）— ZachXBT 与 Bitquery 两套数字的来源与差异、USDC 换 ETH 再换 XMR、披露延迟与 3000 万美元的指控</span>
+                        <a href="https://crypto-jazz.com/news/2026/11/05/credit-mutuel-arkea-confirms-attack-not-133m-figure">cryptojazz · 确认攻击不确认金额</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CryptoNews（11-05）— Bitquery 的 1.088 亿美元、15 个地址、21 小时、去重后 9570 万、4260 万仍留在以太坊</span>
+                        <a href="https://cryptonews.net/news/security/33705567/">cryptonews · 链上追踪</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">澎湃新闻（11-05）— EFS 三处站点、零下 30 度改到 110 度、Coolworld 与第三方组件、ANSSI 与卫生部介入、远程访问已关</span>
+                        <a href="https://www.thepaper.cn/newsDetail_forward_34410740">thepaper · 血库被攻击</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻 / 中青报（11-05）— EFS 未造成损失与供应未中断、Ahold Delhaize 第四季度减收 2.5 亿欧元</span>
+                        <a href="https://news.qq.com/rain/a/20261105A0AAVC00">qq · 冷库参数被改</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IT-Connect（11-05）— SonicWall GMS 的 EOL 时间表、两条 CVE 与评分、无补丁无变通方案、迁移到 NSM</span>
+                        <a href="https://www.it-connect.tech/sonicwall-gms-two-flaws-including-a-critical-one-will-never-be-fixed">itconnect · GMS 永不修复</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review（11-05）— Cisco 三条：76506 / 20241 / 76419 的评分、受影响版本与各分支修复等级</span>
+                        <a href="https://dailysecurityreview.com/resources/cisco-patches-ucs-central-flaw-cve-2026-76506-and-ise-bugs">dsr · Cisco 三条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">奇安信（11-04）— 网络安全威胁 2026 年中报告：银狐活动密度、SaaS 身份盗窃、四个新勒索组织、AI 压缩准备周期</span>
+                        <a href="https://www.qianxin.com/threat/reportdetail?report_id=350">qianxin · 2026 年中报告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">今日头条（11-05，安全情报日报）— SEAL 周报细节：99 起、5700 万美元、签名容器内执行代码加云 KMS 解密预生成私钥</span>
+                        <a href="https://www.toutiao.com/a7704464136498987530">toutiao · 1105 情报日报</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注两边口径；聚合站转述而未能核到原始公告的条目已在正文明确标注为二手；仅单一来源的条目已单独标注。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年11月5日
+            </p>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

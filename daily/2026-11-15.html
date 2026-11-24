@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月15日（第217期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月15日 星期日</span>
+            <span class="edition-number">第 217 期 | 总第 217 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>整条链上没有用到任何一个漏洞 · 钥匙和数据都放在供应商手里 · 写进备份配置等系统自己执行 · 装个灯控软件内核多一个驱动 · 不加密了直接删掉用户的设备 · 分数最低的那一条永远在队尾
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">十天拆掉一整套虚拟化，攻击者一个漏洞都没用</h2>
+                <p class="sub-headline">Kaspersky 这份复盘最刺眼的地方是它没有的东西：没有零日，没有虚拟机逃逸，没有一个可以打分的编号。攻击者做的事，全部是 vCenter 自己提供的功能——SSH 登进去，43 秒装好远程管理代理，四小时后搭一条伪装成 VMware 服务的隧道，然后推一个 Host Profile 把 ESXi 的 SSH 打开，从配置推送到服务运行中间隔 33 秒，从第一次读配置到拿到主机直连是 11 分钟。四台 ESXi、两套 vCenter、一整套备份，十天之内全部消失。备份服务器上的杀毒是提前几天关掉的，毁灭前三小时还跑过一次 16 秒的预演。今天另外几条在说同一件事的不同侧面：一个"组织成员"权限写一句话进备份配置，等定时任务以 root 执行；上游 AI 平台十月初丢的钥匙，下游十一月中才开始疼；装个调灯光的软件，内核里就多出一个能读写物理内存的驱动。六条里三条的核心事实是"防护栏是被有权限的人自己打开的"。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">已发生 · 复盘 11-13 公开</span>
+                    <h3 class="article-title">关掉的是期望状态，能改期望状态的那个账号才是边界</h3>
+                    <div class="article-meta">
+                        <span>Kaspersky GERT · 勒索家族 BlackNevas · 无 CVE · 驻留 10 天 · 4 台 ESXi + 2 套 vCenter + 全套备份</span>
+                        <span class="cvss-score">从登录到主机直连 11 分钟 · 没有一个虚拟化漏洞</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 13 日，Kaspersky 的 GERT 在 Securelist 上发了一份虚拟化环境的处置记录。被毁掉的是四台 ESXi 主机和上面全部虚拟机、两套 vCenter Server Appliance，以及与之相连的整套备份基础设施。勒索信上写的是 <strong>BlackNevas</strong>，这个家族最早出现在 2024 年 11 月；SentinelOne 把它归为 Trigona 的衍生物，Kaspersky 说本次的命令行特征与这个判断吻合。</p>
+                        <p><strong>先把口径划清楚：报告没有把攻击日期定在这一周，也没有确认这是一轮正在扩散的 campaign。</strong>本期把它当作"新公开的复盘"收录，不当成"本周新发生的攻击"。这个案子能确认的是一次具体的处置过程。</p>
+                        <p>入场券来自虚拟化之外。凭据是从非虚拟化系统上拿到的，用来登进 vCenter；备份基础设施上的管理权限又暴露了另一批存储的凭据。<strong>一套用来恢复生产的系统，同时是一条通往生产的通道</strong>——这是整条链里最反直觉的一环，也是后面所有破坏能做成的前提。</p>
+                        <p>时间颗粒度细到可以当检测规则用。以 root 通过 SSH 登入 VCSA 之后 <strong>43 秒</strong>，MeshAgent 就装好了，这是一个合法的远程管理代理。约四小时后出现反向隧道，用的是 Ligolo-ng，服务名起成 <code>vmware-vdma</code>，可执行文件放在 <code>/opt/vmware/bin/</code> 下面，看起来像 VMware 自己的组件。</p>
+                        <p>然后是关键一步：攻击者从 vCenter 推了一个 <strong>Host Profile</strong>，把 ESXi 的 SSH 服务（TSM-SSH）打开。日志显示配置推送后 <strong>33 秒</strong>服务进入运行状态，随后的 SSH 连接来自 vCenter 自己的 IP。从第一次读配置到拿到主机直连，Kaspersky 记的是 <strong>11 分钟</strong>。</p>
+                        <p><strong>这一段要划出来：如果你只检查"我的 ESXi 是不是关了 SSH"，这个检查是无效的。</strong>关掉的是期望状态。能改期望状态的那个账号一旦被控，SSH 会以完全合规的方式被打开，走的是授权的管理机制。要抓的是<strong>未经审批的 Host Profile 变更，加上紧随其后的、来自 vCenter 的 SSH</strong>——这两件事单独看都像日常运维。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>驻留时间</td><td>10 天</td></tr>
+                            <tr><td>损失范围</td><td>4 台 ESXi + 全部虚拟机 · 2 套 VCSA · 全套备份</td></tr>
+                            <tr><td>用到的功能</td><td>SSH 登入 · MeshAgent · Ligolo-ng（systemd 服务 vmware-vdma）· Host Profile · TSM-SSH · SFTP · esxcli</td></tr>
+                            <tr><td>没用到</td><td>任何虚拟化层漏洞，任何零日，任何内存破坏</td></tr>
+                            <tr><td>毁灭手法</td><td>23 秒内停掉灾备主机上全部虚拟机，再逐盘覆盖 VMDK 前 2KB（不是传统加密）</td></tr>
+                            <tr><td>备份侧</td><td>提前数天关掉备份服务器杀毒 → 停备份服务 → 加密恢复设施 → 切断管理访问</td></tr>
+                            <tr><td>IOC</td><td><code>api.cloudvflare[.]com</code> · <code>45.149.154[.]135</code> · <code>91.92.242[.]121</code> · <code>31.41.33[.]212</code> · <code>188.240.57[.]94</code>；<strong>没有 ESXi 加密器的哈希</strong></td></tr>
+                            <tr><td>取证点</td><td>vCenter Events 与 Tasks（发起账号）· vpxa.log 与 vobd.log（主机配置与服务状态）· auth.log 与 shell.log（后续命令）</td></tr>
+                        </table>
+                        <p><strong>真正动手之前还有一次预演。</strong>载荷 <code>esx64</code> 通过 SFTP 送进去，毁灭前三小时左右跑了一次 <code>/selftest</code>，持续约 16 秒。这 16 秒是留给防守方的时间窗口，它出现在主机日志里。毁灭阶段执行的是 <code>./tmp/esx64 /p /vmfs/ /depth 5 /wipe /allsys /detach /-showvolumes</code>。</p>
+                        <p><strong>手法要说准。</strong>这不是加密，是每块 VMDK 覆盖前 2KB——够让磁盘认不出来，不够等于写入随机数据。Kaspersky 自己也说，2KB 覆盖本身不代表数据不可恢复（它指向 GPT 备份头）。所以"销毁"这个词要打个折，它是转述方给的标签，不是报告结论。</p>
+                        <p><strong>还有一个案子，性质不同，别混。</strong>另一份处置记录里，攻击者先用 AnyDesk 和 GMER 二进制进了虚拟化域控所在网段的一台 Windows，环境里跑着 PRTG 网络监控。PRTG 存着能连所有 ESXi 的凭据，而且这些凭据在多个节点上复用。攻击者直接用它们 SSH 上主机，用 <code>esxcli</code> 把 <code>execInstalledOnly</code> 关掉，让 <code>/tmp</code> 下未签名的加密器能跑，最后删日志做反取证。<strong>监控平台持有它监视的系统的凭据，那它就是特权基础设施</strong>——这个逻辑对大多数中小环境来说，压根没被当 Tier 0 管过。</p>
+                        <p><strong>为什么值得关注：</strong>这是"打补丁"这个动作的边界案。受害者跑的是不受支持的 ESXi 版本，厂商建议里也有补丁，但这次攻击完全绕开了补丁这个维度，<strong>你补到最新也一样会被这么打</strong>。而且 ESXi 上跑不了常规 EDR，Broadcom 自己的说法是第三方 agent 不能直接装在 ESXi 或 VCSA 上；虚拟机里的 EDR 能看到结果（I/O 卡死、突然关机），看不到动手的那个进程。<strong>这类事件只能靠管理面遥测和主机原生日志重建</strong>，而 ESXi 的日志在内存盘上，Kaspersky 明确建议处置期间不要重启，重启就把日志丢了。</p>
+                        <p>四个预警信号全部早于加密数小时到数天：VCSA 上多了一个 systemd 服务、Host Profile 被改、SSH 被打开、备份服务器的杀毒被关。<strong>这四条告警很便宜，和结果比起来便宜得离谱。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">凭据从虚拟化之外拿到</span>
+                        <span class="flow-step critical">SSH 登入 VCSA 43 秒后装好代理</span>
+                        <span class="flow-step">四小时后搭一条伪装成 VMware 的隧道</span>
+                        <span class="flow-step critical">推 Host Profile 把 ESXi 的 SSH 打开</span>
+                        <span class="flow-step critical">33 秒后服务运行 全程 11 分钟</span>
+                        <span class="flow-step">备份提前几天被关掉杀毒</span>
+                        <span class="flow-step critical">23 秒停光虚拟机 再逐盘覆盖 2KB</span>
+                    </div>
+                </article>
+
+                <!-- 文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-high">已确认 · 多州备案</span>
+                    <h3 class="article-title">上游十月初丢的钥匙，下游十一月中才开始疼</h3>
+                    <div class="article-meta">
+                        <span>Uber × Fireworks AI · 10-09 事发 · 11-13 向多州总检察长备案 · 无 CVE</span>
+                        <span class="cvss-score">麻省 2,567 · 南卡 3,430 · 罗德岛 1,873，总数未公布</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Uber 这周开始通知数千名司机：个人信息和驾照信息在一次数据泄露里被拿走了。事发不在 Uber，在它的一家技术供应商。10 月 9 日，供应商通知 Uber，说有人闯进来偷了内部凭据，然后用这些凭据访问了 Uber 存放在那里的数据。</p>
+                        <p>TechCrunch 确认这家供应商是 <strong>Fireworks AI</strong>，一家让开发者跑、微调和扩展开源模型的平台。Uber 发言人的原话是：通知司机是因为"一起影响我们第三方供应商 Fireworks.ai 的安全事件，该供应商能够访问部分 Uber 数据"。Fireworks 承认自己系统被未授权访问、客户数据受影响，但没有回答关于这次事件细节的提问。</p>
+                        <p>按已经提交的泄露通知统计，驾照信息涉及<strong>马萨诸塞 2,567 人、南卡罗来纳 3,430 人、罗得岛 1,873 人</strong>；伊利诺伊州那份写的是"人数待定"，加州也发了通知但没给数字。两家公司都没公布总数，<strong>随着更多州的备案进来，这个数字还会涨。</strong></p>
+                        <p><strong>这条要连着两周前的背景看。</strong>本刊 11-02 期写过 Wiz 的一份研究：10 月里有<strong>九家 AI 开发平台</strong>接连披露安全事件，按披露顺序是 Fireworks AI（10-06）、Andromeda（10-09）、Zeabur（10-14）、Lightning AI（10-15）、OpenCode（10-16 至 17）、Railway（10-20）、Warp（10-23）、CommandCode（10-28）、Northflank（10-30）。当时能看到的下游影响是账单：两把密钥烧掉约 250 万次调用，账单超过 10 万美元。</p>
+                        <p><strong>今天补上的那一半是：数据侧的账要晚五周才到。</strong>AI 平台不是只存 API key，它还存着客户为了跑推理而上传的东西。Fireworks 把事件归给一个以经济动机为主的团伙，目标是倒卖访问大模型的令牌——它盯的是钥匙。但同一套系统里放着 Uber 的司机驾照，钥匙被拿走的时候，数据也一起在门里面。同一批泄露的另一个下游是 Notion，客户聊天记录也在其中。</p>
+                        <p>Uber 今年这是第二次。8 月，勒索组织 Helix 通过社工手段从 Uber Freight 货运部门拿走数据。</p>
+                        <p><strong>为什么值得关注：</strong>第一，这是"把数据交给 AI 供应商"这个决定的实际代价，第一次以具体人数出现。法规上你是数据控制者，物理上数据的防线是对方那套凭据。</p>
+                        <p>第二，注意时间差：10-06 上游披露，10-09 通知下游，11-13 才开始逐个州备案、逐个司机通知。<strong>安全团队看到的是"供应商事件已处置"，法务和用户看到的是五周之后。</strong>如果你只盯供应商的公告页，中间这五周你是空白的。</p>
+                        <p>第三，自查动作很具体：把所有能访问你数据集的第三方 AI 平台列出来，看它们的凭据是不是长期有效、是不是共享、有没有轮换记录；再看那份数据里到底有什么。<strong>很多团队答不上来第二条。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">10-06 供应商披露泄露</span>
+                        <span class="flow-step critical">偷的是内部凭据，不是模型</span>
+                        <span class="flow-step">同一套系统里存着客户上传的数据</span>
+                        <span class="flow-step critical">10-09 通知下游 下游才知道有这回事</span>
+                        <span class="flow-step">11-13 才开始逐州备案逐个通知</span>
+                        <span class="flow-step critical">中间五周 安全团队是空白的</span>
+                        <span class="flow-step">上游处置完毕，不等于下游不疼</span>
+                    </div>
+                </article>
+
+                <!-- 文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">已修 · 无 KEV</span>
+                    <h3 class="article-title">组织里的普通成员，写一句话，然后等 root 自己送上门</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-129433 · CVSS 3.1 9.9（PR:L / S:C）· 4.0 记 9.4 · Dokploy &lt; 0.31.1 · 11-14 进 NVD</span>
+                        <span class="cvss-score">载荷住在备份配置里 · 定时任务每天执行一次</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Dokploy 是一套开源的 self-hosted 部署平台，定位类似自建的 Vercel：装在自己的服务器上，替你把容器编排起来。它的权限模型里有个基本假设——<strong>组织成员不是管理员，不该碰到宿主机。</strong>这个假设在 0.31.1 之前是假的。</p>
+                        <p>问题在 <code>getComposeContainerCommand()</code> 这个函数：拼 compose 备份命令的时候，<code>serviceName</code> 参数没有做过滤。攻击路径不需要任何技巧：一个组织成员调用 <code>backup.create</code> 或 <code>backup.update</code> 这两个 tRPC 接口，把 <code>serviceName</code> 填成带 shell 元字符的字符串，<strong>这个值会被原样存进备份配置</strong>。然后什么都不用做。定时备份到点，拼出来的命令以 <strong>root</strong> 执行。容器里挂着 Docker socket，从这一步到接管宿主机是常规操作。</p>
+                        <p><strong>这个洞的性质不是"少转义一个字符"，是持久化被做成了产品功能。</strong>载荷不是内存里的利用链，是一条合法的定时任务配置；重启容器不会清掉它，改密码不会清掉它，日志里看到的是一次正常的备份执行。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>受影响</td><td>Dokploy &lt; 0.31.1</td></tr>
+                            <tr><td>类型</td><td>CWE-78 OS 命令注入</td></tr>
+                            <tr><td>分数</td><td>CVSS 3.1 9.9（<code>PR:L</code> / <code>S:C</code>）· CVSS 4.0 9.4 · CVSS2 9.0</td></tr>
+                            <tr><td>前置</td><td>一个组织成员账号，不需要管理员</td></tr>
+                            <tr><td>触发</td><td>定时备份执行时，不需要攻击者在线</td></tr>
+                            <tr><td>后果</td><td>root + 挂载的 Docker socket = 宿主机</td></tr>
+                            <tr><td>修复</td><td>0.31.1（commit <code>b24006e</code> / PR #5908 / GHSA-j329-jw7j-rxjm）</td></tr>
+                            <tr><td>修复后必做</td><td>检查已有备份配置里 <code>serviceName</code> 是否带元字符——<strong>存进去的载荷不会因为升级而消失</strong></td></tr>
+                        </table>
+                        <p><strong>有一条口径要标出来。</strong>NVD 这条记录的 <code>vulnStatus</code> 是 <strong>Deferred</strong>，CISA 没收录，<strong>没有任何一手证据显示已在野利用</strong>。有聚合站在公告里写"confirmed exploitable in the wild"，那是模板措辞，别当事实转。</p>
+                        <p><strong>为什么值得关注：</strong>这条是本期的主题在代码层的版本。上一条讲的是"用管理功能达成破坏"，这一条讲的是"用低权限写一条配置，等系统自己执行"。两者的共同点是：<strong>攻击面不在漏洞库里，在你为了效率而设计的那套自动化上</strong>——备份、定时任务、CI、webhook，凡是"配一次、以后自动跑"的东西，都是把一次输入变成永久执行。</p>
+                        <p>最后那句"升级不会清掉已存的载荷"值得单独抄下来。<strong>这类洞的处置动作是两步，第二步经常被漏。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">普通成员账号 不是管理员</span>
+                        <span class="flow-step critical">serviceName 里塞 shell 元字符</span>
+                        <span class="flow-step">tRPC 接口原样存进备份配置</span>
+                        <span class="flow-step critical">到这一步攻击者已经不用再动手</span>
+                        <span class="flow-step">定时备份到点 命令以 root 执行</span>
+                        <span class="flow-step critical">挂着的 Docker socket 给出整台主机</span>
+                        <span class="flow-step">升级之后 还要去清一遍旧配置</span>
+                    </div>
+                </article>
+
+                <!-- 文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">未修 · 厂商不回</span>
+                    <h3 class="article-title">装个调灯光的软件，内核里多出一个能读写物理内存的驱动</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-129255（CoolerMaster 1.9.6）· CVE-2026-129261（Kingston ≤ 2.0.66.0）· 同日进 NVD</span>
+                        <span class="cvss-score">WinRing0x64.sys 8.8/9.3 · NTIOLib_X64.sys 8.2/9.3</span>
+                    </div>
+                    <div class="article-body">
+                        <p>今天两条来自同一个位置，但是两个不同的驱动、两个不同的厂商、两套不同的实现。</p>
+                        <p><strong>CoolerMaster 那条</strong>在 <code>MASTERPLUS+ 1.9.6</code> 里，问题出在 <code>WinRing0x64.sys</code>——这是第三方硬件访问驱动里最有名的一个，被无数灯控、风扇、超频软件打包过。缺陷在 <code>sub_11504</code> 处理 <code>PhysicalAddress</code> 参数时权限判断不对，本地用户就能读写物理内存。CVSS 3.1 给 8.8（<code>AV:L</code> / <code>PR:L</code> / <code>S:C</code>），CVSS 4.0 给 9.3。<strong>厂商被提前联系过，没有回应。</strong></p>
+                        <p><strong>Kingston 那条</strong>在 <code>FURY CTRL RGB Control Software</code> 2.0.66.0 及以下，驱动是 <code>NTIOLib_X64.sys</code>，缺陷在 IOCTL 处理函数上，暴露了访问控制不足的 ioctl。CVSS 3.1 只给 8.2（<code>PR:H</code>，需要较高权限），CVSS 4.0 给 9.3。同样只能本地触发。</p>
+                        <p><strong>为什么值得关注：</strong>第一，这是 BYOVD（自带脆弱驱动）在消费级外设上的复现。过去这类洞集中在游戏反作弊、主板厂商工具、安全软件自带驱动上，现在轮到了 RGB 灯控。<strong>设备的用户群不需要是攻击目标，只要装机量够大，驱动就会变成现成的提权零件。</strong></p>
+                        <p>第二，这条对 EDR 的实际影响比分数写的大。拿到内核读写之后，最省事的用法不是提权自己，是把正在跑的 EDR 从内核里摘掉，然后再做后面的事。<code>S:C</code> 那个 scope change 就在这里。</p>
+                        <p>第三，处置比补丁难。厂商没回应的那条没有修复版本；另一条即使修了，<strong>用户机器上那份旧驱动还在</strong>——这类软件的更新意愿极低，很多机器上跑的是三四年前的安装包。要么按驱动黑名单拦，要么承认这类软件在受管终端上就不该存在。</p>
+                        <p>顺带一句对照：10 月 11 日那期写过攻击者用 <code>certutil.exe</code> 投放 <code>WinRing0x64.sys</code>，给矿机拿内核级硬件访问。<strong>同一个驱动，一边是攻击者主动投放，一边是厂商主动安装，落点是一样的。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">用户只想调个灯效</span>
+                        <span class="flow-step critical">安装包静默装下内核驱动</span>
+                        <span class="flow-step">驱动 ring0 常驻 开机自启</span>
+                        <span class="flow-step critical">低权限进程发一个 IOCTL 指定物理地址</span>
+                        <span class="flow-step critical">读写内核内存 然后提权到 SYSTEM</span>
+                        <span class="flow-step">签名校验对签过名的驱动不构成阻碍</span>
+                        <span class="flow-step critical">厂商不回 也就没有修复版本</span>
+                    </div>
+                </article>
+
+                <!-- 文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">未核实 · 单一来源</span>
+                    <h3 class="article-title">不加密了，直接把你十万个调制解调器删掉</h3>
+                    <div class="article-meta">
+                        <span>EndZone 勒索团伙 · 11-14 在泄露站挂出 Momentum Telecom · 全部内容来自团伙声明</span>
+                        <span class="cvss-score">声称 750 万用户数据 · 声称删除超 10 万台设备</span>
+                    </div>
+                    <div class="article-body">
+                        <p><strong>先标明性质：全部内容来自勒索团伙自己在泄露站上的声明。</strong>受害方没有确认，也没有第三方验证过。写出来是因为它描述的那种打法值得提前想一遍，不是因为事实已经坐实。</p>
+                        <p>按声明，EndZone 通过一家被攻破的 MSO（多业务运营商）拿到了 Momentum Telecom 用来做诊断和开通的工具。这个工具的作用是控制终端设备——也就是用户家里的调制解调器。他们声称访问到了每一家 MSO 的用户数据，涉及 <strong>750 万以上用户的个人信息</strong>；然后开始删设备，声称已经删掉<strong>超过 10 万台</strong>，直接造成用户断网。</p>
+                        <p>原文里有一句很具体的话：他们一开始删调制解调器，对方才注意到长时间存在的访问和已经拖走的数据；对方每次都把访问切断，他们每次都能重新拿回来。还有一句更直接的——<strong>"这个服务在我们工具上点一下就能恢复，但你得联系我们。"</strong></p>
+                        <p>Momentum 是一家做云语音、托管网络、SD-WAN 和 Teams Phone 集成的运营商，营收约 2.217 亿美元。当地媒体确实报道过 Eagle Mountain 一带的互联网中断与网络攻击有关，<strong>这一部分能对上</strong>，其余部分只有团伙自述。</p>
+                        <p><strong>为什么值得关注：</strong>第一，勒索的杠杆从"加密你的文件"换成了"<strong>删你的终端设备</strong>"。加密要写数据、要留密钥、要谈判；删设备只要一条命令，而且恢复动作也在攻击者手里。</p>
+                        <p>第二，被拿下的不是运营商自己的核心网，是<strong>给运营商做诊断的那个工具</strong>。MSO 型业务里，一个工具服务多家运营商、管着几百万台设备、权限是批量下发，这个结构本身就是单点。供应链这个词在这里不是比喻。</p>
+                        <p>第三，如果这条最后被证实，它会是"运营侧停机比数据泄露更值钱"的一个样本。断网对用户的体感、对运营商的口碑、对 SLA 的冲击，都比丢一份客户表更直接。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">先拿下一个 MSO</span>
+                        <span class="flow-step critical">顺着 MSO 摸到诊断与开通工具</span>
+                        <span class="flow-step">工具管着用户家里的调制解调器</span>
+                        <span class="flow-step critical">声称 750 万用户数据 已拖走</span>
+                        <span class="flow-step critical">声称删掉超 10 万台 用户直接断网</span>
+                        <span class="flow-step">切断访问一次 他们重新拿回来一次</span>
+                        <span class="flow-step critical">恢复也要找他 才叫勒索</span>
+                    </div>
+                </article>
+
+                <!-- 文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">已确认 · 官方通报</span>
+                    <h3 class="article-title">两周十二起，六起在医疗，官方说不是同一拨人</h3>
+                    <div class="article-meta">
+                        <span>新加坡 CSA 与 PDPC · Fullerton Health 与人力部 11-14 联合通报 · 无 CVE</span>
+                        <span class="cvss-score">约 14 万条准证记录 · 月通报量为均值三倍</span>
+                    </div>
+                    <div class="article-body">
+                        <p>新加坡这半个月的节奏值得单独看一眼，因为它呈现的是"<strong>通用漏洞加集中目标</strong>"的形态，不是一次协同攻击。</p>
+                        <p>11 月 14 日，Fullerton Health 和人力部联合通报：<strong>约 14 万份工作准证持有者记录</strong>被泄露，入口是一台独立服务器，挂在 Migrant Worker Primary Care Plan 门户后面。其中约 <strong>4.3 万份属于已经失效的准证</strong>。可能暴露的字段是姓名、外籍身份证号、出生日期、联系方式、地址；公司说健康、医疗、财务数据没有受影响。</p>
+                        <p>同一天，新加坡 CSA 给了统计口径：<strong>10 月 24 日到 11 月 13 日之间，至少 12 起事件</strong>打到本地机构或它们的服务商，其中 <strong>6 起在医疗与社区护理</strong>；9 月以来每月的通报量是 1 到 8 月平均值的<strong>三倍</strong>。CSA 和 PDPC 的判断是这些事件看起来不像针对新加坡的协同行动，PDPC 的说法是攻击者利用的是<strong>常见 IT 漏洞</strong>。CSA 已经向所有关键信息基础设施行业做了通报。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>单起最大</td><td>Fullerton Health 约 140,000 条（其中约 43,000 条为准证已失效）</td></tr>
+                            <tr><td>入口形态</td><td>一台独立服务器，挂在业务门户后面</td></tr>
+                            <tr><td>两周内事件数</td><td>至少 12 起（10-24 至 11-13）</td></tr>
+                            <tr><td>行业分布</td><td>医疗与社区护理 6 起</td></tr>
+                            <tr><td>月度对比</td><td>9 月以来为 1 至 8 月均值的 3 倍</td></tr>
+                            <tr><td>官方定性</td><td>非协同攻击，利用常见未修补漏洞</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，"独立服务器"这四个字是重点。它不是主业务系统，是被挂在外面的一个旁路服务，通常由外包做、不在主资产的补丁清单里、也不在渗透测试范围里。<strong>攻击面长在这些地方，不在架构图上。</strong></p>
+                        <p>第二，医疗与社区护理占了一半。这类机构的特点是一致的：系统老、外包多、数据敏感度高、安全预算低。漏洞是通用的，目标选择是有偏好的，合起来就是 CSA 说的那个形态——<strong>不需要协同，只需要扫描器</strong>。</p>
+                        <p>第三，这条和第二条是同一个结构的两端。Uber 那边是数据放在供应商那里、防线由供应商的凭据把守；这边是数据放在自己的旁路服务器上、防线由没人管的补丁状态把守。<strong>结论一样：你以为的边界和你实际的边界不是同一条线。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">主业务系统没被打</span>
+                        <span class="flow-step critical">被打开的是挂在门户后面的独立服务器</span>
+                        <span class="flow-step">那台机器不在补丁清单里 也不在测试范围里</span>
+                        <span class="flow-step critical">两周 12 起 六起在医疗与社区护理</span>
+                        <span class="flow-step">月通报量是此前均值的 3 倍</span>
+                        <span class="flow-step critical">官方说不是协同 是常见的没打补丁</span>
+                        <span class="flow-step">14 万条里 4.3 万条来自已失效准证</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. 九点八分，但需要管理员先配一个"官方支持的配置"</h4>
+                    <p><code>CVE-2026-126173</code>，AutomatorWP Pro 的 webhook 插件，1.4.4 及以下，未认证攻击者可以把<strong>任意 WordPress 账号（含管理员）的密码重置掉</strong>，直接接管站点。但触发条件写得很细：需要管理员已经建过一条自动化，用 <code>Receive Webhook</code> 触发器、带 <code>Is the user ID</code> 字段，接到一个 <code>Update-User</code> 动作上、且 User ID 那栏<strong>留空</strong>、Password 那栏映射到 webhook 的 password 标签。NVD 的描述里专门补了一句——<strong>这是插件文档里支持的配置方式</strong>，不是畸形用法。公开 PoC 已有。这条的看点是"9.8 分对应的是一个正常配置"，不是"9.8 分对应所有安装"。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. GhostMap：收了两个多月，Google 这周改口重开</h4>
+                    <p>本刊 11-09 期报过这条：装一个不含代码、不要权限、永远不用打开的 APK，手机就进入崩溃循环，重启和安全模式都无效，只能恢复出厂设置，Android 10 及以上都受影响。当时 Google 的第二次回复是"不属于安全更新的修复范围"，转给功能团队评估未来版本。<strong>这周 Google 重开了这个 issue，并把严重性提到 High</strong>——但这次更新里没有补丁，也没有发布日期。触发点是 Bitdefender 在 8 月 20 日和 8 月 25 日提交的两份报告，复现环境是 Pixel 10 / Android 17 / 2026 年 8 月 5 日补丁。<strong>降级和升档都不是修复</strong>，这条仍然只能靠不装来路不明的 APK 来防。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. macOS 上的假验证码：往终端粘一条命令</h4>
+                    <p>Huntress 分析的 Macfinger 活动，页面伪装成验证码，提示用户"按这三个键、把这段粘贴到终端里"。粘进去的是一条从远端拉脚本的命令，脚本装的是 <strong>DownTheDRAIN</strong> 信息窃取器，能把加密货币钱包里的内容改道到攻击者地址。IOC：域名 <code>quill-kraee-um2gf[.]pro</code>，IP <code>45.150.32[.]130</code>、<code>171.22.131[.]24</code>。ClickFix 这套话术在 Windows 上跑了一年多，现在把同样的交互搬到了 macOS——<strong>它利用的不是系统漏洞，是"用户相信网页让自己做的事"</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. 一个长度对不上的属性，能把整台路由器的 BGP 全断掉</h4>
+                    <p><code>CVE-2026-129456</code>，FRRouting 的 <code>bgpd</code> 接受隧道封装属性（type 23）时，只在外层 TLV 长度和属性长度不一致时<strong>记一条日志，然后照常处理</strong>。后果是引用计数失衡：BGP 邻居发一条带这种属性的 UPDATE，就能让子 TLV 链被提前释放，而 Adj-RIB-In 和 RIB 里的路由还指着它；等这些路由被替换、撤销或清除（比如会话中断）时，<code>bgpd</code> 读到已释放内存、减一次引用计数、再释放一次。报告者的构建里（没开 AddressSanitizer）表现为内存记账断言失败，<strong>bgpd 直接 abort，路由器上所有 BGP 会话一起掉</strong>，而且邻居每次都能重来。需要已建立的 BGP 会话，报告者是在配了 <code>soft-reconfiguration inbound</code> 的邻居上复现的，且不是每次都崩。还有一句要注意：RFC 9012 要求 eBGP 会话默认过滤这个属性，但 <code>bgpd</code> 对<strong>包括 eBGP 在内的每个邻居</strong>都处理它。CVSS 4.0 记 7.7，没有 3.1 分数。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 同一个洞，3.1 给 5.9，4.0 给 8.2</h4>
+                    <p><code>create-ecdh</code> 4.0.4 及以下，这个包是 Node.js <code>crypto.createECDH</code> 的可打包版本，被浏览器打包器和没有原生实现的 Node 版本用。<code>computeSecret</code> 和 <code>setPublicKey</code> <strong>没有校验对端公钥</strong>——不检查点是否在配置的曲线上、是否在素数阶子群里。攻击者只要能提交公钥给一个复用静态私钥的一方，就能做无效曲线或小子群攻击，恢复私钥对小因子的模，再用中国剩余定理拼出完整私钥；对 ed25519 和 curve25519 还接受低阶点，可以强制出一个可预测的共享密钥。修在 4.0.5。现代 Node 上这个包直接转发原生实现，不受影响。<strong>两个分数差 2.3，因为 3.1 的 <code>AC:H</code> 和 4.0 的 <code>AT:P</code> 对"需要攻击者能反复提交公钥"这件事的计法不同</strong>——按哪个分数排期，结论会不一样。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. 今天 12 个 critical 里，两条 10.0 来自 15 年前就停产的设备</h4>
+                    <p>11 月 14 日到 15 日上午这个窗口，NVD 只有 77 条新记录，其中 12 条 9.0 以上，周末的量本来就是平时的零头。抽样三条：<strong>CVE-2026-129351</strong>（TRENDnet TEW-657BRM 1.00.1，10.0，<code>/setup.cgi</code> 里 <code>sprintf</code> 越界写，远程可打，公开利用已有，<strong>厂商原话是"该产品停产已超过 15 年，无法确认漏洞是否存在，我们会发个公告告知客户"</strong>）；<strong>CVE-2026-129353 与 129354</strong>（D-Link DIR-600L 2.17b02，均 10.0，<code>authenticationcgi_main</code> 与 <code>hnap_main</code> 两个入口，同为 VulDB 出品）；<strong>CVE-2026-129250</strong>（Edimax BR6478ACV2 1.23，9.9，<code>formPPTPSetup</code>）。这类记录的共同点是分数很高、可利用性成立、但没有修复版本——<strong>它们该进的是资产清退名单，不是补丁排期表。</strong></p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 是否已发生或可利用象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 是否已发生或可利用
+    x-axis "未利用或仅研究演示" --> "已发生或已在野"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "BlackNevas拆虚拟化": [0.96, 0.95]
+    "Uber司机驾照外流": [0.90, 0.66]
+    "Momentum删十万设备": [0.86, 0.88]
+    "新加坡两周十二起": [0.78, 0.64]
+    "Dokploy普通成员提权": [0.22, 0.86]
+    "外设软件内核驱动": [0.34, 0.80]
+    "AutomatorWP重置管理员": [0.58, 0.74]
+    "FRRouting断全部BGP": [0.26, 0.72]
+    "GhostMap手机变砖": [0.44, 0.52]
+    "createecdh私钥恢复": [0.18, 0.58]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "没用漏洞只用管理功能": 23
+    "上游泄露下游才受害": 20
+    "低权限等于高权限": 18
+    "自带驱动绕过内核边界": 15
+    "单一来源待核实": 13
+    "分数与后果不匹配": 11
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月6日至11月16日
+    10月06日 : Fireworks AI 披露泄露 九家 AI 平台里的第一家
+    10月09日 : 供应商通知 Uber 内部凭据被偷
+    10月24日 : 新加坡这一轮事件的统计起点
+    11月02日 : GitBook 单点登录被绕过 全站下线十六小时
+    11月05日 : Bitdefender 公开 GhostMap Google 判不属于安全修复
+    11月09日 : CISA 一次收四条 含 OpenSSH 与 FreeSWITCH
+    11月10日 : CISA 收六条 Barracuda 两条 11-13 到期
+    11月13日 : Kaspersky 发 BlackNevas 十天复盘
+    11月13日 : Uber 向多州总检察长提交泄露通知
+    11月13日 : CISA 收 Check Point 与 UnrealIRCd
+    11月14日 : Dokploy 与两个内核驱动同日进 NVD
+    11月14日 : EndZone 在泄露站挂出 Momentum Telecom
+    11月14日 : 新加坡通报 Fullerton Health 十四万条
+    11月14日 : AutomatorWP 那条的公开 PoC 出现
+    11月15日 : Google 把 GhostMap 重开并升为 High
+    11月16日 : Check Point 那条的联邦整改大限
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Kaspersky Securelist — Ransomware at the hypervisor layer（11-13 原始复盘：43 秒装代理、11 分钟拿到主机直连、Host Profile 推送后 33 秒服务运行、/selftest 16 秒预演、23 秒停光虚拟机、2KB 覆盖与 GPT 备份头的保留意见、完整 IOC）</span>
+                        <a href="https://securelist.com/">securelist · esxi</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">RansomwareWire — BlackNevas ESXi Attack Anatomy（完整时间点与命令原文、Trigona 衍生的归属说明、报告没有把攻击日期定在这一周的提示）</span>
+                        <a href="https://ransomwarewire.com/articles/blacknevas-esxi-vcenter-destruction-kaspersky-gert-case-2026">ransomwarewire · blacknevas</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatsEye — Ransomware at the Hypervisor Layer（ESXi 上无法运行常规 EDR 的结构性原因、Broadcom 对第三方 agent 的表述、Babuk 源码泄露与十个家族的关系）</span>
+                        <a href="https://threatseye.io/blog/ransomware-at-the-hypervisor-layer-how-attackers-weaponize-esxi-and-vcenter-with">threatseye · esxi</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GridinSoft — BlackNevas Turned vCenter Into a Key（Host Profile 打开 TSM-SSH 的机制、四个取证日志点、明确说明与 PRTG 那个案子是两次不同事件）</span>
+                        <a href="https://blog.gridinsoft.com/blacknevas-vcenter-host-profiles-esxi-backups">gridinsoft · blacknevas</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">QPulse — BlackNevas 借 PRTG 与凭据复用（第二案例：PRTG 存着连所有 ESXi 的凭据且多节点复用、AnyDesk 与 GMER、esxcli 关掉 execInstalledOnly、反取证删日志）</span>
+                        <a href="https://qpulse.quasarcybertech.com/news/7940/blacknevas-ransomware-leverages-prtg-monitoring-platform-and-credential-reuse-to-compromise-esxi-environments">qpulse · prtg</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense — How vCenter and Backups Failed（备份先被攻破的顺序、T1021.004 与 T1543.002 与 T1572 映射、黑市帖子计数只代表帖子数不代表受害数）</span>
+                        <a href="https://brandefense.io/security-news/esxi-vcenter-ransomware-backup-attack">brandefense · vcenter</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechCrunch — Uber 确认司机驾照泄露（供应商为 Fireworks AI、10-09 通知、三州人数、Uber 今年第二起、Fireworks 对归因的表述）</span>
+                        <a href="https://techcrunch.com/2026/11/13/uber-confirms-hackers-stole-thousands-of-drivers-license-information-in-data-breach/">techcrunch · uber</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Engadget — Uber drivers' information stolen（第二来源交叉核对；Fireworks 称攻击方属于倒卖大模型访问令牌的经济动机团伙）</span>
+                        <a href="https://www.engadget.com/2316881/uber-drivers-information-stolen-in-a-third-party-hack/">engadget · uber</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">网易 — 优步司机信息经第三方泄露（中文侧核对：三州人数、"数据放在合作方、防线由对方凭据把守"的定位）</span>
+                        <a href="https://www.163.com/dy/article/LBO4UGLA05561FZQ_pdya11y.html">163 · uber</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻 — Uber 遭攻击致多州驾照外泄（中文侧时间点 11-14、涉及四个州、Uber Freight 与 Helix 的前情）</span>
+                        <a href="https://news.qq.com/rain/a/20261114A0D25200">qq · uber</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tenable — CVE-2026-129433（Dokploy 三个版本的分数：CVSS2 9.0 / 3.1 9.9 / 4.0 9.4，发布与更新日期，引用 GHSA 与 commit）</span>
+                        <a href="https://www.tenable.com/cve/CVE-2026-129433">tenable · 129433</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Advisory GHSA-gfc5-hfj7-fjwc — Dokploy 公告（受影响范围、修复引用 GHSA-j329-jw7j-rxjm 与 PR 5908 与 commit b24006e、CVSS 4.0 向量原文）</span>
+                        <a href="https://github.com/advisories/GHSA-gfc5-hfj7-fjwc">ghsa · dokploy</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Wasteland — Dokploy 命令注入分析（PR:L 与 S:C 的实际含义、载荷持久化在备份配置、NVD 状态 Deferred、无 KEV、处置要多做一步清旧配置）</span>
+                        <a href="https://wasteland.me/intel/CVE-2026-129433">wasteland · 129433</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-129255（CoolerMaster MASTERPLUS+ 1.9.6 的 <code>WinRing0x64.sys</code> 与 <code>sub_11504</code>、PhysicalAddress 参数、厂商未回应的原文、8.8 与 9.3 两个分数）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129255">nvd · 129255</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-129261（Kingston FURY CTRL 的 <code>NTIOLib_X64.sys</code>、暴露的 ioctl 与访问控制不足、PR:H 与 8.2 分）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129261">nvd · 129261</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-126173（AutomatorWP webhook 插件的完整触发条件原文，含"这是文档支持的配置方式"那句，9.8 与未认证）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-126173">nvd · 126173</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Aretiq — 11-14 漏洞简报（AutomatorWP 与 Dokploy 的当日评级与 PoC 状态；该站把 Dokploy 写成已在野，本期按模板措辞处理）</span>
+                        <a href="https://aretiq.ai/bulletins/2026-11-14">aretiq · 1114</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-129456（FRRouting bgpd 对 type 23 属性只记日志、引用计数失衡、double free、断言失败与"eBGP 也会处理该属性"的说明）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129456">nvd · 129456</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-129319（create-ecdh 不校验对端公钥、无效曲线与小子群攻击、CRT 恢复私钥、ed25519 与 curve25519 低阶点、5.9 与 8.2 两个分数）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129319">nvd · 129319</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-129351（TRENDnet TEW-657BRM 的 10.0 分与厂商"停产超过 15 年"的原话）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129351">nvd · 129351</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-129353（D-Link DIR-600L 的 <code>authenticationcgi_main</code> 入口，10.0，VulDB 出品，公开利用已有）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129353">nvd · 129353</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Bitdefender — Google reopens GhostMap（重开并把严重性提到 High 的原始表述、没有补丁与日期、8-20 与 8-25 两次提交、Pixel 10 与 Android 17 复现环境）</span>
+                        <a href="https://www.bitdefender.com/en-au/blog/hotforsecurity/google-reopens-ghostmap-investigation">bitdefender · ghostmap</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatCluster — GhostMap 技术细节（ZIP 条目两个字段、libziparchive 与 libandroidfw 的不一致、system_server 崩溃循环的机制、ADB 抢救的有限条件）</span>
+                        <a href="https://threatcluster.io/article/ghostmap-the-android-flaw-that-crashes-your-phone--90c15c7d">threatcluster · ghostmap</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">cvetodo — 11-14 亚太简报（BlackNevas 与 Macfinger 的当日条目、DownTheDRAIN 的行为与七个 IOC、BlackNevas 的处置建议）</span>
+                        <a href="https://cvetodo.com/threat-report/au">cvetodo · au</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Hacker Feeds — EndZone 挂出 Momentum Telecom（泄露站声明原文：通过被攻破的 MSO 拿到诊断工具、750 万用户、十万台设备、"点一下就能恢复"、营收 2.217 亿美元）</span>
+                        <a href="https://hackerfeeds.com/ransomware/momentum-telecom-by-endzone-evfgf">hackerfeeds · momentum</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">cvetodo — 11-14 新加坡简报（Fullerton Health 与人力部联合通报的字段与人数、CSA 的 12 起与三倍口径、PDPC 对"常见漏洞"的定性、非协同的判断）</span>
+                        <a href="https://cvetodo.com/threat-report/sg">cvetodo · sg</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Axis Intelligence — 数据泄露追踪（11-14 单日新增的多起区域性泄露，用于判断当天事件密度；只统计已确认人数，攻击者声明不计入）</span>
+                        <a href="https://axis-intelligence.com/data-breach-tracker/">axis · tracker</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber-Defence — CVE Explorer（11-15 全局计数：425,758 条 CVE、KEV 1,781 条、公开利用 25,058 条，用于判断今日 critical 数量的相对位置）</span>
+                        <a href="https://www.cyber-defence.io/tools/cve">cyber-defence · cve</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Cyberfeed — 11-15 摘要（当日主线归纳、"披露到利用以小时计"的表述、KEV Week 46 的口径；该摘要含涉华归因段，本期未采用）</span>
+                        <a href="https://cloud.thecyberfeed.com/daily-summary/2026-11-15">cyberfeed · 1115</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">WorldProgramming — This Week In Security（GhostMap 与 2013 Master Key、2017 Janus 两次解析差异漏洞的类比、GitBook 四步链、eMudhra 密钥被截断到极短值的复盘）</span>
+                        <a href="https://www.worldprogramming.org/posts/this-week-in-security-four-digit-patch-tuesday-ssh-exploited-gitbook-breach-android-ghostmap-v8nzte">worldprogramming · weekly</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分、受影响与修复版本以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注两边口径或直接指出差异：Kaspersky 的 BlackNevas 复盘发布于 11-13 但报告没有把攻击日期定在这一周，本期按"新公开的复盘"收录；报告中"2KB 覆盖"不足以断定磁盘不可恢复（GPT 备份头），"销毁"是转述方标签不是报告结论；PRTG 那个案子与 Host Profile 那个案子是两次不同事件，不要合并；Momentum Telecom 一条全部来自泄露站声明，受害方未确认，标为未独立核实，能对上的只有当地媒体对 Eagle Mountain 断网的报道；CVE-2026-129433 的 NVD 状态是 Deferred、无 KEV、无一手的在野利用证据，某聚合站的"confirmed exploitable in the wild"属模板措辞；CoolerMaster 那条"厂商没有回应"是厂商行为记录，不等于默认否认；Uber 受影响总人数未知，三州数字来自已公开的检察长备案，会继续上升；CVE-2026-129351 的 10.0 分来自 VulDB 口径，与 NVD 自行重算可能不同；CVE-2026-129319 的 5.9 与 8.2 分别来自 CVSS 3.1 与 4.0，不构成版本差异。涉华涉台的归因类内容本期不予收录，技术事实按各报告方原文转述。文中涉及的驱动、PoC 与 IOC 细节仅用于自查与识别，不要用于未授权环境。
+                <br>
+                每日精选 · 值得关注 | 2026年11月15日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

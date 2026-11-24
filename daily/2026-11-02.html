@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月2日（第205期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月2日 星期一</span>
+            <span class="edition-number">第 205 期 | 总第 205 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>信任库把每一张证书都核对了 · 可只有第一张真正证明过私钥 · 三个多小时翻出三十一年的洞 · 被偷的不是模型是调模型的钥匙 · 厂商联系不上PoC已经公开 · 官方标了不支持请自己换分支
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">校验都跑了，校验的对象错了</h2>
+                <p class="sub-headline">一台容器主机的 mTLS 把客户端发来的证书链里每一张都拿去比对信任库，可 TLS 握手只证明了第一张的私钥归属，后面几张全是对方自己贴上去的字节；一套撑了三十年、被无数专家人工审过的工控核心库，一个自主 agent 用三小时四十九分钟翻出四个洞，最狠的那个 9.8；九家 AI 开发平台在一个月里陆续出事，攻击者没碰模型，只读环境变量里的那把钥匙，其中两把在三十小时里烧掉八十万次 Bedrock 调用；一批老旧路由器在同一天被公开八枚 0day，厂商联系不上、补丁没有、PoC 已经在手；一个 Java 网络框架的官方公告直接写明这个分支不再修；一个 .NET 加载器把落脚点选在了 Windows 分发补丁的那个目录里。六件事，共同点是"我检查过了"这句话里，检查的动作和检查的结果不是一回事。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">信任库里每一张证书都核对过了，可只有第一张证明过私钥</h3>
+                    <div class="article-meta">
+                        <span>10-28 厂商公告 · 10-29 稳定通道 · 10-30 Incus 修复</span>
+                        <span class="cvss-score">CVE-2026-112816 · CVSS v4.0 10.0 · CWE-295 · 无在野 · 不在 KEV · 无 workaround</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这是本月到目前为止技术含量最高的一条，因为它的漏洞不在代码写错，<strong>在密码学语义被理解错了</strong>。</p>
+                        <p><strong>机制说清楚就一句话：</strong>LXD 与 MicroCloud 的远程管理 API 走 mTLS，服务端维护一个信任库，客户端出示的证书只要"在库里"就放行。问题在于实现里把<strong>客户端发来的整条证书链上的每一张</strong>都拿去和信任库比对。而标准 TLS 握手（LXD 文档要求 TLS 1.3）只做一件事：客户端发完证书链后，用<strong>第一张（leaf）证书对应的私钥</strong>签一条 <code>CertificateVerify</code>。链上后面的中间证书是<strong>帮助服务端构建到根的可信路径</strong>用的，握手过程中<strong>没有任何步骤证明客户端持有它们的私钥</strong>。</p>
+                        <p>于是攻击路径极其干净：攻击者用自己的密钥对生成一张证书，再在后面<strong>追加一张受害者（被信任客户端）的公开证书</strong>——公开证书本来就不是秘密，任何抓包、任何一次集群加入过程都能拿到——服务端在链上找到那张受信任的证书，就把这条连接当成了那个身份。</p>
+                        <div class="attack-flow">
+                            <div class="flow-step">自己签一张叶证书<br/>私钥在自己手里</div>
+                            <div class="flow-step critical">链尾追加受害者公开证书<br/>公开证书不是秘密</div>
+                            <div class="flow-step critical">握手只证明第一张私钥<br/>后面几张无人验证</div>
+                            <div class="flow-step critical">逐张比对信任库<br/>命中第二张即放行</div>
+                            <div class="flow-step">继承该客户端权限<br/>特权身份直达宿主 root</div>
+                        </div>
+                        <p><strong>能不能打到，取决于那个监听口开没开。</strong>单机 LXD 默认只监听本地 socket，要管理员显式设置 <code>core.https_address</code> 才会监听网络（厂商文档示例是 TCP 8443）。MicroCloud 多了一层特定风险：<strong>集群组建阶段</strong>，新节点加入时它的<strong>公开证书要在网络上传输</strong>，抓到这张证书的人在之后就能以该节点身份登录。也就是说，<strong>入群那一刻的流量就是攻击素材</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>产品</th><th>受影响版本</th><th>修复版本</th></tr>
+                            <tr><td>LXD 6/stable</td><td class="risk-high">6.9 及之前</td><td>6.10.1</td></tr>
+                            <tr><td>LXD 5.21/stable</td><td class="risk-high">5.21.8 及之前</td><td>5.21.9</td></tr>
+                            <tr><td>LXD 5.0/stable</td><td class="risk-high">5.0.10 及之前</td><td>5.0.11</td></tr>
+                            <tr><td>LXD 4.0/stable</td><td class="risk-high">4.0.14 及之前</td><td>4.0.15</td></tr>
+                            <tr><td>MicroCloud 3 / 2</td><td class="risk-high">对应版本线</td><td>3.4.1 / 2.1.5</td></tr>
+                            <tr><td>Incus（社区分叉）</td><td class="risk-high">7.6.0 之前</td><td>7.6.0</td></tr>
+                        </table>
+                        <p><strong>这个洞是 Incus 项目发现并上报的</strong>（维护者 Stéphane Graber），Canonical 在公告里点名致谢；Incus 在 10 月 30 日发布 7.6.0，同一个洞连同另外 17 个安全问题一起修。Canonical 10 月 28 日发公告，10 月 29 日把修复推到稳定通道。</p>
+                        <p><strong>几个必须写清楚的前提与边界：</strong></p>
+                        <p><strong>没有 workaround。</strong>Canonical 除了升级没给别的办法，Incus 那边也明确说没有配置项能缓解。补丁前的唯一动作是<strong>收缩谁能访问那个监听口</strong>。</p>
+                        <p><strong>刷新不等于升上了。</strong>厂商公告发布时修复版本正在从 candidate 往 stable 滚，<code>snap refresh</code> 之后要<strong>实际看版本号</strong>，不能假定补丁到了。Ubuntu 归档里的 LXD 包在 CVE 记录里标为不受影响或未分发，修复只走 snap 通道。</p>
+                        <p><strong>没有在野利用。</strong>CISA 10 月 30 日的 SSVC 评估是：利用情况"无"、可自动化"是"、技术影响"完全"，不在 KEV。有一个自称 PoC 的仓库被公开的利用聚合站收录了，但<strong>没有任何独立验证</strong>，这里按"存在声称、未经证实"处理。</p>
+                        <p><strong>公开证书不是秘密，这一点决定了杀伤半径。</strong>任何一次 MicroCloud 入群、任何一份被备份出去的证书、任何一次抓包，都可能成为素材。所以"我没被入侵过，别人不可能有我的证书"这个假设不成立。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>它示范了一类极难被代码审查发现的错误</strong>——每一个函数调用看起来都合理，"把客户端给的证书和信任库比对"读起来毫无问题，错的是"客户端给的证书"这个集合里，<strong>只有一张是经过密码学证明的</strong>。</p>
+                        <p>第二，<strong>修复方向不是加校验，是改比对的对象</strong>。多检查一张，等于多开一个洞。安全评审时该问的是"这个比较的左边，哪些字节是攻击者可控的"，不是"这些字节对不对"。</p>
+                        <p>第三，<strong>受影响的是管理面</strong>。LXD 与 MicroCloud 管的不是业务流量，是宿主机和虚拟机本身。打进去直接是 root，不需要第二步提权。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">三个多小时，翻出三十一年没人看见的四个洞</h3>
+                    <div class="article-meta">
+                        <span>6-09 通报维护者 · 7 月至 8 月合入 · 10-27 CISA 公告</span>
+                        <span class="cvss-score">CVE-2026-114595 至 114598 · 最高 9.8 · ICSA-26-300-01 · 修复 7.0.11 · 无在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>EPICS 是洛斯阿拉莫斯与阿贡国家实验室最初开发的分布式控制系统工具包，用来把操作员与物理设备接起来。全球约 <strong>90 个</strong>大型科研、高校与工业站点在跑它，包括阿贡的<strong>先进光子源</strong>和 <strong>ITER 聚变堆的控制系统</strong>。</p>
+                        <p>这次是四个洞一起公开，全部落在 EPICS 的两个网络协议 Channel Access 与 pvAccess 的报文处理里，全部<strong>不需要认证、不需要用户交互，只要能网络可达 TCP 5064 或 5075</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>编号</th><th>缺陷类型</th><th>v3.1</th><th>后果</th></tr>
+                            <tr><td>2026-114595</td><td class="risk-high">CWE-190 整数溢出</td><td class="risk-high">9.8</td><td class="risk-high">按错误长度分配内存，后续处理导致堆上越界写，可能远程执行代码</td></tr>
+                            <tr><td>2026-114596</td><td>CWE-190 整数溢出</td><td>8.2</td><td>协议解析时消息长度校验失败，越界写，可崩溃控制进程</td></tr>
+                            <tr><td>2026-114597</td><td>CWE-130 长度参数不一致</td><td>7.5</td><td>边界检查不足，越界读，可泄露相邻内存</td></tr>
+                            <tr><td>2026-114598</td><td>CWE-843 类型混淆</td><td>7.5</td><td>越界读，拒绝服务并可能暴露内存</td></tr>
+                        </table>
+                        <p><strong>发现方式才是这条新闻的重点。</strong>找到它们的是 Causal Security 的自主 agent <strong>Cipher</strong>，用时 <strong>3 小时 49 分</strong>。联合创始人 Shubham Raj 对 The Register 的说法是：初始调查完全不需要人工介入，之后只下了一条指令——"可以在安全环境里做更深入的可利用性验证"。人在整件事里只做了一个决定：允许继续往下走。代码历史追溯显示，这四个缺陷<strong>已经存在约 14.5 到 31.5 年</strong>。</p>
+                        <p><strong>必须给这个说法打几个折，否则会读成"AI 已经能自动打穿工控"：</strong>Raj 是在卖产品，他自己把 Cipher 称作"完全自主的超级黑客"，这句要打折；<strong>代码执行没有被演示</strong>，公告与厂商措辞都是"可能"，实际验证到的是崩溃、内存破坏与拒绝服务；<strong>前置条件是真的</strong>——得先能到控制网里的那些端口，Raj 自己的表述是，一旦攻击者摸到一个配置错误或可达的网络，"后面的攻击就相当容易"；<strong>没有在野利用</strong>，CISA 也未收进 KEV。</p>
+                        <p><strong>这条最该被记住的不是"AI 挖洞"，是"隐蔽性防守结束了"。</strong>工控软件长期享受一种隐性保护：懂的人少，写得出利用的人更少。Raj 那句话很直白——攻击者不需要懂加速器的物理，只需要懂控制它的软件。而且这不是 Cipher 第一次出手：今年早些时候它找到过北美与欧洲电网系统的关键攻击路径，CISA 在 10 月 8 日发过通告。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>31 年、无数专家人工审过的代码，四小时内出四个洞</strong>。这不再是"AI 帮人提效"，是审查密度的天花板被换掉了。</p>
+                        <p>第二，<strong>四枚里两枚是同一个 CWE</strong>。整数溢出在同一份报文解析代码里出现两次，说明这类缺陷的分布有规律——同样的输入处理模式，同样的错误。查一个就该查一片。</p>
+                        <p>第三，<strong>"没人在打"是个短期状态</strong>。SSVC 是"利用情况无、可自动化是、技术影响完全"。可自动化等于：有了公开编号和协议文档，任何人照着写利用的成本都不高。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">九家 AI 开发平台，丢的不是模型是钥匙</h3>
+                    <div class="article-meta">
+                        <span>Wiz 报告 10-30 · Northflank 事件 10-30 · 10-31 跟进报道</span>
+                        <span class="cvss-score">九起事件九种根因 · 两把密钥烧掉约 250 万次调用 · 账单超 10 万美元 · Zeabur 宣布关停</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Wiz 的研究（Benjamin Read 与 Rami McCarthy）把 10 月串成了一条线：<strong>九家 AI 开发平台在一个月内披露安全事件</strong>。按披露顺序是 Fireworks AI（10-06）、Andromeda（10-09）、Zeabur（10-14）、Lightning AI（10-15）、OpenCode（10-16 至 17）、Railway（10-20）、Warp（10-23）、CommandCode（10-28）、Northflank（10-30）。</p>
+                        <p><strong>九起事件没有共同的漏洞，也没有共同的依赖。</strong>Wiz 明确说了这一点。共同的是<strong>目标</strong>：每份公开报告都指向<strong>环境变量</strong>，而且明显偏爱那些<strong>能开 AI 服务的变量</strong>。几家的自述还很像——Fireworks、OpenCode、Warp 都报告了"agent 蜂群"迹象；Andromeda 说自己是"行业级攻击"的一部分；OpenCode 和 CommandCode 把事件归为"蒸馏尝试"。已公布的根因各不相同：Fireworks、Zeabur、Lightning 说是凭据被访问，Railway 的初步报告指向<strong>构建基础设施里的提权</strong>，Warp 指向第三方供应商，OpenCode 指向<strong>遗留系统</strong>。</p>
+                        <p><strong>Northflank 那一天的时间线值得逐行看</strong>，因为它把"响应速度"和"根因空白"同时展示了出来：</p>
+                        <table class="affected-table">
+                            <tr><th>时间（UTC，10-30）</th><th>发生了什么</th></tr>
+                            <tr><td>11:43</td><td>Wiz 发出威胁告警，工程团队一分钟内开始核查</td></tr>
+                            <tr><td>12:02 / 12:50 / 13:05</td><td>连发三版网络策略补丁</td></tr>
+                            <tr><td>13:00</td><td>请求 Wiz 的事件响应团队介入</td></tr>
+                            <tr><td class="risk-high">13:58</td><td class="risk-high">状态页写下那句话：假定所有环境变量都已被解密，禁用或轮换全部密钥</td></tr>
+                            <tr><td>15:12</td><td>为 Postgres 与 MongoDB 附加组件开放紧急轮换，并说明已有多名用户确认 AI 密钥被用过</td></tr>
+                            <tr><td>23:38</td><td>把 AI 密钥滥用与更大范围攻击模式挂钩，指向 Wiz 的报告</td></tr>
+                            <tr><td>10-31</td><td>审计日志对所有客户（含免费层）开放；轮换扩展到 MySQL、Redis、MinIO、RabbitMQ</td></tr>
+                        </table>
+                        <p><strong>到 10 月 31 日深夜，Northflank 仍未公布根因</strong>，没说攻击者怎么拿到客户密钥，也没说受影响客户数量；也没区分 BYOC（跑在客户自己 VPC 里）与普通客户的边界。这一点比时间线本身更值得记：<strong>响应流程跑得很快，因果关系是空的</strong>。</p>
+                        <p><strong>下游的账单是可观测的。</strong>Wiz 追了两把被泄露的企业密钥：<strong>案例 A 三十小时内约 80 万次 Bedrock 调用</strong>（约九成成功，其中 Opus 5 占 36%、Opus 5.5 占 22%、Opus 4.8 占 10%），<strong>案例 B 十三小时内约 170 万次</strong>（超百万成功）；两个案例合计，<strong>按目录价超过 10 万美元</strong>。两次都是在凭据被访问后<strong>三十分钟内</strong>先发一次 <code>InvokeModel</code> 试水，然后低频试探数日，确认没被封才开始灌量。</p>
+                        <p>Wiz 把流量和两个转售渠道 <strong>momo</strong> 与 <strong>Xingjiabi</strong> 的基础设施关联起来，但<strong>明确说不认为这两家执行了最初的入侵或大规模滥用</strong>。另有一个细节：与某转售方关联的服务器上托管过一个以 <strong>ARTEX</strong> 命名的页面——那是出现在 Vapor Panda 间谍活动与 ConnectWise 供应链攻击里的自主攻击框架。Wiz 没有把 Black October 归因给这两个行为体，这里照抄这个"不归因"的结论。</p>
+                        <p><strong>Zeabur 的结局要单独提一句</strong>：它公开了完整复盘，并宣布因这次事件在 12 月 31 日前<strong>关停</strong>。一个平台的生死，被一次凭据失窃决定了。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这轮攻击的目标不是模型，是调用模型的权限</strong>。模型本身不好偷，但"能无限调用前沿模型"这件事在转售市场上是硬通货。LLMJacking 这个叫法不是比喻，它的经济结构和挖矿劫持一模一样。</p>
+                        <p>第二，<strong>环境变量成了新的单点故障</strong>。九家平台，九种根因，同一个暴露面。这不是某家的实现问题，是"把密钥放在能被应用直接读到的环境里"这个行业惯例的结构性问题。</p>
+                        <p>第三，<strong>账单是唯一能及时发现的信号</strong>。从第一次试水到大规模滥用中间隔了数日，平台侧与应用侧都没拦住；能看见异常的只有用量与费用曲线。所以"给 AI 服务设花费告警"这句话，今年从最佳实践变成了最低要求。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">一天放出八枚路由器 0day，厂商联系不上，PoC 已经公开</h3>
+                    <div class="article-meta">
+                        <span>11-01 集中公开</span>
+                        <span class="cvss-score">四枚 CVSS 4.0 满分 10.0 · 其余 9.9 · 全部无修复版本 · 全部不在 KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>VulDB 在 11 月 1 日一天里放出了一批家用与小型办公网络设备的漏洞，共同特征极其一致：<strong>远程可达、PoC 公开、厂商提前联系过但没有回应或没有补丁</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>编号</th><th>设备</th><th>位置与成因</th><th>评分</th></tr>
+                            <tr><td>2026-120189</td><td>D-Link DIR-505（1.10B02）</td><td class="risk-high">tftpd 上传文件名处理，栈溢出（CWE-121）</td><td class="risk-high">10.0</td></tr>
+                            <tr><td>2026-120195</td><td>WAVLINK WL-WN579A3-A</td><td class="risk-high">初始设置向导，<code>wlan_ssid</code> 参数注入</td><td class="risk-high">10.0</td></tr>
+                            <tr><td>2026-120198</td><td>WAVLINK WL-WN530BE1-A</td><td class="risk-high">协议处理器，<code>group_name</code> 与 IP-FROM 注入</td><td class="risk-high">10.0</td></tr>
+                            <tr><td>2026-120276</td><td>WAVLINK WN536AX6-A</td><td class="risk-high"><code>/bin/ioos</code> 的 sub_416760，<code>group_name</code> 注入</td><td class="risk-high">10.0</td></tr>
+                            <tr><td>2026-120196</td><td>WAVLINK WN579X3-D</td><td>端口转发名称参数注入</td><td>9.9</td></tr>
+                            <tr><td>2026-120197</td><td>WAVLINK WL-WN530HG4B</td><td>端口转发名称参数注入</td><td>9.9</td></tr>
+                            <tr><td>2026-120227</td><td>WAVLINK WN701AE</td><td><code>del_staticrule</code> 的 <code>rule_name</code> 直接进 <code>system()</code></td><td>9.9</td></tr>
+                            <tr><td>2026-120231</td><td>WAVLINK WN553X1-B</td><td>OpenVPN CLI 处理 sub_416568，<code>file_id</code> 只查空格</td><td>9.9</td></tr>
+                        </table>
+                        <p><strong>技术上两个细节值得拎出来。</strong></p>
+                        <p><strong>一是 WAVLINK 那一串几乎都是同一个模板。</strong>参数名不同（<code>wlan_ssid</code>、<code>group_name</code>、<code>rule_name</code>、<code>file_id</code>），位置不同（设置向导、协议处理器、静态路由、OpenVPN CLI），但成因完全一样：<strong>用户输入被拼进 <code>system()</code> 或 <code>popen()</code> 的字符串，只做最粗的过滤</strong>。其中那条过滤是 <code>strchr</code> 查空格——<strong>只要用引号跳出双引号上下文，空格检查就形同虚设</strong>。这不是八个独立的失误，是同一份代码风格在八个地方的结果。</p>
+                        <p><strong>二是 D-Link 那台的评分是 10.0，且设备是老的。</strong>DIR-505 属于早年产品，厂商大概率不会再出固件。这种情况下"修复建议"只有一条：<strong>别让它暴露在公网，能换就换</strong>。它的 EPSS 只有 1.3%（第 71 百分位），这个数字说明还没人写自动化利用，不代表安全。</p>
+                        <p><strong>这批的共同处置逻辑只有一条是真正有效的：把管理口从公网撤下来。</strong>因为补丁不存在、"等厂商修"这个选项不存在。至于"设了强密码就安全"——<strong>那条 OpenVPN CLI 洞明确写了，出厂默认密码几乎没人改，这让"需要认证"这个前提在现实中接近于不需要</strong>。</p>
+                        <p>同日还有一枚同批次的：<strong>锐捷 RG-ES 系列交换机</strong>（RG-ES205GC / ES206GC-P / ES208GC / ES210GC-LP / ES210GS-P）的本地固件升级接口 <code>httpupg.cgi</code> 越界写，编号 <strong>CVE-2026-120241</strong>，评 7.5，攻击向量是无认证远程，GitHub 上已有公开 PoC，厂商没有回应。它评 7.5 而不是 10，是因为只影响可用性。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>这批不是"新漏洞被发现了"，是"没人管的设备被公开标价了"</strong>。PoC 一公开，脚本小子和僵尸网络运营者的成本曲线立刻拉平。</p>
+                        <p>第二，<strong>同一厂商八个洞一个模板，说明它的代码里还有更多</strong>。已经公开的八个是发现者愿意公开的部分，不是全部。</p>
+                        <p>第三，<strong>这批设备的位置决定了后果</strong>。家用路由器与分支路由器的价值不在设备本身，在它后面的整段网络、在它承载的 DNS 与端口转发规则。一台被改过 DNS 的路由器，比一台被拿 root 的服务器更难被发现。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">官方在原公告里写了：这个分支不修</h3>
+                    <div class="article-meta">
+                        <span>10-31 公开</span>
+                        <span class="cvss-score">CVE-2026-118636 · CVSS 9.8 · CWE-502 · EPSS 0.57% · 无 PoC · 无修复</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Apache MINA 3.0 的 codec 模块里，<code>JavaNativeMessageDecoder</code> 对收到的每一帧<strong>直接调用 <code>ObjectInputStream.readObject()</code>，没有任何类过滤器</strong>。Java 原生反序列化的问题是它能从字节流里指定要实例化哪个类；只要目标应用的 classpath 上存在可用的 gadget 链，攻击者构造一个对象图就能在 <code>readObject()</code> 期间跑代码。</p>
+                        <p><strong>成立条件必须说清楚，否则会被误读成"所有 MINA 用户都中"：</strong>应用把 <code>JavaNativeMessageDecoder</code> <strong>接在了面对不可信对端的过滤器链上</strong>；对端的 classpath 里<strong>存在可用的 gadget 链</strong>；攻击者<strong>能往这个监听口发帧</strong>。三条同时满足才是 9.8 的实际风险。EPSS 给的是 <strong>0.57%（第 47 百分位）</strong>，不在 KEV，没有公开 PoC。</p>
+                        <p><strong>真正的新闻是官方处置：</strong>这条公告被标为 <strong>UNSUPPORTED WHEN ASSIGNED</strong>，原文意思是 3.0.0 分支已停止维护，<strong>不计划发布修复版本</strong>，建议用户改用 <strong>2.2.X 分支</strong>的最新版。受影响版本是 <strong>3.0.0 到 3.0.0-M2</strong>。</p>
+                        <p><strong>同一天还漏了一条同族问题</strong>：Apache Thrift 的 Java 绑定在 <strong>0.24.0 之前</strong>，<code>TProtocolUtil.skip()</code> 默认不限制递归深度（<strong>CVE-2026-120135</strong>，CVSS 4.0 8.2），构造的嵌套报文可以把服务打崩，修法是升到 <strong>libthrift 0.24.0</strong>。两条放在一起看才有意思：<strong>同一个生态里，一条没人修，一条一个版本号就解决了</strong>。</p>
+                        <table class="affected-table">
+                            <tr><th>条目</th><th>结论</th><th>处置</th></tr>
+                            <tr><td>MINA 3.0.0 至 3.0.0-M2</td><td class="risk-high">UNSUPPORTED WHEN ASSIGNED，不修</td><td class="risk-high">摘掉 <code>JavaNativeMessageDecoder</code>，迁到 2.2.X</td></tr>
+                            <tr><td>Thrift Java 0.24.0 之前</td><td>CVE-2026-120135，递归深度不设限</td><td>升到 libthrift 0.24.0</td></tr>
+                        </table>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"官方说不修"是漏洞管理里最难处理的一类结论</strong>。它把处置责任 100% 推给了资产方，而且推得很干净：没有补丁可以等，没有 workaround 可以配，只有"改代码"和"改网络"两条路。</p>
+                        <p>第二，<strong>处置路径是明确的</strong>：把解码器从任何面对不可信对端的监听器上摘掉，换成有 schema 的编解码（Protobuf、JSON、自定义二进制）；短期降级手段是给 JVM 加 <code>-Djdk.serialFilter=</code> 白名单，并收缩监听口的可达范围。</p>
+                        <p>第三，<strong>这条应该进"依赖清单"，不是"待办事项"</strong>。MINA 经常是被框架或内部平台间接带进来的，<code>mvn dependency:tree</code> 里翻 <code>mina-core</code> 与 3.0 codec 模块，比等扫描器报要快。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">高</span>
+                    <h3 class="article-title">把补丁分发目录，当成了落脚点</h3>
+                    <div class="article-meta">
+                        <span>Kaspersky 本周披露 · 样本首见于 2026 年上半年</span>
+                        <span class="cvss-score">未归因 · 无 CVE · 疑似供应链投递 · 投递载体仍未知</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Kaspersky 分析了一条针对<strong>亚洲某地政府机构专用定制版 Windows 10</strong> 的感染链，载荷是一个此前未被记录的 .NET 程序集加载框架，代号 <strong>NetamLoader</strong>。攻击者未被归因，也没有证据说明入侵是否波及多台机器或窃取了敏感数据。</p>
+                        <p><strong>落脚点的选择是这条最值得学的地方。</strong>那个 CAB 压缩包被放在 <code>C:\Windows\SoftwareDistribution\Download\e4537a1762fcafd2fd96bfc825bad34f9db9a24\</code>，内容解压到同级的 <code>Install\</code> 目录。<strong>这是 Windows 存更新包的地方</strong>——一个系统级、自动生成、几乎没人会去翻、也极少有工具会拦的路径。把恶意文件放在"系统自己下补丁的目录"里，等于借了系统更新这件事的信任。</p>
+                        <p><strong>包里七个文件，四个是 Patch My PC（一款端点管理软件）的真实组件：</strong></p>
+                        <table class="affected-table">
+                            <tr><th>文件</th><th>性质</th></tr>
+                            <tr><td>PatchMyPC-ScriptRunner.exe</td><td>真实组件，被当作启动器</td></tr>
+                            <tr><td>PatchMyPC-ScriptRunner.exe.config</td><td>真实组件，承载 AppDomainManager 注入配置</td></tr>
+                            <tr><td>Microsoft.HostIntegration.Connectors.dll</td><td>真实组件，被借来读同目录配置</td></tr>
+                            <tr><td>PatchMyPC-Enum.dll / PatchMyPC-Models.dll</td><td>真实组件，用于凑齐依赖</td></tr>
+                            <tr><td>fabric.config</td><td>配置文件，指向下一步要加载的东西</td></tr>
+                            <tr><td class="risk-high">Resources.resx</td><td class="risk-high">唯一真正藏了东西的文件，多层编码压缩加密载荷</td></tr>
+                        </table>
+                        <div class="attack-flow">
+                            <div class="flow-step critical">CAB 落在系统更新目录<br/>四个真实组件做外壳</div>
+                            <div class="flow-step critical">AppDomainManager 注入<br/>配置里指定加载谁</div>
+                            <div class="flow-step">资源文件多层解码<br/>其中一层专绕 AMSI</div>
+                            <div class="flow-step">宿主必须是 dllhost<br/>抖动二十到四十分钟</div>
+                            <div class="flow-step">删 Prefetch 与 CLR 日志<br/>现场只留推测</div>
+                        </div>
+                        <p>Kaspersky 判断这可能是<strong>一次供应链攻击</strong>：攻破某个第三方供应商，从而触达依赖它的下游。但<strong>具体的投递载体（那个 CAB 是怎么进去的）仍然是未知的</strong>，这一点它写得很明确。</p>
+                        <p><strong>从技术侧挑三个可以拿去写检测的点。</strong></p>
+                        <p><strong>一是 AppDomainManager 注入。</strong><code>.config</code> 文件可以指定 CLR 启动时加载哪个 <code>AppDomainManager</code>，从而在 .NET 应用起来的瞬间把任意程序集拉进来。效果和 DLL 侧加载一样，但<strong>没有"往应用目录里塞 DLL"这种明显痕迹</strong>，全在配置里。检测上该看的是"谁在写 <code>.exe.config</code>"、"进程树里有没有非预期的程序集加载"。</p>
+                        <p><strong>二是分层载荷全藏在 <code>.resx</code> 里。</strong>资源文件本来是放字符串和图标的，正常没人会去审。XAML、.NET 程序集、JSON 一层套一层，其中一份负责绕过 AMSI，一份是加密插件，一份是 C2 配置。这种"把可执行内容伪装成资源"的手法，静态扫描很难给高置信度。</p>
+                        <p><strong>三是清场动作很完整</strong>：删掉从 CAB 解出来的原始文件、删 CLR 使用日志、删 Prefetch 缓存。<strong>留下的取证素材因此很少</strong>，这也是为什么"补丁目录里出现过 CAB"这件事本身值得当成告警。</p>
+                        <p>还有两个行为细节：第一，插件会<strong>先确认自己宿主进程是 <code>dllhost.exe</code></strong> 才继续，宿主不对就不干活——这既躲开沙箱，也躲开那些按进程名做规则的工具；第二，<strong>首次外连前随机等 20 至 40 分钟</strong>，这段时间足够让"执行即联网"的检测规则失效。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <p>第一，<strong>"系统自己的目录"不等于"系统自己的文件"</strong>。SoftwareDistribution 是 Windows 更新机制的落地区，把它当可信路径的任何白名单，都会成为这条链的入口。</p>
+                        <p>第二，<strong>合法的第三方组件被拿来当外壳</strong>。七个文件里六个是真的，只有资源文件被动过。签名、文件名、版本信息全部对得上——<strong>"这文件是哪来的"比"这文件签没签名"更值得问</strong>。</p>
+                        <p>第三，<strong>这条链的每一层都在拖时间、减证据</strong>。抖动 20 至 40 分钟、宿主校验、删 Prefetch 与 CLR 日志，三件事合起来让"事后追溯"变成"事后推测"。</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-section">
+                <div class="quick-item">
+                    <h4>7. OAuthLib：认证的是一个客户，授权的是另一个客户</h4>
+                    <p><strong>CVE-2026-118669</strong>（NVD 评 CVSS 4.0 <strong>8.4</strong>，GitLab 咨询库评 <strong>9.6</strong>，CWE-863 授权不当），10 月 28 日公开，<strong>4.0.0 修复</strong>。机制很短：<code>client_credentials</code> 与密码模式的处理函数里，认证函数把 <code>request.client</code> 设成"已认证的那个客户"，但<strong>没有任何步骤要求 <code>request.client_id</code> 与它一致</strong>。如果请求体里已经带了 <code>client_id=</code>，这个值就活下来了，而被传进授权与 scope 校验的<strong>是请求体那个值，不是已认证的对象</strong>。结果：攻击者用自己一个低权限客户端的凭据认证，然后在请求体里写一个权限更大的客户名，<strong>授权检查就跑在受害者身份下</strong>。</p>
+                    <p>边界要写清楚：<strong>只有"信任 <code>client_id</code> 参数"的校验器受影响</strong>，那些只从 <code>request.client</code> 授权的部署按公告说法可能不受影响；受影响的也是<strong>服务端（做 OAuth 提供方）</strong>，不是客户端拿 token 的用法。为什么单列：<strong>越来越多的 MCP 服务器与 agent 网关自己实现 OAuth 授权服务器</strong>，而这个库就在下面。处置顺序是先升 4.0.0，再把校验器改成只信 <code>request.client</code>——<strong>补丁治的是这一处，改法治的是这一类</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. SAP Cloud SDK for Python：控制租户子域名，就能拿走 OAuth2 凭据</h4>
+                    <p><strong>CVE-2026-89111</strong>，CVSS <strong>10.0</strong>，SSRF 类型。成立条件是攻击者能控制租户子域名，此时 SDK 会把 <strong>OAuth2 应用凭据（client id 与 secret）</strong>送到攻击者那边，而不是只泄露内部端口信息；修复方式是加输入校验。这条只找到二手汇总口径（多个聚合站转述厂商公告），<strong>原始 SAP 公告页与完整受影响版本矩阵没有直接核到</strong>，所以当成"需要自己去厂商页面确认"的条目处理，不给具体版本号。</p>
+                    <p>放进速览的原因是：<strong>它泄露的不是数据，是身份</strong>。拿到 OAuth2 客户端凭据的攻方，后续动作在日志里全都长得像正常集成。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Prefab UI：给 LLM 写的代码用的沙箱，读写网络全放开</h4>
+                    <p><strong>CVE-2026-120338</strong>（CVSS <strong>10.0</strong>），影响 Prefab UI <strong>0.14.0 至 0.20.2</strong>：它启动 Python 沙箱时<strong>没有限制读、写与网络</strong>，隔离形同虚设，而它存在的目的正是"安全地跑不可信或由 LLM 生成的代码"。同批还有 <strong>Beta9</strong> 的 <strong>CVE-2026-120308</strong>（9.9）：网关与 worker <strong>不校验租户是否拥有它要挂载的卷</strong>，因此可以路径穿越。两条都无在野记录、都在等厂商修。</p>
+                    <p>放在速览是因为它和昨天的头条构成对照：<strong>昨天是"沙箱是好的，旁边那个监听器不验来源"，今天是"沙箱本身就是个普通进程"</strong>。两个方向都指向同一件事——"隔离"这个词必须落到具体的系统调用与网络策略上，不能落在产品命名上。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Polymarket：726 个钱包，约 270 万美元，账算清了</h4>
+                    <p>前情：本刊 10-30 已在速览提过"Polymarket 因第三方供应商被入侵暂停交易、承诺全额补偿"。11 月 1 日 The Hacker News 给出了最终数字与机制：被劫持的是站上一个<strong>第三方页面速度监测脚本（DebugBear）</strong>，交易者在已登录状态下签名时，被这个脚本诱导签了不该签的东西；平台退款约 <strong>270 万美元给 726 个钱包</strong>。到 11 月 1 日核查时，那个恶意域名已经没有 DNS 记录。</p>
+                    <p>平台侧的整改是三件：<strong>更强的 CSP、锁定版本号、把第三方脚本放进沙箱</strong>。Hudson Rock 的建议更根本：<strong>交易或签名页面上不该有不需要的第三方代码</strong>；能锁定版本的就上 SRI（浏览器会在文件内容变化时直接拒绝）；<strong>"允许某个可信 CDN"这条策略并不检查那个 CDN 到底发了什么</strong>；最后一条是给用户的——<strong>拒绝任何你没预期到的签名请求</strong>。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Linux 98432：多了一个不依赖发行版的临时缓解</h4>
+                    <p>前情：本刊 10-29 已详写这枚 IPv4 TCP 握手的释放后重用（CVE-2026-98432），11-01 又记录过 Ubuntu 与 RHEL 全线仍无修复内核。<strong>11 月 1 日 oss-security 上多了一条补充</strong>：在拿不到修复内核的机器上，除"用 nftables 丢掉带 IPv4 选项的入向 TCP"与"关掉 MPTCP"之外，还可以加 <strong><code>init_on_free=1</code></strong> 启动参数——把已释放内存立刻清零，让"读到刚被释放的那块"拿不到有效内容。</p>
+                    <p><strong>这只降低可利用性，不修漏洞</strong>，代价是性能；而且它要求重启，重启本身又会让内存里的证据消失。顺序仍然是：先补丁重启，补不了再叠这三条。保留在速览里是因为它示范了一个态度——<strong>在发行版补丁空窗期，缓解措施是可以叠加的，但每一条都要写清楚它治的是什么、不治什么</strong>。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Black October 九家平台": [0.95, 0.90]
+    "路由器八枚 0day": [0.88, 0.84]
+    "LXD 证书链冒充": [0.14, 0.97]
+    "EPICS 四洞": [0.12, 0.92]
+    "NetamLoader 补丁目录": [0.72, 0.80]
+    "SAP SDK 凭据外泄": [0.20, 0.88]
+    "Prefab UI 沙箱": [0.08, 0.86]
+    "OAuthLib 授权错位": [0.10, 0.72]
+    "Apache MINA 不修": [0.06, 0.81]
+    "Polymarket 第三方脚本": [0.93, 0.42]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "凭据与身份验证": 28
+    "设备与固件 0day": 22
+    "AI 基础设施与供应链": 20
+    "工控与关键设施": 14
+    "反序列化与代码执行": 10
+    "缓解措施与运维": 6
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月27日至11月2日
+    10月27日 : CISA 发布 EPICS Base 通告 ICSA-26-300-01
+             : KEV 收录 Brotli 未检查返回值问题
+    10月28日 : Canonical 公告 LXD 与 MicroCloud 证书链问题
+             : OAuthLib 授权错位公开
+    10月29日 : LXD 修复版本进入稳定通道
+             : CISA 把 GitLab 与 Cisco 防火墙列入 KEV
+    10月30日 : Incus 发布 7.6.0 修同一问题
+             : Wiz 发布 Black October 报告
+             : Northflank 要求全体客户轮换密钥
+             : CISA 把 Ivanti 两枚列入 KEV
+    10月31日 : Apache MINA 与 Thrift 两枚公开
+             : 安卓死亡短信 PoC 同期公开
+    11月1日 : VulDB 集中公开 D-Link 与八款 WAVLINK 漏洞
+             : Polymarket 公布退款数字
+             : oss-security 补上 init_on_free 缓解建议
+    11月2日 : Ivanti 111357 联邦修复死线到期
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">CSA Labs 研究笔记（11-01）— 机制逐层拆解：TLS 握手只证明 leaf 私钥、中间证书是攻击者可控字节；Canonical 10-28 公告与四个 LXD 版本线、MicroCloud 两条线的修复号；Incus 7.6.0 于 10-30 发布；CISA SSVC 三项取值；公开索引的 PoC 未经证实</span>
+                        <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-lxd-microcloud-mtls-impersonation-20261101">csa labs · lxd</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Random Chaos — 受影响版本 4.0.14 / 5.0.10 / 5.21.8 / 6.9、Ubuntu 归档包不受影响、MicroCloud 入群过程泄露公开证书的具体路径、Incus 在同版修 17 个其他问题、刷新后必须核对版本</span>
+                        <a href="https://randomchaos.us/articles/lxd-flaw-enables-keyless-client-impersonation">randomchaos · lxd</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Mallory 漏洞库 — CVSS 10.0、CWE-295、EPSS 0.30%、KEV 未收录、无在野、缓解与"假定已失陷"清单</span>
+                        <a href="https://mallory.ai/vulnerabilities/01a18dee-6099-7092-b0fa-468ab41cacad">mallory · 112816</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NetCyberBase — core.https_address 的默认关闭与手动开启、TCP 8443、snap 通道与刷新命令</span>
+                        <a href="https://netcyberbase.com/article/critical-cvss-10-0-vulnerability-in-lxd-and-microcloud-enables-root-host-imperso-mvxvbbkb">netcyberbase · lxd</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA 通告 ICSA-26-300-01（10-27，Revision 1）— 四个编号、CWE 分类、CVSS 两套评分、修复版本 7.0.11、SSVC 三项取值</span>
+                        <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01">cisa · epics</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OT/ICS Monitor（11-01）— 协议面（Channel Access 与 pvAccess、TCP 5064 / 5075）、逐枚评分与向量、CISA 与 CVE 记录的一致性核对、媒体报道中的评分误传纠正</span>
+                        <a href="https://otsecuritywire.com/articles/epics-base-icsa-26-300-01-cve-2026-114595-integer-overflow-channel-access-pvaccess">otics · epics</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyberpresso（转 The Register 采访）— Cipher 与 Causal Security、3 小时 49 分、Shubham Raj 的两段原话、"未演示代码执行"与"厂商自述需打折"的边界</span>
+                        <a href="https://cyberpresso.com/blog/ai-agent-cipher-four-epics-bugs-particle-accelerators-fusion-reactors-under-four-hours">cyberpresso · epics</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurity Institute 周报（11-01）— 90 个站点的规模、ITER 与 APS 的具体用途、6-09 通报维护者与 7 月、8 月合入修复、代码历史 14.5 至 31.5 年</span>
+                        <a href="https://www.cybersecurityinstitute.com/blog?p=6205">csi · weekly</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">BreachNews — Northflank 7:43 至 19:38 的逐条时间线、附加组件轮换的开放顺序、审计日志全量开放、"agent 蜂群"与蒸馏的自述对照、ARTEX 页面的出处与边界</span>
+                        <a href="https://breachnews.com/cyber-attacks/northflank-breach-wiz-black-october-ai-developer-platforms">breachnews · northflank</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AL-ICE 复盘（11-01）— Northflank 时间线的 UTC 版本、截至 10-31 23:31 仍无根因与 BYOC 边界未说明、Zeabur 关停时间点、Railway 的构建基础设施提权表述</span>
+                        <a href="https://al-ice.ai/posts/2026/11/wiz-black-october-llmjacking-nine-platforms-northflank-october-2026">al-ice · black october</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechQuire — 环境变量通常承载什么、为什么一组凭据能变成进入云账户与计费系统的路径</span>
+                        <a href="https://tech-quire.com/articles/northflank-environment-variables-decrypted-ai-api-keys">techquire · northflank</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NextGuard（CVE-2026-120189）— D-Link DIR-505 的 save_upload_file 与 mp_upload_file、CVSS 4.0 10.0、CWE-121、EPSS 1.3%、无修复版本、11-01 公开、报告人</span>
+                        <a href="https://nextguardhq.com/en/vulnerabilities/cve-2026-120189-link-505">nextguard · dlink</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NextGuard（CVE-2026-120276）— WAVLINK WN536AX6-A 的 /bin/ioos 与 sub_416760、group_name 注入、10.0、无修复</span>
+                        <a href="https://nextguardhq.com/en/vulnerabilities/cve-2026-120276-wavlink-wn536ax6">nextguard · wavlink</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Junglewise（CVE-2026-120227 / 120231）— del_staticrule 的 rule_name 进 system()；WN553X1-B 的 file_id 只查空格、可用引号跳出、默认口令前提</span>
+                        <a href="https://junglewise.ai/threats/cve-2026-120227-a-vulnerability-was-detected-in-wavlink-wn701ae-m01ae-v260105">junglewise · wavlink</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">East Bay Cyber 11-01 汇总 — WL-WN579A3-A（wlan_ssid，10.0）、WL-WN530BE1-A（group_name 与 IP-FROM，10.0）、WN579X3-D 与 WL-WN530HG4B（端口转发名称，9.9）、DIR-505 的三条处置建议</span>
+                        <a href="https://eastbaycyber.com/content/2026-11-01-digest-ai-attacks-netamloader-router-exploits">eastbay · digest</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVETodo 11-01 日报 — 五款 WAVLINK 的横向清单与"PoC 公开、无在野记录"的标注、Prefab UI 与 Beta9 的对照组</span>
+                        <a href="https://cvetodo.com/threat-report/au">cvetodo · 11-01</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Hacker Feeds（CVE-2026-120241）— 锐捷 RG-ES 系列 httpupg.cgi 本地固件升级越界（7.5，CWE-119 / 120）、GitHub 上公开的 PoC 仓库、厂商未回应</span>
+                        <a href="https://hackerfeeds.com/cve/CVE-2026-120241">hackerfeeds · ruijie</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NextGuard（CVE-2026-118636）— 9.8、CWE-502、3.0.0 至 3.0.0-M2、UNSUPPORTED WHEN ASSIGNED 的原文、建议改用 2.2.X、EPSS 0.57%、报告人</span>
+                        <a href="https://nextguardhq.com/en/vulnerabilities/cve-2026-118636-apache-software-foundation-apache-mina">nextguard · mina</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CosmicBytez Labs — readObject 无过滤器、gadget 链依赖 classpath、三条实现级处置（摘解码器 / 白名单过滤器 / 迁出分支）与检测思路</span>
+                        <a href="https://labs.cosmicbytez.ca/security/cve-2026-118636">cosmicbytez · mina</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Insights 摘要（含 11-01 条目）— Thrift 的 CVE-2026-120135 与 0.24.0、98432 的 init_on_free=1 补充、WebDyne for Perl 五个 CVE</span>
+                        <a href="https://updates.securityinsights.io/2026/10/security-digest-28-oct-2026.html">securityinsights · digest</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News（11-01）— NetamLoader 完整两阶段链：七个文件的构成与哪四个是真实组件、SoftwareDistribution 的精确路径、AppDomainManager 注入、XAML 分工、AMSI 绕过、dllhost 宿主校验、20 至 40 分钟抖动、清理 Prefetch 与 CLR 使用日志</span>
+                        <a href="https://thehackernews.com/2026/11/netamloader-malware-targets-government.html">thn · netamloader</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Vulnios（11-01）— 时间与受影响平台标注，可作二手时间锚点</span>
+                        <a href="https://vulnios.com/threats/netamloader-malware-targets-government-windows-10-systems-in-asia-via-net-inject-2026-11-01">vulnios · netamloader</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Security Advisory GHSA-7984-qgvg-3j9c — OAuthLib 的受影响面、校验器契约、4.0.0 修复</span>
+                        <a href="https://github.com/oauthlib/oauthlib/security/advisories/GHSA-7984-qgvg-3j9c">github · oauthlib</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVEFeed（CVE-2026-118669）— 8.4 与 CVSS 4.0 向量、CWE-863、10-28 发布、commit 与 PR 链接</span>
+                        <a href="https://cvefeed.io/vuln/detail/CVE-2026-118669">cvefeed · 118669</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AL-ICE 分析 — "一个请求两个身份"的代码级解释、只从 request.client 授权的部署可能不受影响、MCP 相关下游包的标记、"审的是 token 端点不是依赖树"的处置口径</span>
+                        <a href="https://al-ice.ai/posts/2026/11/oauthlib-cve-2026-118669-client-id-grant-scope-confusion-october-2026">al-ice · oauthlib</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">RealGround 日报（10-29 / 10-30 / 11-01）— SAP CVE-2026-89111 与 LXD 112816、GitLab 97229 的并列记录；为二手汇总口径，SAP 原始公告未直接核到</span>
+                        <a href="https://www.realground.com/daily/2026-11-01">realground · 11-01</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News（11-01）— Polymarket 726 个钱包与约 270 万美元、DebugBear 脚本被劫持、恶意域名已无 DNS 记录、平台三项整改、Hudson Rock 的四条建议</span>
+                        <a href="https://thehackernews.com/2026/11/hackers-steal-about-27-million-from.html">thn · polymarket</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 清单（catalogVersion 2026.10.30，1766 条）— 10-31 与 11-01 无新增；10-27 收录 Brotli 未检查返回值；10-29 收录 GitLab 97229 与 Cisco 76418</span>
+                        <a href="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json">cisa · kev</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。同一事实在不同来源出现分歧时，正文已标注两边口径；聚合站转述而未能核到原始公告的条目已在正文明确标注为二手；勒索团伙声称与厂商对受害数量的自述均未经独立验证。建议读者查阅原始来源获取最新动态。
+                <br>
+                每日精选 · 值得关注 | 2026年11月2日
+            </p>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

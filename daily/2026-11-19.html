@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月19日（第221期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月19日 星期四</span>
+            <span class="edition-number">第 221 期 | 总第 221 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>十年没人碰过的流量控制账本 · 厂商明说不会有修复版了 · 签名驱动一边杀软件一边写报告 · 构建服务器上一个参数就执行 · 别人的证书挂在链上就算通过 · 偷来的密钥付下一次扫描费用
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">今天出事的，全站在入口上</h2>
+                <p class="sub-headline">NVD 在 11-18 00:00 到 11-19 06:00 这个窗口里收了 791 条新 CVE，其中 112 条在 9.0 以上。数字比昨天小，但这批东西有个共同点：它们全都装在"装上去之后没人再看第二眼"的位置。nginx 是网站的第一跳，Apache Axis 是十几年前 SOAP 集成留下的那扇门，NAS 是中小企业唯一的存储入口，TeamCity 是代码变成制品的入口，Incus 是容器的入口，LiteLLM 是模型的入口。今天没有一条是业务应用里的逻辑漏洞。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">无在野 · 公开 PoC · 十年老洞</span>
+                    <h3 class="article-title">十年前的账本算错一次，nginx 把 root 交了出去</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-123007 · nginx2root · F5 与 Rapid7、Wiz、Xint、Ikotas 同日披露 · 修在 1.31.9 与 1.30.7</span>
+                        <span class="cvss-score">CVSS 4.0 记 9.2 · 五条独立 RCE 加一个内核提权 · 128 GB 流量才跑得完</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 18 日，F5 一次性发了十个 nginx 的 CVE，修在 1.31.9（mainline）和 1.30.7（stable）。最重的一条是 CVE-2026-123007，Xint 给整套取的名字是 nginx2root：五个 nginx 的 RCE，加一个 Linux 内核 SCTP 子系统的提权，六个洞拼起来能从公网直接拿到宿主机的 root。</p>
+                        <p>先说这条洞本身。HTTP/2 用一套信用额度控制发送节奏：客户端告诉 nginx"你可以给我发这么多字节"，nginx 分两个计数器记账，一条流一个，整个连接再共用一个。客户端取消一个响应时，nginx 把没发出去的额度退回去，<strong>但没有检查退完之后有没有超过 2 的 31 次方减 1 这个协议上限</strong>。超了之后，下一次 <code>WINDOW_UPDATE</code> 做减法时无符号回绕，得到一个天文数字，再往后某个长度计算变成负数，负数到了内存拷贝那里就成了巨大的无符号计数，一次写穿缓冲区。CWE-191，整数下溢。</p>
+                        <p>这段代码从 2015 年 nginx 引入 HTTP/2 起就在里面（1.9.5），一直到 1.31.8，包括 11 月 10 日的 master 分支。<strong>十年，每一个官方发行版都带着它。</strong></p>
+                        <p>Xint 的演示分两段。第一段用 123007 在容器里以 worker 权限执行命令，第二段用一个 Linux 内核 SCTP 的提权洞打到宿主机 root，测试覆盖 AWS、GCP、Azure 和裸机，其中 AWS 那一场是从公网 IP 直接打进去的。那个内核洞从 Linux 4.15（2018 年）就在，<strong>目前没有 CVE、没有补丁</strong>，Xint 说等各发行版能出修复再公开细节，现在只给结论。</p>
+                        <p>工程门槛要说清楚，不然容易被标题带偏。Rapid7 的 Stephen Fewer 算过：跑通一次需要往目标灌大约 128 GB 的 HTTP/2 数据，10 Gbit/s 下两分钟，1 Gbit/s 下十七分钟，而 nginx 默认连接一小时就断，所以<strong>带宽低于 300 Mbit/s 的攻击者根本来不及做完</strong>。整条利用还依赖 x86-64 上 glibc 那个被 AVX-512 选中的 memcpy 实现（要 avx512f 与 avx512vl）。前面套了 HTTP/2 终结代理的话，攻击者控制的帧不会被原样转发，大概率也打不通。这些限制说明"打崩一个 worker"很容易，"拿到 shell"没那么容易。但打崩是免费的，公开 PoC 已经在 GitHub 上，一条命令就能让 worker 反复重启。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>五个洞的条件</td><td>123007 只要开 HTTP/2；123633 要 HTTP/2 转发到后端且 worker_connections 紧张；123634 要变量拼出的 proxy_pass 目标加 SSI 或 mirror 子请求；121810 要 HTTP/3 转发到后端；113425 要 mail proxy</td></tr>
+                            <tr><td>影响区间</td><td>123007 从 1.9.5 起；123633 从 1.19.7 起；123634 从 1.13.4 起；121810 从 1.25.0 起；113425 从 0.5.15 起，全部到 1.31.8</td></tr>
+                            <tr><td>修复版本</td><td>Open Source 1.31.9 / 1.30.7；Plus 37.3.0.1 / 37.0.8.1；<strong>Plus R33 到 R36 没有修复版</strong></td></tr>
+                            <tr><td>升级后必须做</td><td><code>nginx -s reload</code> 不够，要重启进程，reload 不换正在跑的二进制</td></tr>
+                            <tr><td>临时缓解</td><td>关 HTTP/2 只能挡 123007 与 123633，另外三条照旧</td></tr>
+                            <tr><td>自查</td><td><code>nginx -v</code> 看版本，<code>grep -rnE 'http2' /etc/nginx/</code> 看有没有真开；<code>openssl s_client -alpn h2</code> 看对端是否接受 h2</td></tr>
+                            <tr><td>版本号会骗人</td><td>发行版会回移补丁不改版本号，Ubuntu 上显示 1.18.0 的可能已经修了，要查发行版自己的公告</td></tr>
+                            <tr><td>暴露面</td><td>Shodan 上 5,670 万台 nginx；Xint 抽样 1,194 万台能读出具体版本的，98.9% 落在受影响区间（只算版本，不算是否真开了 HTTP/2）</td></tr>
+                            <tr><td>在野</td><td>截至发稿无确认在野，未进 KEV</td></tr>
+                        </table>
+                        <p>另外几条也值得单独记。CVE-2026-123633 有个外号叫 Drainbreak，是 worker_connections 快耗尽时的 use-after-free，Metnir 在开着 ASLR 的情况下十分钟打穿，并复现了 OpenResty、Kong、Apache APISIX、NGINX Gateway Fabric 与社区版 ingress-nginx 的崩溃，这几个默认都开 HTTP/2。CVE-2026-123634 要 resolver 加变量拼出来的 proxy_pass 再加一个子请求，Xint 明确说 SSI 也可能走到同一个 bug，所以"把 mirror 关掉"不等于安全。</p>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>这次是 AI 找到的，而且是流水线找到的</strong>。123007 是一名研究员在做 ZeroDay Cloud 2026 准备时挖到的，剩下四条是 Xint 的自动化装置在没人干预的情况下扫出来的：指到 5 万行 nginx 代码上，90 分钟出高严重度结论，再过 10 分钟有可用利用。同一天独立撞上同一批洞的还有 Rapid7、Wiz、Ikotas Labs、Metnir 四家。当五支队伍用同一类工具在同一块代码上撞车，"这个洞以前没人看见"这句话正在失效。</p>
+                        <p>第二，<strong>容器不是边界，今天又被演示了一遍</strong>。nginx 跑在 Docker 里，worker 权限被打穿，再用一个 2018 年就存在的内核洞提权，宿主机的 root 就到手了。所有把"我们跑在容器里"当成一层防护的架构，在拿到内核洞的攻击链面前都只是换了个进程树。</p>
+                        <p>第三，<strong>修完之后的责任边界比补丁本身更难</strong>。自建 nginx、K8s Ingress 控制器、API 网关、托管负载均衡、CDN 边缘节点，这五样东西的补丁责任人不是同一个，而它们对外的表现都是"前面有个 nginx"。今天该做的第一件事不是升级，是先列出这张表：谁在替我们跑 nginx，他什么时候升。</p>
+                        <p>第四，<strong><code>reload</code> 这个习惯要改</strong>。Xint 在公告里专门提了一句，reload 只换配置不换可执行文件，升级完必须 <code>systemctl restart nginx</code>。这类"升了但没生效"的情况在事故复盘里出现频率极高。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">客户端授额度 服务端响应排队待发</span>
+                        <span class="flow-step">取消请求 nginx 退还剩余额度</span>
+                        <span class="flow-step critical">不校验是否超过 2 的 31 次方上限</span>
+                        <span class="flow-step critical">减法回绕 长度计算变成负数</span>
+                        <span class="flow-step critical">负数当无符号计数 写穿堆缓冲</span>
+                        <span class="flow-step critical">Worker 里执行 权限是 nginx 用户</span>
+                        <span class="flow-step critical">内核 SCTP 提权 容器边界没了</span>
+                        <span class="flow-step">十年所有官方版本 全部带有这段代码</span>
+                    </div>
+                </article>
+
+                <!-- 文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">9.8 · 没有修复版会来 · 11-21 截止</span>
+                    <h3 class="article-title">一次更新四条 KEV，其中一条厂商明说不修</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-90436 Apache Axis · CVE-2026-90817 REDCap · CVE-2024-10441 Synology · CVE-2026-40217 LiteLLM</span>
+                        <span class="cvss-score">KEV 2026.11.18 版共 1,786 条 · 四条里三条只给 72 小时</span>
+                    </div>
+                    <div class="article-body">
+                        <p>CISA 在 11 月 18 日一次往 KEV 里加了四条。目录版本 2026.11.18，总数 1,786 条，其中 361 条标注了已知勒索利用。最该看的是 Axis 那条，因为它是<strong>唯一一条"没有修复版会来"的</strong>。</p>
+                        <p>漏洞在 Axis 1.x 处理 SOAP fault 的时候。fault 里带一个 <code>exceptionName</code> 字段，Axis 会去加载这个字段点名的类，如果同时还带了 string 元素，还会用字符串构造函数把它实例化，<strong>全程没有先确认这个类是不是 AxisFault 的子类</strong>。光是把类加载进来，静态初始化块就跑了，classpath 上只要有一个可用的 gadget，代码就执行了。不需要凭据，不需要交互，不需要事先落脚。</p>
+                        <p>真正要命的是时机。这段解析发生在 Axis <strong>还在判断这条消息该投给哪个服务</strong>的阶段，而认证是在后面的 handler 链里做的。也就是说，一个"必须登录才能用"的 SOAP 端点，在这条洞面前和裸奔没有区别，攻击代码跑在认证之前。任何"我们有 API key 校验"的自我安慰在这里都不成立。</p>
+                        <p>Apache 的话说得很直白：<strong>这个项目不打算为 Axis 1.x 出一个修复这个问题的版本</strong>。唯一的官方路径是一个源码 commit（41f3b4e），改的是 fault 反序列化的两头：加载类时不跑静态初始化，构造对象前先确认它确实是 AxisFault 子类。要修，自己编译自己部署。想省事就迁到 Axis2，那是另一套代码，没有平替升级路径。</p>
+                        <p>剩下三条各有各的形状。Synology 那条是 2024 年的 CVE（CVE-2024-10441，9.8，Pwn2Own 2024 的产物，system plugin daemon 的输出编码问题），补丁当年就发了，DSM 修到 7.2.2-72806-1，BeeStation OS 修到 1.1-65374，<strong>两年半之后才进 KEV</strong>，说明这两年半里一直有人在打没升的机器。</p>
+                        <p>REDCap 那条是 9.8 的代码注入，知道一个有效的公开调查问卷 hash 就能从问卷页面走到一个不该走到的控制器路由。Unit 42 在 10 月 7 日就记录了针对公网 REDCap 的 XMRig 挖矿，无文件执行、crontab 持久化、往里塞 SSH 公钥。LiteLLM 那条最"新派"：<code>/guardrails/test_custom_code</code> 这个 URI 允许对字节码做重写，等于把"执行任意代码"做成了一个功能，CISA 给的期限是 12-02。</p>
+                        <table class="affected-table">
+                            <tr><th>条目</th><th>产品</th><th>分数</th><th>期限</th><th>修得掉吗</th></tr>
+                            <tr><td>90436</td><td>Apache Axis 1.x</td><td>9.8</td><td>11-21</td><td>只有 commit，需要自己编译；官方建议迁 Axis2</td></tr>
+                            <tr><td>2024-10441</td><td>Synology DSM / BeeStation OS</td><td>9.8</td><td>11-21</td><td>有，7.2.2-72806-1 等一串</td></tr>
+                            <tr><td>90817</td><td>Vanderbilt REDCap</td><td>9.8</td><td>11-21</td><td>有，升级到当前版本即可</td></tr>
+                            <tr><td>40217</td><td>BerriAI LiteLLM</td><td>未公开</td><td>12-02</td><td>有</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>"EOL 组件"不是历史问题，是当下资产表里的空白</strong>。2026 年没人会主动装 Axis 1，但它被打包在中间件、集成平台、老 ERP 连接器、设备固件里卖了十几年，厂商通常不会在文档里写。一个安全团队完全可能真诚地认为自己没有 Axis 暴露，实际上某台 SOAP 网关底下跑着它。</p>
+                        <p>第二，<strong>认证跑在漏洞后面，这类情况比想象的多</strong>。判断一个端点安不安全，不能只问"要不要登录"，要问"这段解析发生在认证之前还是之后"。Axis、昨天那条 Puppet、前几天的各种反序列化，全是同一个顺序问题。</p>
+                        <p>第三，<strong>KEV 的期限正在从两周往三天压</strong>。四条里三条是 11-21，从加进去到截止只有 72 小时，而且 Synology 与 REDCap 两条都带强制取证要求。等 KEV 再动的人，现在连排期都排不出来。</p>
+                        <p>第四，<strong>Axis 这条的最后手段是断网</strong>。如果三天内编不出补丁，就把 SOAP 端点从网络上摘掉，或者在入口把带 <code>exceptionName</code> 的 fault 报文拦掉。这不是修复，但能把窗口从敞开变成窄缝。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">SOAP 报文里塞一个 fault 元素</span>
+                        <span class="flow-step critical">exceptionName 点名任意类 直接加载</span>
+                        <span class="flow-step critical">静态初始化块先跑 对象还没实例化</span>
+                        <span class="flow-step critical">解析发生在认证之前 登录要求形同虚设</span>
+                        <span class="flow-step">Apache 明确说不出 Axis 1.x 修复版</span>
+                        <span class="flow-step critical">只剩一个 commit 要自己编译自己部署</span>
+                        <span class="flow-step">三天内修不了 就把端点从网上摘掉</span>
+                    </div>
+                </article>
+
+                <!-- 文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">在野一年 · 签名驱动 · 主体无 CVE</span>
+                    <h3 class="article-title">签名是真的，杀毒软件也是真的被杀掉了</h3>
+                    <div class="article-meta">
+                        <span>AuditTeam / OpsAgent · Kaspersky 11-18 公开 · CVE-2026-19193（BYOVD）</span>
+                        <span class="cvss-score">主体无 CVSS · 约 220 个进程被成批终止 · 勒索信写成审计账单</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Kaspersky 在 11 月 18 日把这条讲完了：一个叫 AuditTeam 的团伙，用自己写的框架 OpsAgent 打了一整年，受害者分布在俄罗斯、意大利、菲律宾、中国香港、塞内加尔、芬兰、中国等地，时间跨度从 1 月 5 日（GitHub 上第一次提交）一直到至少 10 月。</p>
+                        <p>这伙人有两个地方值得单独拿出来讲。</p>
+                        <p><strong>第一个是那个签名驱动。</strong>OpsAgent 带一个"杀软杀手"模块，装的是一个<strong>有正规数字签名的、伪装成江民杀毒（Jiangmin KV 系列）的驱动</strong>，通过 <code>\KvCorePortX0</code> 这个 minifilter 端口通信，收到 <code>0x1D</code> 命令加一个进程名，就把那个进程干掉。杀名单大约 220 条：Microsoft Defender、Sysmon、Splunk、Wazuh agent、TeamViewer、Veeam、Acronis，以及 SQL Server、MySQL、MongoDB、Redis 这些数据库进程。<strong>驱动签名是真的，所以 Windows 会信它</strong>，除非开了易受攻击驱动黑名单、HVCI，或者干脆用应用控制策略禁掉。这个驱动本身的问题被追为 CVE-2026-19193，公开 PoC 已经存在，教科书式的 BYOVD。</p>
+                        <p><strong>第二个是那份"审计报告"。</strong>加密完成之后落下的勒索信，不说自己被加密了，说的是"我们为你做了一次安全审计，请支付 Audit and Consulting fee，付了我们给你一份漏洞报告，不付就把数据公开"。这封信是加密模块自己落的，也就是说，<strong>读到这封信的时候文件已经加密完了</strong>。把勒索包装成专业服务，是今年明显的一个话术趋势：它降低受害者第一时间报警的意愿，也让内部沟通多绕一圈。</p>
+                        <p>工具本身的成熟度也不像小团伙。OpsAgent 5.2.8 的功能被 Kaspersky 形容为"接近 Cobalt Strike"：文件与进程管理、提权、窃取与伪造令牌、键盘记录、截屏、经 SMB 和 HTTP 把受害机器串成链做横向。加载器一年换了三代，4 月的 C 加载器（OLLVM 控制流平坦化）、6 月的 .NET 加载器（<code>NtQueueApcThread</code>）、9 月的 Rust 加载器（在自己进程里解密执行，不再注入）。C2 走 CloudFront 子域，配置放在公开 GitHub 仓库里，<strong>按 IP 封堵没有意义，因为 CloudFront 的地址是共用的大众 CDN</strong>。研究者还注意到代码里有明显的大模型痕迹，比如几个注入例程几乎一模一样，只有参数不同。</p>
+                        <table class="affected-table">
+                            <tr><th>排查项</th><th>具体位置</th></tr>
+                            <tr><td>驱动文件</td><td><code>C:\Windows\System32\drivers\kvcore.sys</code>，机器上没装江民却出现这个文件就是信号</td></tr>
+                            <tr><td>调试日志</td><td><code>C:\Users\Public\kv_dbg.log</code></td></tr>
+                            <tr><td>载荷残留</td><td>ProgramData 与用户 AppData 缓存目录里的 <code>syscache.dat</code></td></tr>
+                            <tr><td>进程行为</td><td><code>msiexec.exe</code>、<code>notepad.exe</code> 出现异常子进程，或从命名管道收数据</td></tr>
+                            <tr><td>网络</td><td><code>d19v1tntmz2i98.cloudfront.net</code>、<code>d35htktbyt7nxc.cloudfront.net</code>、<code>157.20.104.111</code></td></tr>
+                            <tr><td>加固</td><td>打开微软易受攻击驱动黑名单、HVCI、App Control，把 kvcore.sys 挡在加载之前</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>"签名"这两个字已经不是信任依据了</strong>。过去十年我们教用户看签名，现在攻击者直接买、借、偷一个签名来用。防线必须从"有没有签名"挪到"这个签名的主体应不应该出现在这台机器上"。</p>
+                        <p>第二，<strong>杀软被杀的那几十秒是最关键的检测窗口</strong>。220 个进程被成批终止，这个行为本身噪音极大，但前提是你的日志不在被杀的那批里。把 EDR 日志实时外发、给安全代理加防篡改保护，比事后找 IOC 有用得多。</p>
+                        <p>第三，<strong>AI 让"小团伙做出国家队工具"变成了常态</strong>。Kaspersky 的判断是，代码里那种高度重复的注入例程指向大模型辅助开发。这条和昨天 GTIG 那份自动化利用流水线、今天 nginx 那五个 AI 找出来的洞，是同一件事的三张脸。</p>
+                        <p>第四，<strong>勒索话术在变，处置流程不能跟着变</strong>。不管信上写的是"审计费"还是"解密费"，读到它就意味着加密已经发生，第一步永远是隔离与取证，不是谈判。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">加载器从 GitHub 取加密配置</span>
+                        <span class="flow-step">CloudFront 上心跳 随后升级 WebSocket</span>
+                        <span class="flow-step critical">命名管道送 mimikatz 进 msiexec.exe</span>
+                        <span class="flow-step critical">装签名的江民驱动 伪装成杀毒软件</span>
+                        <span class="flow-step critical">一条 0x1D 命令 约 220 个进程消失</span>
+                        <span class="flow-step critical">停数据库 删卷影 覆写已删文件</span>
+                        <span class="flow-step">AES-CBC 或 ChaCha20 X25519 换密钥</span>
+                        <span class="flow-step critical">落下账单 读到它时加密已经完成</span>
+                    </div>
+                </article>
+
+                <!-- 文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">四个 9.9 · 无 PoC · 低权限即可</span>
+                    <h3 class="article-title">构建服务器上一个参数，CI 里的密钥就全归别人</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-132231 / 132232 / 132233 / 132234 · JetBrains TeamCity 2026.1.3 与 2025.11.7 之前</span>
+                        <span class="cvss-score">CVSS 3.1 均 9.9（PR:L，S:C）· 四条全在版本控制连接配置</span>
+                    </div>
+                    <div class="article-body">
+                        <p>JetBrains 在 11 月 18 日发了 TeamCity 的四个高危：2026.1.3 与 2025.11.7 之前的版本里，四条独立的远程代码执行，CVSS 3.1 全部 9.9，向量是 <code>AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H</code>。翻译一下：只要能登录，就能在构建服务器上执行代码，而且影响范围跨出 TeamCity 本身（S:C），因为构建服务器上挂着部署凭据、制品仓库密钥、云平台令牌。</p>
+                        <p>四条分别是：Perforce 设置里的 best-fit 字符映射（132231）、Perforce 设置里的参数注入（132232）、构建属性注入（132233，CWE-23）、Mercurial VCS root 设置里的参数注入（132234）。<strong>四条全在"版本控制连接配置"这一块</strong>，这不是巧合，是同一个设计缺陷的四种表现：把用户填的仓库地址、用户名、分支名拼进命令行，而没有把它当成数据。</p>
+                        <p>这条的时间线反而简单：披露当天进 NVD，没有公开 PoC，没有 KEV，CISA 的 SSVC 记 exploitation 为 none。但 TeamCity 的用户群体决定了它不能等：这是那种"装在内网、只给研发用、默认信任里面所有人"的系统。</p>
+                        <table class="affected-table">
+                            <tr><th>分支</th><th>受影响</th><th>修复版本</th></tr>
+                            <tr><td>2026.1 线</td><td>2026.1 到 2026.1.2</td><td>2026.1.3</td></tr>
+                            <tr><td>2025.11 线</td><td>2025.11.7 之前</td><td>2025.11.7</td></tr>
+                            <tr><td>攻击前提</td><td colspan="2">一个能登录、能改项目构建配置的普通账号</td></tr>
+                            <tr><td>落点</td><td colspan="2">agent 上以服务账号身份执行，读环境变量里的部署密钥</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>CI 服务器是供应链里最划算的目标</strong>。打一个开发者的笔记本，得到一个人的权限；打构建服务器，得到的是所有经过这条流水线的东西。签名、制品、发布通道全在这一层，而这一层通常放在内网，被默认为安全。</p>
+                        <p>第二，<strong>PR:L 不代表门槛高</strong>。TeamCity 在很多公司是全员可登录的，任何能提 PR 的人大概率也能建分支、改自己的构建配置。9.9 分里那个 L 是"低权限"，不是"需要管理员"。</p>
+                        <p>第三，<strong>参数注入这类洞扫不出来</strong>。没有畸形输入、没有异常日志、没有越界，请求在审计记录里长得完全正常。审查这类代码该问的问题是：这个字符串最终会进 <code>exec</code> 吗，进去的时候有没有被当成一个整体参数。</p>
+                        <p>第四，<strong>修完之后要轮换</strong>。如果构建服务器被登录过，第一件该做的事不是升级，是假设环境变量里的所有令牌都已泄露，全部换掉，再看流水线里有没有多出来的步骤。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">一个普通开发者账号就够</span>
+                        <span class="flow-step critical">改项目 VCS root 或构建配置</span>
+                        <span class="flow-step critical">Perforce 路径里塞入额外选项</span>
+                        <span class="flow-step critical">拼出的命令行多了一个参数</span>
+                        <span class="flow-step critical">构建机上以服务账号身份执行</span>
+                        <span class="flow-step critical">读走部署密钥与云平台令牌</span>
+                        <span class="flow-step">用正规流水线把后门打进制品</span>
+                    </div>
+                </article>
+
+                <!-- 文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">10.0 · 未认证 · 一天八条</span>
+                    <h3 class="article-title">把别人的证书挂在自己链上，就算通过了</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-130778 · Incus 7.6.0 之前 · 同日另有至少七条</span>
+                        <span class="cvss-score">CVSS 10.0 · 不持有私钥也能冒充集群成员</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 18 日一天，NVD 里多了至少八条 Incus 的记录：一条 10.0、五条 9.9、两条 9.6。Incus 是 LXD 分家出来的容器与虚拟机管理平台，管的是集群、存储池、虚拟机的生命周期，通常直接挂在运维网段上。</p>
+                        <p>10.0 那条的机制简单到有点荒谬。Incus 的 HTTPS 监听器会向客户端要证书，<strong>但只验证客户端送来的证书链里的第一张</strong>，而认证逻辑又拿链上所有的证书去和信任库比对。于是攻击者只要把自己那张自签证书和一张受信证书（比如服务器自己的证书，或者某个集群成员的证书）拼成一条链送过去，就会通过认证，<strong>而他并不持有那张受信证书的私钥</strong>。过了这一步，就能拿到集群级权限、改信任库、影响基于脚本的授权判断。</p>
+                        <p>配套那几条也都指向"授权判断写得太松"：130786、130784、130773 是项目隔离被绕，130780、130771、130779 是路径穿越（迁移、备份、自定义卷的元数据里塞快照名），130783 是事件流把证书和集群加入令牌给泄了，130774 是命名空间映射提权。官方给的缓解只有一句：<strong>没有配置层的绕过办法，把 HTTPS 监听器限制在受信主机</strong>，升级到 7.6.0。</p>
+                        <table class="affected-table">
+                            <tr><th>编号</th><th>分数</th><th>问题</th></tr>
+                            <tr><td>130778</td><td>10.0</td><td>证书链只验第一张，可冒充任意受信证书</td></tr>
+                            <tr><td>130786</td><td>9.9</td><td>OCI 镜像元数据里带换行，注入 LXC 指令</td></tr>
+                            <tr><td>130784</td><td>9.9</td><td>受限账号借请求的项目绕过授权</td></tr>
+                            <tr><td>130780</td><td>9.9</td><td>迁移对端给的卷名与快照名不校验，路径穿越</td></tr>
+                            <tr><td>130773</td><td>9.9</td><td>项目隔离被绕过</td></tr>
+                            <tr><td>130771</td><td>9.9</td><td>备份与镜像元数据里的特殊文件、硬链接、符号链接</td></tr>
+                            <tr><td>130783</td><td>9.6</td><td>事件流泄露证书与集群加入令牌</td></tr>
+                            <tr><td>130779</td><td>9.6</td><td>自定义卷备份里的快照名不校验</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>mTLS 不是"开了就安全"，关键在于验到第几张</strong>。证书链验证是那种写错一个循环边界就完全失效的代码，而它的失效方式很静默：服务照常工作，日志里全是 200。</p>
+                        <p>第二，<strong>这类平台的爆炸半径是整片集群</strong>。Incus 管着宿主机、存储、网络和虚拟机的创建权限，拿到集群级权限等于拿到"再造一台机器"的能力，而这通常是横向移动最省事的一步。</p>
+                        <p>第三，<strong>同一天八条这件事本身是信号</strong>。这不是八个人各自偶然发现的，更像是有人系统性地审了一遍 Incus 的授权模型，然后一次性交出来。被审过一轮的项目，短期之内最好别再假设"上次看过了"。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">出示一张自签证书</span>
+                        <span class="flow-step critical">后面挂上服务器自己的证书</span>
+                        <span class="flow-step critical">监听器只验证链上第一张</span>
+                        <span class="flow-step critical">信任库拿整条链比对 命中</span>
+                        <span class="flow-step critical">判定为受信成员 给集群级权限</span>
+                        <span class="flow-step">私钥一直在真正的主人手里</span>
+                    </div>
+                </article>
+
+                <!-- 文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">已进 KEV · 12-02 截止 · 密钥集中地</span>
+                    <h3 class="article-title">AI 网关成了提款机，一群假爬虫在敲 .env</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-40217（LiteLLM）· Octopus 与 Gecko 扫描活动（Tin Computer，11-18 公开）</span>
+                        <span class="cvss-score">无统一评分 · 十秒三百个路径，三十二个轮换 UA</span>
+                    </div>
+                    <div class="article-body">
+                        <p>今天这两件事要放一起看，因为它们说的是同一个位置：<strong>存着模型密钥的那台机器</strong>。</p>
+                        <p>第一件，LiteLLM 进了 KEV。<code>/guardrails/test_custom_code</code> 允许对字节码做重写，等于远程执行代码，CISA 给到 12-02。LiteLLM 是这两年被大量自建的 LLM 网关，一个界面后面挂着 OpenAI、Anthropic、DeepSeek、通义、Kimi 的 key，谁能碰到它，谁就同时碰到好几家云的钱包。</p>
+                        <p>第二件，安全公司 Tin Computer 在 11 月 18 日公开了两组扫描器，代号 Octopus 和 Gecko。它们伪装成 GPTBot、ClaudeBot、PerplexityBot，还有一堆没在任何官方名单里出现过的名字（DeepSeekBot、GrokBot、ChatGLM-Spider）。手法很直接：先用真浏览器头访问首页、读 robots.txt 和 sitemap.xml、看 Next.js 与 Vite 的 manifest，然后<strong>在十秒内打大约 300 个敏感路径，每请求换一个 UA</strong>。</p>
+                        <p>目标包括 <code>/.env</code>、<code>/.git/config</code>、LiteLLM 的管理路径，以及这一批新出现的智能体凭据：<code>/.claude/.credentials.json</code>、<code>/.cursor/mcp.json</code>、<code>/.codex/auth.json</code>、<code>/.gemini/settings.json</code>。</p>
+                        <p>Gecko 那边更专注，它是个 .NET 客户端，UA 有个 60 字符截断的毛病（<code>(KHTML, like Gecko)</code> 那一段被截掉），9 月 30 日开始专门问 Claude Code 的配置，10 月到 11 月扩展到 MCP JSON、Codex 的 auth.json、Gemini 的 settings.json 和 LiteLLM 的 config。<strong>AI 工具相关路径从它扫的 4% 涨到了 10%</strong>，涨的速度正好等于这些工具新增配置文件的频率。</p>
+                        <table class="affected-table">
+                            <tr><th>对象</th><th>具体内容</th></tr>
+                            <tr><td>Octopus 手法</td><td>先用真浏览器头读页面与 manifest，然后十秒内约 300 个路径，32 个 UA 轮换，Google Cloud 上 97 台临时 VM 分布在 15 个区域</td></tr>
+                            <tr><td>Gecko 手法</td><td>.NET 客户端，UA 在第 60 字符被截断，专扫智能体配置文件，比利时 Google Cloud 加长驻 DMZ 的 Windows VPS</td></tr>
+                            <tr><td>高价值文件</td><td><code>.env</code>、<code>.git/config</code>、LiteLLM 管理路径、<code>.claude</code>、<code>.cursor</code>、<code>.codex</code>、<code>.gemini</code> 下的凭据与配置</td></tr>
+                            <tr><td>LiteLLM 默认值</td><td>管理界面可用 <code>admin</code> 加主密钥登录，LiteLLM 自己称之为 bootstrap 机制，有 <code>disable_env_credential_login</code> 可关</td></tr>
+                            <tr><td>自查</td><td>按扫描器路径清单打自己的站，敏感路径必须返回 404，不能把首页吐回来</td></tr>
+                        </table>
+                        <p><strong>为什么值得关注：</strong>第一，<strong>"给 AI 爬虫放行"这个习惯正在变成漏洞</strong>。很多站为了 SEO 或训练透明度，按 UA 白名单放行 GPTBot 一类，Octopus 就是吃这一口：32 个轮换名字，一台 Google Cloud 主机，几百个路径。<strong>按名字放行等于没放行</strong>，要按官方公布的 IP 段校验。</p>
+                        <p>第二，<strong>这一批新目标文件是 IDE 自己写出来的</strong>。<code>.claude/.credentials.json</code>、<code>.cursor/mcp.json</code>、<code>.codex/auth.json</code> 这些文件很多人根本没意识到它们存在，而 CI 只要把仓库（包括被 gitignore 的智能体配置）拷进 <code>public/</code> 或 <code>dist/</code>，扫描器就能拿到，不需要利用你应用的任何逻辑。</p>
+                        <p>第三，<strong>AI 网关的风险是"一把钥匙开很多扇门"</strong>。一个管理界面弱，后面几家的账号一起完。Ollama 默认只监听 127.0.0.1 且不鉴权，一旦有人为了"让同事也能用"把端口开出去，等于把模型和账单一起挂到公网。</p>
+                        <p>第四，<strong>自查很便宜</strong>。<code>/.env</code>、<code>/.git/config</code>、<code>/.claude/settings.local.json</code> 这些应该返回 404。返回了真内容的，那把 key 就该换了。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">伪装成 AI 爬虫 读 robots 与 manifest</span>
+                        <span class="flow-step critical">十秒打三百个路径 每请求换一个 UA</span>
+                        <span class="flow-step critical">拿到 .env 或网关配置里的多把 key</span>
+                        <span class="flow-step">逐把验证可用性 存入共享密钥池</span>
+                        <span class="flow-step critical">用偷来的 key 付下一轮推理费用</span>
+                        <span class="flow-step">按 UA 放行等于没放行 要按 IP 段</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. 路由器固件里的九条 critical，DrayTek 一次全交出来</h4>
+                    <p>11-18 进 NVD 的一批里，DrayTek Vigor2960（1.5.1.6 及之前）至少有九条 critical、三条 9.9：<strong>CVE-2026-132143</strong> 在 <code>/cgi-bin/mainfunction.cgi</code> 的 <code>doWebBackup</code> 里，参数处理不当；<strong>CVE-2026-132141</strong> 是同一文件 <code>json_load_lock</code> 的参数问题；<strong>CVE-2026-132139</strong> 是 <code>setSWMProfile</code> 里 <code>filename</code> 参数导致的栈溢出。这类"功能函数直接吃表单字段"的洞在老固件里是常态，位置又在内网边界，同一个二层里还坐着办公终端。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Dell PowerStore SDNAS 五条：未认证就能把存储打崩</h4>
+                    <p><strong>CVE-2026-116446</strong>（9.8）是 NFS 服务里的越界内存访问，未认证远程即可触发；<strong>CVE-2026-116443</strong>（9.8）是 TFTP 服务的栈溢出；<strong>CVE-2026-116448 / 116449</strong>（均 9.8）是两处 OS 命令注入，需要内网访问；<strong>CVE-2026-116441</strong>（9.6）是存储处理器互联驱动的越界写，需要恶意对端。存储设备的特殊性在于：它坏了不是一台机器的事，是挂在上面的所有业务一起停。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. UniFi Access 四条 9.9，都是低权限起步</h4>
+                    <p><strong>CVE-2026-132802</strong>（不当链接解析，9.9）、<strong>132803</strong>（SQL 注入，9.9）、<strong>132804</strong>（SSRF，9.9）、<strong>132808</strong>（授权判断错误，9.9），攻击前提统一是"能访问网络且有一个低权限账号"。门禁系统管的是谁能进哪扇门，权限判断出错的后果比分数写得更具体。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. 自托管 PaaS 的五个 9.9，Dokploy 一天被翻了个底朝天</h4>
+                    <p><strong>CVE-2026-129987</strong>（数据库密码校验，9.9）、<strong>129316</strong>（终端、容器日志、监控的 WebSocket，9.9）、<strong>129986</strong>（<code>mount.deleteFileMount</code> 路径未过滤，9.9）、<strong>129989</strong>（Nixpacks 的 <code>publishDirectory</code> 吃 shell 元字符，9.9）、<strong>129991</strong>（备份前缀只查非空，9.9），全部修在 0.31.1。这类工具往往是业务团队自己为了"少找运维"装的，装着生产数据库的密码，却不在运维的资产表里。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. HPE Aruba AOS-10：PAPI 协议 10.0，未认证绕过认证</h4>
+                    <p><strong>CVE-2026-95787</strong>，CVSS 3.1 <strong>10.0</strong>（S:C，可用性不受影响但机密性与完整性全失），AOS-10.8.1.1、10.7.2.6、10.4.1.13 及以下。公告编号 HPESBNW05162（rev.2），修复版 10.8.1.2 / 10.7.2.7 / 10.4.1.14。同批还有 95788（相邻网络缓冲区溢出，7.1）与 95789（认证后命令注入，7.2）。无线控制器是全公司 Wi-Fi 的那台机器，管理面通常和 AP 管理网段在一起，很多人以为它不可达。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. 一天三起大牌勒索声明，没有一家确认</h4>
+                    <p><strong>NVIDIA</strong> 在 11 月 18 日 08:48 UTC 出现在 The Gentlemen 的泄露站上，没有样本、没有文件列表、没有数据量，只有一个倒计时（约 232 小时后，即 11 月 28 日）。同一个站点上还挂着它的散热供应商 Jentech（10-06，声称 9TB）与 IT 服务商 FPT Software（10-27）。<strong>Visa 与 JPMorgan</strong> 被一个 9 月才出现的团伙 n0n 挂上泄露站，给了 48 小时，没有样本；Visa 的回应是涉及第三方服务商、自身系统未受影响，JPMorgan 说是一次本地硬件系统的软件缺陷。<strong>Veritiv</strong> 被 Helix 挂出，卖方声称 9,484 万行、68.65 GB。三条的共同点是：声明先到，证据没到。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 是否已发生或可利用象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 是否已发生或可利用
+    x-axis "未利用或仅研究演示" --> "已发生或已在野"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Axis无修复版": [0.95, 0.90]
+    "REDCap在野挖矿": [0.95, 0.78]
+    "Synology进KEV": [0.88, 0.86]
+    "LiteLLM进KEV": [0.86, 0.72]
+    "假爬虫扫密钥": [0.82, 0.60]
+    "勒索三连声明": [0.80, 0.55]
+    "nginx2root公开PoC": [0.62, 0.97]
+    "TeamCity四个9.9": [0.30, 0.90]
+    "Incus认证绕过10.0": [0.28, 0.88]
+    "ArubaPAPI10.0": [0.22, 0.85]
+    "Dell存储五条": [0.25, 0.80]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日失败点分布</div>
+                    <div class="mermaid">
+pie title 今日六条主线的失败点分布
+    "入口组件十年没被审过": 24
+    "厂商已放弃维护": 18
+    "签名被当成可信": 16
+    "低权限足够改配置": 18
+    "证书链只验第一张": 14
+    "密钥就放在网关上": 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月7日至11月19日
+    10月07日 : Unit 42 记录针对公网 REDCap 的挖矿
+    10月29日 : Incus 130778 私下披露
+    11月12日 : Axis PoC 与在野报告出现
+    11月13日 : KEV 加入 UnrealIRCd 与 Check Point
+    11月17日 : CISA 把 Puppet 收进 KEV
+    11月18日 : F5 发十条 nginx CVE 修 1.31.9 与 1.30.7
+    11月18日 : Rapid7 与 Xint 同步公开 nginx PoC
+    11月18日 : CISA 一次加四条 KEV 共 1786 条
+    11月18日 : Kaspersky 公开 AuditTeam 的 OpsAgent
+    11月18日 : JetBrains 发 TeamCity 四条 9.9
+    11月18日 : Incus 八条进 NVD 其中一条 10.0
+    11月18日 : NVIDIA 出现在 The Gentlemen 泄露站
+    11月19日 : 本期统计窗口收 791 条新 CVE
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Xint 官方技术报告 nginx2root（五个洞的配置条件、内核链、缓解措施）</span>
+                        <a href="https://xint.io/blog/nginx2root-remote-code-execution">xint · nginx2root</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rapid7 CVE-2026-123007 分析（128GB 流量测算、glibc 依赖、PoC 仓库）</span>
+                        <a href="https://www.rapid7.com/blog/post/ve-cve-2026-123007-critical-nginx-http-2-integer-underflow-leads-to-rce-fixed/">rapid7 · 123007</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rapid7 公开 PoC 仓库（含崩溃触发脚本与完整 RCE 利用）</span>
+                        <a href="https://github.com/sfewer-r7/CVE-2026-123007">github · sfewer-r7</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">nginx 官方安全公告目录（1.31.9 与 1.30.7 的修复清单）</span>
+                        <a href="https://nginx.org/en/security_advisories.html">nginx · advisories</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberScoop：五条 nginx 漏洞与 Xint 自动化装置 90 分钟出结论</span>
+                        <a href="https://cyberscoop.com/nginx-critical-vulnerabilities-exploits/">cyberscoop · nginx</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Boulevard：nginx2root 常见问题（五个 CVE 与 Plus 版本矩阵）</span>
+                        <a href="https://securityboulevard.com/2026/11/nginx2root-cve-2026-123007-frequently-asked-questions-about-five-critical-nginx-vulnerabilities">securityboulevard · nginx2root</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Hunt：nginx HTTP/2 漏洞机制与自查命令（含版本回移提醒）</span>
+                        <a href="https://zerohunt.ai/blog/nginx-http2-cve-2026-123007-rce">zerohunt · nginx</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录（2026.11.18 版，1,786 条，361 条标注勒索利用）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">East Bay Cyber：11-18 新增四条 KEV 的逐条字段与期限</span>
+                        <a href="https://eastbaycyber.com/kev/added/2026-11-18">eastbaycyber · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISOBrief：四款产品同日进 KEV 的行业影响分析</span>
+                        <a href="https://cisobrief.com/cisa-adds-four-actively-exploited-vulnerabilities-to-kev-catalog">cisobrief · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Infosec Intelligence：Axis 不出修复版，只给 commit 41f3b4e 与三天期限</span>
+                        <a href="https://www.infosec.mn/blog/post.html?slug=cve-2026-90436-cisa-gives-apache-axis-users-until-november-21-to-patch-a-bug-the-vendor-isnt-fixing">infosec · axis</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-90436（Apache Axis 不安全反射，9.8）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-90436">nvd · 90436</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-90817（REDCap 代码注入，需公开问卷 hash）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-90817">nvd · 90817</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-40217（LiteLLM 未受保护替代通道，字节码重写）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-40217">nvd · 40217</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2024-10441（Synology DSM 输出编码，Pwn2Own 2024）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2024-10441">nvd · 10441</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Synology 安全公告 SA-24:20（受影响版本与各分支修复版）</span>
+                        <a href="https://www.synology.com/en-global/security/advisory/Synology_SA_24_20">synology · sa-24:20</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Kaspersky 报告转述：签名驱动杀 EDR，勒索信写成审计账单</span>
+                        <a href="https://cypro.co.uk/insights/cyber-bulletins/auditteam-ransomware-masks-extortion-as-audits">cypro · auditteam</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IntelFusions：OpsAgent 的三代加载器、220 条杀名单与完整 IOC 列表</span>
+                        <a href="https://www.intelfusions.com/news/auditteam-opsagent-ransomware-consulting-fee">intelfusions · opsagent</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyfar：OpsAgent 检测工程假设、所需日志源与 ATT&amp;CK 映射</span>
+                        <a href="https://cyfar.ca/posts/the-forced-audit-how-auditteams-opsagent-framework-masks-ransomware-as-consulting">cyfar · opsagent</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threatlinqs：AuditTeam 归因与检测覆盖缺口（含 CloudFront 域）</span>
+                        <a href="https://intel.threadlinqs.com/threat/TL-2026-6308">threadlinqs · auditteam</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">JetBrains 已修问题清单（TeamCity 四条 9.9 与修复版本）</span>
+                        <a href="https://www.jetbrains.com/privacy-security/issues-fixed/">jetbrains · issues-fixed</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-132232（TeamCity Perforce 参数注入，9.9）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132232">nvd · 132232</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-132233（TeamCity 构建属性注入，9.9）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132233">nvd · 132233</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-130778（Incus 证书链认证绕过，10.0）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-130778">nvd · 130778</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Junglewise：Incus 同批漏洞清单、修复版本与周统计口径</span>
+                        <a href="https://junglewise.ai/threats/technologies/lxc-incus">junglewise · incus</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tin Computer：Octopus 与 Gecko 伪 AI 爬虫报告（路径清单与云厂商分布）</span>
+                        <a href="https://www.explainx.ai/blog/octopus-gecko-fake-ai-crawler-api-key-scanners-november-2026">explainx · octopus</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">云安全联盟：AI 网关密钥被智能体收割的机制与影响面</span>
+                        <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-self-funding-agents-ai-gateway-key-harvest">csa · ai gateway</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HPE Aruba 公告 HPESBNW05162（AOS-10 与 AOS-8 多个漏洞与修复版本）</span>
+                        <a href="https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&amp;docLocale=en_US">hpe · hpesbnw05162</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-95787（AOS-10 PAPI 认证绕过，10.0）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-95787">nvd · 95787</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-116446 / 116443（Dell PowerStore 存储服务与 TFTP）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-116446">nvd · 116446</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-132802 / 132803 / 132804 / 132808（UniFi Access 四条 9.9）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132802">nvd · 132802</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-129987 / 129316（Dokploy 密码校验与 WebSocket 终端）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-129987">nvd · 129987</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-132139 / 132141 / 132143（DrayTek Vigor2960 三处栈溢出）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-132139">nvd · 132139</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ransomnews：NVIDIA 出现在 The Gentlemen 泄露站（无样本，倒计时至 11-28）</span>
+                        <a href="https://ransomnews.com/nvidia-the-gentlemen-ransomware-claim-2026">ransomnews · nvidia</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Wisevoter：n0n 声称掌握 Visa 与 JPMorgan 数据，48 小时期限</span>
+                        <a href="https://wisevoter.com/world/2026/11/18/n0n-ransomware-claims-visa-jpmorgan-data">wisevoter · n0n</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackerFeeds：Veritiv 被 Helix 挂出（卖方自述规模，未独立验证）</span>
+                        <a href="https://hackerfeeds.com/ransomware/veritiv-by-helix-1fya2">hackerfeeds · veritiv</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0 — 本期窗口查询（11-18 00:00 至 11-19 06:00 共 791 条、9.0 以上 112 条，本刊一手统计）</span>
+                        <a href="https://services.nvd.nist.gov/rest/json/cves/2.0">nvd · api</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Junglewise：11-13 至 11-19 供应商缺陷量（Chrome 203 条、TeamCity 19 条等，作量级参照）</span>
+                        <a href="https://junglewise.ai/threats/technologies">junglewise · vendors</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分、受影响与修复版本以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注口径或直接指出差异：CVE-2026-123007 的 9.2 是 F5 按 CVSS 4.0 给出的评分，CVE-2026-123634 与 113425 在 NVD 侧按 CVSS 3.1 记 8.1，两套体系不可直接横比；"128 GB HTTP/2 流量"是 Rapid7 按其 PoC 实测的估算值，另有来源写 119 GiB，属同一测试的不同计量口径；Shodan 的 5,670 万台与 98.9% 来自 Xint 抽样快照，只统计能读出具体版本的机器，不代表真实可攻击面；nginx 的在野状态截至 11-19 为无确认在野且未进 KEV，之后可能变化；Apache Axis 的修复只能通过上游 commit 41f3b4e 自行构建，Apache 明确表示不会为 Axis 1.x 发布修复版本；REDCap 的在野证据来自 Unit 42 于 10-07 记录的 XMRig 挖矿活动，CISA 未公开具体受害方与 IOC；AuditTeam 的受害者分布按 Kaspersky 报告转述，本刊不做任何归因判断；NVIDIA、Visa、JPMorgan、Veritiv 四起均为勒索站点单方面声明，仅有 Visa 与 JPMorgan 给出有限回应，均无样本可核；Incus 的"至少八条"为本刊按 11-18 当日 NVD 新增记录统计，第三方周统计口径为 16 条；本期 791 条与 112 条为本刊按 NVD API 2.0 时间窗自行统计。涉华涉台的归因类内容本期不予收录，技术事实按各报告方原文转述。文中涉及的 PoC、IOC 与复现细节仅用于自查与识别，不要用于未授权环境。
+                <br>
+                每日精选 · 值得关注 | 2026年11月19日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

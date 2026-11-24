@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月14日（第216期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月14日 星期六</span>
+            <span class="edition-number">第 216 期 | 总第 216 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>分数最低的那条决定了整条链 · 补丁打全了机器照样是别人的 · 公开到被打穿只用了五个小时 · 装完补丁还得把扩展重编一遍 · 攻击方直接把渗透框架拿来用 · 人只定一个目标剩下交给智能体
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">分数最低的那一条，才是链上决定性的那一步</h2>
+                <p class="sub-headline">Check Point 那个洞只有 7.8，因为它写着"本地"。而"本地"这个前提，前一步那个 9.8 免费送上来了：攻击者从对公网的门户进来，往一个全局可写的 socket 写一条命令，就是 root，然后在 ESXi 上跑擦除程序。N-able N-central 那边，21 台被拿 root 的服务器里有 19 台跑的是本周二刚发的最新热修，PoC 公开到第一台被打穿只隔了五小时。PostgreSQL 一次修 52 条，装完补丁还得把 C 扩展重编一遍才算修，否则洞还在进程里。一个开源的 AI 渗透框架被至少五拨人当武器用，两千多个租户被撞登录，模型护栏只在某一个版本上触发过一次，之后操作者就换了个更宽松的。FBI 查封的那套社工基础设施里，缴获的最值钱的东西是九百多段受害者摄像头录像。六条里三条的核心事实是"你按流程做了该做的，还是中招"，两条的核心事实是"分数不决定后果"。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">已在野 · 进 KEV</span>
+                    <h3 class="article-title">那个全局可写的 socket，谁连上来都当 root 处理</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-123039 · CVSS 3.1 7.8 · Gaia OS DynamicCLI · R81 至 R82.20 · KEV 11-13 收录，整改 11-16</span>
+                        <span class="cvss-score">"几十家客户"被打穿 · 部分主机已被擦盘</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 12 日，Check Point 一次性放出三样东西：安全公告 sk1000362、一份研究博客、一批紧急热修。11 月 13 日，CISA 把 <strong>CVE-2026-123039</strong> 收进 KEV，标注"用于取证排查"，联邦整改截止 <strong>11 月 16 日</strong>。</p>
+                        <p>漏洞本身简单得不像话。Gaia OS 里有个叫 <code>dynamic_server</code> 的守护进程，以 root 跑，监听本地套接字 <code>/tmp/dynamic_socket</code>。这个 socket <strong>全局可写</strong>，而且<strong>不校验连上来的是谁</strong>。任何能在这台机器上执行代码的本地用户，往那个 socket 写一条命令，就以 root 执行了。</p>
+                        <p>厂商给 7.8，理由是 <code>AV:L</code>。孤立看一个漏洞时这个评分合理。问题在于攻击现场从来不是孤立的——<strong>前面那一步是免费的</strong>。研究报告里，攻击者先用 PHP2Shell 打对公网开放的 Mobile Access 门户：CVE-2026-109618（9.8）与 CVE-2026-109619（8.1），拿到门户服务账号的代码执行。这个服务账号就是"本地用户"。7.8 那条的前置条件，被 9.8 那条直接填满了。</p>
+                        <p>拿到 root 之后做了什么，比漏洞本身更值得记：在门户登录页的模板目录放 PHP webshell（文件名模式 <code>zz*.tpl</code>）；装一个叫 <strong>TSGA</strong> 的后门，进程名伪装成 <code>slot_CPconfigdaemon</code>，偷网关配置、通过备份与快照持久化、篡改防火墙日志；装 <strong>TSProxy</strong> 组件，把回连藏进设备本身的正常进程；用 gogo 扫内网，再用 <code>vpxuser</code> 这个服务账号 SSH 到 VMware ESXi，跑一个叫 <code>destroy_v6</code> 的程序，把文件覆盖成全零再删掉，然后留一份拒绝谈判的文本。</p>
+                        <p><strong>时间线里有一句要划线：<code>补丁早就在了，攻击是在补丁发布之后才开始的</code>。</strong>第一波 10 月 30 日，距修复可用约一周；第二波 11 月 2 日，多国机构受影响，这一波没有破坏行为；11 月 12 日厂商发公告与热修；11 月 13 日进 KEV。厂商自己的说法是被打穿"几十家客户"（原文 a couple of dozen customers）。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>受影响产品</td><td>Security Gateway、Firewall、Security Management Server、Multi-Domain Security Management Server、Scalable Platforms</td></tr>
+                            <tr><td>受影响版本</td><td>R81、R81.10、R81.20、R82、R82.10、R82.20</td></tr>
+                            <tr><td>修复构建</td><td>R82.20 Take 14 / R82.10 Take 52 / R82 Take 132 / R81.20 Take 174</td></tr>
+                            <tr><td>无补丁</td><td>R81 与 R81.10 已 EOS，厂商不修；唯一变通是停掉 <code>dynamic_server</code> 并阻止重启，代价是 Dynamic CLI 全部不可用</td></tr>
+                            <tr><td>不受影响</td><td>Spark 防火墙与 Smart-1 Cloud 不受 123039 影响，但 <strong>Spark 在 PHP2Shell 的受影响列表里</strong>——两条不同的洞，别混</td></tr>
+                            <tr><td>排查点</td><td><code>/var/log/dynamicCli.log</code> 异常命令；模板目录里的 <code>zz*.tpl</code>；<code>slot_CPconfigdaemon</code> 进程；到 <code>130.94.19[.]204</code> 与 <code>130.94.19[.]168</code> 的连接；绕过 Clish 包装层直接用 <code>system()</code> 的命令</td></tr>
+                        </table>
+                        <p><strong>分数的另一面。</strong>同一个 CVE 在 CVSS 4.0 体系里 <code>AT:P</code>（攻击前提为"存在"）。用哪个版本的分数排序，会直接决定你把哪台机器排在第一。</p>
+                        <p><strong>归因这一节，厂商自己没给结论。</strong>公告与研究博客都说工具链和基础设施与某个已知工具包有重合，但同时明确写证据不支持高置信归因，并把"初始访问中介"和"假旗"都列为可能。破坏性载荷与政治文本跟已知行动风格也对不上。这种时候照抄"某国干的"最省事，也最不负责任，本期按厂商原话处理。</p>
+                        <p><strong>背景补一句</strong>：9 月 Check Point 还披露过 CVE-2026-93616（Security Management Server）与 CVE-2026-85102（Security Gateway），两条都是无需权限的 RCE。两年内 CISA 收了 5 条 Check Point 的洞，其中 2 条被勒索团伙用过。边界设备被当成目标，不是这一周才开始。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">对公网门户 用 PHP2Shell 进门</span>
+                        <span class="flow-step critical">拿到服务账号 等于拿到了本地用户</span>
+                        <span class="flow-step">往全局可写的 socket 写一条命令</span>
+                        <span class="flow-step critical">dynamic_server 不校验来源 直接按 root 执行</span>
+                        <span class="flow-step">模板目录放 webshell 装 TSGA 与 TSProxy</span>
+                        <span class="flow-step critical">改防火墙日志 让痕迹对不上</span>
+                        <span class="flow-step">SSH 上 ESXi 跑 destroy_v6 覆盖后删除</span>
+                    </div>
+                </article>
+
+                <!-- 文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">19/21 已打最新热修</span>
+                    <h3 class="article-title">二十一台里十九台，跑的是本周二刚发的补丁</h3>
+                    <div class="article-meta">
+                        <span>N-able N-central · CVE-2026-90436（9.8）· 4EverAble2Shell + Agent2Shell · Legacy API 是真正的入口</span>
+                        <span class="cvss-score">PoC 公开 5 小时后首台被拿 root · 21 台在挖矿</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条最刺眼的地方不在漏洞，在数字：<strong>21 台被拿 root 的服务器里，19 台跑的是 11 月 10 日刚发的 Hotfix 2（2026.4.1.26）</strong>。</p>
+                        <p>链条分两段。第一段是 Apache Axis：N-central 打包了这个老组件，它的 SOAP fault 处理里存在<strong>不安全的类实例化</strong>，构造一个畸形请求就能让攻击者指定的 JLine 类去处理恶意输入，命令以 <code>nable</code> 服务账号执行。这一段是 <strong>CVE-2026-90436，9.8，11 月 6 日已修</strong>。第二段是 N-central 自己的提权，Previdian 记作 VULN-2026-0009：滥用 <code>setLDFileOwner</code> 这个特权辅助函数，配一个符号链接，把本来属 root 的脚本变成可写，改写它，再调用 <code>serverControl</code> 让 root 执行，<strong>最后尝试把改过的文件还原回去</strong>。还原这一步是在抹痕迹，不是在利用。</p>
+                        <p><strong>关键数字是 5 小时。</strong>11 月 12 日研究者 Sean Bales 公开 PoC（他自己说没走厂商披露流程）。Previdian 08:30 UTC 在蜜罐上看到探测，请求里带着 PoC 点名的那个 Java 类；Huntback 09:16 UTC 记录到第一次完整链执行；12:50 UTC，21 台已经在矿池里提交份额。<strong>从代码公开到第一台被打穿，中间没有任何缓冲</strong>——这意味着"先测试再上补丁"这个流程，在 PoC 公开的那一刻就过期了。</p>
+                        <table class="affected-table">
+                            <tr><th>事项</th><th>具体值</th></tr>
+                            <tr><td>第一段</td><td>CVE-2026-90436，9.8，Apache Axis SOAP fault 中的不安全类实例化，11-06 修复</td></tr>
+                            <tr><td>第二段</td><td>N-central 内部提权（VULN-2026-0009），<code>setLDFileOwner</code> + 符号链接，无独立 CVE 也无独立修复</td></tr>
+                            <tr><td>成功条件</td><td>Legacy API <strong>已开启</strong>且服务器对公网可达。托管版默认关闭，本地部署要自己确认</td></tr>
+                            <tr><td>配套</td><td>Agent2Shell：十余个零日，在被管 Windows 端点以 <code>NT AUTHORITY\SYSTEM</code> 执行，需要知道 appliance ID，<strong>目前无在野报告</strong></td></tr>
+                            <tr><td>载荷</td><td>从 <code>157.20.241[.]16</code> 拉 <code>jup.sh</code>，装 XMRig，<strong>只占一半 CPU 核</strong>，systemd 或 cron 持久化</td></tr>
+                            <tr><td>受害分布</td><td>美国 9、南非 4、加拿大 4，另有英国、德国、法国、瑞典；全部为托管型部署</td></tr>
+                        </table>
+                        <p><strong>矿池那边漏了受害者名单。</strong>XMRig 的 worker 名被设成 <code>nc_</code> 加服务器 IP，Huntback 直接从矿池统计里把 21 台全数了出来，全部注册在过去五分钟内。这个细节值得记：攻击者为了自己方便，把受害面写进了一个公开可查的地方。</p>
+                        <p><strong>厂商口径在 24 小时内变过一次。</strong>11 月 12 日公告说"没有看到通过这些新漏洞入侵的迹象"。11 月 13 日更新为"已识别到更多入侵指标，正在与受影响客户逐家处理"。改口本身不算问题，问题在于它发生在蜜罐数据出来<strong>之后</strong>。</p>
+                        <p><strong>处置只有一条真的有效：关掉 Legacy API。</strong>另外 Agent 与 Probe 必须<strong>两边都</strong>升到 2026.4 HF1 以上，因为新版改了这两者之间的通信方式，只升一边会留通信缺口。厂商还顺手关了 Intune 集成，并对托管版限制了部分功能。IOC 清单很具体：<code>POST /dms/services/ServerUI</code> 带 SOAP fault、User-Agent <code>python-requests/2.31.0</code>、<code>/tmp/.xvd</code> 或 <code>/var/tmp/.xvd</code> 下的文件、systemd 服务 <code>xvd.service</code>、到 <code>157.20.241[.]16</code> 的连接。<strong>命中任何一条，按"这台机器已经完全被控"处理，不要当清理任务。</strong></p>
+                        <p>还有前情：11 月 9 日第一轮 Able2Shell 披露 33 条，N-able 当天把托管版下线；11 月 10 日 Hotfix 2 修了其中 7 个 CVE。<strong>两天后，新 PoC 证明那些修复没有动到底层的攻击面。</strong>同一天第二个战场在 ScreenConnect 那边：一家 MSP 问"这些陌生会话是什么"，顺着查出一百多台服务器上挂着未授权会话，会话名用的是加密货币交易所的名字当伪装。RMM 这条线今天有两处在响。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">研究者直接公开 PoC 未走披露流程</span>
+                        <span class="flow-step critical">五小时后第一台被拿 root</span>
+                        <span class="flow-step">Axis 不安全实例化 拿到服务账号</span>
+                        <span class="flow-step critical">setLDFileOwner 加符号链接 提到 root</span>
+                        <span class="flow-step">拉 jup.sh 装矿机 只占一半核</span>
+                        <span class="flow-step critical">十九台已经装过本周最新热修</span>
+                        <span class="flow-step">唯一有效控制 关掉 Legacy API</span>
+                    </div>
+                </article>
+
+                <!-- 文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-high">52 条一次发完</span>
+                    <h3 class="article-title">二进制换了，扩展没编，洞还在进程里</h3>
+                    <div class="article-meta">
+                        <span>PostgreSQL 11-12 · 18.7 / 17.12 / 16.16 / 15.20 / 14.25 / 19 RC2 · CVE-2026-6460 与 120144 均 8.8</span>
+                        <span class="cvss-score">14 分支同日停止支持 · 无单 CVE 热修</span>
+                    </div>
+                    <div class="article-body">
+                        <p>一次 minor release 修 <strong>52 个安全问题</strong>，这在 PostgreSQL 是少见的大批量。两条 8.8 最容易搞混，先分清。</p>
+                        <table class="affected-table">
+                            <tr><th>编号</th><th>描述原文</th><th>影响版本</th><th>修复版本</th></tr>
+                            <tr><td><strong>CVE-2026-6460</strong></td><td>type confusion after <code>ALTER ... SET DATA TYPE</code> executes arbitrary code</td><td>18、17、16、15、14</td><td>18.7 / 17.12 / 16.16 / 15.20 / 14.25</td></tr>
+                            <tr><td><strong>CVE-2026-120144</strong></td><td>type-cache invalidation gap executes arbitrary code</td><td><strong>仅 18</strong></td><td><strong>仅 18.7</strong></td></tr>
+                        </table>
+                        <p>两条向量完全相同：<code>AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H</code>，都是"类型混淆导致以数据库进程的操作系统用户身份执行任意代码"。区别在触发条件——6460 是 <code>ALTER ... SET DATA TYPE</code> 之后，120144 是复合类型变更时缓存条目正在填充的过程中缓存失效不完整。<strong>看到"PostgreSQL 类型混淆 8.8"就以为是同一个洞，会把 17/16/15 的升级优先级排错。</strong></p>
+                        <p><strong>"22 年"这个数字要标出处。</strong>媒体普遍写"潜伏约 22 年"，但 PostgreSQL 官方安全页只写行为、受影响版本、修复版本和向量，<strong>不写这个洞存在了多久</strong>。引用年龄就注明是媒体口径，别写成项目自己的说法。</p>
+                        <p><strong>真正会让人以为自己修好了的地方，是 C 扩展。</strong>C 语言写的扩展（PostGIS 这类）在编译时链的是服务器的内部头文件。你把服务器二进制换成 18.7，旧扩展还按旧假设在同一个进程里跑。<strong>洞还在进程里，只是你看不到。</strong>所以完整处置是两步：升级服务器，同一维护窗口内重编译全部 C 扩展。跳过第二步的团队会得到一个"版本号是新的、攻击面是旧的"实例。</p>
+                        <p>顺带一个坑：<strong>18.7 这个 minor 又一次破坏了 ABI 兼容性</strong>，社区帖子的标题里直接写着"again"。这对只换二进制不重编扩展的团队反而是硬性拦截——扩展会加载失败，你至少能发现问题。对全自动流水线是麻烦，得确保扩展编译和服务器升级在同一个步骤里。</p>
+                        <p>另外两个运维事实：<strong>14 分支在 11 月 12 日停止支持</strong>，14.25 是这条线最后一个版本，生产上还跑 14 的不是升级而是迁移；<strong>52 条没有单 CVE 热修</strong>，官方不发 cherry-pick，只能整包升。</p>
+                        <p><strong>"Authenticated" 不等于低风险。</strong><code>PR:L</code> 要求有建对象权限。真实环境里，应用服务账号、集成账号、迁移工具、开发账号几乎都有这个权限。一个被拿下的应用账号，从这里可以直接升到主机层。所以处置不只是打补丁，还要顺手审一遍谁有 CREATE 权限。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">一次发布修五十二条 无单条热修</span>
+                        <span class="flow-step critical">两条八点八 版本范围完全不同</span>
+                        <span class="flow-step">换掉服务器二进制</span>
+                        <span class="flow-step critical">C 扩展还是按旧头文件编译的</span>
+                        <span class="flow-step">旧代码仍在同一进程里跑</span>
+                        <span class="flow-step critical">版本号是新的 攻击面是旧的</span>
+                        <span class="flow-step">再审一遍谁有建对象权限</span>
+                    </div>
+                </article>
+
+                <!-- 文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">至少五个行为体</span>
+                    <h3 class="article-title">护栏只在某一个版本上生效，他就换了一个</h3>
+                    <div class="article-meta">
+                        <span>ARTEX · 开源 AI 渗透框架 · 8 月起 · 无 CVE，工具本身合法 · 开发者 10-08 闭源，fork 仍在流通</span>
+                        <span class="cvss-score">单次行动模型成本 145 至 1,500 美元 · 多按默认配置</span>
+                    </div>
+                    <div class="article-body">
+                        <p>这条的性质和前三条都不一样：它不是漏洞，是<strong>一个合法的安全工具被拿去当了攻击平台</strong>。</p>
+                        <p>ARTEX 是一个开源的 AI 自动化渗透框架，会自己规划任务、并行侦查、执行利用。SentinelOne、CrowdStrike、Microsoft、Check Point、Cisco Talos、Datadog、CERT-EU 在这一周里各自出了一份材料，拼起来是这样：<strong>至少 5 个动机不同的行为体</strong>在用它，最早活动可追到 8 月初；开发者 10 月 8 日闭源，<strong>fork 和维护副本仍然公开可得</strong>；一次行动的模型成本在 145 到 1,500 美元之间；运营者普遍用<strong>默认配置</strong>，不做定制。</p>
+                        <table class="affected-table">
+                            <tr><th>行为体</th><th>判断方</th><th>规模</th><th>结果</th></tr>
+                            <tr><td>VAPOR PANDA</td><td>CrowdStrike</td><td>200+ 组织，至少 14 国</td><td>9 家确认后渗透，另 12+ 家被扫凭据与撞库</td></tr>
+                            <tr><td>Storm-0940</td><td>Microsoft</td><td>2,250+ 个下游 M365 租户</td><td>用被窃的 ConnectWise 应用凭据撞登录，后续动 Graph 与权限</td></tr>
+                            <tr><td>Storm-3358</td><td>Microsoft</td><td>东南亚金融机构</td><td>打公网系统，投 RAT</td></tr>
+                            <tr><td>未具名犯罪团伙</td><td>Check Point</td><td>未统计</td><td>偷代码签名证书、游戏账号、加密货币</td></tr>
+                        </table>
+                        <p><strong>两个数字最该记。</strong>一个是 <strong>5 分钟</strong>：Microsoft 记录到一次从"在公开 GitHub 仓库里搜到泄露凭据"到"从 Azure Key Vault 拉走数据"，中间 5 分钟，这单目前只标"疑似 ARTEX 使用"。另一个是 <strong>3 小时</strong>：FBI 的 FLASH 通告写的是"部分入侵从初始目标到拿到特权访问不到 3 小时"，同时描述了它的选择偏好——优先找没装 EDR 传感器的 Windows 主机，以及通过组织间的信任关系去找防护最弱的第三方供应商。<strong>有运营者直接在指令里写"找没有 EDR 的机器"。</strong></p>
+                        <p><strong>护栏这一节，是整份材料里最该读的一段。</strong>分析样本里 10 个实例中有 3 个配置的是美国厂商的模型。<strong>护栏只在 Opus 5.5 上触发过一次</strong>，触发之后操作者没有放弃，而是换成了限制更宽松的模型继续跑。SentinelOne 的结论是护栏起的作用有限。这个观察的意义超过今天任何一个 CVE：<strong>模型侧的对齐，在"操作者可以自由换模型"这个前提下，不构成一道安全边界。它是一道摩擦，不是一堵墙。</strong></p>
+                        <p><strong>规模有多散。</strong>Check Point 统计到 2,557 台托管 ARTEX 的系统，其中 10 个配置错误的实例把完整数据库暴露在外；Censys 在 11 月 4 日的数据是 1,465 台暴露的控制台。这些实例不全是恶意的，渗透测试团队也在用同一个工具，这正是检测的难点：<strong>行为是合法的，只有意图不合法。</strong></p>
+                        <p><strong>一个具体的战果值得单说。</strong>在针对苹果代码签名证书的行动里，ARTEX 智能体在被控系统上找证书数据库，然后逐项验证：密码对不对、私钥在不在、苹果那边撤销了没有、有没有过期、关联的描述文件是否有效。最后捞到 300 多份证书及其密码，其中 3 份通过完整验证流程，<strong>可以用来签任意 iOS 应用</strong>。这个环节人工做要几天，智能体做是并行的。</p>
+                        <p>防御建议里唯一可执行的：把 RMM 控制台、CI 凭据、云上的长期访问密钥当成 tier-0 资产。ARTEX 打的就是这些，而且它撞的是低复杂度的配置错误，不是零日。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">开源的 AI 渗透框架 本身合法</span>
+                        <span class="flow-step critical">闭源后 fork 仍在流通</span>
+                        <span class="flow-step">操作者只给目标 剩下交给智能体</span>
+                        <span class="flow-step critical">护栏只在某一个模型上触发过</span>
+                        <span class="flow-step">换个更宽松的模型继续跑</span>
+                        <span class="flow-step critical">两千二百五十个租户被撞登录</span>
+                        <span class="flow-step">从搜到密钥到拉走数据 五分钟</span>
+                    </div>
+                </article>
+
+                <!-- 文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">四亿美元 十八个月</span>
+                    <h3 class="article-title">缴获清单里最值钱的，是九百多段摄像头录像</h3>
+                    <div class="article-meta">
+                        <span>FBI 与 DOJ 11-13 宣布 · FaceStealer · BlueNoroff / APT38 / Sapphire Sleet 等八个别名 · 全链条无漏洞</span>
+                        <span class="cvss-score">基础设施被查封 · 目标已扩到开源维护者</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 13 日，美国司法部和 FBI 同时发了两份东西：一份是查封 FaceStealer 所用云基础设施的公告，一份是起诉材料。缴获清单里最扎眼的一项不是钱，是 <strong>900 多段受害者摄像头录像</strong>。</p>
+                        <p><strong>这条链没有一个漏洞。</strong>全程是社工，而且是自复制的社工。先拿下一个人，拿走钱包和助记词，劫持他的 Telegram、Slack、LinkedIn、Discord 并把本人踢出去，同时<strong>偷偷录下他的摄像头画面</strong>。然后用他的账号联系他的联系人——因为读得到聊天记录，话术对得上，约时间用的是 Calendly，一切都在真实渠道里流动。临近会议发一个仿冒链接（<code>uu01webzoom[.]us</code> 假冒 Zoom、<code>teams.livemeet[.]us</code> 假冒 Teams）。进会后，屏幕上是他认识的那个人——播的是<strong>上一个受害者的录像</strong>，再配上 deepfake 的行业名人和 ChatGPT 生成的头像凑人数。几十秒后出现"听不到你"的技术故障，给一个修音频的链接或者一段要粘进终端的命令。</p>
+                        <p><strong>自复制是设计的核心，不是副作用。</strong>每拿下一个受害者，就多一个可信的账号和一截可信的脸。下一个目标的屏幕上出现的，是他认识的人，说的是他知道的说话方式，链接是从真实会话里发来的。JUMPSEC 在 7 月的报告里把这个叫做"受害者获取平台"，用词很准。</p>
+                        <p><strong>目标已经变了。</strong>早期是加密货币和 Web3 从业者，现在明确加上了<strong>开源软件的开发者和维护者</strong>。FBI 的原话是：目标是软件供应链，进了可信开发者的账号，就能通过被广泛使用的软件影响几百万下游用户。</p>
+                        <p><strong>这里的数字有一处必须纠正。</strong>有一家日报摘要把"冻结超过 270 万美元"写成了 <strong>27 亿美元</strong>。原始表述是两个动作：执法部门与业界合作冻结了超过 <strong>270 万美元</strong>，并取得法院批准对 <strong>12 亿美元</strong> 的被盗资产实施查封或限制访问。两个数字相差三个数量级，而且出自同一段话。抄摘要时要注意单位。</p>
+                        <p><strong>平行的另一条线。</strong>朝鲜的 TraderTraitor 在 10 月 29 日从 Binance 盗走 60 亿美元以上。Binance 已用自有资金补上客户资产，钱没有追回。这是两件独立的事，传播时不要混成一件。</p>
+                        <p>个人侧的处置只有一条真的有用：任何未经事先文字沟通就发来的视频会议邀请，先挂掉，用另一个渠道（打电话给本人）确认。会中让你"粘一条命令修音频"的，百分之百是攻击。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">劫持一个可信账号 把人踢出去</span>
+                        <span class="flow-step critical">顺手录下他的摄像头画面</span>
+                        <span class="flow-step">冒充他联系他的联系人 话术对得上</span>
+                        <span class="flow-step critical">会中播上一个受害者的录像</span>
+                        <span class="flow-step">制造听不到你的故障 诱导粘命令</span>
+                        <span class="flow-step critical">新的受害者变成下一轮素材</span>
+                        <span class="flow-step">目标已扩到开源软件维护者</span>
+                    </div>
+                </article>
+
+                <!-- 文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-high">默认配置即受影响</span>
+                    <h3 class="article-title">这条不需要你开任何功能，装完就是那个状态</h3>
+                    <div class="article-meta">
+                        <span>Citrix CTX697305 + CTX697320 · 11-12 · NetScaler ADC / Gateway 共 28 条 · Console 1 条</span>
+                        <span class="cvss-score">120868 无前置条件 · 120869 认证绕过 · 均无在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>11 月 12 日 Citrix 发了两个公告。CTX697305 覆盖 NetScaler ADC 与 Gateway 的 28 个漏洞，CTX697320 单独修 NetScaler Console 的一条认证绕过。</p>
+                        <p><strong>要单独拎出来的是 CVE-2026-120868，CVSS 4.0 9.3。</strong>绝大部分 NetScaler 公告都带一个前置条件从句：只有开了 SMPP 才受影响，只有开了 DoH 才受影响，只有配了 Email OTP 才受影响。运维的常规做法就是先看这一列，把没用那个功能的设备排到后面。<strong>120868 这一行写的是：所有 NetScaler ADC 与 Gateway 部署，默认配置，无需额外功能。</strong>不需要认证，不需要用户交互。没有变通方案——因为没有可以关掉的开关，出问题的路径就是核心包处理。</p>
+                        <p>厂商对影响的描述只到"不可预测或错误的行为，以及拒绝服务"，<strong>没有说代码执行</strong>。但公告里十条向量的 C / I / A 全是 H。这两句放在一起读，尺度要自己把握：厂商没承诺 RCE，也没排除。</p>
+                        <table class="affected-table">
+                            <tr><th>编号</th><th>分数</th><th>前置条件</th><th>影响面</th></tr>
+                            <tr><td><strong>120868</strong></td><td>9.3（v4.0）</td><td><strong>无。默认配置即可</strong></td><td>所有部署</td></tr>
+                            <tr><td><strong>107412</strong></td><td>9.5（v4.0）</td><td>Gateway 或 AAA 虚拟服务器</td><td>SSL VPN / ICA Proxy / CVPN / RDP Proxy</td></tr>
+                            <tr><td>120863</td><td>高</td><td>只需能从不可信网络访问 NSIP</td><td>管理地址</td></tr>
+                            <tr><td>111338</td><td>6.9</td><td>—</td><td>把登录数据写进 <code>/var/log/httperror.log</code></td></tr>
+                            <tr><td>120869</td><td>9.4（公告）/ 9.3（ENISA）</td><td>Console，无需认证</td><td>认证绕过</td></tr>
+                        </table>
+                        <p><strong>最高分 9.5 是另一条</strong>，CVE-2026-107412。这条 11-13 期在速览里提过，当时的处境是"分数先到了，信息还没到"——只有两句描述，没有 CWE，没有版本范围，没有修复版本。<strong>现在补上了</strong>，这也说明当时的判断值得跟。</p>
+                        <p><strong>修复构建，注意一个坑。</strong>14.1 分支要 14.1-73.57 起，13.1 分支要 13.1-64.39 起，14.1 FIPS 要 14.1-73.58 FIPS 起，13.1 FIPS 与 NDcPP 要 13.1-37.293 起，Console 要 14.1-74.34 起。<strong>坑在 14.1：公告写的第一修复构建是 73.57，Citrix 实际挂出来供下载的是 73.58。</strong>以公告为准去核对版本号，会对不上。另一个容易漏的点：10 月为了修那两个在野零日升到 14.1-73.49 或 13.1-64.32 的设备，<strong>现在重新回到受影响状态</strong>。补丁不是一次性的。NetScaler 12.1 与 13.0 已 EOS，不修。</p>
+                        <p><strong>截至 11 月 13 日，这条没有在野利用，没有确认的公开 PoC，28 条也没一条进 KEV。</strong>这个状态不等于可以放着：NetScaler 今年秋天的几次公告，被利用的间隔是以天计的，攻击者会拿修补前后两个构建做二进制比对。10 月刚修过两个已被在野利用的零日，其中一个进了 KEV。</p>
+                        <p><strong>和第一条对着看很有意思。</strong>Check Point 那条要前置条件（本地账号），已经在擦盘了。Citrix 这条什么前置条件都不要，还没人用。<strong>评分、紧迫度、现实威胁，是三个不同的量。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">大部分公告都带前置条件从句</span>
+                        <span class="flow-step critical">这一条写的是默认配置即可</span>
+                        <span class="flow-step">没有开关可以关 因为没有可选功能</span>
+                        <span class="flow-step critical">厂商只说拒绝服务 向量却是三个 H</span>
+                        <span class="flow-step">公告写 73.57 实际挂出 73.58</span>
+                        <span class="flow-step critical">十月打过的版本 现在又是暴露状态</span>
+                        <span class="flow-step">无在野 但历史间隔以天计</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Trezor Safe 5 被查出硬件层植入，固件管不了夹在屏幕前的那块板</h4>
+                    <p>三台 Safe 5 被植入恶意电路板，全部购自东南亚经销商 <strong>CryptoBilis</strong>，购买时间集中在 2026 年 8 月 20 日到 9 月 23 日。植入物是<strong>夹在主板上方与显示屏之间的一块额外电路板</strong>，不改固件，也不碰 Secure Element。它只做一件事：等屏幕上出现助记词（新建备份或恢复旧钱包都会出现），就抄下来，连 passphrase 一起加密，通过<strong>蜂窝网络</strong>发到攻击者服务器；没有信号就存着，反复重试直到发出去。Trezor 在实验室拆了一台，另两台通过客户提交的照片确认。10 月发出警告后有 48 位 CryptoBilis 客户联系厂商，固件缓解已发布——<strong>但固件管不了夹在屏幕前的电路板</strong>。这个案例最该记的就是这句话：供应链的物理层，软件侧所有校验都看不见它。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. 今天新增 80 个 critical，抽四个看看都是什么形状</h4>
+                    <p>统计口径是 11 月 14 日 06:05 UTC，80 个新 critical，其中 6 条建议当天打。抽样四条：<strong>CVE-2026-27175</strong>（MajorDoMo，9.8，<code>rc/index.php</code> 把用户输入的 <code>$param</code> 直接插进双引号命令串，<strong>没用 <code>escapeshellarg()</code></strong>，未认证命令注入，EPSS 24%，公开利用已有）；<strong>CVE-2026-127080</strong>（OpsTree BuildPiper &lt; 2.7.0，9.9，已认证的部署用户能定义任意 Kubernetes hostPath 卷，没有白名单也没有策略检查，host path 设成 <code>/</code> 就是节点 root 文件系统）；<strong>CVE-2026-126380</strong>（Vvveb &lt; 1.0.9.0，9.4，<code>.phar</code> 在拒绝名单里被写成带前导点的形式，等于没拦，配 GIF magic byte 合成多语言 webshell 绕二进制检查）；<strong>CVE-2026-126473</strong>（OpenEMR &lt; 8.4.0，9.3，OAuth scope 规范化缺陷，注册一个冒号形式的 <code>system:Patient.read</code> 客户端就绕过审批拿到系统级 FHIR 权限）。四条都不是零日，都是少写一个函数、名单写错一个字符这类。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. Tactical RMM 任意文件读，直接暴露 Django SECRET_KEY</h4>
+                    <p>CVE-2026-129165。单看分数不高，位置要命：Tactical RMM 是另一套开源远程管理工具，和第二条的 N-central 属于同一类资产。<strong>任意文件读拿到 <code>SECRET_KEY</code> 之后，Django 的签名体系基本等于开了后门</strong>，会话伪造、密码重置令牌伪造都能做。今天 RMM 这条线上有两处在响：一处已经在挖矿，一处刚公开。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. UnrealIRCd 一条分隔符问题进了 KEV，和 Check Point 同一天</h4>
+                    <p>CVE-2026-114713，11 月 13 日与 Check Point 那条一起被 CISA 收进目录。UnrealIRCd 在 IRC 网络里常被当基础组件用，分隔符处理缺陷这类问题的特点是<strong>利用门槛低、影响面取决于上游怎么拼字符串</strong>。这条目前公开细节还少，NVD 富化未完成，本期只记编号和状态，等完整描述出来再展开。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Qubole 凭据被打，跨账号 AssumeRole 走进客户 AWS 环境</h4>
+                    <p>被泄露的 Qubole 凭据被用来跨账号 assume 客户环境里的 AWS 角色，之后是偷 secrets 和数据，攻击者用了 TruffleHog 做凭据收割。<strong>这条只有一个来源，本期标为未一手核实</strong>，写出来是因为它和第四条是同一个模式：拿一个合法的集成凭据，顺着信任关系横着走。自查动作很具体——把长期不用和遗留的 trust relationship 全撤，审 AssumeRole 事件，强制轮换所有 secrets 与会话。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "CheckPoint网关链": [0.95, 0.93]
+    "Ncentral十九台热修": [0.92, 0.90]
+    "ARTEX多行为体": [0.88, 0.86]
+    "FaceStealer自复制": [0.90, 0.72]
+    "Citrix默认配置": [0.12, 0.88]
+    "PostgreSQL五十二条": [0.18, 0.82]
+    "Trezor硬件植入": [0.72, 0.55]
+    "TacticalRMM密钥": [0.30, 0.68]
+    "UnrealIRCd进KEV": [0.66, 0.62]
+    "Qubole单一来源": [0.55, 0.44]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "补丁打全了仍然中招": 24
+    "分数低于实际杀伤": 20
+    "需要额外运维动作才算修完": 18
+    "合法工具被反向使用": 16
+    "社工绕过所有技术控制": 13
+    "默认配置即受影响": 9
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月30日至11月16日
+    10月30日 : Check Point 第一波 打在修复发布之后
+    11月02日 : 第二波 多国机构 这一波没有破坏行为
+    11月06日 : Apache Axis 的 CVE-2026-90436 修复
+    11月08日 : ARTEX 开发者闭源 但 fork 仍在流通
+    11月09日 : Able2Shell 首轮三十三条 托管版下线
+    11月10日 : N-able 发 Hotfix 2 修七个 CVE
+    11月12日 : 新 PoC 公开 五小时后首台被拿 root
+    11月12日 : 十二点五十 二十一台在矿池提交份额
+    11月12日 : Check Point 发紧急热修与研究博客
+    11月12日 : Citrix 发 CTX697305 二十八条
+    11月12日 : PostgreSQL 发六个版本 五十二条
+    11月12日 : PostgreSQL 十四分支同日停止支持
+    11月13日 : CISA 收 Check Point 与 UnrealIRCd
+    11月13日 : N-able 改口 说发现更多入侵指标
+    11月13日 : FBI 与 DOJ 查封 FaceStealer 基础设施
+    11月16日 : Check Point 那条的联邦整改大限
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Check Point sk1000362 — CVE-2026-123039 原始公告（7.8、DynamicCLI 与 <code>/tmp/dynamic_socket</code> 全局可写、受影响产品与版本、四个 Take 修复号、停 dynamic_server 的变通、R81 与 R81.10 的 EOS 状态）</span>
+                        <a href="https://support.checkpoint.com/results/sk/sk1000362">checkpoint · sk1000362</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Check Point Research — PHP2Shell Exploitation on Check Point Gateway（11-12；攻击链、TSGA 与 TSProxy、gogo 扫描、vpxuser 上 ESXi、destroy_v6 行为、IOC 清单）</span>
+                        <a href="https://research.checkpoint.com/2026/php2shell-exploitation-on-check-point-gateway/">cpr · php2shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Check Point 官方博客 — Security Advisory（"a couple of dozen customers" 原话、两波攻击的时间与范围、厂商对归因的明确表态：证据不支持高置信结论，初始访问中介与假旗都在可能范围）</span>
+                        <a href="https://blog.checkpoint.com/security/security-advisory-active-exploitation-of-php2shell-and-local-privilege-escalation/">checkpoint · blog</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA — Known Exploited Vulnerabilities Catalog（11-13 收录 CVE-2026-123039 与 CVE-2026-114713；11-16 联邦整改截止；标注用于取证排查）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OneSignalDesk — Check Point Gaia flaw（修复构建对照、Spark 与 Smart-1 Cloud 不受 123039 影响但 Spark 在 PHP2Shell 列表里、R81 与 R81.10 无修复）</span>
+                        <a href="https://onesignaldesk.com/news/check-point-gaia-cve-2026-123039-exploited-cisa-kev">onesignaldesk · checkpoint</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber Kendra — CVE-2026-123039 拆解（destroy_v6 覆盖后删除、<code>zz*.tpl</code> webshell、<code>slot_CPconfigdaemon</code> 进程名、130.94.19.204 与 .168 两个 IP）</span>
+                        <a href="https://www.cyberkendra.com/2026/11/cve-2026-123039-check-point-gateway-php2shell-wiper.html">cyberkendra · 123039</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Five Nines — CISA 收录与整改期限（BOD 26-04、第二波范围、厂商归因表态、两年内五条 Check Point 进 KEV 其中两条被勒索团伙使用）</span>
+                        <a href="https://www.thefivenines.com/security/cisa-adds-check-point-zero-day-vulnerability-to-exploited-list">fivenines · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SECBORN — Check Point 热修（9 月 CVE-2026-93616 与 CVE-2026-85102 两条前情、检测建议：绕过 Clish 包装层的 <code>system()</code> 调用）</span>
+                        <a href="https://secborn.com/check-point-patches-zero-day-root-escalation-flaw-exploited-against-customers">secborn · checkpoint</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — N-central 二十一台（厂商 11-13 改口原话、jup.sh 完整命令、Intune 与 Legacy API 处置、Agent 与 Probe 必须两边都升）</span>
+                        <a href="https://thehackernews.com/2026/11/hackers-exploit-n-central-flaws-to.html">thn · ncentral</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review — N-central 零日（11-09 到 11-12 的完整前一幕、Agent2Shell 需要 appliance ID、受害国别分布、PoC 未走厂商披露流程）</span>
+                        <a href="https://dailysecurityreview.com/resources/n-able-n-central-zero-days-exploited-hours-after-poc-release">dsr · ncentral</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Random Chaos — Hotfix 2 上挖矿（setLDFileOwner 加符号链接的完整机制、08:30 与 09:16 与 12:50 UTC 三个时点、矿池 worker 名 <code>nc_&lt;IP&gt;</code> 反查受害面）</span>
+                        <a href="https://randomchaos.us/articles/attackers-mine-monero-on-n-central-hotfix-2-servers">randomchaos · ncentral</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shield53 — 4EverAble2Shell 分析（CVSS 9.8 与受影响版本、Apache Axis 作为 EOL Java 组件的性质、RMM 应为 tier-0 的论证）</span>
+                        <a href="https://news.shield53.com/4everable2shell-critical-n-central-rce-chain-cve-2026-90436-actively-exploited-for-crypto-mining">shield53 · 4everable2shell</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PostgreSQL 官方安全页 — CVE-2026-6460 与 CVE-2026-120144（两条描述的原文、向量、受影响与修复版本矩阵；<strong>页面不写漏洞年龄</strong>，"22 年"是媒体口径）</span>
+                        <a href="https://www.postgresql.org/support/security/">postgresql · security</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PostgreSQL — CVE-2026-120144 单独条目（仅 18.x 受影响、复合类型变更时缓存填充过程中失效不完整、CVSS 3.0 8.8、组件 core server）</span>
+                        <a href="https://www.postgresql.org/support/security/CVE-2026-120144">postgresql · 120144</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">PostgreSQL — 18.7 / 17.12 / 16.16 / 15.20 / 14.25 与 19 RC 2 发布公告（52 条、14 分支 11-12 停止支持、建议升级路径）</span>
+                        <a href="https://www.postgresql.org/about/news/postgresql-187-1712-1616-1520-1425-and-19-rc-2-released-3442/">postgresql · release</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">RedSide Security — PostgreSQL 52 条（"22 年"媒体口径的出处、C 扩展必须重编的原因、<code>PR:L</code> 在真实环境里的实际含义）</span>
+                        <a href="https://blog.redsidesecurity.com/post/postgresql-patches-52-flaws-including-22-year-old-bug-allowing-authenticated-rce">redside · postgresql</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">香港 Linux 用家协会 — 中文侧核对（无单 CVE 热修、扩展必须在同一维护窗口重编、CREATEDB 权限审计、托管服务的责任边界）</span>
+                        <a href="https://www.linux.org.hk/archive/20261113-9619-postgresql-urges-immediate-upgrades-afte.html">linux.org.hk · postgresql</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SentinelOne — ARTEX 分析与完整 IOC（2,250 个租户、护栏只在 Opus 5.5 触发后改换模型、10 个实例中 3 个用美国厂商模型、8 月 1 日为回溯起点）</span>
+                        <a href="https://www.nsi-ca.com/network-security/artex-unmasked-the-rise-of-ai-powered-artex-in-cybercrime-espionage">sentinelone · artex</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cisco Talos — ARTEX and beyond（五个行为体逐条对照、VAPOR PANDA 200+ 与 14 国与 9 家确认、3 小时到特权访问、Storm-3358 与 Storm-0940 的分工）</span>
+                        <a href="https://wpnews.pro/news/artex-and-beyond-ai-enabled-penetration-testing-platforms">talos · artex</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Malware Must Die — ARTEX 检测签包（2,557 台与 1,465 台的两种口径来源、FBI FLASH-20261113-001、约 45 个同类智能体框架）</span>
+                        <a href="https://blog.malwaremustdie.org/2026">mmd · artex</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">美国司法部 — FaceStealer 公告（4 亿美元与 18 个月、八个别名、作案手法原文、目标已扩到开源供应链）</span>
+                        <a href="https://www.justice.gov/usao-cdca/pr/justice-department-announces-actions-disrupt-north-koreas-massive-theft-cryptocurrency">doj · facestealer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">洛杉矶时报 — FBI 行动报道（900 多段摄像头录像、冻结 270 万美元与查封 12 亿美元的原始表述、TraderTraitor 与 Binance 的 60 亿美元是独立事件）</span>
+                        <a href="https://www.latimes.com/california/story/2026-11-13/fbi-disrupts-crypto-theft-scheme-by-north-korean-hacking-group-billions-stolen-so-far">latimes · facestealer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global — FaceStealer 时间线（GhostCall 2025-10、Arctic Wolf 2026-04 的 400+ 受害者与 20+ 国、JUMPSEC 2026-07 的钓鱼套件、两个仿冒域名）</span>
+                        <a href="https://www.enigma-global.com/blog/facestealer-north-korea-deepfake-video-call-crypto-theft">enigma · facestealer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">RedEye — FaceStealer 拆解（Calendly 约时间、ClickFix 式诱导、账号劫持覆盖 Telegram 与 Slack 与 LinkedIn 与 Discord、自我复制机制）</span>
+                        <a href="https://threat-intelligence.redeyesecurity.com/blog/facestealer-north-korea-deepfake-video-calls-400-million-2026">redeye · facestealer</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatsEye — Citrix 28 条解读（120868 无前置条件、10 月两个在野零日前情、研究者致谢、用配置里 <code>add vpn vserver</code> 一类条目反查受影响面）</span>
+                        <a href="https://threatseye.io/blog/citrix-ships-28-netscaler-fixes-and-one-critical-bug-needs-no-configuration-at-a">threatseye · citrix</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatAft — CTX697305 版本矩阵（公告写 73.57 实际发布 73.58、12.1 与 13.0 的 EOS、无 PoC 无 KEV 的时间点、10 月打过 73.49 与 64.32 的重新暴露）</span>
+                        <a href="https://threataft.com/articles/citrix-netscaler-ctx697305-28-cves-november-2026">threataft · citrix</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ctipilot — CTX697305 与 CTX697320（120869 的 9.4 与 9.3 两个分数口径、Console 修复构建 14.1-74.34、厂商只写到 DoS 不写 RCE）</span>
+                        <a href="https://ctipilot.ch/entries/2026-11-13/citrix-netscaler-adc-gateway-ctx697305-28-memory-flaws">ctipilot · citrix</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ITSEC Asia — Citrix 28 条（CERT-EU 2026-020、确认无在野与无公开 PoC 的表述、升级会中断现有 ICA 会话）</span>
+                        <a href="https://itsec.asia/blog/citrix-netscaler-28-memory-flaws-put-exposure-management-to-the-test">itsec · citrix</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">defend.network — 11-14 简报（Trezor 三台与 48 位客户、CryptoBilis 购买窗口 8-20 至 9-23、植入物位置与蜂窝回传与重试机制）</span>
+                        <a href="https://defend.network/briefings/check-point-vmware-ransomware-north-korea-crypto-2026-11-14.html">defend · 1114</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">critical.is — 11-14 每日简报（80 个新 critical 的统计口径与 6 条当日建议、MajorDoMo 27175 与 BuildPiper 127080 与 Vvveb 126380 与 OpenEMR 126473 的完整描述与 EPSS）</span>
+                        <a href="https://critical.is/">critical.is</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Cyberfeed — 11-14 摘要（Tactical RMM 129165 与 Django SECRET_KEY、Qubole 跨账号 AssumeRole 与 TruffleHog、Trezor 固件缓解已发布；该摘要把 270 万美元写成 27 亿美元，本期已纠正）</span>
+                        <a href="https://cloud.thecyberfeed.com/daily-summary/2026-11-14">cyberfeed · 1114</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecBrief — 11-14（六条主线的第二来源交叉核对、2,250 租户与 200+ 组织 14 国、SCKit 一百多台伪装会话、UnrealIRCd 进 KEV）</span>
+                        <a href="https://www.cybersecbrief.com/news/cybersec/cybersec-2026-11-14">csb · 1114</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global — 11-14 摘要（一百多台 ScreenConnect 上以交易所名字伪装的会话、Barracuda 补丁后即被利用、PostgreSQL 与 Citrix 的当日定位）</span>
+                        <a href="https://www.enigma-global.com/blog/daily-digest-2026-11-14">enigma · 1114</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">网易 — 开源 AI 渗透工具与云密钥（中文侧核对：1,465 台暴露控制台、300+ 证书捞取其中 3 份可用、45 个同类框架的五类划分）</span>
+                        <a href="https://www.163.com/dy/article/LBGAI66T05561FZP_pdya11y.html">163 · artex</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分、受影响与修复版本以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注两边口径或直接指出差异：CVE-2026-123039 在 CVSS 3.1 是 7.8、在 4.0 向量里 AT:P，两者含义不同；Check Point 的受害客户数厂商原文是 "a couple of dozen customers"；PostgreSQL 的"22 年"是媒体口径，官方安全页不写漏洞年龄；Citrix CVE-2026-120869 公告记 9.4、ENISA 记 9.3，14.1 分支公告写第一修复构建 73.57 而实际挂出下载的是 73.58；FaceStealer 相关金额中"冻结 270 万美元"与"查封 12 亿美元"是两个不同动作，有摘要把前者写成 27 亿美元；ARTEX 的托管实例数 Check Point 记 2,557、Censys 记 1,465，统计时点不同；N-central 的 "no signs of compromise" 是 11-12 的表述，11-13 已改为"发现更多入侵指标"。ARTEX 一章的行为体归属一律照各报告方的原始评估转述并标明是"评估"而非"确认"。Trezor 植入物与硬编码凭据类细节仅用于自查与识别，不要用于未授权环境。涉华涉台归因类内容不予收录。
+                <br>
+                每日精选 · 值得关注 | 2026年11月14日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

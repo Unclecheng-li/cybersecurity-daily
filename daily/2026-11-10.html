@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月10日（第213期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+        <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月10日 星期二</span>
+            <span class="edition-number">第 213 期 | 总第 213 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>默认配置本身就是漏洞的入口 · 一个加号后面接的是系统命令 · 后门做成了产品功能的一部分 · 不知道哪个扩展出事就先全关 · 修好了但没进任何一个正式版 · 供应商先说没有泄露三天后改口
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">谁定的分数，谁写的版本号</h2>
+                <p class="sub-headline">SAP 在补丁日前一分钟落库 40 条 CVE，四个满分全在底座上，其中一条不是写错的代码，是装完就有的默认配置。意大利网络安全局一次交了 20 条，一条"未文档化的后门、可绕过认证创建特权账户"评了 6.1 中危，因为向量标了本地。VulDB 给一台家用路由打了 10.0，而把固件拆开的人贴出的向量差四个指标。Tasmota 的修复提交在开发分支上，没有一个已发布固件带着它；rConfig 记录止于 8.2.19，公告叫装 8.2.20；ARARA 先说没泄露，三天后改口；LNbits 连是哪个扩展出事都没公开，就让所有人立刻关服务器。六个数字，六个出处，没有一个出处在你自己那台机器上。</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">四个满分</span>
+                    <h3 class="article-title">四十条记录一分钟落库，四个 10.0 全在底座上</h3>
+                    <div class="article-meta">
+                        <span>11-10 01:17 UTC 单分钟提交 40 条 · 9 严重 / 17 高 / 13 中 / 1 低 · 另一口径 38 条、34 份说明</span>
+                        <span class="cvss-score">四条 10.0 同向量 AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H · 均不在 KEV · 厂商未报在野</span>
+                    </div>
+                    <div class="article-body">
+                        <p>2026 年 11 月 10 日 01:17 UTC——美国中部时间十一月九日晚上七点十七分——<strong>SAP 的 CVE 编号机构在同一分钟里提交了 40 条 CVE 记录</strong>，赶在周二的安全补丁日之前。按 NVD 查询的分布是 9 条严重、17 条高危、13 条中危、1 条低危。中文侧的口径是 38 条新记录、34 份 SAP 安全说明、9 严重 / 15 高 / 13 中 / 1 低（合 38），差的两条大概率是同一批里的重复计数或后续补录，两个数都记在这里。</p>
+                        <p>真正值得注意的是那四个 10.0 的<strong>位置</strong>。没有一条在 ERP 模块、CRM 前端或者报表工具里，四条全在底座：<strong>CVE-2026-89103</strong> 在 SAP Gateway（CWE-863，note 3798345）、<strong>CVE-2026-76964</strong> 在 NetWeaver AS ABAP 的 ICM（CWE-1287，note 3778530）、<strong>CVE-2026-89126</strong> 在 Web Dispatcher（CWE-122 堆溢出，note 3778556）、<strong>CVE-2026-120017</strong> 在 NetWeaver AS ABAP / ABAP Platform 的 SAML2 服务提供方（CWE-347，note 3849308）。四个共用同一个向量，可利用率子分 3.9，影响子分 6.0，全部是 SAP 自己给的分数——它也是自己产品的 CNA。</p>
+                        <p><strong>89103 要读两遍，因为它不是编码失误。</strong>SAP 自己的描述是产品"以高权限激活默认访问控制列表"，导致外部未认证攻击者被归类为内部应用服务器。换句话说：<strong>有漏洞的状态就是安装完成后的状态</strong>。不需要管理员误配，不需要打开某个可选功能，装完就是这样。受影响内核横跨 KRNL64NUC 7.22、7.22EXT，KRNL64UC 7.22 / 7.53 / 8.04，KERNEL 7.22、7.54、7.77、7.93、9.16、9.20、9.21。</p>
+                        <p><strong>SAML2 那条的现实影响面可能更大。</strong>受影响版本是 SAP_BASIS 702、731、740，以及 750 到 758 的每一个版本，加 816、920、921、922。断言验不严意味着：只要知道一个用户名（<code>DDIC</code>、某个业务管理员），就能自己造一张"认证通过"的票进去。而 ABAP 系统的用户枚举成本极低，这条更像是"知道账号名就等于拿到账号"。</p>
+                        <p>其余五条严重级：<strong>109795</strong>（9.9，CWE-94，S4CRM 远程启用功能，低权限即可代码注入）、<strong>109803</strong>（9.9，CWE-94，知识管理 XML Forms 的 XSL 转换选择不受限）、<strong>76965</strong>（9.9，CWE-749，note 3792735，缺授权检查一路走到操作系统命令执行）、<strong>89119</strong>（9.6，CWE-352，Web Dispatcher 与 ICM 的 CSRF，九条严重里唯一需要用户交互的）、<strong>109798</strong>（9.1，BusinessObjects Web Intelligence 的 XXE）。</p>
+                        <p><strong>尚未确认在野。</strong>这 40 条一条都不在 CISA KEV 里，SAP 也没报告主动攻击。但 KEV 里已经躺着 14 条更早的 SAP 漏洞——这个数字说明 SAP 底座是被人翻过的，不是没人看的角落。补丁窗口排不开时，先做两件不依赖补丁的事：把 Gateway、Web Dispatcher、ICM 的端口收到内网，然后去 ABAP 里核一遍 SAML2 配置有没有真的在验签。89103 尤其要查：默认高权限 ACL 是装完就有的，老系统上如果没人动过这个配置，它一直开着。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">补丁日前一分钟提交 40 条</span>
+                        <span class="flow-step critical">Gateway 默认 ACL 出厂即高权限</span>
+                        <span class="flow-step">外部攻击者被判为内部应用服务器</span>
+                        <span class="flow-step critical">SAML2 断言验不严 冒充特权账户</span>
+                        <span class="flow-step">ICM 与 Web Dispatcher 内存破坏</span>
+                        <span class="flow-step critical">四个 10.0 全在底座不在业务模块</span>
+                        <span class="flow-step">先收端口 再核 SAML2 配置</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">已在野</span>
+                    <h3 class="article-title">KEV 一次加四条，一个加号后面接的是系统命令</h3>
+                    <div class="article-meta">
+                        <span>11-09 加四条 · catalogVersion 2026.11.09 共 1773 条 · 联邦整改截止 11-12</span>
+                        <span class="cvss-score">FreeSWITCH 116779 · CVSS 3.1 9.8 · CWE-77/78/749 · 1.11.3 修 · 从公开到死线 7 天</span>
+                    </div>
+                    <div class="article-body">
+                        <p>十一月九日，CISA 往 KEV 里加了四条，全部给同一个截止日：<strong>2026 年 11 月 12 日</strong>。联邦民事机构只有三天。四条是 GPUStack 102895、OpenSSH 123158、<strong>SignalWire FreeSWITCH 116779</strong>、<strong>IBM Aspera Faspex 123218</strong>。前两条我们在十一月六日已经写过本体机制（GPUStack 的 <code>force_auth_localhost</code> 默认 false 加 <code>client_ip_getter</code> 收 <code>X-GPUStack-Real-IP</code>；OpenSSH 那个 musl <code>crypt()</code> 失败返回星号、刚好等于 shadow 字段里的星号）。CISA 是在它们公开四天后才收进 KEV 的——这不是补录的错，是两套时钟的正常差速：厂商的在野证据比 KEV 的收录早，KEV 的收录比很多人的补丁早。真正新的只有后两条。</p>
+                        <p>FreeSWITCH 的缺陷在 <code>sofia_presence_handle_sip_i_message()</code>。它支持在 SIP 上跑聊天，判断一条消息投给哪个聊天后端的方式是<strong>把 To 头里的 user 部分按加号切开，左半边当协议名</strong>。于是往 <code>api+随便什么@你的交换机</code> 发一条 MESSAGE：<code>api</code> 这半边选中了 <code>mod_dptools</code> 注册的聊天接口，而这个接口把载荷原样递给 <code>switch_api_execute()</code>。那是命令分发器——<code>status</code>、<code>reloadxml</code>、<code>sofia profile</code>、<code>originate</code> 都从这里走，<code>system</code> 也从这里走，而 <code>system</code> 背后是 <code>popen</code>。链条短的原因是：<strong>聊天面和控制面共用了一个解析器。</strong></p>
+                        <p>默认配置决定分布面。入站聊天在出厂的 internal 和 external 两个 SIP profile 上都是<strong>开着</strong>的，而收紧 <code>apply-inbound-acl</code> <strong>并不能</strong>覆盖 SIP MESSAGE。认证这关也没想象中牢：<code>auth-messages</code> 从 1.10.7 起默认开启，所以"该 profile 上任意一个注册账号"就够了；更糟的是出厂 <code>conf/vanilla</code> 目录里带着<strong>没有密码、没有 a1-hash</strong> 的用户，除非显式把 <code>allow-empty-password</code> 设为 false。一个照着入门镜像装起来、把 5060 开到 SBC 上、忘了删 1000 到 1019 号分机的呼叫中心，正好就是公告里说的"任意一个已认证账号即可"。</p>
+                        <p>时间线本身也是样本：修复提交 <strong>8 月 26 日</strong>进 master，标题就写着加开关；<strong>8 月 28 日</strong> 1.11.3 发布，参数默认关闭；<strong>10 月 28 日</strong> GHSA 才公开，距修复 <strong>63 天</strong>；11 月 5 日 CVE 公开；11 月 9 日进 KEV。这 63 天里，任何看 master 的人读一遍提交标题、读一眼 vanilla profile 里的注释，就能复现打补丁前的原语。公告那句"已在野观察到利用"和这个时间差放在一起看，更像是在描述一件已经发生的事。</p>
+                        <p><strong>Aspera Faspex 123218</strong> 是另一回事：CWE-863，影响 5.0.0 到 5.0.19，IBM 十一月七日修（5.0.19 PL1，容器部署要确认 <code>faspex-core</code> 报 <code>5.0.19 (1ce4b13)</code>），<strong>没有给任何变通方案</strong>。公告措辞是"已认证用户构造特定消息可跳过授权检查、拿到完整管理员权限"，而向量写的是 PR:N。两者不矛盾：PR:N 描述的是"一旦持有任意一个有效账号，不需要额外角色"。真正的门槛是<strong>一张能用的登录</strong>，而文件传输门户的登录恰恰是钓鱼和撞库最容易拿到的那个——它本来就是给外部合作方用的。这个产品有过前科：2022 年 12 月修的 CVE-2022-47986（未认证 YAML 反序列化 RCE，9.8），几周内就被 IceFire 和 Buhti 拿去打对外的 Faspex。</p>
+                        <p><strong>该怎么做</strong>：FreeSWITCH 升 1.11.3 后重启；升不动就先 reload profile（会关掉该 profile 全部入站 MESSAGE 聊天），再删掉空密码目录用户、设 <code>allow-empty-password=false</code>，<code>disable_system_api_commands=true</code> 能摘掉最大的坑但不算完整修复。被暴露过的机器按失陷处理：翻 MESSAGE 与 403 日志、查 autoload 里多出来的模块、查新用户与 cron、查守护进程发起的呼出。Faspex 用 <code>docker ps</code> 确认镜像版本，补不上就只能把服务从公网拿下来——对一台合作方要从外部访问的传输服务器，这是业务决定。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">对端发 SIP MESSAGE</span>
+                        <span class="flow-step critical">To 头按加号切开 左半边当协议名</span>
+                        <span class="flow-step">api 选中 mod_dptools 聊天接口</span>
+                        <span class="flow-step critical">载荷直达 switch_api_execute()</span>
+                        <span class="flow-step">system API 背后是 popen</span>
+                        <span class="flow-step critical">以守护进程身份执行系统命令</span>
+                        <span class="flow-step">升 1.11.3 或先 reload profile</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-medium">口径断裂</span>
+                    <h3 class="article-title">一个未文档化后门，评了 6.1 中危</h3>
+                    <div class="article-meta">
+                        <span>11-09 12:16 至 13:17 UTC 同一 CNA 交 20 条 · 最高 9.2 · 全部无 CPE · 全部 CNA 自评</span>
+                        <span class="cvss-score">CVE-2026-112169 · 6.1 MEDIUM · CWE-288 + CWE-912 · 向量 AV:L 压住结果</span>
+                    </div>
+                    <div class="article-body">
+                        <p>2026 年 11 月 9 日 12:16 到 13:17 UTC 之间，20 条 CVE 落到 NVD，全部来自同一个 CNA，引用的只有 <code>acn.gov.it</code> 上的页面（意大利国家网络安全局，CSIRT Italia 的上级）加一份 CompuGroup Medical 的新闻稿。受影响产品是 CompuGroup 的 XDent、XMedical、Infantia、Profim、Venere、Phronesis、Wingesfar，以及 GALENO SISTEMI 的 MAGISTRA 3.12。</p>
+                        <p><strong>这批里最该坐一会儿的是 CVE-2026-112169。</strong>描述第一句是："Magistra 软件包含未文档化的后门功能，允许绕过认证并在不验证凭据的情况下创建特权用户账户。"弱点标了 CWE-288（替代路径绕过认证）和 CWE-912（隐藏功能）。评分：<strong>6.1 MEDIUM</strong>。向量解释了为什么：<code>CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U</code>——机密性、完整性、可用性影响<strong>全是 High</strong>，不需要任何权限，但 <strong>AV:L（本地攻击向量）</strong>把结果压在中段。</p>
+                        <p>这个分不算评错。CVSS 问的是"这个洞有多难够到"，软件跑在诊所自己的 Windows 机器上，本地向量确实降低可达性。问题在于 <strong>CVSS 不问"厂商是不是自己留了一扇门"</strong>。CWE-912 这个分类存在的意义就是描述隐藏功能，记录也确实用了它。但一个绕认证的、能创建特权账户的内部入口落到 6.1，在周一的分诊队列里就会排在一堆中危 Web 漏洞后面。更讽刺的是同款产品还有三条：6.0、6.3、4.4——<strong>后门不是它自己软件里分最高的那条</strong>，6.3 的 112170（升级文件不校验完整性）比它高。</p>
+                        <p>版本数据这层更麻烦。<strong>118462</strong>（9.2，CWE-494，本批最高）：更新组件下载并执行代码而不做真实性验证，受影响 <code>cgm.files.delivery</code> 到 1.3.0、<code>cgm.liveupdates</code> 到 2.12.0——<strong>漏洞就在更新通道本身</strong>，用一条"会执行未验证代码"的通道去投递它自己的修复。<strong>118458</strong>（8.1，CWE-798）：生产环境里发布出去的测试用 DAO、明文比对、固定管理员账户，受影响包 <code>cgm.it.ais.common</code>，上界写 <code>lessThanOrEqual 5.1.15.1.1</code>、<code>versionType: semver</code>。<strong>那不是语义化版本号</strong>，五个点分段而 semver 只有三段。而同一个 CNA 在这条之前 <strong>19 秒</strong>提交的 118459，同包同产品，上界写 <strong>5.1.1</strong>。同一分钟两条记录给了两个不一样的答案，其中一个还不是数字。</p>
+                        <p>Wingesfar 四条用了两套不兼容的版本方案：118790（7.2）上界 <code>lessThan 2026.07a</code>，118791（7.2）上界 <code>lessThan 10.2.1</code>，118792（6.1）与 118798（4.4）又回到 <code>2026.07a</code>。一个产品，一个日历版本号和一个语义版本号当两条边界，没有任何东西关联两者。更有五条根本没有范围：118450 只写 Venere <code>version 8.33.2</code> 没有 <code>lessThan</code>；四条 MAGISTRA 只写 <code>version 3.12</code>、<code>versionType: custom</code>——<strong>3.11 受不受影响，记录不说</strong>。20 条里没有一条带 NVD 自评分数，核过的记录<strong>都没有 CPE</strong>，读完整的几条还停在 <code>vulnStatus: Received</code>。<strong>没有一个扫描器能靠 CPE 匹配到这 20 条。</strong></p>
+                        <p>链条断在哪里很清楚：厂商新闻稿说"技术细节、CVE 标识符和受影响版本见公告"，公告在 CSIRT Italia 网页上（意英两条路径对自动抓取都返回客户端错误），CNA 五天后才把结构化记录交上去。<strong>每一环单独看都站得住，整条链走完没交出一个版本号。</strong>CompuGroup 的新闻稿落款 11 月 4 日，说修了认证系统、密钥分发、更新投递和日志留存，补丁自动下发，未发现被利用证据——<strong>通篇不提产品名、不提版本号、不提 CVE</strong>。自动下发关掉了那些代码路径，但它没法告诉管理员硬编码凭据在这之前有没有被用过。</p>
+                        <p><strong>该怎么做</strong>：确认更新真的落地了，别信"应该已自动装了"；118462 是更新通道里的 9.2，一条会执行未验证代码的通道不是好的自我修复工具。Phronesis/Venere 别自己去解 <code>5.1.15.1.1</code>，按兄弟记录支持的读法把 5.1.1 及以下全当受影响。MAGISTRA 3.12 在 GALENO 明说之前按更早版本也受影响处理，并且<strong>不管那条 6.1，先把现存特权账户审一遍</strong>。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">厂商新闻稿 不写产品与版本</span>
+                        <span class="flow-step critical">CNA 五天后再交结构化记录</span>
+                        <span class="flow-step">版本串不是 semver 扫描器无法比对</span>
+                        <span class="flow-step critical">未文档化后门 因本地向量落 6.1</span>
+                        <span class="flow-step">同款另有 6.3 比后门更高</span>
+                        <span class="flow-step critical">20 条全无 CPE 扫不到</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">全量关停</span>
+                    <h3 class="article-title">让所有人立刻关服务器，却还没说是哪个扩展</h3>
+                    <div class="article-meta">
+                        <span>11-08 12:33 UTC 首警告 · 约 80 分钟后全量关停 · 攻击 09:22 已开始</span>
+                        <span class="cvss-score">单一运营者损失 2,285,545 sats（≈0.023 BTC）· 截至 11-09 09:00 UTC 无修复版本</span>
+                    </div>
+                    <div class="article-body">
+                        <p>LNbits 是比特币闪电网络上用得最广的开源自托管钱包/账户系统之一，个人和小机构拿它开自托管钱包、给多个用户分账户、在上面写扩展。<strong>它是自托管的，所以项目方没有总开关。</strong></p>
+                        <p>11 月 8 日 <strong>12:33 UTC</strong>，项目方发第一条警告：跑 <strong>Paywall</strong> 扩展的运营者立刻关掉这个功能，正在排查一个可能的缺陷。大约 <strong>80 分钟后</strong>，警告升级成对所有人："<strong>所有 LNbits 用户立刻停掉你们的 LNbits 服务器。</strong>在一波攻击之后，我们有一批安全补丁要推。"托管服务 <code>my.lnbits.com</code> 一并停掉。</p>
+                        <p>最清楚的一笔损失来自荷兰运营者 <strong>Kevin Ravensberg</strong>，他的实例上跑着 Telegram 打赏机器人 Bittipbot：攻击者在他的实例上<strong>新建账号</strong>，在 <strong>11 月 8 日 09:22 到 14:00 UTC</strong> 之间提走了 <strong>2,285,545 sats</strong>（约 0.0229 BTC，按当时约 75,800 美元算约 1,730 美元）。注意这个时间：<strong>攻击 09:22 开始，第一条警告 12:33，已经晚了三个多小时。</strong>他说会个人赔付受影响用户，但资金要等补丁推出来才能动。</p>
+                        <p>截至 11 月 9 日项目方最后一次更新，<strong>没有发布任何修复版本</strong>；GitHub releases 页最新的还是 <strong>v1.6.2</strong>，一个 9 月 18 日的 PostgreSQL 备份热修。核心贡献者 Ben Arc 估计补丁在 24 到 48 小时内合并可用——那是估计，不是发布通知，也不是"可以安全重启"的许可。他确认团队已查清"用的是哪个扩展的漏洞"，但<strong>至今没公开是哪一个</strong>，也没说是不是 Paywall。总损失、受害实例数量、受影响清单，一概未公布；项目方也<strong>没有给出任何"自查是否被打过"的方法</strong>。</p>
+                        <p>另一头：2026 年早些时候 LNbits 做过外部审计（V12），发现一个认证缓存绕过和一个 PayPal 集成缺陷，都在 <strong>1.6.0</strong>（9 月）修了。目前没有证据把那次审计的问题和 11 月 8 日的攻击连起来，但时间上离得很近。</p>
+                        <p><strong>该怎么做</strong>：现在关掉，等官方修复版本再开。<strong>别把"关掉一个扩展"当成完整响应</strong>——项目方自己在一个半小时内就把口径从"关 Paywall"扩到"全关"，这个扩口径的动作本身就是答案。恢复前：留证据（日志、数据库快照、配置），查新建账号与异常提现，轮换 API key 和管理凭据，然后按"这台机器可能被打过"做隔离，而不是按"网页能打开所以没事"。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">08日 09点22分 新建账号开始提款</span>
+                        <span class="flow-step critical">项目方尚不知情 已过三小时</span>
+                        <span class="flow-step">12点33分 只让关 Paywall</span>
+                        <span class="flow-step critical">80 分钟后 升级为全量关停</span>
+                        <span class="flow-step">14点00分 提款结束</span>
+                        <span class="flow-step critical">09日 仍无修复版本</span>
+                        <span class="flow-step">扩展名至今未公开</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">无正式版</span>
+                    <h3 class="article-title">修复提交在开发分支上，正式固件里一条都没有</h3>
+                    <div class="article-meta">
+                        <span>11-06 修复进开发分支 · 发布分支该文件自六月未动 · 16.0.0 为最新正式发布</span>
+                        <span class="cvss-score">CVE-2026-119756 · CVSS 3.1 9.8 / 4.0 9.3 并存 · CWE-805 · UDP 4447 · 无 CPE</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Tasmota 是 ESP8266 / ESP32 上装机量最大的开源固件之一，智能开关、插座、传感器、电表大量跑在家庭和小商户的局域网里。<strong>CVE-2026-119756</strong> 出在 <code>SendReceiveDeviceGroupMessage()</code>——Device Groups 功能收消息的那个函数。Device Groups 用 <strong>UDP 4447</strong>（组播 239.255.250.250）在设备之间同步状态：构造的消息让 <code>log_remaining</code> 计数器<strong>变成负数</strong>，随后的写入超出那个固定的 <strong>512 字节</strong>缓冲区，形成堆越界写。ESP8266 和 ESP32 都没有 ASLR，也没有堆 cookie，所以"崩机"和"原生代码执行"之间的差别只取决于攻击者愿意花多少功夫。</p>
+                        <p>问题在修复的位置：<strong>提交 e97e1e4 于 11 月 6 日进了开发分支，发布分支（master）上这个文件自六月以来没有被动过。</strong>换句话说：<strong>16.0.0 是当前最新的正式发布，而没有任何一个已发布固件包含这个修复。</strong>不要等 16.0.1——它不存在。</p>
+                        <p>这条还带两个"扫不到"的属性：<strong>没有 CPE</strong>，基于 CPE 的匹配完全不会命中；按版本号匹配会把 16.0.0 标成受影响、但找不到可比的修复版本，于是一直挂在扫描结果里，直到真有一个发布出来。同一份记录挂了两个分数：CVSS 3.1 <strong>9.8</strong> 与 CVSS 4.0 <strong>9.3</strong>，都是 VulnCheck 给的，这里不替它选。</p>
+                        <p>同一天还有一条同型的：<strong>rConfig CVE-2026-124079</strong>（9.8，CWE-502）。未认证攻击者把构造好的序列化任务推进 <strong>Redis 支撑的 Laravel Horizon 队列</strong>（受影响部署里这个队列不带认证），Laravel 的 <code>CallQueuedHandler</code> 反序列化时不限制类，于是可以实例化产品里现成的 <code>App\Jobs\TaskDownloadRun</code> 去调用自己控制的 Artisan 命令。产品自带 <code>laravel/tinker</code>，等于任意 PHP 加任意系统命令，以队列工作进程身份执行；能往 <code>storage/app/public</code> 写持久化 webshell，也能读出数据库口令、存着的设备凭据和 API token。Redis 够不到时，已认证攻击者还能通过"把设备目标指向服务器自己的回环地址"投递同样载荷。这里的问题只是版本号：<strong>记录里的范围止于 8.2.19，而官方公告页叫 Core 用户装 8.2.20。装高的那个。</strong></p>
+                        <p><strong>该怎么做</strong>：Tasmota 唯一今天就能做、且不涉及未发布固件的改动，是<strong>把 Device Groups 关掉</strong>。在每台设备上跑 <code>SetOption85</code> 看返回值，官方排障文档说结果应该是 ON；返回 off 说明那台设备上没有可达路径。开着又不需要的，<code>SetOption85 0</code> 关掉——那会摘掉漏洞赖以到达的监听器。需要保留的，就把 UDP 4447 和组播 239.255.250.250 当控制面：设备放隔离 VLAN，和普通用户网、访客网之间不留通路，段边界上拦入站 UDP 4447。<strong>这是替代补丁的缓解，不是补丁。</strong></p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">局域网发 Device Groups 消息</span>
+                        <span class="flow-step critical">log_remaining 计数变成负数</span>
+                        <span class="flow-step">写入超出 512 字节固定缓冲</span>
+                        <span class="flow-step critical">无 ASLR 无堆 cookie 可执行代码</span>
+                        <span class="flow-step">修复只在开发分支</span>
+                        <span class="flow-step critical">正式固件一条都没带</span>
+                        <span class="flow-step">SetOption85 0 或隔离 4447</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-medium">先否认</span>
+                    <h3 class="article-title">二百一十九万条邮箱，供应商先说没事三天后改口</h3>
+                    <div class="article-meta">
+                        <span>11-09 世嘉公告 · 2,196,044 条邮箱地址 · 92,273 条附未确认信息</span>
+                        <span class="cvss-score">涉事发送期 2026-07-02 至 10-28 · ARARA 客户约 380 家 / 邮箱约 7,700 万个 · 不含姓名与卡号</span>
+                    </div>
+                    <div class="article-body">
+                        <p>世嘉（SEGA）在 2026 年 11 月 9 日发公告：受第三方新闻邮件分发服务商 <strong>ARARA</strong> 的"ARARA Message"服务被非法访问影响，<strong>2,196,044 条</strong>邮箱地址记录外泄，其中 <strong>92,273 条</strong>还带着与邮件投递相关的附加信息——具体是什么，世嘉和 ARARA 还在确认。受影响的是世嘉及世嘉 FAVE 用 ARARA 发的部分新闻邮件，发送时间落在 <strong>2026 年 7 月 2 日到 10 月 28 日</strong>之间：东京电玩展 2026 的两封出展通知、CHUNITHM Mate 上线、SEGA Lucky Kuji Online 六封、ONGEKI Re:Fresh Act.2 与 maimai DX MAGiCAL 的更新通知。</p>
+                        <p>泄露数据<strong>不包含</strong>姓名、出生日期、性别、住址、电话号码、信用卡信息或登录密码。用 SEGA Account 注册的邮箱走另一套分发系统，不在本次范围内。截至公告时没有确认到滥用。世嘉已暂停通过 ARARA 发新闻邮件，并将与 ARARA 一起向日本个人信息保护委员会提交联合报告。</p>
+                        <p><strong>这条真正值得记的是那段三天的口径变化。</strong>10 月 29 日，世嘉请 ARARA 核查安全状况，答复是"未确认信息泄露"；11 月 1 日，ARARA 自己公开披露遭未授权访问；11 月 2 日，ARARA 自述受影响企业客户近 380 家、邮箱合计约 7,700 万个；<strong>11 月 3 日，才以邮件告知世嘉"投递用地址已外泄"</strong>；11 月 5 日到 8 日提供正式报告；11 月 9 日世嘉公告。<strong>从"没事"到"有事"隔了五天，从"有事"到世嘉能对外公告又隔了六天。</strong>这不是恶意隐瞒，是供应链泄露里最常见的节奏：出事的是供应商，判断也是供应商做的，下游客户只能等。</p>
+                        <p>还有一层：ARARA 说入侵可能与网络服务器漏洞和系统环境问题有关，入侵方式和时间仍在调查。同期有报道称攻击者利用对 ARARA 服务的访问权限，在十月下旬发出<strong>超过 700 万封冒充信用卡公司的邮件</strong>——这批被拿到的邮件通道能力，先被用来做钓鱼，然后才被下游客户知道。同一批受影响方里还有 MOS Burger、松竹多厅影院、TKC、IIJmio 等。</p>
+                        <p><strong>要和另一件事分开看</strong>：世嘉 FAVE 的街机网络服务上周另遭未授权访问，ALL.Net、Aime、在线游戏和新 SEGA ID 注册至今暂停。世嘉明确说两起事件互不相关，初步调查显示街机事件未造成客户或合作伙伴数据外泄，支付信息因单独存储未受影响。两件放一起看的意义是：一家公司同一周里两个不同系统出事，公告里得分别说清哪条是哪条。</p>
+                        <p><strong>该怎么做</strong>：收到过世嘉相关新闻邮件的人，接下来的钓鱼邮件会拿"SEGA""SEGA FAVE""ARARA"当抬头，而且会引用你确实订阅过的内容。世嘉不会用邮件问密码或卡号。企业侧的教训更直接：<strong>供应商说"没确认泄露"不等于没泄露，它只等于"供应商此刻没确认"</strong>——合同里要写清通知时限和"发现即告知"义务，别把判断权整体外包给供应商。</p>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">10月29日 供应商答复未确认泄露</span>
+                        <span class="flow-step">11月1日 ARARA 公开披露遭入侵</span>
+                        <span class="flow-step">11月2日 自述约380家客户7700万邮箱</span>
+                        <span class="flow-step critical">11月3日 才告知投递地址已外泄</span>
+                        <span class="flow-step">11月5至8日 提供正式报告</span>
+                        <span class="flow-step critical">11月9日 世嘉公告219万条</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. 那个 10.0，给分的人和拆固件的人不是同一个</h4>
+                    <p>VulDB 在 11-10 01:17 UTC 提交 <strong>CVE-2026-125086</strong>（D-Link M60，固件 1.12.B01），描述指向 <code>/etc/emDaemon/mosquitto.conf</code> 的 <code>system</code> 函数里的硬编码凭据，CWE-259 + CWE-798，并写明"利用已向公众披露并可能被使用"。一条记录挂了三个分：<strong>CVSS 3.1 10.0</strong>（AV:N/AC:L/PR:N/UI:N/<strong>S:C</strong>/<strong>C:H/I:H/A:H</strong>）、<strong>CVSS 4.0 9.3</strong>、<strong>CVSS 2.0 10.0</strong>（NVD 给 v2 的 <code>baseSeverity</code> 标的是 <strong>HIGH</strong>，因为 v2 分档就到 HIGH）。记录的第一个引用是公开仓库 <code>XueDugu/dlink-m60-easymesh-mqtt-credential-evidence</code>，作者自己在 README 里贴的向量是 <code>CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L</code>——两个向量<strong>在八个基础指标里有四个不一致</strong>：找洞的人说相邻网络、范围不变、机密性低影响，CNA 说网络、范围变了、机密性高。仓库的技术主张（出厂 EasyMesh MQTT broker 用编译期写死的 <code>admin</code>/<code>admin</code>；<code>/usr/bin/commander</code> 开机从二进制常量重写配置与 passwd，机主改不掉也删不掉；自带 mosquitto 2.0.14 监听 <code>0.0.0.0:1883</code> 与 <code>[::]:1883</code>；订阅 <code>acs/</code> 主题的控制守护进程以 root 运行并能走到执行 <code>/tmp/acs.sh</code> 的 <code>system()</code>）均为单一来源、未经独立核实，仓库只有一个 commit。同批还有 <strong>CVE-2026-125079</strong>（DCS-6501LH 3.03.02，Media Service，同两个弱点类，5.3 中危）在 <strong>0.45 秒前</strong>提交——两条同弱点、同作者、同批次的记录之间差 <strong>4.7 分</strong>，差距几乎全在 scope 和影响三元组上，两条都没解释为什么。<strong>两条都没有修复版本</strong>，NVD 状态 <code>Deferred</code>，找不到 D-Link 对应公告。真正可操作的那句不依赖分数之争：broker 在所有接口上监听 1883 且凭据改不掉，去查 1883 是不是只在本段可达，不是就在边界拦掉。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. UnrealIRCd 8.6：任何用户都能注入服务器之间的命令</h4>
+                    <p><strong>CVE-2026-114713</strong>（CVSS 3.1 <strong>8.6</strong>，AV:N/AC:L/PR:N/UI:N/<strong>S:C</strong>/C:N/I:H/A:N），影响 <strong>6.0.0 到 6.2.7.1 之前</strong>。labeled-response 模块在把 IRCv3 的 <code>label</code> 消息标签回显进回复时<strong>不做转义</strong>，于是任何在"有两台以上服务器互联"的网络上的人，都能注入本应只在服务器之间传递的命令，并以<strong>服务器权限</strong>执行。注意这条的向量是 S:C 但 C:N——影响全在完整性上，也就是"能改"，不是"能读"。NVD 状态 <code>Deferred</code>，不在 KEV。有一个聚合类日报称它"已在野被滥用"，但没有任何一手来源（厂商公告、CISA、研究者）确认，此处按二手标注。跑 IRC 网络的升到 6.2.7.1。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. SuperTokens Core 9.9：改父级连接 URI 域名的权限检查不足</h4>
+                    <p><strong>CVE-2026-123800</strong>（CVSS 3.1 <strong>9.9</strong>，AV:N/AC:L/<strong>PR:L</strong>/UI:N/<strong>S:C</strong>/C:H/I:H/A:H），11-09 收录，<code>vulnStatus: Received</code>。<code>Multitenancy.checkPermissionsForCreateOrUpdate</code> 对"更新父级连接 URI 域名"这件事的授权检查不足。受影响版本从 6.0.0 起，直到 <strong>6.0.24、7.0.23、8.0.7、9.0.6、9.1.6、9.2.7、9.3.5、10.0.8、10.1.9、11.0.9、11.1.4、11.2.4、11.3.8、11.4.8、12.0.11、12.1.2、12.2.1、12.3.1</strong> 为止——每一条维护线各有一个修复点，这种列表本身就是"你很可能还在某条旧线上"的提示。PR:L 意味着需要低权限账号，但 S:C 加三项 H，低权限到跨租户接管只差一步。SuperTokens Core 是自托管的认证服务器，改父级 URI 域名在多租户场景下等于把某个租户的认证流量整体导向攻击者。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Redpanda Connect 9.8：管理 API 默认不开认证，4.39 到 4.110 全中</h4>
+                    <p><strong>CVE-2026-123270</strong>（CVSS 3.1 <strong>9.8</strong>，AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H），11-09 收录。<strong>4.39 到 4.110</strong> 版本在 streams 模式下把管理 HTTP API 开在 <code>0.0.0.0:4195</code>，<strong>认证默认关闭</strong>，stream 的增删改查路由上没有任何认证关卡。能连到 TCP/4195 的未认证攻击者可以直接 <code>POST</code> 一个 stream 配置进去——而 stream 配置里本来就有 processor 和 input/output 组件，这条路通向代码执行。默认值是"关"的产品，暴露面取决于谁把它开在了公网网卡上。版本区间跨了 70 多个小版本，说明修的时间点离发现的时间点很远。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. 两个 7.5 的双因子绕过，更新日志里没有"安全"两个字</h4>
+                    <p><strong>CVE-2026-118201</strong> 与 <strong>CVE-2026-118202</strong>，都是 CVSS 3.1 <strong>7.5</strong>（AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H），都在 <strong>3.4.1 之前</strong>。118201：Limit Login Attempts Reloaded 没有在<strong>每一条</strong>密码认证路由上强制双因子，知道密码的攻击者可以从另一个登录入口进去，不完成第二因子就拿到该用户会话。118202 更难看：它<strong>不确认第二因子那一步成功了就完成登录，并且把"构造这一步失败"当成成功</strong>——攻击者只要发一个能让该步骤报错的请求头，第二因子就被跳过。两个都在 3.4.1 修了，<strong>更新日志里没把它们称为安全修复</strong>；而紧接着的 3.4.2 在同一种更新日志里给一个 SSRF 标了"Security:"。这条的形状和十一月九日写过的 Contact Form 7 是同一种：<strong>修了，但没告诉你有事。</strong></p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 利用/发生程度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日事件：严重性 × 利用状态
+    x-axis "未利用或仅研究演示" --> "已在野或已发生"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "SAP四个满分": [0.30, 0.96]
+    "FreeSWITCH在野": [0.92, 0.94]
+    "Aspera在野": [0.88, 0.90]
+    "LNbits全量关停": [0.85, 0.82]
+    "意大利后门6.1": [0.18, 0.88]
+    "rConfig队列投毒": [0.25, 0.85]
+    "Tasmota无正式修复": [0.20, 0.72]
+    "DLink M60打分之争": [0.55, 0.68]
+    "世嘉两百二十万邮箱": [0.80, 0.40]
+    "UnrealIRCd注入": [0.65, 0.55]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">事件类型分布</div>
+                    <div class="mermaid">
+pie title 今日事件类型分布
+    "分数与版本口径不一致": 30
+    "默认配置即脆弱": 24
+    "修复不在发布分支": 18
+    "供应链判断权外移": 14
+    "无修复版本需关停": 8
+    "更新通道自身被攻破": 6
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年8月26日至11月12日
+    8月26日 : FreeSWITCH 修复提交进 master 开关默认关闭
+    8月28日 : FreeSWITCH 1.11.3 发布
+    10月28日 : FreeSWITCH GHSA 公告公开 距修复六十三天
+    10月29日 : ARARA 答复世嘉 未确认泄露
+    11月1日 : ARARA 公开披露遭未授权访问
+    11月3日 : ARARA 改口 告知投递地址已外泄
+    11月4日 : CompuGroup 新闻稿 不提产品与版本
+    11月5日 : FreeSWITCH CVE 公开
+    11月6日 : Tasmota 修复提交进开发分支
+    11月7日 : IBM 修 Faspex 出 5.0.19 PL1
+    11月8日 : LNbits 首次警告 约80分钟后全量关停
+    11月9日 : KEV 一次加四条 死线全指向12日
+    11月9日 : 世嘉公告 2196044 条邮箱记录
+    11月9日 : 意大利20条记录落库 后门评6.1
+    11月10日 : SAP 一分钟提交40条记录
+    11月12日 : KEV 四条整改截止
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-89103（SAP Gateway 以高权限激活默认 ACL，外部攻击者被判为内部应用服务器，CVSS 3.1 10.0，CWE-863，note 3798345）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-89103">nvd · 89103</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-120017（NetWeaver SAML2 服务提供方不充分验证断言，未认证可冒充特权账户，10.0，CWE-347，note 3849308）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120017">nvd · 120017</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Severity Daily — SAP 十一月补丁日：一分钟 40 条记录、四个 10.0、Note 号与受影响内核版本逐条清单（另标 40 是 CVE 记录数不是说明数）</span>
+                        <a href="https://severitydaily.com/sap-november-2026-patch-day-40-cve-records-nine-critical-four-10-0-cve-2026-89103-gateway-default-acl-cwe-863-cve-2026-76964-icm-cve-2026-89126-web-dispatcher-cve-2026-120017-saml2-notes-login-walled">severitydaily · sap</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">中文侧口径 — SAP 2026 年 11 月安全补丁日修复九个严重漏洞（38 条新记录 / 34 份说明 / 9 严重 15 高 13 中 1 低）</span>
+                        <a href="http://mp.weixin.qq.com/s?__biz=Mzk0NzQ0MjA1OA==&amp;mid=2247494487&amp;idx=1&amp;sn=ab179c00c2531e5e1bd9f895672c60e7">mp · sap</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV 目录（catalogVersion 2026.11.09，共 1773 条；11-09 新增四条，deadline 均为 2026-11-12）</span>
+                        <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">cisa · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-116779（FreeSWITCH 入站 SIP MESSAGE 按加号切 To、选中 api chat proto 直达 switch_api_execute，9.8，1.11.3 修）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-116779">nvd · 116779</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SignalWire — GHSA-mg63-h38w-8p9p（官方公告：enable-chat-api-proto 门控、默认关闭、403 与日志记录、已在野）</span>
+                        <a href="https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p">github · ghsa</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SignalWire — PR #3135 修复提交与 v1.11.3 发布（8-26 提交、8-28 发版）</span>
+                        <a href="https://github.com/signalwire/freeswitch/pull/3135">github · pr3135</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Zero Hunt — FreeSWITCH 一条 SIP 消息执行系统命令（含 fs_cli 版本检查、enable-chat 排查、空密码目录用户检测命令）</span>
+                        <a href="https://zerohunt.ai/blog/freeswitch-cve-2026-116779-sip-message-command-injection">zerohunt · 116779</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NefariousPlan — 1.11.3 只是多了一个复选框（63 天静默窗口、补丁即注释符、PR:N 的真实来源是出厂目录）</span>
+                        <a href="http://nefariousplan.com/posts/freeswitch-api-chat-proto-is-a-feature-flag">nefariousplan · 分析</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IBM — Aspera Faspex CVE-2026-123218 安全公告（影响 5.0.0–5.0.19，修复 5.0.19 PL1，faspex-core 1ce4b13，无变通方案）</span>
+                        <a href="https://www.ibm.com/support/pages/node/7252436">ibm · faspex</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-123218（Faspex 授权不当，9.8，CWE-863；向量 PR:N 与描述"已认证用户"的口径差异）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123218">nvd · 123218</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Layman Security — Faspex 123218 三天死线与 PR:N 解读（Faspex 2022 年 CVE-2022-47986 被 IceFire / Buhti 利用的历史）</span>
+                        <a href="https://thelaymansecurity.com/ibm-aspera-faspex-cve-2026-123218-exploited">layman · faspex</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Severity Daily — 周一的分数量是谁给的（意大利 20 条、D-Link 打分之争、Tasmota、rConfig、Limit Login Attempts 同批复盘）</span>
+                        <a href="https://severitydaily.com/recap-2026-11-09">severitydaily · recap</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Severity Daily — 意大利局给 Magistra 后门评 6.1（20 条记录、版本串 5.1.15.1.1、无 CPE、CompuGroup 新闻稿日期矛盾、自动下发）</span>
+                        <a href="https://severitydaily.com/acn-csirt-italia-20-cves-november-9-compugroup-medical-magistra-cve-2026-112169-6-1-undocumented-backdoor-cwe-912-av-l-cve-2026-118458-8-1-cwe-798-5-1-15-1-1-semver-vs-5-1-1-cve-2026-118462-9-2-no-pri/">severitydaily · acn</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-118462（CGM 更新组件不做真实性验证，依赖被忽略的哈希与可伪造校验和，9.2，CWE-494）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-118462">nvd · 118462</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-112169（MAGISTRA 未文档化后门，绕过认证创建特权账户，6.1，CWE-288 + CWE-912）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-112169">nvd · 112169</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CompuGroup Medical — 新闻稿（2026-11-04，称修复自动下发、未发现利用证据，但不提产品名、版本号与 CVE）</span>
+                        <a href="https://www.cgm.com/ita_it/magazine/cgm-informa.html">cgm · informa</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — LNbits 要求所有运营者关停比特币闪电钱包服务器（11-08 警告与全量关停）</span>
+                        <a href="https://thehackernews.com/2026/11/lnbits-urges-all-operators-to-shut-down.html">thn · lnbits</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threat Ticker — LNbits 时间线复盘（09:22 攻击起、12:33 首警告、2,285,545 sats、扩展未公开、无自查方法）</span>
+                        <a href="https://threatticker.com/news/lnbits-tells-every-operator-to-shut-down-their-bitcoin-lightning-wallet-servers">threatticker · lnbits</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">LNbits 官方 X 账号（2026-11-08 全量关停公告原文）</span>
+                        <a href="https://x.com/lnbits">x · lnbits</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">LNbits GitHub Releases（截至 11-09 最新仍为 v1.6.2，9 月 18 日 PostgreSQL 备份热修，无 11 月修复）</span>
+                        <a href="https://github.com/lnbits/lnbits/releases">github · releases</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — Tasmota Device Groups UDP 堆越界写（CVE-2026-119756，CWE-805，9.8 CVSS3.1 / 9.3 CVSS4，作者 Abdurakhmonov Ulugbek）</span>
+                        <a href="https://www.vulncheck.com/advisories/tasmota-heap-out-of-bounds-write-via-device-groups-udp">vulncheck · tasmota</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub — Tasmota 修复提交 e97e1e4（2026-11-06，开发分支；master 上同文件自六月未动）</span>
+                        <a href="https://github.com/arendst/Tasmota/commit/e97e1e4f7e319a55caa1613aef1f25fc81bdb554">github · e97e1e4</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Severity Daily — Tasmota 9.8 修在开发分支、发布分支自六月未动（含 SetOption85 逐台核查与替代补丁的缓解做法）</span>
+                        <a href="https://severitydaily.com/tasmota-cve-2026-119756-9-8-cvss-3-1-9-3-cvss-4-0-device-groups-udp-4447-heap-out-of-bounds-write-sendreceivedevicegroupmessage-512-byte-log-buffer-cwe-805-fix-commit-e97e1e4-november-6-developme">severitydaily · tasmota</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-124079（rConfig Redis Horizon 队列投毒、CallQueuedHandler 不限类、webshell 写 storage/app/public，9.8，CWE-502）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-124079">nvd · 124079</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">rConfig — 安全公告页（受影响范围写至 8.2.19，但公告页叫 Core 用户安装 8.2.20）</span>
+                        <a href="https://www.rconfig.com/security-advisories">rconfig · 公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SEGA — 官方公告（2026-11-09，ARARA Message 服务被非法访问，2,196,044 条邮箱记录）</span>
+                        <a href="https://www.sega.co.jp/company/news/">sega · 公告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberInsider — SEGA 2.2 million email addresses leaked in vendor breach（2,196,044 / 92,273 拆分、发送期 7-02 至 10-28、10-29 至 11-03 的口径变化）</span>
+                        <a href="https://cyberinsider.com/sega-data-breach-2-2-million-email-addresses/">cyberinsider · sega</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">凤凰网科技 / IT之家 — 世嘉通报约 220 万订阅邮箱泄露（ARARA 近 380 家企业客户、合计约 7700 万邮箱、700 万封冒充邮件口径）</span>
+                        <a href="https://tech.ifeng.com/c/8xw4aecXyHH">ifeng · sega</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Rock Paper Shotgun — SEGA 第三方邮件分发商被攻击（世嘉账户不受影响、受影响邮件清单、提醒钓鱼）</span>
+                        <a href="https://www.rockpapershotgun.com/cyberattack-on-sega-third-party-newsletter-distributor-reportedly-sees-over-two-million-email-addresses-leaked-but-sega-accounts-unaffected">rps · sega</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Severity Daily — D-Link M60 的 10.0 是相邻网络、机密性低影响（三个 CVSS 版本、研究者自贴向量四指标不一致、0.45 秒兄弟记录差 4.7 分）</span>
+                        <a href="https://severitydaily.com/d-link-m60-cve-2026-125086-vuldb-10-0-cvss-3-1-9-3-cvss-4-0-10-0-cvss-2-0-high-emdaemon-mqtt-broker-hard-coded-admin-admin-finder-vector-av-a-s-u-c-l-dcs-6501lh-cve-2026-125079-5-3-no-fixed-version-de/">severitydaily · dlink</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub — XueDugu/dlink-m60-easymesh-mqtt-credential-evidence（单一来源技术说明，单 commit，含 admin/admin 与 0.0.0.0:1883 主张）</span>
+                        <a href="https://github.com/XueDugu/dlink-m60-easymesh-mqtt-credential-evidence">github · dlink</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-123800（SuperTokens Core 多租户父级连接 URI 域名授权不足，9.9，18 条维护线各有修复点）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123800">nvd · 123800</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-123270（Redpanda Connect 4.39–4.110 管理 API 开在 0.0.0.0:4195 且默认无认证，9.8）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123270">nvd · 123270</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-114713（UnrealIRCd labeled-response 不回显转义，互联服务器可注入服务器命令，8.6，6.2.7.1 修）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-114713">nvd · 114713</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD — CVE-2026-118201 / 118202（Limit Login Attempts Reloaded 两个 7.5 双因子绕过，后者把构造失败当成功，3.4.1 修）</span>
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-118202">nvd · 118202</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Shattered — CISA 一次加四条与十月以来的 KEV 节奏（七次警报共 21 条，含四条产品的处置排序建议）</span>
+                        <a href="https://shattered.io/cisa-kev-gpustack-freeswitch-openssh-aspera-faspex-nov-12-2026">shattered · kev</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0 — 11-09 至 11-10 收录 600 条，本期按 CVSS 降序筛出 SAP 全批、SuperTokens、Redpanda、Mongoose、rConfig 等，并逐条核对向量与 published 日期</span>
+                        <a href="https://nvd.nist.gov/developers/vulnerabilities">nvd · api</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分以 NVD / 厂商公告 / CISA KEV 原始记录为准。同一事实在不同来源出现分歧时，正文已标注两边口径（SAP 记录数 40 与 38、Tasmota 的 CVSS 3.1 9.8 与 4.0 9.3、rConfig 受影响范围 8.2.19 与公告建议 8.2.20、UnrealIRCd 是否已在野、SEGA 邮箱数 219 万与 219.6 万）。D-Link M60 的全部技术细节来自单一研究者仓库，未经独立核实；LNbits 的攻击路径与受影响扩展至今未公开。涉华涉台归因类内容不予收录。
+                <br>
+                每日精选 · 值得关注 | 2026年11月10日
+            </p>
+        </footer>
+
+        </div>
+
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>

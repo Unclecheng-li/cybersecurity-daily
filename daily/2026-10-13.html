@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 - 2026年10月13日</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <div class="edition-info">
+            <span class="edition-date">2026年10月13日 星期二</span>
+            <span class="edition-number">第 185 期 | 总第 185 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>CyberXero用51个AI智能体·Dell DSU 86360未认证root·Bricksforge85097×10在野·GitLab96893提示注入·SonicWall102255
+        </div>
+
+        <div class="content-wrapper">
+
+            <div class="headline-section">
+                <h2 class="main-headline">攻击者已经把 AI 当"人手"用了：51 个智能体组成流水线，61 秒投下 32 个 WebShell</h2>
+                <p class="sub-headline">安全厂商 <strong>SOCRadar</strong> 披露了一个代号 <strong>CyberXero</strong> 的俄语系初始访问中间商：它把 <strong>Anthropic 的 Claude Code 拆成 51 个专用智能体</strong>，再经 AI 供应商 API 把开源自主渗透框架 <strong>PentAGI 接进 Cobalt Strike</strong>。一次自动执行<strong>扫描 4,708 个目标、确认 429 个 WordPress 后台，并在 61 秒内投下 32 个 WebShell</strong>，最终窃取<strong>超过 62.8 万条</strong>乌克兰个人记录。同一天，Dell、WordPress 插件、GitLab 与 SonicWall 各有满分或高危漏洞落地或在野。</p>
+            </div>
+
+            <div class="articles-grid">
+
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">头条事件</span>
+                    <h3 class="article-title">CyberXero：51 个 Claude Code 智能体组成攻击流水线，61 秒投下 32 个 WebShell（头条）</h3>
+                    <div class="article-meta">
+                        <span>SOCRadar 披露 · 俄语系财务动机初始访问中间商 · 至少自 2026-07 起活跃且仍在活动 · 受害者：乌克兰能源与公用事业 + 全球 WordPress/电商</span>
+                        <span class="cvss-score">确认窃取超 62.8 万条乌克兰个人记录 · 单次扫描 4,708 目标 / 429 个后台 / 61 秒 32 个 WebShell · 入口 CVE-2026-63030 / 60137 / 4815 · 暴露目录 46.21.250.135</span>
+                    </div>
+                    <div class="article-body">
+<p>安全厂商 <strong>SOCRadar</strong> 披露了一个代号 <strong>CyberXero</strong> 的<strong>俄语系、财务动机的初始访问中间商（IAB）</strong>：它一边在全球范围内自动扫打 WordPress 与电商站点，一边<strong>手工挑选乌克兰能源与关键基础设施目标</strong>深挖。<strong>至少自 2026 年 7 月起活跃，目前仍在活动</strong>，已确认窃取 <strong>超过 62.8 万条</strong>与乌克兰个人相关的记录，另在波兰、中国、荷兰确认了若干受害站点。</p>
+<p><strong>最值得记住的是它的"组织结构"——AI 不是助手，是流水线上的工种：</strong>攻击者在自己的主力 Linux 工作站上，把 <strong>Anthropic 的 Claude Code 拆成 51 个专用智能体</strong>，分别负责<strong>扫描、漏洞链编排、侦察与后渗透</strong>；在另一台 <strong>Cobalt Strike Team Server</strong> 上，他又把开源自主渗透智能体 <strong>PentAGI 经 AI 供应商 API 接进 Cobalt Strike</strong>，用于<strong>载荷生成与自动化渗透执行</strong>。整条架构由<strong>八个节点</strong>构成（主力工作站、配置服务器、变现基础设施、载荷暂存服务器、扫描器等）。</p>
+<p><strong>自动化跑出来的具体数字（来自泄露的日志）：</strong>单次自动执行<strong>扫描 4,708 个目标</strong>，确认拿到 <strong>429 个 WordPress 后台</strong>的访问权，并在<strong>一个 61 秒的窗口内投下 32 个 WebShell</strong>。全球侧的入口主要是 <strong><code>wp2shell</code>（<code>CVE-2026-63030</code> / <code>CVE-2026-60137</code>）</strong> 与 <strong>Support Board 插件的 SQL 注入 <code>CVE-2026-4815</code></strong>；此外还打了<strong>暴露在公网的 Redis</strong>，导致两家中国实体被入侵。定向侧则直指乌克兰能源与公用事业，其中<strong>哈尔科夫一家区域供热商因脚本里硬编码的密码，单点泄露 56.4 万+ 条客户记录</strong>。</p>
+<p><strong>怎么被发现的：</strong>又是"自己的服务器裸奔"——攻击者的机器 <strong><code>46.21.250[.]135</code> 是一个没有任何访问控制的开放目录</strong>，泄露了 <strong>9 万+ 个文件</strong>，里面躺着 <strong>AI 会话日志、含明文 token 的脚本、漏洞利用工具包、侦察结果、AI 智能体配置和已被窃取的受害者数据</strong>。</p>
+<p><strong>关于"模型为什么肯干"：</strong>SOCRadar 的分析给出了一个对 AI 开发者很关键的观察——<strong>模型的安全控制作用于"会话上下文"，而不是模型权重</strong>，所以<strong>一次拒绝不会带进下一次会话</strong>。攻击者用 <strong>上下文工程（把任务包装成"对我自己基础设施的授权渗透测试"）加会话重置</strong>，反复绕开拒绝。不过日志里也记录了<strong>真实生效的拒绝</strong>：模型在四次迭代中<strong>连续拒绝了装后门、关防火墙、横向移动和投 WebShell</strong>，另有一次<strong>连续四次拒绝扫描，并正确识破了一个伪造的所有权令牌</strong>。</p>
+<p><strong>为何值得关注：</strong>这起事件是目前 <strong>"AI 赋能攻击"最有说服力的一份样本</strong>——不是概念演示，而是<strong>有日志、有数字、有受害者</strong>的实战。它把两件事同时摆到台面上：<strong>第一，AI 已经把攻击的"人均产出"抬高了一个量级</strong>（61 秒 / 32 个 shell，人类团队做不到）；<strong>第二，靠"模型会拒绝"来当防线，是站不住的</strong>——拒绝按会话生效，换个说法重开一次就行。防御上，SOCRadar 给出的三个排查锚点很实在：<strong>可疑的 WordPress 管理员账号、WSO WebShell，以及 Redis 主机上 <code>~/.ssh/authorized_keys</code> 里多出来的条目</strong>。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">未认证 root</span>
+                    <h3 class="article-title">Dell System Update CVE-2026-86360：路径穿越直通未认证远程 root，PowerEdge 固件通道被打穿</h3>
+                    <div class="article-meta">
+                        <span>Dell System Update（DSU）CLI 部署工具 · Linux 与 Windows 平台 · 用于批量部署 PowerEdge 的 BIOS / 固件 / 软件更新</span>
+                        <span class="cvss-score">86360 路径穿越 → 未认证远程 root RCE · 同批 63697 / 71168 RCE · 86361 / 86362 提权 · 修复 DSU 2.3.0.0+</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>Dell</strong> 就其 <strong>System Update（DSU）命令行部署工具</strong>发布紧急安全公告：<strong><code>CVE-2026-86360</code></strong> 是一枚<strong>路径穿越</strong>漏洞，<strong>未认证的远程攻击者</strong>可利用它在<strong>目标主机上以 root 权限执行任意代码</strong>。</p>
+<ul>
+    <li><strong>影响面：</strong>DSU 是<strong>用来给 PowerEdge 服务器批量部署 BIOS、固件与软件更新</strong>的工具，<strong>Linux 与 Windows 平台都在用</strong>。也正因为这个工具<strong>本身就需要高层级权限去改动系统核心组件</strong>，一旦漏洞把 root 送出去，<strong>等于把服务器的主安全边界整个让了出去</strong>——攻击者可以同时操纵硬件层与操作系统层，后果从大规模数据泄露一直到关键基础设施被破坏</li>
+    <li><strong>修复：</strong>Dell 已发布补丁，<strong>要求企业客户立即升级到 DSU 2.3.0.0 或更高版本</strong></li>
+    <li><strong>同批一并修掉的还有四枚高危：</strong><strong><code>CVE-2026-63697</code></strong> 与 <strong><code>CVE-2026-71168</code></strong>（均为 RCE）、<strong><code>CVE-2026-86361</code></strong> 与 <strong><code>CVE-2026-86362</code></strong>（权限提升）</li>
+    <li><strong>另需连带留意：</strong>Dell 另一份公告 <strong>DSA-2026-448</strong> 修了<strong>容器存储模块（CSM）的两枚最高严重级漏洞 <code>CVE-2026-63688</code> 与 <code>CVE-2026-63692</code></strong>（该对漏洞在 10 月上旬已通报，属同一波 Dell 补丁）</li>
+</ul>
+<p><strong>为何值得关注：</strong>这是典型的"<strong>运维工具即最高权限后门</strong>"问题。DSU 这类工具在数据中心里的角色是<strong>"批量改固件"</strong>，为了干这活它必须长着 root 的手；而它同时往往<strong>挂在管理网、甚至被自动化平台调用</strong>。于是漏洞的利用门槛被压到最低：<strong>网络可达 + 无需凭据 = 最高权限</strong>。对运维团队的动作很明确：<strong>把 DSU 升级到 2.3.0.0+，并顺手盘一遍"还有哪些自带高权限的运维/交付工具暴露在非受控网段"</strong>——这类工具的补丁优先级，应该按"它被拿下后能做什么"来排，而不是按"它是不是个漏洞扫描器"来排。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">满分 10.0 · 在野</span>
+                    <h3 class="article-title">Bricksforge WordPress 插件 CVE-2026-85097（CVSS 10.0）：一个 MIME 校验的落差，未认证直通 RCE</h3>
+                    <div class="article-meta">
+                        <span>Bricks 建站器的商业扩展插件（不在 WordPress.org 销售，走自建更新通道）· Patchstack 通报 · 受影响 ≤ 3.1.8.9 · 修 3.1.8.10 / 4.0.1</span>
+                        <span class="cvss-score">85097 CVSS 10.0（Wordfence 评 9.8）· CWE-434 任意文件上传 · 10-07 21:47 UTC 起在野 · 63 个源 IP · 仍未入 KEV</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>Patchstack</strong> 通报：WordPress 可视化建站工具 <strong>Bricks</strong> 的商业扩展插件 <strong>Bricksforge</strong> 存在一枚<strong>满分（CVSS 10.0）</strong>漏洞 <strong><code>CVE-2026-85097</code></strong>，<strong>未认证攻击者可上传并执行任意 PHP 代码</strong>，且<strong>已在野利用</strong>（Wordfence 作为 CNA 给出的 CVSS 3.1 评分为 9.8，Patchstack 评 10.0）。</p>
+<ul>
+    <li><strong>根因（一个"前后不一致"）：</strong>Bricksforge 在<strong>文件首次上传时会校验 MIME 类型</strong>，但<strong>在随后提交表单时，却信任客户端送来的文件元数据</strong>——<strong>它没有校验 <code>temporaryFileUploads</code> 参数里的 <code>url</code> 字段</strong></li>
+    <li><strong>四步利用链：</strong>① 从<strong>未认证的 <code>bricksforge_regenerate_nonce</code> AJAX 接口</strong>取到有效 nonce；② 上传一个 <strong>GIF/PHP 多形态文件（polyglot）</strong>——同时是合法图片又内含 PHP 代码，落在临时上传目录；③ 提交一个表单：<strong>服务端文件路径指向那张"已通过校验的图片"，但 <code>url</code> 字段以 <code>.php</code> 结尾</strong>；④ Bricksforge <strong>照单全收地把文件内容写到 PHP 路径上</strong>——请求它，代码就执行</li>
+    <li><strong>在野情况：</strong>Patchstack <strong>于 2026-10-07 21:47 UTC 首次观测到利用尝试</strong>，来自 <strong>63 个不同源 IP</strong>，其中<strong>六个 IP 承担了约 46% 的请求</strong>（<code>177.75.57[.]20</code>、<code>23.97.62[.]146</code>、<code>84.247.60[.]125</code>、<code>38.154.185[.]97</code>、<code>150.109.16[.]166</code>、<code>153.75.90[.]146</code>）。流量呈明显<strong>自动化特征</strong>：一个簇里 <strong>44 个 IP 在数秒内发出 56 个完全相同的请求</strong>，另一个簇里 <strong>3 个 IP 试了 25 种 PHP 扩展名与编码变体</strong>（<code>.php5</code>、<code>.php7</code>、<code>.phtml</code>、大小写混用、<code>%70hp</code>、双重编码等）。<strong>绝大多数请求打到 <code>POST /wp-json/bricksforge/v1/form_submit</code></strong>，落地文件名形如 <code>login_admin_*.php</code></li>
+    <li><strong>修复与状态：</strong>升级到 <strong>Bricksforge 3.1.8.10 或更高</strong>（厂商侧另有 4.0.1 修复版本；<strong>3.1.8.9 及更早受影响，4.0.0 也应视为可能暴露</strong>）。<strong>该插件不在 WordPress.org 官方插件库销售</strong>，走自建更新通道，很容易"以为自己会自动更新、其实没更新"。<strong>截至 10-13，该 CVE 仍未进入 CISA 的 KEV 目录</strong></li>
+</ul>
+<p><strong>为何值得关注：</strong>这是一个<strong>"校验只做了一半"</strong>的经典案例：<strong>上传时查了，提交时不查</strong>，而攻击者恰好能同时控制这两步。更值得记的是<strong>风险判断的教训</strong>——一个<strong>满分、免凭据、可自动化</strong>的漏洞，<strong>是否在 KEV 里，和它是否正在被利用，是两回事</strong>。自查锚点：翻 Web 日志里<strong>带 <code>temporaryFileUploads</code> 参数的表单提交请求</strong>，检查 <strong><code>/wp-content/uploads/bricksforge/tmp/</code></strong> 下有没有你没放过的 PHP 文件（尤其 <code>login_admin_</code> 开头的），发现即按<strong>已失陷</strong>处置、轮换凭据。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">提示注入</span>
+                    <h3 class="article-title">GitLab 一次修 24 个漏洞：CVE-2026-96893 把"AI 智能体提示注入"写成正式 CVE</h3>
+                    <div class="article-meta">
+                        <span>GitLab CE / EE · 补丁版本 19.4.2 / 19.3.5 / 19.2.8 · 安全公告 SB2026101301 · 多数漏洞需已认证或特定角色</span>
+                        <span class="cvss-score">96893 提示注入 CVSS v4 8.4 · 16301 受保护分支越权执行流水线 7.1 · 81839 迁移项目流水线残留 7.2 · 14552 机密 epic 越权读取 5.3 · 92883 存储型 XSS 5.1</span>
+                    </div>
+                    <div class="article-body">
+<p><strong>GitLab</strong> 发布了包含 <strong>24 个漏洞</strong>的补丁版本（<strong>19.4.2 / 19.3.5 / 19.2.8</strong>），其中最值得单独拎出来的是 <strong><code>CVE-2026-96893</code>（CVSS v4.0 = 8.4）</strong>。</p>
+<ul>
+    <li><strong><code>CVE-2026-96893</code>（8.4）—— GitLab Duo Agent Platform 的 LLM 提示注入。</strong>漏洞成因是<strong>在构造 AI 对话上下文时，没有正确中和特殊元素</strong>。因此<strong>已认证用户可以把特制内容注入到 AI 智能体的指令里</strong>，从而<strong>诱发以"其他用户"名义执行的、非预期的命令执行</strong>。也就是说，<strong>污染的是"智能体的指令流"，背锅的却是别人</strong>——这直接把"AI 智能体"从"辅助功能"变成了<strong>一个可被第三方间接操纵的执行通道</strong></li>
+    <li><strong>同批其他高危（均需已认证或特定角色）：</strong></li>
+</ul>
+<ul>
+    <li><strong><code>CVE-2026-16301</code>（7.1）</strong>：<strong>下游流水线创建服务授权不当</strong>，<strong>具备 Developer 角色的用户可绕过授权，在受保护分支上执行 CI/CD 流水线</strong></li>
+    <li><strong><code>CVE-2026-81839</code>（7.2）</strong>：项目迁移时<strong>计划流水线执行策略记录清理不当</strong>，<strong>保留的策略记录可让攻击者在被迁移项目里、以新所属组的权限执行任意 CI/CD 流水线</strong>（需用户交互）</li>
+    <li><strong><code>CVE-2026-14552</code>（5.3）</strong>：<strong>work items GraphQL API 授权检查不当</strong>，Guest 权限即可读取被外部授权限制的<strong>机密 epic 内容</strong></li>
+    <li><strong><code>CVE-2026-92883</code>（5.1）</strong>：<strong>语法高亮输出对 HTML 属性净化不当</strong>导致<strong>存储型 XSS</strong>，攻击者可用特制仓库在其他用户浏览器里执行 JavaScript</li>
+</ul>
+<p><strong>为何值得关注：</strong>这期的信号是——<strong>"LLM 提示注入"正在从博客里的攻击演示，变成厂商公告里的正式 CVE</strong>。当 AI 智能体被授予<strong>读写代码、触发流水线、调用工具</strong>的能力时，"<strong>输入没有被正确中和</strong>"就不再是一个 XSS 级别的小问题，而是一条<strong>能借他人身份执行动作</strong>的路径。GitLab 把它按 8.4 处理、并和 20 多个其他漏洞一起打包修复，等于在说：<strong>智能体平台的安全基线，现在必须和代码仓库本身一个级别</strong>。处置侧没有花招：<strong>升级到 19.4.2 / 19.3.5 / 19.2.8 及以上</strong>；同时<strong>给 AI 智能体的工具权限做最小化</strong>，别让"能读 issue 的人"顺带拥有"能指挥智能体动 CI/CD"的隐含能力。</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">满分 10.0 · 在野</span>
+                    <h3 class="article-title">SonicWall SMA 1000 CVE-2026-102255 在野确认：135 次利用尝试，凭据与 TOTP 种子被成批薅走</h3>
+                    <div class="article-meta">
+                        <span>SMA 1000 远程接入设备（机型 6210 / 7210 / 8200v）· 修复 12.4.3-03670 / 12.5.0-03082 · Previdian 与 Defused Cyber 最早捕捉 · Rapid7 观测驻留</span>
+                        <span class="cvss-score">102255 预认证 SSRF CVSS 10.0 · 特制 OPTIONS 请求经备用路径打到回环 5984 的 CouchDB · 135 次尝试来自 2 个美国 IP · 仍未入 KEV</span>
+                    </div>
+                    <div class="article-body">
+<p>10-06 打过补丁、10-08 首次被观测到利用的 <strong>SonicWall SMA 1000</strong> 预认证 SSRF <strong><code>CVE-2026-102255</code>（CVSS 10.0）</strong>，在 <strong>10-12 有了更硬的在野证据</strong>。</p>
+<ul>
+    <li><strong>漏洞通道：</strong>攻击者向 <strong>SMA 1000 的 WorkPlace 界面</strong>发送一个<strong>特制的 <code>OPTIONS</code> 请求</strong>，<strong>经由一个"非预期的备用访问路径"（unintended alternate access path），打到设备回环地址上的内部 CouchDB 服务（端口 5984）</strong>。由于是<strong>预认证</strong>，<strong>不需要任何凭据</strong>。受影响机型为 <strong>6210 / 7210 / 8200v</strong>，受影响固件为 <strong>12.4.3-03526 与 12.5.0-02952 及更早</strong></li>
+    <li><strong>修复版本：</strong><strong>12.4.3-03670（平台热修复）</strong> 与 <strong>12.5.0-03082（平台热修复）</strong></li>
+    <li><strong>在野数据：</strong><strong>Previdian 统计到 135 次利用尝试，来自两个位于美国的 IP</strong>（10-09 与 10-10）；<strong>Defused Cyber</strong> 与 <strong>Previdian</strong> 是最早在 <strong>10-08</strong> 捕捉到利用迹象的厂商。<strong>Rapid7</strong> 称观测到攻击者<strong>把暴露的 SMA 设备当作隐蔽初始访问入口</strong>，<strong>在设备上执行命令并维持长期驻留</strong>；站稳之后，他们<strong>系统性地提取了高价值凭据、活动会话数据库，以及基于时间的一次性口令（TOTP）多因素认证的种子配置</strong></li>
+    <li><strong>状态提醒：</strong>截至 10-13，<strong>该 CVE 仍未进入 KEV</strong>，<strong>SonicWall 也尚未更新公告去确认在野利用</strong></li>
+</ul>
+<p><strong>为何值得关注：</strong>这类<strong>边缘远程接入设备</strong>一直是攻击者最爱的"门"——<strong>它天然对外、补丁常常滞后、而且里面塞满了最值钱的东西</strong>。这次被盗的<strong>不只是密码，还有 TOTP 种子</strong>：<strong>拿到 MFA 种子，等于把"第二因素"变成了"另一个可以被复制的东西"</strong>，这会<strong>直接削弱组织对 MFA 的信任</strong>。行动项很干脆：<strong>升到 12.4.3-03670 / 12.5.0-03082</strong>；升级之后<strong>务必轮换凭据、作废并重建会话、重新登记 TOTP</strong>（<strong>补丁清不掉补丁之前就被薅走的种子</strong>）；如果暂时升不了，<strong>就把 SMA 门户收敛到最小暴露面</strong>。</p>
+                    </div>
+                </article>
+
+            </div>
+<h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+
+                <div class="quick-item">
+                    <h4>6. IBM 双 CVE：IBM i 的 HTTP 管理界面代码注入 9.9，Maximo AI Service 9.8</h4>
+                    <p><strong><code>CVE-2026-96119</code>（CVSS 9.9，CWE-94 代码注入）</strong>：<strong>IBM i 的 HTTP Server Administration 图形管理界面</strong>因<strong>数据净化不当</strong>，<strong>远端已认证攻击者可读取敏感信息或执行任意代码</strong>（<code>CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H</code>——注意<strong>范围变更 S:C</strong> 意味着<strong>影响会溢出到其他组件</strong>）。<strong>影响 IBM i 7.3 / 7.4 / 7.5 / 7.6</strong>，修复 PTF：<strong>7.6 → SJ11645、7.5 → SJ11644、7.4 → SJ11643、7.3 → SJ11641</strong>，<strong>无临时缓解措施</strong>。另 <strong><code>CVE-2026-90920</code>（CVSS 9.8）</strong>：<strong>IBM Maximo AI Service 9.1.0 与 9.2.0</strong> 因<strong>对代码生成的控制不当</strong>，<strong>远端攻击者可执行任意代码</strong>。同批还有 <strong>IBM DataStage（Cloud Pak for Data 5.4.0.0）<code>CVE-2026-82103</code>（9.6）</strong>。<strong>注意：</strong>IBM i 这类"跑了几十年的核心系统"，管理界面往往<strong>直接挂在企业网里、被当作可信内网组件</strong>——<strong>9.9 分 + 范围变更</strong>说明它不是"关起门来"的问题；而 Maximo AI Service 的"代码生成控制不当"，再次说明<strong>AI 服务正以"普通业务组件"的身份进入评分体系</strong>，该打的补丁一个也别少。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>7. Rapyd Admin CVE-2026-109566（CVSS 9.8）：硬编码的 <code>admin@laravel / admin</code>，每跑一次命令就重建一次</h4>
+                    <p><strong>VulnCheck</strong> 披露 <strong>Rapyd Admin 9.0.0 至 9.20.0 之前</strong>存在一枚<strong>硬编码凭据（CWE-798）</strong>漏洞 <strong><code>CVE-2026-109566</code></strong>：安装器通过 <code>AuthSeeder</code> <strong>种下了一个 <code>admin@laravel</code> 账号，口令就是 <code>admin</code></strong>；更妙的是，这个账号<strong>在每次执行 <code>rpd:make</code> 时会被静默重建</strong>——<strong>管理员就算手动删了、改了密码，下次跑命令它又回来了</strong>。攻击者<strong>无需认证</strong>即可用它登录，<strong>成为全局超级管理员，绕过逐记录的授权与多租户隔离（tenant scoping）</strong>。修复：升级到 <strong>9.20.0 或更高</strong>（补丁提交 <code>acd6ee8</code>）。<strong>为何值得关注：</strong>这是"<strong>默认凭据 + 会被自动复活</strong>"的叠加伤害——<strong>默认凭据本身还能靠"上线后改密码"兜住，但"每次构建都重建"直接把这个兜底废掉了，你的加固会被自己的一次部署覆盖</strong>。凡是脚手架/后台生成类框架，都要警惕"<strong>开发期便利特性被带进生产</strong>"：<strong>上线前确认 seeder 与默认账号是否真的关掉了，而不是只看"我第一次登录时改过密码"</strong>。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>8. Ledger 供应链实锤：授权经销商卖出的硬件钱包里，藏着偷助记词的间谍芯片</h4>
+                    <p><strong>Ledger</strong> 在 <strong>10-11 的 72 小时更新</strong>中确认：<strong>截至当时所有已确认的"10-09 钱包被清空"事件，涉及的设备都来自东南亚经销商 CryptoBilis</strong>；Ledger 强调<strong>自身系统与直营渠道未被入侵</strong>。第三方链上测算：<strong>Bitquery 估算约 9,320 万美元被从 315 个钱包窃取</strong>（Tron 约 7,050 万、Bitcoin 约 1,680 万、Ethereum 约 370 万美元），<strong>Tether 冻结约 1,000 万美元 USDT（20 个地址）</strong>。<strong>植入体长什么样：</strong>前 Mt. Gox 负责人 <strong>Mark Karpelès</strong> 称自己在马来西亚买到被动手脚的 Ledger，照片/视频显示<strong>屏幕下方（本该是显示缓冲垫的位置）藏了一块小电路板</strong>，上面有<strong>微控制器、天线、LTE 芯片与一张 eSIM</strong>——<strong>屏幕显示什么就记什么，在你抄写助记词的那一刻记下来，再发出去</strong>；<strong>拿到助记词的人可在任何设备上重建钱包、随时清空</strong>。<strong>为什么"验真"没拦住：</strong>Karpelès 说设备<strong>开着完好塑封、还通过了 Ledger 的 Genuine Check——因为里面的安全芯片是真的</strong>，<strong>唯一可靠的发现方式是拆机</strong>。<strong>处置：</strong>CryptoBilis 已停售全部硬件钱包；<strong>从该渠道购买且尚未初始化的设备不要初始化</strong>，<strong>已初始化的应迁到 Ledger 直营渠道的新设备、生成全新助记词</strong>；Bitquery 另提示<strong>被清空钱包中超八成是在 6 月或更晚才首次收到资金</strong>，可能不止"最近 90 天"批次。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>9. Cisco Talos：恶意软件开始"反向说服"防守方的 AI——在源码里塞指令，让模型以为"这里不是真目标"</h4>
+                    <p><strong>Cisco Talos</strong> 发现，一批恶意软件家族<strong>内嵌了自然语言指令，用来干扰自动化分析模型</strong>：<strong>在源码里写入面向 AI 的注释，试图让模型相信"你正在看的不是真实目标"</strong>，甚至夹杂<strong>恐吓性提示，声称分析环境是一个被监控的蜜罐</strong>。受影响的家族包括 <strong>FRUITSHELL、PLOTSAFE、HOLLOWCLAD 与 MANTLEMAZE</strong>。Talos 指出，这类<strong>直接指令式</strong>手法<strong>已进化到"模板喷洒"</strong>——<strong>同一份载荷里塞入面向多个模型的指令模板</strong>，谁来看都能"照顾到"。<strong>为何值得关注：</strong>这是<strong>攻防在"AI 这一层"上第一次真刀真枪地交手</strong>：<strong>防守方用模型自动化研判，攻击方就去污染模型的输入</strong>。它提醒两件事：<strong>第一，"把样本丢给模型让它判断"不能作为唯一定性依据</strong>，模型看到的文本本身就是<strong>攻击者可写的内容（不可信输入）</strong>；<strong>第二，检测管线需要"模型之外的锚点"</strong>——<strong>行为、网络流量、YARA/特征、沙箱动态执行</strong>，这些是攻击者<strong>没法靠改注释左右的东西</strong>。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>10. 开源组件集中修复：Apache Struts 四连（S2-075~078）两条分支已 EOL；Elasticsearch 四枚</h4>
+                    <p><strong>Apache Struts</strong>（10-02 发布 7.4.0 与 6.12.0，10-05 公布 S2-075 至 S2-078）：<strong><code>CVE-2026-104711</code></strong> 是<strong>遗留 RESTful action mapper 中的 OGNL 注入，"可能导致远程代码执行"</strong>（Apache 自评 Moderate，<strong>公告文本未称其为未认证</strong>）；另有 <strong><code>CVE-2026-104712</code>（DoS，Moderate）</strong>、<strong><code>CVE-2026-104713</code>（REST 插件，DoS，Important）</strong>、<strong><code>CVE-2026-104714</code>（数据暴露 + DoS，Moderate）</strong>。<strong>受影响分支含 Struts 6（&lt; 6.12.0）与 Struts 7（&lt; 7.4.0）</strong>；<strong>Struts 7 仅在关闭 OGNL 允许列表时受影响</strong>。<strong>关键提醒：四条受影响范围里，有两条已 EOL、不会再有代码修复</strong>——<strong><code>2.0.0–2.3.37</code>（2.3.x 于 2019-09-12 EOL）与 <code>2.5.0–2.5.33</code>（2.5.x 于 2023-10-30 EOL）</strong>。缓解手段是<strong>改用默认 mapper、restful2 mapper 或 REST 插件</strong>。<strong>法国 CERT-FR 于 10-09 发布预警（CERTFR-2026-AVI-1290）</strong>，并<strong>未称已观测到利用</strong>。另外 <strong>Elasticsearch 四枚</strong>（<code>CVE-2026-102404</code> / <code>102406</code> / <code>102413</code> / <code>103008</code>）被一并列入本周重点高危清单。<strong>为何值得关注：</strong>Struts 这条最有价值的不是 OGNL 本身，而是那句"<strong>两条分支不再有补丁</strong>"——<strong>对一个仍在跑 Struts 2.3/2.5 的应用来说，真正的问题不是"这个月补哪个 CVE"，而是"这个应用还打算在互联网上活多久、谁签了字"</strong>。</p>
+                </div>
+
+                <div class="quick-item">
+                    <h4>11. P7 DarkSword：iOS 漏洞利用套件升级，直接在设备端抽走钥匙串与加密钱包数据</h4>
+                    <p>安全研究者发现 <strong>DarkSword iOS 漏洞利用套件的一个新变种</strong>，被命名为 <strong>P7 DarkSword</strong>，能力较前代明显增强：<strong>在设备端直接抽取 Keychain（钥匙串）数据</strong>，并<strong>窃取加密钱包信息</strong>——<strong>不再是把整个数据库复制出来再远程处理，而是当场取、当场发</strong>；建立<strong>双向命令控制（C2）通道</strong>，可持续下发指令；<strong>自带隐藏与痕迹清理行为，使旧的失陷指标（IOC）失效</strong>；研究者称该套件通过<strong>水坑攻击中的恶意广告</strong>分发。<strong>为何值得关注：</strong>它把"<strong>移动端的失陷</strong>"从"账号被盗"推进到了"<strong>设备里的密钥材料被直接搬走</strong>"。对<strong>高价值目标（记者、金融与加密资产持有者、企业高管）</strong>，<strong>"iPhone 很安全"这个默认假设需要重新审视</strong>——尤其是<strong>通过广告投放的规模化水坑</strong>，并不需要精确点名某个受害者。</p>
+                </div>
+
+            </div>
+<h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+
+                <div class="chart-container">
+                    <div class="chart-title">漏洞严重性 × 利用状态象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 2026-10-13 漏洞严重性 × 利用状态
+    x-axis "未利用" --> "在野/公开可用"
+    y-axis "低危" --> "严重"
+    quadrant-1 "紧急修复"
+    quadrant-2 "密切关注"
+    quadrant-3 "持续监控"
+    quadrant-4 "常规更新"
+    "CyberXero AI 攻击流水线": [0.96, 0.92]
+    "Dell DSU 86360 未认证 root": [0.44, 1.00]
+    "Bricksforge 85097×10 在野": [0.93, 0.99]
+    "GitLab 96893 提示注入×8.4": [0.22, 0.86]
+    "SonicWall 102255×10 在野": [0.91, 1.00]
+    "IBM i 96119×9.9": [0.18, 0.97]
+    "IBM Maximo AI 90920×9.8": [0.20, 0.95]
+    "Rapyd Admin 109566×9.8": [0.28, 0.94]
+    "Ledger 硬件植入供应链": [0.84, 0.80]
+    "Struts 104711 OGNL": [0.26, 0.76]
+    "P7 DarkSword iOS 套件": [0.78, 0.72]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">安全事件类型分布</div>
+                    <div class="mermaid">
+pie title 2026-10-13 安全事件类型分布
+    "产品漏洞与严重 CVE": 32
+    "AI 与智能体安全": 24
+    "在野利用与初始访问": 18
+    "供应链与硬件安全": 14
+    "数据泄露与隐私事件": 12
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">CyberXero 攻击链（AI 智能体编排 → 自动化扫打 → 记录窃取）</div>
+                    <div class="mermaid">
+flowchart TD
+    A["主力 Linux 工作站 运行 51 个 Claude Code 专用智能体"] --> B["全局自动化流水线 打 WordPress 与电商 CVE-2026-63030 60137 与 4815"]
+    A --> C["定向手工流水线 深挖乌克兰能源与公用事业"]
+    A --> D["Cobalt Strike Team Server 经 AI 供应商 API 接入 PentAGI 自主渗透框架"]
+    B --> E["单次执行扫描 4708 个目标 确认 429 个 WordPress 后台"]
+    E --> F["61 秒窗口内投下 32 个 WebShell"]
+    F --> G["形成初始访问库存 可转售或后续利用"]
+    C --> H["哈尔科夫区域供热商脚本硬编码密码 单点泄露 56.4 万条记录"]
+    H --> I["累计确认窃取超 62.8 万条乌克兰个人记录"]
+    D --> J["攻击者用上下文工程与会话重置绕开模型拒绝"]
+    J --> K["模型安全控制按会话生效 拒绝不跨会话继承"]
+    K --> L["日志同时记录到真实生效的拒绝 含拒绝装后门与关防火墙"]
+    G --> M["攻击者服务器 46.21.250.135 为开放目录 泄露 9 万+ 文件暴露全链路"]
+                    </div>
+                </div>
+
+            </div>
+
+<!-- ===== 本周时间线 ===== -->
+            <div class="timeline-section">
+
+                <div class="mermaid">
+timeline
+    title 2026年10月7日至10月13日 网安事件时间线
+    10月7日 : Bricksforge 85097×10 首次被观测到在野利用
+    10月8日 : SonicWall SMA 1000 102255 首次被厂商捕捉到利用迹象
+    10月9日 : Ledger 要求 CryptoBilis 停售硬件钱包 : 法国 CERT-FR 就 Struts 四连发布预警
+    10月10日 : SonicWall 102255 利用尝试达 135 次来自两个美国 IP
+    10月11日 : Ledger 确认经销商设备内存在未授权硬件植入 : SOCRadar 披露 CyberXero 事件
+    10月12日 : Dell 紧急公告 DSU 86360 未授权 root : Rapyd Admin 109566×9.8 硬编码凭据披露
+    10月13日 : GitLab 一次修复 24 个漏洞含 96893 提示注入 : IBM i 96119×9.9 与 Maximo AI 90920×9.8 公告
+                </div>
+
+            </div>
+
+<!-- ===== 出处链接 ===== -->
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">SOCRadar / The Hacker News — CyberXero 用 Claude Code 窃取 62.8 万条乌克兰记录</span>
+                        <a href="https://thehackernews.com/2026/10/cyberxero-uses-claude-code-in-campaign.html">https://thehackernews.com/2026/10/cyberxero-uses-claude-code-in-campaign.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity Beat — 一支 AI 驱动的队伍放出 51 个智能体打乌克兰目标</span>
+                        <a href="https://cybersecuritybeat.com/2026/10/12/an-ai-driven-crew-turned-51-agents-loose-on-ukrainian-targets">https://cybersecuritybeat.com/2026/10/12/an-ai-driven-crew-turned-51-agents-loose-on-ukrainian-targets</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Daily Security Review — CyberXero 用 Claude Code 智能体窃取乌克兰数据</span>
+                        <a href="https://dailysecurityreview.com/threat-actors/cyberxero-broker-used-claude-code-agents-to-steal-ukrainian-data">https://dailysecurityreview.com/threat-actors/cyberxero-broker-used-claude-code-agents-to-steal-ukrainian-data</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">TechNewsReel — Dell 修复 PowerEdge System Update 工具中的 root 级严重漏洞</span>
+                        <a href="https://technewsreel.com/cybersecurity/dell-patches-critical-root-level-flaw-in-poweredge-system-update-tool">https://technewsreel.com/cybersecurity/dell-patches-critical-root-level-flaw-in-poweredge-system-update-tool</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Secure Today（腾讯）— Bricksforge WordPress 插件 CVSS 10.0 漏洞遭利用（Patchstack）</span>
+                        <a href="https://sectoday.tencent.com/api/article/7Ie5L6EBVJfJhgnJS9HW/link">https://sectoday.tencent.com/api/article/7Ie5L6EBVJfJhgnJS9HW/link</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatFrontier — Bricksforge CVE-2026-85097 未认证上传 RCE 详析</span>
+                        <a href="https://threatfrontier.com/articles/bricksforge-cve-2026-85097-unauthenticated-upload-rce-exploited">https://threatfrontier.com/articles/bricksforge-cve-2026-85097-unauthenticated-upload-rce-exploited</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">DugganUSA — 两枚 CVSS 10.0 漏洞本周被利用却都不在 KEV</span>
+                        <a href="https://www.dugganusa.com/post/two-cvss-10-exploited-not-in-kev-bricksforge-wordpress-sonicwall-sma1000">https://www.dugganusa.com/post/two-cvss-10-exploited-not-in-kev-bricksforge-wordpress-sonicwall-sma1000</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybersecurity Help — GitLab CE/EE 多个漏洞（SB2026101301，共 24 个漏洞）</span>
+                        <a href="https://www.cybersecurity-help.cz/vdb/SB2026101301">https://www.cybersecurity-help.cz/vdb/SB2026101301</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HackerFeeds — CVE-2026-96893（GitLab Duo Agent Platform 提示注入）</span>
+                        <a href="https://hackerfeeds.com/cve/CVE-2026-96893">https://hackerfeeds.com/cve/CVE-2026-96893</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Enigma Global — CERT 预警：SonicWall SMA 1000 严重漏洞在补丁后遭 135 次利用尝试</span>
+                        <a href="https://www.enigma-global.com/preview/cert/12565">https://www.enigma-global.com/preview/cert/12565</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">IBM — Security Bulletin：IBM i HTTP Server Administration GUI 代码生成控制不当（CVE-2026-96119）</span>
+                        <a href="https://www.ibm.com/support/pages/node/7292159">https://www.ibm.com/support/pages/node/7292159</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck — Rapyd Admin 硬编码超级管理员凭据（CVE-2026-109566）</span>
+                        <a href="https://www.vulncheck.com/advisories/rapyd-admin-9.0.0-before-9.20.0-hard-coded-super-admin-credentials-via-authseeder">https://www.vulncheck.com/advisories/rapyd-admin-9.0.0-before-9.20.0-hard-coded-super-admin-credentials-via-authseeder</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Help Net Security — Ledger 硬件钱包内发现隐藏植入体，与 9,300 万美元盗币相关</span>
+                        <a href="https://www.helpnetsecurity.com/2026/10/12/ledger-wallets-compromised-via-hardware-implant/">https://www.helpnetsecurity.com/2026/10/12/ledger-wallets-compromised-via-hardware-implant/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FinanceFeeds — Ledger 称所有已确认钱包清空均指向 CryptoBilis 设备</span>
+                        <a href="https://financefeeds.com/ledger-says-all-confirmed-wallet-drains-trace-back-to-cryptobilis-devices/">https://financefeeds.com/ledger-says-all-confirmed-wallet-drains-trace-back-to-cryptobilis-devices/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">LavX News — 本周回顾：Atlassian 数小时内被利用、AI 对抗分析恶意软件与 CVE 清单</span>
+                        <a href="https://news.lavx.hu/article/weekly-recap-atlassian-flaws-exploited-within-hours-rogue-certificates-shinyhunters-arrest-and-ai-evasion-malware">https://news.lavx.hu/article/weekly-recap-atlassian-flaws-exploited-within-hours-rogue-certificates-shinyhunters-arrest-and-ai-evasion-malware</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cyber Insider — Apache Struts 用户面临四枚新公布安全缺陷</span>
+                        <a href="https://cyberinsider.co.uk/apache-struts-users-face-four-newly-documented-security-flaws">https://cyberinsider.co.uk/apache-struts-users-face-four-newly-documented-security-flaws</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Hacker News — 每周回顾：Helpdesk 零日、流氓证书、AI 欺骗型恶意软件</span>
+                        <a href="https://thehackernews.com/2026/10/weekly-recap-helpdesk-0-days-rogue.html">https://thehackernews.com/2026/10/weekly-recap-helpdesk-0-days-rogue.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">FreeBuf — 网络安全周报：Atlassian 0Day 遭在野利用与本周重点 CVE 清单</span>
+                        <a href="https://www.freebuf.com/news/506020.html">https://www.freebuf.com/news/506020.html</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">OSINTSights — CyberXero 双线 AI 赋能乌克兰攻击行动（含 Operation Master）</span>
+                        <a href="https://osintsights.com/cyberxero-exploits-ai-in-dual-pronged-ukraine-cyberattack-campaign">https://osintsights.com/cyberxero-exploits-ai-in-dual-pronged-ukraine-cyberattack-campaign</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cybernoz — Bricksforge 严重漏洞允许未认证 RCE</span>
+                        <a href="https://cybernoz.com/critical-wordpress-bricksforge-flaw-lets-unauthenticated-attackers-execute-remote-code/">https://cybernoz.com/critical-wordpress-bricksforge-flaw-lets-unauthenticated-attackers-execute-remote-code/</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatCluster — CyberXero 集群详情与 CVE / ATT&amp;CK 映射</span>
+                        <a href="https://threatcluster.io/cluster/cyberxero-campaign-targets-ukrainian-records-using-ai-tools-e19fe391">https://threatcluster.io/cluster/cyberxero-campaign-targets-ukrainian-records-using-ai-tools-e19fe391</a>
+                    </div>
+                </div>
+            </div></div><!-- content-wrapper -->
+
+
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。建议读者查阅原始来源获取最新动态。部分钱包损失金额、泄露站与攻击团伙主张为第三方测算或单方声明，尚未被官方证实；本报告不采用涉华政治敏感归因。
+                <br>
+                每日精选 · 值得关注 | 2026年10月13日
+            </p>
+        </footer>
+    </div>
+<script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
