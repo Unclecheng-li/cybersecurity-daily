@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="\u52a0\u8f7d\u4e2d"
+            android:text="Latest"
             android:textColor="@color/accent_gold"
             android:textSize="13sp" />
 
@@ -76,7 +76,7 @@
         android:maxLines="1"
         android:paddingHorizontal="8dp"
         android:paddingVertical="3dp"
-        android:text="\u6b63\u5728\u83b7\u53d6\u6700\u65b0\u5b89\u5168\u8981\u95fb..."
+        android:text="Tap refresh to load the latest report."
         android:textColor="@android:color/white"
         android:textSize="11sp" />
 

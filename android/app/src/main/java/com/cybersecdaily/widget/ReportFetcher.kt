@@ -5,6 +5,8 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jsoup.Jsoup
+import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import java.util.concurrent.TimeUnit
 
 object ReportFetcher {
@@ -12,20 +14,22 @@ object ReportFetcher {
     private const val BASE_URL = "https://unclecheng-li.github.io/cybersecurity-daily"
     private const val INDEX_URL = "$BASE_URL/index.html"
     private const val DAILY_URL = "$BASE_URL/daily"
+    private val datePattern = Regex("[0-9]{4}-[0-9]{2}-[0-9]{2}")
+    private val keywordsLabel = Regex("^(?:‰ªäÊó•|Êú¨Êúü)?ÂÖ≥ÈîÆËØç\\s*[:Ôºö]\\s*")
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(15, TimeUnit.SECONDS)
+        .callTimeout(25, TimeUnit.SECONDS)
         .followRedirects(true)
         .build()
 
     suspend fun fetchLatest(): DailyReport = withContext(Dispatchers.IO) {
         try {
-            val latestDate = fetchLatestDateOnly()
-            val dailyHtml = fetchDailyPage(latestDate)
-            parseDailyHtml(dailyHtml, latestDate)
+            val date = fetchLatestDateOnly()
+            parseDailyHtml(fetchDailyPage(date), date)
         } catch (e: Exception) {
-            DailyReport.error("ªÒ»° ß∞‹£∫${e.localizedMessage ?: "Œ¥÷™¥ÌŒÛ"}")
+            DailyReport.error("Ëé∑ÂèñÂ§±Ë¥•Ôºö${e.localizedMessage ?: "Êú™Áü•ÈîôËØØ"}")
         }
     }
 
@@ -37,28 +41,41 @@ object ReportFetcher {
         }
 
         val regex = Regex(""""date"\s*:\s*"(\d{4}-\d{2}-\d{2})"""")
-        regex.find(body)?.groupValues?.get(1)?.let { return it }
-        Regex("""(\d{4}-\d{2}-\d{2})""").find(body)?.groupValues?.get(1)?.let { return it }
-        throw Exception("Œﬁ∑®Ω‚Œˆ◊Ó–¬»’∆⁄")
+        regex.findAll(body).map { it.groupValues[1] }.firstOrNull(::isReportDate)?.let { return it }
+        datePattern.findAll(body).map { it.value }.firstOrNull(::isReportDate)?.let { return it }
+        throw Exception("Êó†Ê≥ïËß£ÊûêÊúÄÊñ∞Êó•Êúü")
     }
 
-    private fun fetchDailyPage(date: String): String {
-        val url = "$DAILY_URL/$date.html"
-        val request = Request.Builder().url(url).build()
+    internal fun isReportDate(date: String): Boolean {
+        if (!datePattern.matches(date)) return false
+        return try {
+            LocalDate.parse(date)
+            true
+        } catch (_: DateTimeParseException) {
+            false
+        }
+    }
+
+    internal fun reportUrl(date: String): String =
+        if (isReportDate(date)) "$DAILY_URL/$date.html" else BASE_URL
+
+    internal fun fetchDailyPage(date: String): String {
+        require(isReportDate(date))
+        val request = Request.Builder().url(reportUrl(date)).build()
         return client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw Exception("»’±®≤ª¥Ê‘⁄ ($date)")
+            if (!response.isSuccessful) throw Exception("Êó•Êä•‰∏çÂ≠òÂú® ($date)")
             response.body?.string() ?: throw Exception("empty daily page")
         }
     }
 
-    private fun parseDailyHtml(html: String, date: String): DailyReport {
+    internal fun parseDailyHtml(html: String, date: String): DailyReport {
         val doc = Jsoup.parse(html)
 
         val keywords = doc.selectFirst(".keywords-banner")
-            ?.ownText()
-            ?.replace(Regex("\\s+"), " ")
-            ?.trim()
-            ?: ""
+            ?.text()
+            .orEmpty()
+            .replaceFirst(keywordsLabel, "")
+            .trim()
 
         val dateCN = doc.selectFirst(".edition-date")?.text()?.trim() ?: date
         val editionNumber = doc.selectFirst(".edition-number")?.text()?.trim() ?: ""
@@ -106,7 +123,7 @@ object ReportFetcher {
             }
         }
 
-        return DailyReport(
+        val report = DailyReport(
             date = date,
             dateCN = dateCN,
             editionNumber = editionNumber,
@@ -116,5 +133,7 @@ object ReportFetcher {
             chartTitles = chartTitles,
             charts = charts
         )
+        check(report.hasContent) { "Êó•Êä•ÂÜÖÂÆπ‰∏∫Á©∫ ($date)" }
+        return report
     }
 }

@@ -31,8 +31,11 @@ class WidgetDataService : RemoteViewsService() {
 
         override fun onDataSetChanged() {
             SettingsManager.init(context)
-            articles = DataHolder.currentArticles
             showSeverity = SettingsManager.showSeverity.value
+            val report = DataHolder.currentReport ?: WidgetReportCache(context).read()
+            articles = report?.articles.orEmpty()
+                .filter { it.title.isNotBlank() && (!showSeverity || SettingsManager.isSeverityVisible(it.severity)) }
+                .take(SettingsManager.headlineCount.value)
         }
 
         override fun onDestroy() {}
@@ -75,8 +78,8 @@ class WidgetDataService : RemoteViewsService() {
     }
 }
 
-/** Simple singleton data holder for passing report data to the widget ListView adapter */
+/** Latest report available in this process. */
 object DataHolder {
-    var currentArticles: List<ArticleItem> = emptyList()
+    @Volatile
     var currentReport: DailyReport? = null
 }

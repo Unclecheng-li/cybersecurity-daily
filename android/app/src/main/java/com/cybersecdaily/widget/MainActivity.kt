@@ -364,7 +364,7 @@ fun MainScreen() {
 
         Spacer(modifier = Modifier.height(32.dp))
         Text(text = "AI\u57fa \u00b7 \u7f51\u7edc\u5b89\u5168\u65e5\u62a5", color = Color(0xFF666666), fontSize = 12.sp)
-        Text(text = "v1.0.6", color = Color(0xFF555555), fontSize = 11.sp)
+        Text(text = "v${BuildConfig.VERSION_NAME}", color = Color(0xFF555555), fontSize = 11.sp)
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
