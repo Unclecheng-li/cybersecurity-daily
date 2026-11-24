@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月22日（第224期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月24日 星期二</span>
+            <span class="edition-number">第 226 期 | 总第 226 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>一个空对象换来了管理员权限 · 只读账号在控制端跑了代码 · 示例文件里的密钥就是生产密钥 · 待改的占位符没改也一直能用 · 认证开关默认关着没人打开 · 一条外包链路串起采集与建模
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">权限体系里标着最低的那一档，能力都是最高那一档</h2>
+                <p class="sub-headline">空对象查出集合里的第一个令牌 · 只读角色在 Leader 上执行代码 · 示例文件里的密钥直接上线 · 回退分支落到写着「待改」的常量 · 认证开关默认关着 · 一家外包同时握着采集与建模</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Xen Orchestra 9.8：一个空对象登录成了管理员</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-133469 · XO 6.9.2 之前 / 6.10.1 之前</span>
+                        <span class="cvss-score">已在野利用</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Vates 的公告编号 VSA-2026-062，日期是 11 月 10 日；GitHub 安全公告 11 月 20 日发出；CVE 记录 11 月 23 日进 NVD，并在描述里写明该漏洞已在野被利用。同期还有一个细节：进 KEV 需要时间，在野利用不需要，截至 11-23 版目录它仍不在里面。</p>
+                        <p><strong>漏洞机制：</strong></p>
+                        <ul>
+                            <li><strong>类型：</strong>认证绕过，CWE-288，通过替代路径</li>
+                            <li><strong>触发：</strong>Cookie 里 <em>authenticationToken=j:%7B%7D</em> 被解析成空对象 <em>{}</em></li>
+                            <li><strong>判断：</strong>令牌提供方只查「是否为空」，空对象在 JavaScript 里是真值</li>
+                            <li><strong>查询：</strong>空对象被当成没有过滤条件，返回集合里第一个令牌</li>
+                            <li><strong>后果：</strong>以令牌主人身份认证，返回体里 bypassOtp 为真</li>
+                        </ul>
+                        <p>拿到会话后 <em>/rest/v0/users/me/authentication_tokens</em> 会交出可复用的登录令牌 ID。按 Vates 的说明，Xen Orchestra 被拿下之后，可以向受管 XCP-ng 池执行任意代码，最终拿到节点 root。</p>
+                        <p>自查线索两条：XCP-ng 主机上查虚拟机平台参数里有没有 <em>hvm_serial: file</em>，以及有没有一个名为 pivot2 的虚拟机。这是活动痕迹，不是版本检查，两件事要分开做。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>空不等于没有。</strong>空对象落到「按条件查一条记录」的逻辑里，条件是零个，也就是全表。GraphQL 参数、缓存键、ORM 的 filter 对象都能重演。</li>
+                            <li><strong>签名通过不等于身份是你。</strong>这次连签名都没碰，走的是「合法令牌、错误主人」。</li>
+                            <li><strong>管理平面被打穿等于底层被打穿。</strong>一次管理员登录往下可以落到每台宿主机。</li>
+                            <li><strong>十一天没人拦。</strong>公告 11-10 发布，CVE 11-23 建档，中间靠读过 VSA 的人自己动手。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">构造 Cookie</span>
+                        <span class="flow-step">解析成空对象</span>
+                        <span class="flow-step">真值判断通过</span>
+                        <span class="flow-step">空条件查令牌</span>
+                        <span class="flow-step critical">管理员会话</span>
+                        <span class="flow-step critical">受管池 root</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Cribl 五连：只读账号在控制端执行了代码</h3>
+                    <div class="article-meta">
+                        <span>11-23 08:25 UTC 四份 CSAF 加一份 Edge 公告</span>
+                        <span class="cvss-score">修 4.21.0</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Stream 4.20.4 及更早受影响，同一批整改文字只有一句：升到 4.21.0。分数最高的那条门槛是「只读」。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>前提</th><th>分数</th></tr>
+                            <tr><td>115873 表达式编译器</td><td class="risk-high">GroupRead 加 Leader API</td><td class="risk-high">9.9 / 8.7</td></tr>
+                            <tr><td>115899 分页注入</td><td class="risk-high">控制上游分页数据</td><td class="risk-high">9.8 / 9.3</td></tr>
+                            <tr><td>115900 心跳原型污染</td><td class="risk-medium">Worker 分发凭据</td><td class="risk-medium">8.8 / 8.7</td></tr>
+                            <tr><td>115901 OIDC 回调</td><td class="risk-medium">可信 IdP 加在线受害者</td><td class="risk-medium">9.0 / 8.5</td></tr>
+                            <tr><td>115903 Edge 文件搜索</td><td class="risk-medium">托管 Edge 只读</td><td class="risk-medium">6.5 / 7.1</td></tr>
+                        </table>
+                        <p>分页那条不需要账号，条件只是某个已有 REST Collector 查询的上游返回的分页信息能被影响。日志平台的设计前提是「上游给什么就处理什么」，分页游标、时间戳、字段名从来没被当成不可信输入。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>只读账号常被当成「看了也不会出事」，发给外包、实习生、监控系统。</li>
+                            <li>同一批漏洞，9.9 在 CVSS 4.0 体系里掉到 8.7，跨过了严重与高危的边界。</li>
+                            <li>四个洞共用一次升级，最实际的动作是先找出 Leader、确认版本、看清谁有 GroupRead。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">AutoGPT 10.0：示例文件里的密钥就是生产密钥</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-130169 · 0.6.26 至 0.7.4</span>
+                        <span class="cvss-score">修 0.8.0</span>
+                    </div>
+                    <div class="article-body">
+                        <p>仓库里带了两个 .env.default，按惯例是部署模板。里面那把 JWT 校验密钥是一个公开已知的固定字符串，算法是 HS256。对称算法签验同钥，密钥公开等于任何人都能给管理员签一个合法令牌。</p>
+                        <p>不需要交互，不需要前置凭据，不需要受害者动作。0.8.0 的修法两步：不再预填密钥，拒绝用共享密钥签发的令牌。公告写明没有临时缓解措施。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>默认值与示例值是同一个词，含义相反，而工具链不会替你检查有没有改。</li>
+                            <li>10.0 来自「不需要任何前提」，唯一条件是按官方模板部署，那正是官方推荐的做法。</li>
+                            <li>这类实例里挂着模型 API 密钥、数据库连接、工具授权，还有一堆能自己调工具的智能体。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">Kerberos Agent 9.8：回退到的那把钥匙写着「待改」</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-135208 · 3.14.4 之前</span>
+                        <span class="cvss-score">CWE-1394</span>
+                    </div>
+                    <div class="article-body">
+                        <p>开源视频监控代理，装在海康、大华这类摄像机旁或直接跑在设备上。JWT 中间件第 17 至 28 行：密钥读不到时回退到硬编码字符串 TOBECHANGED。这个字符串本身就是提示，意思是「这里需要改」。</p>
+                        <p>进去之后能读出 RTSP、ONVIF、Hub 的连接信息与加密密钥，改写配置，停掉摄像头。先看清摄像头用什么账号，再让它停，这两件事放在一起就是物理层面的问题。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>回退路径是默认值最喜欢的藏身处：正常分支有审查有示例，异常分支往往只有一个判定。</li>
+                            <li>这类设备不进补丁流程，由集成商部署，装完没人管，没有版本巡检。</li>
+                            <li>能读密钥等于能解密录像，升级与改密码之后，已流出的录像仍然可解。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-high">高危</span>
+                    <h3 class="article-title">MONAI 三天期限：能装到的仍是旧的那一版</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-133968 · 0.8.5 及更早</span>
+                        <span class="cvss-score">已进 KEV</span>
+                    </div>
+                    <div class="article-body">
+                        <p>修复 10 月 19 日就合进主分支，公告 11 月 18 日发出，CVE 11 月 20 日建档，而 PyPI 上到 11 月 21 日仍是 2024 年 11 月上传的 0.8.5。pip 装出来的还是带洞的那一版，依赖扫描器按那条未审阅、未挂包名的公告条目比对，根本不会报。</p>
+                        <table class="affected-table">
+                            <tr><th>环节</th><th>状态</th></tr>
+                            <tr><td>主分支修复</td><td class="risk-high">10-19 已合并</td></tr>
+                            <tr><td>安全公告</td><td class="risk-high">11-18 已发</td></tr>
+                            <tr><td>CVE 建档</td><td class="risk-high">11-20 已建</td></tr>
+                            <tr><td>PyPI 发行包</td><td class="risk-high">仍是 0.8.5</td></tr>
+                            <tr><td>KEV 整改期限</td><td class="risk-medium">11-26 到期</td></tr>
+                        </table>
+                        <p>默认不开启认证，接口把客户端提交的文件标识符直接与存储目录做字符串拼接，没有规范化也没有过滤。写进去之后攻击者选的是解释器启动时自动加载的配置文件，因为那条路能绕开多数 Web 层写入限制。攻击者归因众说纷纭，此处只记技术链与修复状态。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>合并、公告、建档、发包是四条流水线，任何一条卡住，用户拿到的都是旧版本。</li>
+                            <li>这类工具跑在 GPU 机上并以高权限启动，使用人是研究人员，三天内完成升级加验证往往做不到。</li>
+                            <li>扫描器盲区是结构性的，能补的只有按进程名、端口、镜像去找。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-medium">事件</span>
+                    <h3 class="article-title">三星广告数据 220MB：观看记录与训练向量在一起</h3>
+                    <div class="article-meta">
+                        <span>n0n 在暗网放出 · 三星确认供应商出事</span>
+                        <span class="cvss-score">范围待核查</span>
+                    </div>
+                    <div class="article-body">
+                        <p>三星向媒体确认，泄露来自为其北美广告业务处理数据的一家第三方供应商，供应商初步调查显示部分信息可能受影响。数据分四块，最敏感的不是观看记录。</p>
+                        <table class="affected-table">
+                            <tr><th>数据集</th><th>规模与时间</th></tr>
+                            <tr><td>电视观看记录</td><td>约 15 万条，2024 年</td></tr>
+                            <tr><td>政治广告记录</td><td>约 4.26 万条，2026 年 9 至 10 月</td></tr>
+                            <tr><td>广告模型训练数据</td><td>约 9.91 万条向量，2021 年</td></tr>
+                            <tr><td>内部文件</td><td>2 份，含员工姓名邮箱</td></tr>
+                        </table>
+                        <p>观看记录是行为日志，不含节目内容。真正敏感的是政治广告台账，含赞助方、立场与预估花费，可直接用于画像；嵌入向量原则上不可逆，但它暴露模型输入分布与特征维度。n0n 在第 224 期对两家金融机构放过无证据声明，这次不同，三星自己承认了供应商出事。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li>广告技术栈是数据密度最高、审计最少的一段，采集与建模压在同一家供应商手上。</li>
+                            <li>政治广告数据不含个人信息，于是保护强度也最低。</li>
+                            <li>供应链事故的通报权在供应商手上，品牌方只能等。</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. Tabbycat 9.1：没有 tournament 属性时权限判断返回 True</h4>
+                    <p>CVE-2026-135429，2.9.0 至 2.12.1。权限类取视图上的 tournament 属性做比对，没有这个属性时走进异常分支，结果是返回 True。未认证可以对 /api/v1/tournaments 发写请求，级联删掉队伍与辩手。修 b7f0746。今天第三条「缺省即放行」。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Acer Connect M6E 5G 两条 10.0：连上 WiFi 就能删录音</h4>
+                    <p>CVE-2026-128791 与 CVE-2026-9790，均 CVSS 4.0 的 10.0，CWE-306。任意 WiFi 客户端可对 /meeting-recording/delete 发 DELETE 永久删除文件；一批管理端点完全不校验身份。Acer 已发布固件更新公告。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. 微软一批记录入库：Azure Event Grid 拿到 10.0</h4>
+                    <p>11-23 22:20 UTC 前后 NVD 成批收录 MSRC 记录。最高是 CVE-2026-62841 Azure Event Grid 不当认证 10.0；另有 M365 Copilot 9.9、SharePoint 路径穿越 9.9、Azure 门户 XSS 9.6、Azure ML SSRF 9.6。这是入库时间，不等于补丁发布日。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Cleverbridge：卡号、有效期、CVV 被拷走</h4>
+                    <p>做软件与 SaaS 在线结账的服务商，11-04 发现未授权活动，调查确认有第三方拷走平台上的支付卡数据。11-20 开始通知持卡人，强调不是勒索软件。在它那儿买过软件的人应直接找发卡行换卡，CVV 一起出去了。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Peninsula Energy：铀矿那边先停了牌</h4>
+                    <p>澳交所上市铀矿公司 11-23 申请停牌，称 11-20 周五夜间其怀俄明州 Lance 项目发生网络安全事件，影响限于「运营系统」，美澳行政系统未被入侵，生产受影响。停牌至公告或 11-25 开盘。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. 今天该升的两样东西：Chrome 与 Ruby</h4>
+                    <p>Chrome 158.0.8127.88/.89 修 CVE-2026-134401，Variations 输入校验不当，代码可在沙箱外执行，Chromium 自评 Critical，NVD 记 9.6。Ruby2Shell 的 CVE-2026-132825 公开 PoC 定在 11-25 08:00 UTC，要换的是解释器本身，不是宝石。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 现实可利用度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日重点：严重性 × 现实可利用度
+    x-axis "需要前提或仅研究演示" --> "已在野或已公开 PoC"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "Xen Orchestra 空对象登录": [0.94, 0.95]
+    "MONAI 默认免认证写入": [0.88, 0.93]
+    "Kerberos 回退密钥": [0.72, 0.90]
+    "Cribl 只读执行代码": [0.46, 0.92]
+    "AutoGPT 默认 JWT 密钥": [0.58, 0.97]
+    "Ruby2Shell 待公开 PoC": [0.66, 0.88]
+    "Chrome 沙箱外执行": [0.52, 0.84]
+    "Tabbycat 缺省放行": [0.38, 0.74]
+    "Cribl 分页注入": [0.34, 0.86]
+    "Acer 路由无认证端点": [0.30, 0.62]
+    "Cleverbridge 卡数据外泄": [0.86, 0.55]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">六条主线各踩在哪一格</div>
+                    <div class="mermaid">
+pie title 今日六条主线各踩在哪一格
+    "示例与默认值直接上线" : 22
+    "空值被当成无条件" : 20
+    "最低权限档位能力过高" : 20
+    "回退分支降级成常量" : 14
+    "认证默认关闭" : 14
+    "外包链路权限过度集中" : 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年10月19日至11月26日
+    10月19日 : MONAI 修复合进主分支
+    11月4日 : Cleverbridge 发现平台未授权活动
+    11月10日 : Vates 发布 VSA-2026-062
+    11月18日 : MONAI 发布安全公告
+    11月20日 : Xen Orchestra 安全公告发出
+    11月20日 : MONAI 的 CVE 记录建档
+    11月20日 : Peninsula 铀矿项目夜间出事
+    11月21日 : PyPI 上仍是 0.8.5
+    11月23日 : Cribl 五份公告同时发出
+    11月23日 : Xen Orchestra 的 CVE 进 NVD 并注明在野
+    11月23日 : MONAI 进 KEV 限三天
+    11月23日 : 三星承认供应商出事
+    11月24日 : 三星泄露细节公开
+    11月25日 : Ruby2Shell 公开 PoC
+    11月25日 : Peninsula 停牌到期
+    11月26日 : MONAI 与 MailAssure 整改到期
+                </div>
+            </div>
+
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">Vates · VSA-2026-062</span>
+                        <a href="https://docs.vates.tech/security-advisories/advisories/2026/vates-sa-2026-062">Xen Orchestra 令牌解析绕过认证</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Security Advisory</span>
+                        <a href="https://github.com/vatesfr/xen-orchestra/security/advisories/GHSA-2r3w-c2vx-fv5g">GHSA-2r3w-c2vx-fv5g</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub · 修复提交</span>
+                        <a href="https://github.com/vatesfr/xen-orchestra/commit/50166fe3a49c02069d35ba9046ca4a1f77f4e11d">xen-orchestra commit 50166fe</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Trickyworld</span>
+                        <a href="https://www.trickyworld.in/computer-tricks/cyber-security/cve-2026-133469-xen-orchestra-fixes-token-bypass">版本对照与 IoC 命令</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense</span>
+                        <a href="https://brandefense.io/knowledge-hub/vulnerabilities/cve-2026-133469">在野利用证据的边界</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cribl CSAF</span>
+                        <a href="https://csaf.cribl.io/2026/cribl-2026-0006.json">cribl-2026-0006 只读执行代码</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cribl CSAF</span>
+                        <a href="https://csaf.cribl.io/2026/cribl-2026-0007.json">cribl-2026-0007 分页注入</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cribl Trust</span>
+                        <a href="https://trust.cribl.io/notifications">Stream 4.21.0 与 Edge 4.21.0</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Severity Daily</span>
+                        <a href="https://severitydaily.com/cribl-stream-cve-2026-115873-november-23-2026-9-9-cvss-3-1-vs-8-7-cvss-4-0-read-only-groupread-worker-group-leader-api-nested-expression-compiler-cwe-94-4-20-4-fixed-4-21-0-absent-from-nvd-received-no">3.1 与 4.0 两个口径的差异</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AutoGPT 安全公告</span>
+                        <a href="https://github.com/Significant-Gravitas/AutoGPT/security/advisories/GHSA-24q6-6h89-f9p7">GHSA-24q6-6h89-f9p7</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">AutoGPT Release</span>
+                        <a href="https://github.com/Significant-Gravitas/AutoGPT/releases/tag/autogpt-platform-beta-v0.8.0">0.8.0 修复说明</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Kerberos Agent</span>
+                        <a href="https://github.com/kerberos-io/agent/blob/v3.14.1/machinery/src/routers/http/jwt_middleware.go#L17-L28">JWT 中间件回退逻辑</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Kerberos Agent</span>
+                        <a href="https://github.com/kerberos-io/agent/releases/tag/v3.14.4">3.14.4 发布</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Tabbycat</span>
+                        <a href="https://github.com/TabbycatDebate/tabbycat/blob/v2.12.1/tabbycat/api/permissions.py#L71-L75">权限类源码</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck</span>
+                        <a href="https://www.vulncheck.com/advisories/tabbycat-2.9.0-through-2.12.1-unauthenticated-tournament-modification-via-rest-api">Tabbycat 未认证改写赛事</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Acer 安全公告</span>
+                        <a href="https://community.acer.com/en/en/kb/articles/20236-security-advisory-firmware-update-for-acer-connect-m6e-5g-portable-wi-fi-router">Connect M6E 5G 固件更新</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Chrome Releases</span>
+                        <a href="https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_01734282054.html">158.0.8127.88 稳定版更新</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">HKCERT</span>
+                        <a href="https://www.hkcert.org/security-bulletin/google-chrome-remote-code-execution-vulnerability_20261124">Chrome 远程代码执行通报</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Ruby 官方</span>
+                        <a href="https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/">Regexp 与 String 多个漏洞</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0</span>
+                        <a href="https://services.nvd.nist.gov/rest/json/cves/2.0">本期窗口 488 条、9.0 以上 28 条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV JSON</span>
+                        <a href="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json">2026.11.23 版 1,792 条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">MSRC</span>
+                        <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62841">CVE-2026-62841 Azure Event Grid</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Synology</span>
+                        <a href="https://www.synology.com/en-global/security/advisory/Synology_SA_26_21">SA-26:21 DSM OAuth 参数注入</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Android Headlines</span>
+                        <a href="https://www.androidheadlines.com/2026/11/samsung-confirms-data-breach-as-hackers-dump-220mb-of-data.html">三星确认 220MB 泄露</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CyberSecurity Hunter</span>
+                        <a href="https://cybersecurityhunter.com/cyber-news-roundup-22-november-to-24-november-2026">11-22 至 11-24 汇总</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Security Affairs</span>
+                        <a href="https://securityaffairs.com/203851/data-breach/cleverbridge-confirms-attackers-copied-payment-card-data-from-its-platform.html">Cleverbridge 支付卡数据</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cleverbridge</span>
+                        <a href="https://grow.cleverbridge.com/incident-update">官方事件说明</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ASX 停牌申请</span>
+                        <a href="https://wcsecure.weblink.com.au/pdf/PEN/03164951.pdf">Peninsula Energy 原文</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">mining.com.au</span>
+                        <a href="https://mining.com.au/angold-peninsula-disclose-mining-cyber-incidents/">两家矿企披露网络事件</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SourceCodester</span>
+                        <a href="https://www.sourcecodester.com/blog/18950/postgresql-19-claude-code-secret-leaks-autogpt-jwt-dev-news-nov-24-2026.html">JWT 默认密钥自检脚本</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE编号、CVSS评分等数据以官方源为准。Cribl 四个漏洞的分数同时存在 3.1 与 4.0 两套口径，本文并列给出，不做换算。Microsoft 那批为 NVD 入库时间，不等于补丁发布日。本文对恶意活动只记录技术事实，不转述归因结论。
+                <br>
+                每日精选 · 值得关注 | 2026年11月24日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
