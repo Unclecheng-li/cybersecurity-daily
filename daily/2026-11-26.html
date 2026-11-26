@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网安日报速递 · 2026年11月26日（第228期）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-dark: #2d2d2d;
+            --paper-cream: #f5f0e8;
+            --paper-aged: #e8e0d0;
+            --accent-red: #c41e3a;
+            --accent-orange: #e85d04;
+            --accent-gold: #c9a227;
+            --border-dark: #3d3d3d;
+            --border-light: #b8b0a0;
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--ink-black);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            color: var(--ink-black);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--paper-cream);
+            box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(0,0,0,0.3);
+            border: 3px solid var(--border-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(139,90,43,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139,90,43,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Masthead ========== */
+        .masthead {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px 20px;
+            text-align: center;
+            border-bottom: 4px double var(--accent-gold);
+            position: relative;
+        }
+        .masthead::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .newspaper-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #d4c5a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newspaper-subtitle {
+            font-size: 1.2em;
+            letter-spacing: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== Edition Info ========== */
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--border-light);
+            font-size: 0.85em;
+            color: var(--ink-dark);
+        }
+        .edition-date { font-weight: 700; color: var(--accent-red); }
+        .edition-number { font-style: italic; }
+
+        /* ========== Keywords Banner ========== */
+        .keywords-banner {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-orange));
+            color: white;
+            padding: 12px 40px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+        }
+        .keywords-banner strong { margin-right: 10px; }
+
+        /* ========== Content ========== */
+        .content-wrapper {
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Headlines ========== */
+        .headline-section {
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 30px;
+        }
+        .main-headline {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--ink-black);
+            border-left: 6px solid var(--accent-red);
+            padding-left: 20px;
+        }
+        .sub-headline {
+            font-size: 1.4em;
+            color: var(--ink-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-left: 26px;
+        }
+
+        /* ========== Article Grid ========== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            border: 1px solid var(--border-light);
+            padding: 25px;
+            background: rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+        .article-card.featured {
+            grid-column: span 2;
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(196,30,58,0.05) 0%, rgba(255,255,255,0.8) 100%);
+        }
+        .article-number {
+            position: absolute;
+            top: -15px; left: 20px;
+            background: var(--ink-black);
+            color: var(--accent-gold);
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1em;
+            border-radius: 50%;
+        }
+
+        /* ========== Severity Badges ========== */
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .severity-critical { background: var(--accent-red); color: white; }
+        .severity-high { background: var(--accent-orange); color: white; }
+        .severity-medium { background: var(--accent-gold); color: var(--ink-black); }
+
+        /* ========== Article Content ========== */
+        .article-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--ink-black);
+        }
+        .article-meta {
+            font-size: 0.85em;
+            color: var(--ink-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cvss-score {
+            display: inline-block;
+            background: var(--ink-black);
+            color: var(--accent-red);
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .article-body {
+            font-size: 0.95em;
+            line-height: 1.9;
+            color: var(--ink-dark);
+        }
+        .article-body p { margin-bottom: 12px; text-indent: 2em; }
+        .article-body ul, .article-body ol { margin: 10px 0; padding-left: 2em; }
+        .article-body li { margin-bottom: 5px; }
+
+        /* ========== Section Headers ========== */
+        .section-header {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--ink-black);
+            border-bottom: 3px solid var(--ink-black);
+            padding-bottom: 10px;
+            margin: 40px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-header::before {
+            content: '\00A7';
+            color: var(--accent-red);
+            font-size: 1.2em;
+        }
+
+        /* ========== Quick News ========== */
+        .quick-news {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .quick-item {
+            padding: 20px;
+            border-left: 4px solid var(--accent-orange);
+            background: rgba(232,93,4,0.05);
+        }
+        .quick-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--ink-black); }
+        .quick-item p { font-size: 0.9em; color: var(--ink-dark); }
+
+        /* ========== Charts ========== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--ink-black);
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ========== Attack Flow ========== */
+        .attack-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 4px;
+        }
+        .flow-step {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            position: relative;
+        }
+        .flow-step::after {
+            content: '\2192';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-step.critical { background: var(--accent-red); }
+
+        /* ========== Tables ========== */
+        .affected-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .affected-table th {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 10px;
+            text-align: left;
+        }
+        .affected-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .affected-table tr:hover { background: rgba(232,93,4,0.05); }
+        .risk-high { color: var(--accent-red); font-weight: 700; }
+        .risk-medium { color: var(--accent-orange); font-weight: 700; }
+
+        /* ========== References ========== */
+        .references-section {
+            background: var(--paper-aged);
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 4px double var(--ink-black);
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .reference-item {
+            font-size: 0.8em;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+        .reference-item a {
+            color: var(--accent-red);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .reference-item a:hover { text-decoration: underline; }
+        .reference-source {
+            font-weight: 700;
+            color: var(--ink-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ========== Footer ========== */
+        .newspaper-footer {
+            background: var(--ink-black);
+            color: var(--paper-cream);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 4px double var(--accent-gold);
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            color: rgba(245,240,232,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .article-card.featured { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .newspaper-title { font-size: 2em; letter-spacing: 4px; }
+            .main-headline { font-size: 1.8em; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: span 1; }
+            .quick-news { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .references-grid { grid-template-columns: 1fr; }
+            .edition-info { flex-direction: column; gap: 10px; }
+            .content-wrapper { padding: 20px; }
+            .masthead { padding: 20px; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .newspaper { box-shadow: none; border: none; }
+            .article-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+
+<body>
+    <div class="newspaper">
+        <!-- ========== 报头 ========== -->
+        <header class="masthead">
+            <div class="newspaper-subtitle">AI城 · 网络安全</div>
+            <h1 class="newspaper-title">网安日报速递</h1>
+            <div class="newspaper-subtitle">CYBERSECURITY DAILY EXPRESS</div>
+        </header>
+
+        <!-- ========== 日期栏 ========== -->
+        <div class="edition-info">
+            <span class="edition-date">2026年11月26日 星期四</span>
+            <span class="edition-number">第 228 期 | 总第 228 期</span>
+            <span>每日精选 · 值得关注</span>
+        </div>
+
+        <!-- ========== 关键词横幅 ========== -->
+        <div class="keywords-banner">
+            <strong>今日关键词：</strong>五个洞没有一个是零日 · 只修其中一个真的等于白修了 · 本地提权接在远程执行后面 · 七月发的补丁到十月还在被人利用 · 登录成功之后也没有换掉会话 · 一个空对象就换来了管理员权限
+        </div>
+
+        <!-- ========== 正文 ========== -->
+        <div class="content-wrapper">
+
+            <!-- ===== 头条 ===== -->
+            <div class="headline-section">
+                <h2 class="main-headline">洞都是旧的，链是今天才拼好的</h2>
+                <p class="sub-headline">五个各自不够格的 CVE 串成免密登录 · 五月的本地提权接在十月的远程执行后面 · 七月的补丁到十月还在被利用 · 十月的修复挡不住十一月的扫描 · 每一环都在补丁之外</p>
+            </div>
+
+            <!-- ===== 文章卡片网格 ===== -->
+            <div class="articles-grid">
+
+                <!-- ★ Featured 文章 -->
+                <article class="article-card featured">
+                    <span class="article-number">1</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">GeoServer 五个洞串成一条链：没有一环是零日</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-129244 等五个 · CVSS 3.1 9.8</span>
+                        <span class="cvss-score">PoC 已公开 · 国内 3,852 资产</span>
+                    </div>
+                    <div class="article-body">
+                        <p>两天里十家安全团队先后复现了同一条链。它不是某个组件的高危漏洞，是五个各自「中等偏上」的缺陷在默认配置下正好能连起来：一次未认证的 WFS 请求，最后一跳是 <em>uid=0(root)</em>。</p>
+                        <table class="affected-table">
+                            <tr><th>CVE</th><th>问题</th><th>单独看</th></tr>
+                            <tr><td>129244 WFS</td><td class="risk-medium">超长 storedQuery id 触发文件系统异常，回显数据目录绝对路径</td><td class="risk-medium">信息泄露</td></tr>
+                            <tr><td>129243 OWS</td><td class="risk-high">service 带前缀时调度器截前缀、检查用原值，规则一条不命中</td><td class="risk-high">授权绕过</td></tr>
+                            <tr><td>120705 WFS</td><td class="risk-high">GetFeatureById 的 id 未转义拼进 XML，可注入 xi:include</td><td class="risk-high">文件读加 SSRF</td></tr>
+                            <tr><td>129245 核心</td><td class="risk-high">remember-me 签名密钥发行默认值就是 geoserver</td><td class="risk-high">会话伪造</td></tr>
+                            <tr><td>129242 JDBC</td><td class="risk-high">ResultSet.getObject 读 OTHER 列，反序列化不过滤</td><td class="risk-high">代码执行</td></tr>
+                        </table>
+                        <p>链条顺序就是上面这个顺序，一环给下一环递钥匙。报错回显给出 data_dir；服务名前缀绕过让匿名用户可以写存储查询；XInclude 把 <em>users.xml</em> 的口令摘要和 <em>config.xml</em> 的密钥一起读出来；默认密钥离线签出管理员 cookie，换到真实 JSESSIONID；最后用 REST 传一个恶意 HSQLDB、注册 JDBC 用户组服务，加载用户属性时反序列化执行。</p>
+                        <p>默认发行包把两件本该分开的东西放在一起：JDBC 用户/角色模块和 HSQLDB 驱动都随标准包提供，而这个服务默认不注册。不注册就没人审它，但有管理员会话，一个 REST 请求就能把它注册上。</p>
+                        <p>修复版本 3.0.2、2.28.6、2.27.7，官方十月十九日发布，十一月二十三日公布细节，二十四日出现完整脚本。受影响范围是 2.27.6 及以下、2.28.0 至 2.28.5、3.0.0 至 3.0.1。奇安信鹰图口径：国内风险资产 3,852 个，全球 18,412 个。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>分级在这条链上失效了。</strong>五个里挑任何一个单独打分都到不了 9.8，但没有一个 9.8 能描述「串起来」。</li>
+                            <li><strong>只修一个真的不够。</strong>官方公告写得很直白：修其中一处只能提高门槛，无法消除组合风险。</li>
+                            <li><strong>默认值是最贵的负债。</strong>geoserver 这个字符串在发行版里躺了十几年，改它一次配置，不改就是链条最后一环免费。</li>
+                            <li><strong>一个月没人动。</strong>补丁十月十九日就有，多数升级发生在脚本公开之后。</li>
+                        </ul>
+                    </div>
+                    <div class="attack-flow">
+                        <span class="flow-step">超长 id 换路径</span>
+                        <span class="flow-step">前缀绕过写查询</span>
+                        <span class="flow-step">XInclude 读密钥</span>
+                        <span class="flow-step">默认密钥签 cookie</span>
+                        <span class="flow-step critical">REST 注册 JDBC 服务</span>
+                        <span class="flow-step critical">反序列化拿 root</span>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 2 -->
+                <article class="article-card">
+                    <span class="article-number">2</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">一天十条 KEV：六条在周六到期</h3>
+                    <div class="article-meta">
+                        <span>CISA 2026.11.25 · 目录 1,805 条</span>
+                        <span class="cvss-score">Juniper 只给三天</span>
+                    </div>
+                    <div class="article-body">
+                        <p>十一月二十五日，CISA 一次往 KEV 里加了十条，其中六条的整改期限是十一月二十八日，也就是本周六。</p>
+                        <table class="affected-table">
+                            <tr><th>产品</th><th>问题</th><th>期限</th></tr>
+                            <tr><td>Juniper Session Smart</td><td class="risk-high">构造 salt minion ID 触发命令注入，远程 root</td><td class="risk-high">11-28</td></tr>
+                            <tr><td>Vates Xen Orchestra</td><td class="risk-high">空 JSON 对象构成的 token 绕过认证</td><td class="risk-high">11-28</td></tr>
+                            <tr><td>Mitel MiCollab AWV</td><td class="risk-medium">五个未认证缺陷，最高 10.0</td><td class="risk-medium">11-28 / 12-09</td></tr>
+                            <tr><td>Danfoss AK-SM 800A</td><td class="risk-medium">路径穿越与认证不当，可导出含内网信息的报告</td><td class="risk-medium">11-28 / 12-09</td></tr>
+                        </table>
+                        <p>Juniper 这条最紧。CVE-2026-103406 的攻击面是一个 salt minion ID：只要能往 Salt 主控递一个自己造的标识，命令就在 root 上下文里跑。修复版本 7.0.5-14-lts、7.1.7-15-sts、7.2.3-8r2，没有 workaround。Juniper 在十一月二十四日更新里说已观察到至少一例恶意利用，所以 CISA 给的是三天而不是三周。</p>
+                        <p>Xen Orchestra 是上周的闭环。十一月二十四日本报告的头条「一个空对象换来了管理员权限」讲的就是它，今天进了 KEV，攻击被追溯到十一月十日起。修复版本口径有分歧：厂商写 6.9.2 与 6.10.1，部分媒体转述成 6.9.1 与 6.10.0，升级前按厂商页面核对。厂商另一条建议容易被跳过：确认被入侵的环境要轮换所有密钥并重装，因为它管的是宿主机。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>周六到期。</strong>六条期限落在周末，值班表上没人就是周一发现过期三天。</li>
+                            <li><strong>全在控制面。</strong>路由管理、虚拟化管理、制冷控制器，都是配一次就再也不看的东西。</li>
+                            <li><strong>2023 年的编号今天才进 KEV。</strong>老设备被重新捡起来打是常态，不是意外。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 3 -->
+                <article class="article-card">
+                    <span class="article-number">3</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">PAN-OS：五月的本地提权，接在十月的远程执行后面</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-46300 · PAN-SA-2026-0015</span>
+                        <span class="cvss-score">25 台设备被 root</span>
+                    </div>
+                    <div class="article-body">
+                        <p>Palo Alto 为 Linux 内核 XFRM ESP-in-TCP 的页缓存写缺陷补上 PAN-OS 侧修复。这个洞叫 Fragnesia，7.8，五月就公开了，单看没什么用，要先进系统。十月有人找到了「先进系统」那一步。</p>
+                        <table class="affected-table">
+                            <tr><th>阶段</th><th>用了什么</th><th>结果</th></tr>
+                            <tr><td>第一步</td><td class="risk-high">PHP2Shell CVE-2026-109618，9.2</td><td class="risk-high">nobody</td></tr>
+                            <tr><td>第二步</td><td class="risk-high">Fragnesia，覆写 pam.d/su</td><td class="risk-high">root</td></tr>
+                            <tr><td>第三步</td><td class="risk-medium">替换 change_password.php</td><td class="risk-medium">命令中继</td></tr>
+                        </table>
+                        <p>三段在同一个 HTTP 请求里跑完。第一段用 session.upload_progress 的 OOM 型 use-after-free 拿到 nobody；第二段往只读文件的页缓存里写，把 /etc/pam.d/su 换成 pam_permit.so，之后 su 不需要密码；第三段以 root 把 change_password.php 换成能执行命令的中继，原文件和 PAM 配置备份，health.php 留着保活。没有新端口，没有新守护进程。</p>
+                        <p>Dream 的口径：用 FOFA 扫到 19,182 个 PAN-OS 管理门户，指纹识别约 5,000 台，筛出 240 个目标，最终 24 台防火墙加 1 台内部管理服务器被拿下。Unit 42 在十月二十九日验证过，并给出暴露比例：约 0.02% 的客户设备管理口对公网开放。</p>
+                        <p>20 个 hotfix 覆盖 10.2、11.1、11.2、12.1、12.2 五条线。公告评级是 informational，不评 CVSS，理由是修的是上游内核问题。这个口径可以理解，但后果是扫描器不会为它报警，资产清单上不会出现红点。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>两次补丁之间有一个月。</strong>PHP2Shell 十月三十日修全分支，Fragnesia 到十一月二十四日才修，中间正好是链子能跑的时间。</li>
+                            <li><strong>本地提权评级永远偏低。</strong>7.8 会被排到后面，但它决定「进去之后能不能出来」。</li>
+                            <li><strong>不留新端口。</strong>替换已有文件、复用已有端点，主机巡检看不出来，只能靠文件完整性。</li>
+                            <li><strong>门只有一个。</strong>所有观察到的利用都从公网可达的管理口开始，这条防线比补丁便宜。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 4 -->
+                <article class="article-card">
+                    <span class="article-number">4</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Check Point：24 台管理服务器，cookie 是自己签的</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-16232 加 CVE-2026-61500</span>
+                        <span class="cvss-score">22 家机构 · 17 个国家与地区</span>
+                    </div>
+                    <div class="article-body">
+                        <p>GreyNoise 的行动代号 GT13，身份未归属。22 家机构的 24 台 Security Management Server 被拿下，行业跨政府、金融、能源、交通、采矿、工程、制造。确认活动十月十七日到十一月二日，观察窗口从十月二日开始。</p>
+                        <p>入口不是防火墙，是一台 Rejetto HTTP File Server。HFS 的 loginSrp1 会下发带 sid 的签名会话 cookie，而 sid 来自 JavaScript 的 Math.random()。攻击者连续登录收集输出，重建了 V8 伪随机数生成器的内部状态，还原出签名密钥，签出一个管理员会话。伪造的 cookie 里带 allow_session_ip_change:true，从任何 IP 都有效。</p>
+                        <p>三天后往 /root/.ssh/authorized_keys 追加公钥，十月二十日把机器改成跳板：未认证 HTTP 服务上传工具，Nmap 加 Chisel 做反向代理。后渗透阶段跑的是 CVE-2026-16232，SmartConsole 认证绕过，七月修、七月二十五日 KEV 期限，四个月后还有设备没打。</p>
+                        <p>一百多个管理任务里包括：复制防火墙数据库、导出内部 CA、签发新证书、卸载安全策略（实际相当于把防火墙关了），以及对 NetScaler、Ivanti、vCenter、Exchange、Oracle TNS、域控的探测。GreyNoise 统计到 99 个 IP、1,400 多次会话、800 多个命令行痕迹、1,200 多个文件操作。</p>
+                        <p>十月二十六日那次批量证书任务在 24 台上全部失败，但错误日志回传时带着受害者 IP，还暴露出 /etc/ld.so.preload 指向 /usr/lib/libproc.so，一个疑似植入物的痕迹。GreyNoise 就是靠这批错误信息识别出受害者并通知的。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>拿到管理服务器等于拿到整片网络。</strong>卸载策略这个动作不需要打任何一台防火墙。</li>
+                            <li><strong>PRNG 那条路要单独记。</strong>用 Math.random() 生成会话标识，样本够多就能反推状态。不是密码学问题，是用了不该用的随机源。</li>
+                            <li><strong>AI 的结论要谨慎读。</strong>GreyNoise 的依据是节奏、工具形态和行为自动化，没有捕获到模型调用记录。属于评估，不是证据。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 5 -->
+                <article class="article-card">
+                    <span class="article-number">5</span>
+                    <span class="severity-badge severity-critical">严重</span>
+                    <h3 class="article-title">Expressway 落地：脚本是 AI 写的，日志里留了 nodeup</h3>
+                    <div class="article-meta">
+                        <span>CVE-2026-76466 · 9.8</span>
+                        <span class="cvss-score">首例在野 · 期限已过三天</span>
+                    </div>
+                    <div class="article-body">
+                        <p>集群模式下的 Expressway-C 与 Expressway-E，硬编码凭据加证书校验不足，未认证远程拿 root。思科十月披露并修复，当时说没看到滥用。上周末变了，F6 在十一月二十六日说正在调查首例已观察到的利用。</p>
+                        <p>攻击者先拿下两台面向互联网的 Expressway，通过其中一台进到内部网络里另外两个集群节点。拿到 root 后投放的 Python 脚本用途很具体：扫描 SMB 共享的文件与文件夹，与 SQL Server 和 WinRM 交互，在 GitLab 代码仓库里搜凭据。F6 说脚本形态表明操作者用了 AI 助手。</p>
+                        <p>这句话和 Check Point 那条要放一起看。同一个星期，两家不同厂商的响应团队，都在报告里写了「疑似 AI 辅助」。这已经不算新闻点，快成标准字段了。</p>
+                        <p>自查两条：Erlang 日志 erlang.log 里有没有 wombat@127.0.0.1 的节点加入记录；/mnt/harddisk/ 下有没有被投放的脚本。CISA 十一月二十日收录，整改期限十一月二十三日，已经过了三天。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>硬编码凭据在集群模式里。</strong>「单机部署不受影响」这句话会让资产清单直接跳过它。</li>
+                            <li><strong>两台变四台。</strong>集群节点之间的信任关系是设计出来的便利，也是现成的横向路径。</li>
+                            <li><strong>AI 辅助的落点是搜凭据。</strong>不是写 exploit，是写扫描和整理，这部分以前要人做几个小时。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ★ 普通文章 6 -->
+                <article class="article-card">
+                    <span class="article-number">6</span>
+                    <span class="severity-badge severity-medium">事件</span>
+                    <h3 class="article-title">一天七份通报：77 万人的工资与逾期记录</h3>
+                    <div class="article-meta">
+                        <span>土耳其 KVKK · 无 CVE</span>
+                        <span class="cvss-score">769,779 人</span>
+                    </div>
+                    <div class="article-body">
+                        <p>KVKK 十一月二十五日一次公布七份数据泄露通报，是这个月单批最多的一次。最大的一份来自消费信贷比价平台 InteraktifKredi，769,779 人。通报写得具体：攻击者事先拿到 ICRM 系统的私有访问地址和一名公司管理员的登录凭据，经海外服务器跳板的 VPN 连进销售面板。</p>
+                        <p>字段清单长到需要单独列：姓名、身份证号、出生日期、婚姻状况、手机与邮箱、省市、就业状态、行业与职业、申报工资与发薪银行、配偶申报收入、房车持有标记、信用分、风险与额度、信贷账户、逾期记录、自动评分结果。</p>
+                        <p>这不是「邮箱和密码泄露」的量级，是一个人能不能贷到款、能贷多少的完整底稿。</p>
+                        <p>同一天另外六份：Yeditepe 大学十一月十五日起，入口是面向公网的 POS 应用背后组件，含健康与宗教信仰数据；Dorak 与 Ata Turizm 两家旅游集团十一月十九日同日遭勒索加密；Temeltaş 的会计员工点开钓鱼邮件，浏览器缓存的 VPN 凭据被拿走；World Triathlon 的 Metabase 泄露 1,673 人，含健康信息。</p>
+                        <p><strong>值得关注的原因：</strong></p>
+                        <ul>
+                            <li><strong>私有地址不等于访问控制。</strong>把管理面板放在猜不到的 URL 上只挡住了扫描器，挡不住从别处拿到链接的人。</li>
+                            <li><strong>比价与信贷平台的数据密度极高。</strong>它天然聚合收入、负债、逾期，是身份欺诈的原材料。</li>
+                            <li><strong>三份的起点是凭据。</strong>管理员凭据、VPN 凭据、浏览器缓存，没有一份的起点是零日。</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ===== 速览区 ===== -->
+            <h3 class="section-header">速览区</h3>
+            <div class="quick-news">
+                <div class="quick-item">
+                    <h4>7. JSPWiki：登录了，会话没换，10.0</h4>
+                    <p>CVE-2026-78114，CVSS 4.0 满分，CWE-384 会话固定。2.10.0 到 3.0.0 全平台受影响，修 3.0.1 与 2.12.6。认证成功后没有更换 session 标识，攻击者只要先塞一个已知标识，登录之后照样能用。同日还有 78111（附件页把 CSRF token 放进地址栏）与 78099（CSRF 可绕过），都在 3.0.1 修。ZoomEye 宽泛语法匹配到 626,685 条，是索引量不是装机量。验证办法很土：登录前后抓两次 cookie，看标识变没变。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>8. Jenkins Script Security：9.9，一个部分限定名</h4>
+                    <p>CVE-2026-136835，9.9。1436 及更早版本处理 @Builder 注解时，builderStrategy 用部分限定类名就不会被拒绝，沙箱脚本可以逃逸。前提是攻击者有「定义并运行沙箱脚本」权限，但 Jenkins 里这个权限给得往往比想象中宽。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>9. ICU4C：字符集名可以打进堆里</h4>
+                    <p>CVE-2026-137326，7.3，影响至 79.1。x11-compound-text 转换器克隆时共享 extraInfo 块却没有注册 safeClone 处理器，造成 use-after-free 与 double free。条件是应用把可控字符集名传给 ucnv_open()，同时调用 ucnv_setSubstString() 或做克隆。修在 PR 4297 与 4376。这类库的问题在于它在依赖链最底层，ldd 里能看到，资产清单里看不到。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>10. Barracuda：改个时区就能 root</h4>
+                    <p>CVE-2026-111560，NVD 给 7.2，Mandiant 按 CVSS 4.0 给 8.6。六条产品线的时区字段没过滤 shell 元字符，管理员权限可注入命令并以 root 执行。已在 KEV 里。在 ESG 上还能和登录绕过 CVE-2026-116606 串起来，管理员权限这一步就不再是前提。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>11. Ever Gauzy 与今天的高分堆</h4>
+                    <p>CVE-2026-135400，9.8。111.44.3 之前版本，jwt.strategy.ts 的每请求 JWT 校验直接接受了 getIfExists 的返回结果，用户不存在时校验等于空过。今天 NVD 窗口 9.0 以上还有三十条，多数是这个形状：不是加密写错，是「查不到就当通过」。</p>
+                </div>
+                <div class="quick-item">
+                    <h4>12. 今天该看的三件事</h4>
+                    <p>MONAI Label（CVE-2026-133968）的联邦整改期限就是今天。本周勒索受害者 337 个，比上周多两个，发得最多的是 N0N。本期六条 KEV 在十一月二十八日周六到期，值班表上要有人。</p>
+                </div>
+            </div>
+
+            <!-- ===== 风险分析图表 ===== -->
+            <h3 class="section-header">风险分析</h3>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">事件严重性 × 现实可利用度象限</div>
+                    <div class="mermaid">
+quadrantChart
+    title 今日重点：严重性 × 现实可利用度
+    x-axis "需要前提或仅研究演示" --> "已在野或已公开 PoC"
+    y-axis "影响有限" --> "影响严重"
+    quadrant-1 "立即处置"
+    quadrant-2 "重点加固"
+    quadrant-3 "持续观察"
+    quadrant-4 "常规跟进"
+    "GeoServer 五洞链": [0.95, 0.93]
+    "PAN-OS Fragnesia 链": [0.82, 0.95]
+    "Check Point GT13": [0.78, 0.94]
+    "Cisco Expressway root": [0.90, 0.86]
+    "Xen Orchestra 空对象": [0.88, 0.88]
+    "Juniper Session Smart": [0.72, 0.90]
+    "Mitel MiCollab AWV": [0.55, 0.92]
+    "JSPWiki 会话固定": [0.35, 0.85]
+    "InteraktifKredi 泄露": [0.70, 0.72]
+    "Barracuda 时区注入": [0.48, 0.74]
+    "ICU4C 堆破坏": [0.25, 0.55]
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">今日 KEV 十条的归属</div>
+                    <div class="mermaid">
+pie title 今日 KEV 十条的归属
+    "Mitel MiCollab" : 5
+    "Danfoss AK-SM 800A" : 3
+    "HPE Juniper Session Smart" : 1
+    "Vates Xen Orchestra" : 1
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 事件时间线 ===== -->
+            <h3 class="section-header">事件时间线</h3>
+            <div class="timeline-section">
+                <div class="mermaid">
+timeline
+    title 2026年5月至11月28日
+    5月 : Fragnesia 公开为本地提权
+    7月 : Check Point 修 SmartConsole 绕过
+    7月25日 : 该 CVE 联邦期限到期
+    10月2日 : GT13 伪造管理员 cookie
+    10月17日 : 管理服务器确认被入侵
+    10月19日 : GeoServer 发布修复版本
+    10月25日 : InteraktifKredi 泄露开始
+    10月30日 : PHP2Shell 修复发全分支
+    11月2日 : GreyNoise 失去观察视野
+    11月10日 : Vates 发布 VSA-2026-062
+    11月23日 : GreyNoise 公开 GT13 报告
+    11月24日 : GeoServer 完整脚本公开
+    11月24日 : Palo Alto 发布 PAN-SA-2026-0015
+    11月25日 : CISA 一次收录十条 KEV
+    11月25日 : 土耳其一天发七份通报
+    11月26日 : F6 披露 Expressway 在野利用
+    11月26日 : MONAI Label 联邦期限到期
+    11月28日 : 本期六条 KEV 到期
+                </div>
+            </div>
+            <!-- ===== 出处链接 ===== -->
+            <h3 class="section-header">相关出处</h3>
+            <div class="references-section">
+                <div class="references-grid">
+                    <div class="reference-item">
+                        <span class="reference-source">奇安信 CERT</span>
+                        <a href="https://www.secrss.com/articles/95982">GeoServer 未认证 RCE 风险通告</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">天融信阿尔法实验室</span>
+                        <a href="http://mp.weixin.qq.com/s?__biz=Mzg3MDAzMDQxNw==&amp;mid=2247497135&amp;idx=1&amp;sn=38665ad3d96449e6732a77f8b6f5ef14">五个 CVE 逐条拆解</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">亚信安全研究院</span>
+                        <a href="http://mp.weixin.qq.com/s?__biz=MzcxMDQwMzAwMA==&amp;mid=2247484058&amp;idx=2&amp;sn=e51fe6a450a7a0e40379a9f4db5fd2bb">攻击链与修复建议</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CryptoCat</span>
+                        <a href="https://cryptocat.me/blog/research/analysis/geoserver_preauth_rce/">原始研究与 PoC</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Security Advisory</span>
+                        <a href="https://github.com/geoserver/geoserver/security/advisories/GHSA-9wf2-fcgq-vxhq">GHSA-9wf2-fcgq-vxhq 反序列化</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GitHub Security Advisory</span>
+                        <a href="https://github.com/geoserver/geoserver/security/advisories/GHSA-hgm3-wq4h-8vvq">GHSA-hgm3-wq4h-8vvq 密钥</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">GeoServer 官方</span>
+                        <a href="https://geoserver.org/download/">3.0.2 / 2.28.6 / 2.27.7 下载</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CISA KEV JSON</span>
+                        <a href="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json">2026.11.25 版 1,805 条</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">East Bay Cyber</span>
+                        <a href="https://eastbaycyber.com/kev/added/2026-11-25">11-25 新增十条逐条说明</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">XCyberNow</span>
+                        <a href="https://xcybernow.com/cisa-kev-juniper-mitel-xen-orchestra-danfoss">十条归属与期限</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Threadlinqs</span>
+                        <a href="https://intel.threadlinqs.com/threat/TL-2026-6887">TL-2026-6887 情报条目</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Palo Alto Networks</span>
+                        <a href="https://security.paloaltonetworks.com/PAN-SA-2026-0015">PAN-SA-2026-0015</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatAft</span>
+                        <a href="https://threataft.com/articles/palo-alto-panos-fragnesia-php2shell-root-chain">四段链技术拆解</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">CVE-DB</span>
+                        <a href="https://www.cve-db.com/article/palo-alto-networks-patches-fragnesia-flaw-used-to-root-firewalls-184a8f04">修复版本与利用确认</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">SecurityDaily</span>
+                        <a href="https://securitydaily.news/article/3769">GT13 时间线与工具链</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Root2Sec</span>
+                        <a href="https://root2sec.com/news/hackers-compromise-check-point-servers-in-22-organizations">受害者分布</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">The Terminal</span>
+                        <a href="https://theterminal.space/security/check-point-gt13-24-management-servers-greynoise">证据边界与 CVE 清单</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">腾讯新闻</span>
+                        <a href="https://news.qq.com/rain/a/20261126A0708K00">F6 首例在野利用与 IoC</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Cisco 安全公告</span>
+                        <a href="https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-expressway-authbypass">Expressway 认证绕过</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatTicker</span>
+                        <a href="https://threatticker.com/news/turkish-data-watchdog-publishes-seven-breach-notifications-in-one-day-as">KVKK 一天七份通报</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Brandefense</span>
+                        <a href="https://brandefense.io/knowledge-hub/vulnerabilities/cve-2026-78114">JSPWiki 会话固定</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Apache 邮件列表</span>
+                        <a href="https://lists.apache.org/thread.html/o9o3chszhj17gs5rd689dhc020dpsh46">CVE-2026-78111 令牌泄漏</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">VulnCheck</span>
+                        <a href="https://www.vulncheck.com/advisories/icu4c-through-79.1-use-after-free-and-double-free-via-ucnv-safeclone">ICU4C CVE-2026-137326</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">Softwsp</span>
+                        <a href="https://softwsp.com/advisories/cve-2026-111560">Barracuda CVE-2026-111560</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">ThreatPodium</span>
+                        <a href="https://threatpodium.com/threat-intelligence-report-2026-11-26">本周 KEV 与勒索受害者统计</a>
+                    </div>
+                    <div class="reference-item">
+                        <span class="reference-source">NVD API 2.0</span>
+                        <a href="https://services.nvd.nist.gov/rest/json/cves/2.0">本期窗口 713 条、9.0 以上 30 条</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 页脚 ========== -->
+        <footer class="newspaper-footer">
+            <div class="footer-logo">AI城 · 网安日报</div>
+            <p class="footer-disclaimer">
+                免责声明：本报告基于公开信息整理，CVE 编号、CVSS 评分等数据以官方源为准。GeoServer 完整链的 9.8 为 CVSS 3.1 口径，单个 CVE 另有各自的低分，文中「分级失效」指该组合无法被单条评分表达。PAN-OS 被入侵台数（24 台防火墙加 1 台管理服务器）为 Dream 报告口径，Unit 42 验证了发现但未独立确认台数。Xen Orchestra 修复版本存在 6.9.1/6.9.2 与 6.10.0/6.10.1 两种转述，以厂商页面为准。Check Point 行动中的 AI 使用为 GreyNoise 的评估，不含模型调用证据。KVKK 通报中的受影响人数为申报口径，调查未结束的案件数字可能变化。本文对恶意活动只记录技术事实，不转述归因结论。
+                <br>
+                每日精选 · 值得关注 | 2026年11月26日
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Noto Serif SC, Georgia, serif'
+        });
+    </script>
+</body>
+</html>
